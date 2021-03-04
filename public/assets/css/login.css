@@ -1,0 +1,29 @@
+/* ### login box ### */
+.loginBox { padding: 2.5rem 4rem; position: fixed; overflow: auto; right: 0; top: 0; height: 100%; width: 31.25rem; background: #fff; }
+.loginBox.loginBox__small { padding: 2.5rem 2.625rem; width: 27.25rem; top: 10.5rem; right: 5.75rem; height: auto; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(54px); }
+.loginBox__title { font-size: 1.5625rem; font-weight: 700; color: #005188; }
+.loginBox__label { padding: 1.875rem 4.5rem; position: fixed; left: 0; bottom: 11rem; max-width: 39.5rem; font-size: 2.375rem; color: #fff; font-weight: 700; background: #015189; border-right: 1.25rem solid #01A6CE; }
+.loginBox__link { padding: 0.875rem 0; font-size: 0.75rem; color: rgba(0, 0, 0, 0.6); }
+.loginBox__link > a { font-weight: 700; color: rgba(0, 0, 0, 0.6); }
+.loginBox { }
+.loginBox { }
+.loginBox { }
+.loginBox { }
+.loginBox { }
+
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (max-width: 1200px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 992px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 480px) {
+}
