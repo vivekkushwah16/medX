@@ -1,5 +1,5 @@
 /* ### header box ### */
-.headerBox { padding: 3rem 4.5rem; }
+.headerBox { padding: 3rem 4.5rem; position: fixed; left: 0; top: 0; width: 100%; }
 .headerBox { }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */

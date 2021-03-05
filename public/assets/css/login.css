@@ -1,8 +1,10 @@
 /* ### login box ### */
-.loginBox { padding: 2.5rem 4rem; position: fixed; overflow: auto; right: 0; top: 0; height: 100%; width: 31.25rem; background: #fff; }
-.loginBox.loginBox__small { padding: 2.5rem 2.625rem; width: 27.25rem; top: 10.5rem; right: 5.75rem; height: auto; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(54px); }
+.loginBox__wrapper { display: flex; align-items: flex-end; justify-content: space-between; align-items: center; background-repeat: no-repeat; background-size: auto 100%; }
+.loginBox__wrapper.loginBox__wrapper--cover { background-size: cover; }
+.loginBox { padding: 2.5rem 4rem; overflow: auto; min-height: 100vh; width: 31.25rem; background: #fff; }
+.loginBox.loginBox__small { padding: 2.5rem 2.625rem; margin-right: 6rem; min-height: 0; width: 27.25rem; top: 10.5rem; right: 5.75rem; height: auto; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(54px); }
 .loginBox__title { font-size: 1.5625rem; font-weight: 700; color: #005188; }
-.loginBox__label { padding: 1.875rem 4.5rem; position: fixed; left: 0; bottom: 11rem; max-width: 39.5rem; font-size: 2.375rem; color: #fff; font-weight: 700; background: #015189; border-right: 1.25rem solid #01A6CE; }
+.loginBox__label { padding: 1.875rem 4.5rem; margin-bottom: -27.5%; max-width: 39.5rem; font-size: 2.375rem; color: #fff; font-weight: 700; background: #015189; border-right: 1.25rem solid #01A6CE; }
 .loginBox__link { padding: 0.875rem 0; font-size: 0.75rem; color: rgba(0, 0, 0, 0.6); }
 .loginBox__link > a { font-weight: 700; color: rgba(0, 0, 0, 0.6); }
 .loginBox { }
