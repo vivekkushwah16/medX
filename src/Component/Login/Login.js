@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import firebase, {auth} from "../../Firebase/firebase"
+import {withRouter} from 'react-router-dom';
 
 
 class Login extends Component {
@@ -23,6 +24,11 @@ class Login extends Component {
         this.setState({[name]: value});
         this.captcha = React.createRef();
 
+    }
+
+    redirectToHome = () => {
+        const {history} = this.props;
+        if (history) history.push('/home');
     }
 
 
@@ -77,10 +83,11 @@ class Login extends Component {
             .confirm(verificationId)
             .then( (result) => {
                 // User signed in successfully.
-                var user = result.user;
-                user.getIdToken().then(idToken => {
-                    console.log(idToken);
-                });
+                // var user = result.user;
+                // user.getIdToken().then(idToken => {
+                //     console.log(idToken);
+                // });
+                this.redirectToHome();
             })
             .catch((error) => {
                let errors = this.state.errors;
@@ -181,4 +188,4 @@ class Login extends Component {
 }
 
 
-export default Login;
+export default withRouter(Login);
