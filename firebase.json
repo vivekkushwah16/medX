@@ -1,0 +1,32 @@
+{
+  "hosting": {
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/register",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/login",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/topics",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/home",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/accounts",
+        "function": "accounts"
+      }
+    ]
+  }
+}

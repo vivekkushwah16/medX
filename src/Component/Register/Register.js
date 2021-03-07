@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {CountryDropdown, RegionDropdown, CountryRegionData} from 'react-country-region-selector';
-
+import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
+import axios from 'axios';
+import {withRouter} from 'react-router-dom';
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
 class Register extends Component {
-
     state = {
         email: "",
         phoneNumber: "",
@@ -38,19 +38,23 @@ class Register extends Component {
         this.setState({[name]: value});
     }
 
+    redirectToLogin = () => {
+        const {history} = this.props;
+        if (history) history.push('/login');
+    }
 
     validateForm = () => {
         let errors = this.state.errors;
 
-        errors.email = validEmailRegex.test(this.state.email) ? '' : 'Email is not valid!';
-        errors.phoneNumber = this.state.phoneNumber.length > 0 ? '' : 'Phone number is required';
-        errors.firstName = this.state.firstName.length > 0 ? '' : 'First name is required';
-        errors.hospitalName = this.state.hospitalName.length > 0 ? '' : 'Hospital name is required';
-        errors.designation = this.state.designation.length > 0 ? '' : 'Designation is required';
-        errors.country = this.state.country.length > 0 ? '' : 'Country is required';
-        errors.state = this.state.state.length > 0 ? '' : 'State is required';
-        errors.city = this.state.city.length > 0 ? '' : 'City is required';
-        errors.termsAndConditions = this.state.termsAndConditions == true ? '' : 'Please accept terms and conditions';
+        errors.email = validEmailRegex.test(this.state.email) ? '' : 'Please enter a valid email.';
+        errors.phoneNumber = this.state.phoneNumber.length > 0 ? '' : 'Please enter a valid phone number.';
+        errors.firstName = this.state.firstName.length > 0 ? '' : 'Please enter first name.';
+        errors.hospitalName = this.state.hospitalName.length > 0 ? '' : 'Please select a hospital name.';
+        errors.designation = this.state.designation.length > 0 ? '' : 'Please select a designation.';
+        errors.country = this.state.country.length > 0 ? '' : 'Please select a country.';
+        errors.state = this.state.state.length > 0 ? '' : 'Please select a state.';
+        errors.city = this.state.city.length > 0 ? '' : 'Please enter city name.';
+        errors.termsAndConditions = this.state.termsAndConditions == true ? '' : 'Please accept terms and conditions.';
 
         this.setState({errors: errors});
     }
@@ -68,9 +72,47 @@ class Register extends Component {
         this.validateForm();
 
         if (!this.isValidForm(this.state.errors)) {
-            console.log(this.state);
+            console.log(this.state.errors);
             return;
         }
+
+        axios.post(`/accounts`, {
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            hospitalName: this.state.hospitalName,
+            designation: this.state.designation,
+            country: this.state.country,
+            state: this.state.state,
+            city: this.state.city,
+            termsAndConditions: this.state.termsAndConditions,
+        })
+            .then(res => {
+                this.redirectToLogin();
+            }).catch((error) => {
+            if (error.response) {
+                let data = error.response.data;
+
+                if (data.message && data.message.code === "auth/email-already-exists") {
+                    let errors = this.state.errors;
+                    errors.email = data.message.message;
+                    this.setState({errors: errors});
+                }
+                if (data.message && data.message.code === "auth/invalid-phone-number") {
+                    let errors = this.state.errors;
+                    errors.phoneNumber = "Please enter valid phone number.";
+                    this.setState({errors: errors});
+                }
+
+            } else if (error.request) {
+                alert(error.request);
+            } else {
+                alert('Error '+ error.message);
+            }
+            console.log(error.config);
+        });
+
     }
 
     render() {
@@ -105,7 +147,7 @@ class Register extends Component {
                                    onChange={this.handleInputChange}
                             />
                             {this.state.errors.email &&
-                            <span className="input-error2">Please enter correct email address.</span>}
+                            <span className="input-error2">{this.state.errors.email}</span>}
                         </div>
 
                         <div className="form-group">
@@ -117,7 +159,7 @@ class Register extends Component {
                                    onChange={this.handleInputChange}
                             />
                             {this.state.errors.phoneNumber &&
-                            <span className="input-error2">Please enter correct phone number.</span>}
+                            <span className="input-error2">{this.state.errors.phoneNumber}</span>}
                         </div>
 
                         <div className="row">
@@ -131,7 +173,7 @@ class Register extends Component {
                                            onChange={this.handleInputChange}
                                     />
                                     {this.state.errors.firstName &&
-                                    <span className="input-error2">Please enter first name.</span>}
+                                    <span className="input-error2">{this.state.errors.firstName}</span>}
                                 </div>
                             </div>
                             <div className="col-50">
@@ -155,7 +197,7 @@ class Register extends Component {
                                    onChange={this.handleInputChange}
                             />
                             {this.state.errors.hospitalName &&
-                            <span className="input-error2">Please enter hospital name.</span>}
+                            <span className="input-error2">{this.state.errors.hospitalName}</span>}
                         </div>
                         <div className="form-group">
                             <input type="text"
@@ -166,7 +208,7 @@ class Register extends Component {
                                    onChange={this.handleInputChange}
                             />
                             {this.state.errors.designation &&
-                            <span className="input-error2">Please enter designation.</span>}
+                            <span className="input-error2">{this.state.errors.designation}</span>}
                         </div>
                         <div className="form-group">
                             <div className="custom-select">
@@ -183,31 +225,31 @@ class Register extends Component {
                                     onChange={(val) => this.setState({country: val})}
                                 />
                                 {this.state.errors.country &&
-                                <span className="input-error2">Please enter country name.</span>}
+                                <span className="input-error2">{this.state.errors.country}</span>}
                             </div>
                         </div>
                         <div className="form-group">
                             <div className="custom-select">
                                 <RegionDropdown
-                                    name="city" id="city" name="city" className="form-control"
+                                    name="state" className="form-control"
                                     country={this.state.country}
                                     value={this.state.state}
                                     onChange={(val) => this.setState({state: val})}
                                 />
                                 {this.state.errors.state &&
-                                <span className="input-error2">Please enter state name.</span>}
+                                <span className="input-error2">{this.state.errors.state}</span>}
                             </div>
                         </div>
                         <div className="form-group mg-b30">
                             <input type="text"
                                    className="form-control"
                                    placeholder="City"
-                                   name="hospitalName"
+                                   name="city"
                                    value={this.state.city}
                                    onChange={this.handleInputChange}
                             />
                             {this.state.errors.city &&
-                            <span className="input-error2">Please enter city name.</span>}
+                            <span className="input-error2">{this.state.errors.city}</span>}
                         </div>
                         <div className="mg-b30">
                             <button className="btn btn-primary" type={"submit"}>Sign Up</button>
@@ -220,7 +262,7 @@ class Register extends Component {
                                 onChange={this.handleInputChange}/>
                             I accept term and condition</label>
                         {this.state.errors.termsAndConditions &&
-                            <span className="input-error">Please accept terms and conditions.</span>}
+                        <span className="input-error">{this.state.errors.termsAndConditions}</span>}
                     </form>
 
                 </article>
@@ -233,4 +275,4 @@ class Register extends Component {
 }
 
 
-export default Register;
+export default withRouter(Register);
