@@ -1,37 +1,36 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import About from "./About/About";
-import Home from "./Home/Home";
-import Register from "./Register/Register";
-import Login from "./Login/Login";
-import Topics from "./Topics/Topics";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import About from "./Component/About/About";
+import Home from "./Component/Home/Home";
+import Register from "./Component/Register/Register";
+import Login from "./Component/Login/Login";
+import Topics from "./Component/Topics/Topics";
+import { UserContext } from './Context/Auth/UserContextProvider';
+import ProtectedRoute from './Component/ProtectedRoute/ProtectedRoute';
 
 class App extends Component {
-
     render() {
         return (
             <Router>
                 <Switch>
-                    <Route path="/about">
-                        <About/>
-                    </Route>
                     <Route path="/register">
-                        <Register/>
+                        <Register />
                     </Route>
                     <Route path="/login">
-                        <Login/>
+                        <Login />
                     </Route>
-                    <Route path="/topics">
-                        <Topics/>
-                    </Route>
-                    <Route path="/">
-                        <Home/>
-                    </Route>
+                    <ProtectedRoute redirectTo="/register" path="/topics">
+                        <About />
+                    </ProtectedRoute>
+                    <ProtectedRoute redirectTo="/register" path="/about">
+                        <Topics />
+                    </ProtectedRoute>
+                    <ProtectedRoute redirectTo="/register" path="/">
+                        <Home />
+                    </ProtectedRoute>
                 </Switch>
             </Router>
         );
     }
-
 }
-
 export default App
