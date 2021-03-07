@@ -6,10 +6,12 @@ import firebase, {auth} from "../../Firebase/firebase"
 class Login extends Component {
 
     state = {
-        email: "",
+        phoneNumber: "",
+        otp: "",
         showOtp: false,
         errors: {
-            email: ""
+            phoneNumber: "",
+            otp:""
         }
     }
 
@@ -19,35 +21,52 @@ class Login extends Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
         this.setState({[name]: value});
+        this.captcha = React.createRef();
+
     }
 
 
     handleSubmit = (event) => {
         event.preventDefault();
 
-        // this.validateForm();
+        this.validateForm();
 
         if (!this.isValidForm(this.state.errors)) {
             console.log(this.state.errors);
             return;
         }
 
-        window.appVerifier = new firebase.auth.RecaptchaVerifier(
+        if(this.appVerifier){
+            this.appVerifier.clear();
+            if(this.captcha && this.captcha.current)
+            {
+                this.captcha.current.innerHTML = `<div id="recaptcha-container"></div>`
+            }
+        }
+
+        this.appVerifier = new firebase.auth.RecaptchaVerifier(
             "recaptcha-container",
             {
-                size: "invisible"
+                'size': 'invisible'
             }
         );
-        const appVerifier = window.appVerifier;
         firebase
             .auth()
-            .signInWithPhoneNumber(this.state.email, appVerifier)
+            .signInWithPhoneNumber(this.state.phoneNumber, this.appVerifier)
             .then((confirmationResult) => {
                 this.setState({showOtp: true});
                 window.confirmationResult = confirmationResult;
             })
             .catch((error) => {
-                console.log("Error:" + error.code);
+                let errors = this.state.errors;
+
+                if(error.code ===  "auth/invalid-phone-number"){
+                    errors.phoneNumber =  "Please enter a valid phone number.";
+                }else {
+                    errors.phoneNumber =  error.message;
+                }
+                this.setState({ errors: errors});
+
             });
     }
 
@@ -64,14 +83,15 @@ class Login extends Component {
                 });
             })
             .catch((error) => {
-                // User couldn't sign in (bad verification code?)
-                console.error("Error while checking the verification code", error);
-                window.alert(
-                    "Error while checking the verification code:\n\n" +
-                    error.code +
-                    "\n\n" +
-                    error.message
-                );
+               let errors = this.state.errors;
+
+               if(error.code === "auth/invalid-verification-code"){
+                   errors.otp =  "Invalid one time password.";
+               }else {
+                   errors.otp =  error.message;
+               }
+                this.setState({ errors: errors});
+
             });
 
     }
@@ -79,7 +99,7 @@ class Login extends Component {
     validateForm = () => {
         let errors = this.state.errors;
 
-        errors.email = this.state.email.length > 0 ? '' : 'Please enter a valid phone number or email.';
+        errors.phoneNumber = this.state.phoneNumber.length > 0 ? '' : 'Please enter a valid phone number.';
 
         this.setState({errors: errors});
     }
@@ -95,7 +115,9 @@ class Login extends Component {
         return (
             <div className="loginBox__wrapper loginBox__wrapper--cover min-height-full"
                  style={{"backgroundImage": "url(assets/images/login-bg2.jpg)"}}>
-                <div id={"recaptcha-container"}></div>
+                <div ref={this.captcha}>
+                    <div id={"recaptcha-container"}></div>
+                </div>
                 <header className="headerBox">
                     <img src="assets/images/logo.png" alt=""/>
                 </header>
@@ -112,12 +134,14 @@ class Login extends Component {
                                 <div className="form-group mg-b30">
                                     <input
                                         type="text"
-                                        name="email"
-                                        value={this.state.email}
+                                        name="phoneNumber"
+                                        value={this.state.phoneNumber}
                                         onChange={this.handleInputChange}
                                         className="form-control"
                                         placeholder="Email or phone number"/>
+                                    {this.state.errors.phoneNumber && <span className="input-error">{this.state.errors.phoneNumber}</span>}
                                 </div>
+
                                 <div className="mg-b20">
                                     <button id={"sign-in"} type={"submit"} className="btn btn-primary">Sign In</button>
                                 </div>
@@ -138,6 +162,8 @@ class Login extends Component {
                                         onChange={this.handleInputChange}
                                         className="form-control"
                                         placeholder="OTP"/>
+                                    {this.state.errors.otp && <span className="input-error">{this.state.errors.otp}</span>}
+
                                 </div>
                                 <div className="mg-b20">
                                     <button id={"sign-in"} type={"submit"} className="btn btn-primary">Submit OTP</button>
