@@ -1,0 +1,24 @@
+/* ### topics box ### */
+.topicsBox { padding-top: 10rem; }
+.topicsBox__list { list-style-type: none; display: flex; flex-wrap: wrap; }
+.topicsBox__list > li { padding: 0.75rem 0.9375rem;  }
+.topicsBox__title { margin-bottom: 1.5rem; font-size: 2.375rem; font-weight: 700; color: #FFFFFF; text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15);  }
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (max-width: 1199px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 992px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+    .topicsBox__title { color: #005188; font-size: 2.0875rem; text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15); }
+    .topicsBox__list > li { text-align: center; width: 50%; }
+    .topicsBox__wrapper {  }
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 480px) {
+}

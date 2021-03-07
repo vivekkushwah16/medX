@@ -4,6 +4,7 @@ import About from "./About/About";
 import Home from "./Home/Home";
 import Register from "./Register/Register";
 import Login from "./Login/Login";
+import Topics from "./Topics/Topics";
 
 class App extends Component {
 
@@ -19,6 +20,9 @@ class App extends Component {
                     </Route>
                     <Route path="/login">
                         <Login/>
+                    </Route>
+                    <Route path="/topics">
+                        <Topics/>
                     </Route>
                     <Route path="/">
                         <Home/>
