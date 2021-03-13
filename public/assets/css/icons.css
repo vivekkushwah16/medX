@@ -25,6 +25,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+.icon-profile:before {
+  content: "\e906";
+}
+.icon-notifications2:before {
+  content: "\e907";
+}
+.icon-search:before {
+  content: "\e908";
+}
+.icon-home:before {
+  content: "\e909";
+}
 .icon-like:before {
   content: "\e900";
 }

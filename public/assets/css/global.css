@@ -212,7 +212,8 @@ html { scroll-behavior: smooth; }
 
 /* Global classess */
 .img-bg { background-position: center bottom; background-repeat: no-repeat; background-size: cover; }
-.gradient-bg { background: linear-gradient(180deg, #FFFFFF 0%, #BAE5FA 100%), url(image.png); }
+.gradient-bg { background: linear-gradient(180deg, #FFFFFF 0%, #BAE5FA 100%); }
+.gradient-bg2 { background: linear-gradient(180deg, rgba(130, 192, 237, 0.6) 0%, #FFFFFF 100%); }
 .position-relative { position: relative; }
 .grey-bg { background: #F8F8F8; }
 .wrapper { overflow: hidden; }
@@ -468,6 +469,7 @@ html { scroll-behavior: smooth; }
 @media only screen and (max-width: 767px) {
 
   .custom-checkbox2__text { font-size: 1rem; }
+  .wrapper { padding-bottom: 6rem; }
 
   /* Alignment */
   .text-sm-center { text-align: center; }

@@ -19,6 +19,9 @@ class App extends Component {
                     <Route path="/login">
                         <Login />
                     </Route>
+                    <Route path="/home">
+                        <Home />
+                    </Route>
                     <ProtectedRoute redirectTo="/register" path="/topics">
                         <About />
                     </ProtectedRoute>
