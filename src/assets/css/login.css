@@ -1,0 +1,41 @@
+/* ### login box ### */
+.loginBox__wrapper { display: flex; align-items: flex-end; justify-content: space-between; align-items: center; background-repeat: no-repeat; background-size: auto 100%; }
+.loginBox__wrapper.loginBox__wrapper--cover { background-size: cover; }
+.loginBox { padding: 2.5rem 4rem; overflow: auto; min-height: 100vh; min-width: 31.25rem; width: 31.25rem; background: #fff; }
+.loginBox.loginBox__small { padding: 2.5rem 1.75rem 2.5rem 2.625rem; margin-top: 2rem; margin-right: 5.75rem; min-height: 0; min-width: 27.25rem; width: 27.25rem; top: 10.5rem; right: 5.75rem; height: auto; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(54px); }
+.loginBox__title { font-size: 1.5625rem; font-weight: 700; color: #005188; }
+.loginBox__label { padding: 1.875rem 2rem 9rem 4.5rem; max-width: 39.5rem; font-size: 2.1875rem; color: #fff; font-weight: 700; background: #015189; border-right: 1.25rem solid #01A6CE; }
+.loginBox__label.loginBox__label--bottom { margin-bottom: -26rem; font-size: 2.45rem; }
+.loginBox__link { padding: 0.875rem 0; font-size: 0.75rem; color: rgba(0, 0, 0, 0.6); }
+.loginBox__link > a { font-weight: 700; color: rgba(0, 0, 0, 0.6); }
+.loginBox__video { padding: 0 5rem 0 4.5rem; position: relative; margin: -6.5rem 0 0; }
+.loginBox__video > img { width: 100%; }
+.loginBox__video__play { font-size: 2.125rem; position: absolute; left: 50%; top: 50%; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-left: -2.6875rem; margin-top: -2.6875rem; height: 5.375rem; width: 5.375rem; border-radius: 50%; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(24px); }
+.loginBox__left { width: 100%; }
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (max-width: 1199px) {
+    .loginBox { padding: 4rem 3rem; margin-left: 1rem; margin-right: 0; }
+    .loginBox.loginBox__small { margin: 1rem; }
+    .loginBox__label, .loginBox__label.loginBox__label--bottom { padding: 2rem; margin: 0; }
+    .loginBox__video { margin: 0; padding: 0; }
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 992px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+    .loginBox { background: transparent; }
+    .loginBox, .loginBox.loginBox__small { padding: 2rem; min-height: auto; margin: 0; width: 100%; min-width: auto; }
+    .loginBox__video { margin: 6rem 0 0rem 0; padding: 0; }
+    .loginBox__wrapper.loginBox__wrapper--cover {  background-image: none !important; }
+    .loginBox__wrapper { padding-top: 0; display: block; }
+    .loginBox__left { position: relative; }
+    .loginBox__label, .loginBox__label.loginBox__label--bottom { padding: 1rem 2rem 1rem; font-size: 1.25rem; max-width: 21rem; position: absolute; left: 0; bottom: 1.25rem; z-index: 1; }
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 480px) {
+}

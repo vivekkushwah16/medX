@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
 import axios from 'axios';
 import {withRouter} from 'react-router-dom';
+import {analytics} from '../../Firebase/firebase';
+
+import './Register.css'
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
@@ -89,6 +92,12 @@ class Register extends Component {
             termsAndConditions: this.state.termsAndConditions,
         })
             .then(res => {
+                analytics.logEvent("user_registered", {
+                    country: this.state.country,
+                    state: this.state.state,
+                    city: this.state.city,
+                    date: new Date()
+                })
                 this.redirectToLogin();
             }).catch((error) => {
             if (error.response) {

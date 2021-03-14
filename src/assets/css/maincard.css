@@ -1,0 +1,44 @@
+/* ### maincard box ### */
+.maincardBox { padding: 1.5rem 4.5rem; }
+.maincardBox__title { font-weight: 700; font-size: 1.3125rem; color: #01518A; }
+.maincardBox__card-wrapper { overflow: auto; height: 450px; height: calc(100vh - 420px); min-height: 200px; }
+.maincardBox__card { margin-bottom: 1rem; padding: 0; display: flex; border-radius: 0.625rem; background: #fff; }
+.maincardBox__card-left { padding: 1rem; width: 10rem; }
+.maincardBox__card-right { padding: 1rem; position: relative; width: 100%; color: rgba(0, 0, 0, 0.6); }
+.maincardBox__card-date { font-size: 1.25rem; font-weight: 700; color: #01518A; }
+.maincardBox__card-time { font-size: 1rem; color: #01518A; }
+.maincardBox__card-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+.maincardBox__card-desc { font-size: 0.75rem; font-weight: 400; }
+.maincardBox__card-profile { margin-bottom: 0.5rem; display: flex; align-items: center; text-decoration: none; color: rgba(0, 0, 0, 0.6); line-height: 1rem; }
+.maincardBox__card-profile-pic { margin-right: 1rem; display: block; width: 2.125rem; height: 2.125rem; border-radius: 50%; box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25); }
+.maincardBox__card-profile-title { margin-bottom: 0.25rem; font-size: 0.75rem; font-weight: 400; }
+.maincardBox__card-profile-subtitle { font-size: 0.75rem; font-weight: 400; }
+.maincardBox__card-right .maincardBox__card-date { font-size: 0.9375rem; list-style-type: none; }
+
+.maincardBox__card.maincardBox__card--large { margin-bottom: 2rem; border: 1px solid #D0D0D0; }
+.maincardBox__card.maincardBox__card--large .maincardBox__card-left { padding: 0; min-width: 20rem; }
+.maincardBox__card.maincardBox__card--large .maincardBox__card-right { padding-right: 8rem; }
+.maincardBox__card.maincardBox__card--large .maincardBox__card-wrapper { height: auto; }
+
+.maincardBox__card-video { padding: 0; height: 100%; width: 100%; position: relative; margin: 0; background-position: center center; background-size: cover; }
+.maincardBox__card-video__play { font-size: 2.325rem; position: absolute; left: 50%; top: 50%; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-left: -1.125rem; margin-top: -1.125rem; height: 2.25rem; width: 2.25rem; border-radius: 50%; background: rgba(0, 0, 0, 0.7); }
+
+.like-btn { padding: 0.75rem 1.5rem 0.75rem 1.5rem; cursor: pointer; position: absolute; right: 1rem; top: 1rem; font-size: 0.75rem; border: medium none; border: 1px solid #A6A6A6; color: #A6A6A6; border-radius: 0.625rem; background: transparent; }
+.like-btn i { font-size: 1.125rem; margin-right: 0.25rem;}
+.like-btn.like-btn--active { background: #015189; color: #fff; border-color: #015189; }
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (max-width: 1199px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 992px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 480px) {
+}
