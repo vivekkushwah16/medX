@@ -8,8 +8,14 @@ import Topics from "./Component/Topics/Topics";
 import { UserContext } from './Context/Auth/UserContextProvider';
 import ProtectedRoute from './Component/ProtectedRoute/ProtectedRoute';
 import PreEvent from './Component/Event/PreEvent/PreEvent';
+import EventManager from './Managers/EventManager/EventManager';
 
 class App extends Component {
+
+    componentDidMount() {
+
+    }
+
     render() {
         return (
             <Router>
