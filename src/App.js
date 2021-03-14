@@ -21,9 +21,12 @@ class App extends Component {
                     <Route path="/login">
                         <Login />
                     </Route>
-                    <ProtectedRoute redirectTo="/login" path="/home">
-                    <PreEvent />
-                    </ProtectedRoute>
+                    {/* <ProtectedRoute redirectTo="/login" path="/home">
+                        <About />
+                    </ProtectedRoute> */}
+                    <Route path="/home">
+                        <PreEvent />
+                    </Route>
                     <ProtectedRoute redirectTo="/login" path="/topics">
                         <About />
                     </ProtectedRoute>

@@ -4,7 +4,10 @@ import './VideoModal.css'
 
 function VideoModal(props) {
     return (
-        <div className="videoModal">
+        <div className="videoModal" onClick={(e) => {
+            if (e) { e.preventDefault() }
+            if (props.close) { props.close() }
+        }}>
             <div className="videoModal_container">
                 <ReactPlayer
                     config={{
@@ -19,9 +22,9 @@ function VideoModal(props) {
                     width='100%'
                     height='100%'
                 />
-                {/* <div className="blocker">
+                <div className="videoModal_container_loader">
                     <div className="lds-dual-ring"></div>
-                </div> */}
+                </div>
             </div>
         </div>
     )

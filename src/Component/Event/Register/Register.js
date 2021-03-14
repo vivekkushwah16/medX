@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
-import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
+import React, { Component } from 'react';
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import axios from 'axios';
-import {withRouter} from 'react-router-dom';
-import {analytics} from '../../../Firebase/firebase';
+import { withRouter } from 'react-router-dom';
+import { analytics } from '../../../Firebase/firebase';
 
 import './Register.css'
 import Agenda from "../Agenda/Agenda";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import VideoModal from '../../VideoModal/VideoModal';
 
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
@@ -26,6 +27,7 @@ class Register extends Component {
         city: "",
         pincode: "",
         termsAndConditions: false,
+        showVideo: false,
         errors: {
             email: "",
             phoneNumber: "",
@@ -46,11 +48,11 @@ class Register extends Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        this.setState({[name]: value});
+        this.setState({ [name]: value });
     }
 
     redirectToLogin = () => {
-        const {history} = this.props;
+        const { history } = this.props;
         if (history) history.push('/login');
     }
 
@@ -69,7 +71,7 @@ class Register extends Component {
         errors.pincode = this.state.pincode.length > 0 ? '' : 'Please enter your pin code.';
         errors.termsAndConditions = this.state.termsAndConditions == true ? '' : 'Please accept terms and conditions.';
 
-        this.setState({errors: errors});
+        this.setState({ errors: errors });
     }
 
     isValidForm = (errors) => {
@@ -111,32 +113,32 @@ class Register extends Component {
                 })
                 this.redirectToLogin();
             }).catch((error) => {
-            if (error.response) {
-                let data = error.response.data;
+                if (error.response) {
+                    let data = error.response.data;
 
-                if (data.message && data.message.code === "auth/email-already-exists") {
-                    let errors = this.state.errors;
-                    errors.email = data.message.message;
-                    this.setState({errors: errors});
-                }
-                if (data.message && data.message.code === "auth/invalid-phone-number") {
-                    let errors = this.state.errors;
-                    errors.phoneNumber = "Please enter valid phone number.";
-                    this.setState({errors: errors});
-                }
+                    if (data.message && data.message.code === "auth/email-already-exists") {
+                        let errors = this.state.errors;
+                        errors.email = data.message.message;
+                        this.setState({ errors: errors });
+                    }
+                    if (data.message && data.message.code === "auth/invalid-phone-number") {
+                        let errors = this.state.errors;
+                        errors.phoneNumber = "Please enter valid phone number.";
+                        this.setState({ errors: errors });
+                    }
 
-            } else if (error.request) {
-                alert(error.request);
-            } else {
-                alert('Error ' + error.message);
-            }
-            console.log(error.config);
-        });
+                } else if (error.request) {
+                    alert(error.request);
+                } else {
+                    alert('Error ' + error.message);
+                }
+                console.log(error.config);
+            });
 
     }
 
     setValue = (number) => {
-       this.setState({phoneNumber: number || ""});
+        this.setState({ phoneNumber: number || "" });
     }
 
     enterEvent = (event) => {
@@ -147,8 +149,38 @@ class Register extends Component {
     render() {
         return (
             <div className="login2Box__wrapper min-height-full gradient-bg3">
+                {
+                    this.state.showVideo &&
+                    <VideoModal link={'https://player.vimeo.com/video/184520235'} close={() => { this.setState({ showVideo: false }) }}></VideoModal>
+                }
+                <header class="headerBox">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="headerBox__left">
+                            <a href="#" class="headerBox__logo">
+                                <img src="assets/images/logo2.png" alt="" />
+                            </a>
+                        </div>
+                        <div class="headerBox__right">
+                            <a href="#" class="headerBox__logo2">
+                                <img src="assets/images/cipla-logo.png" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                </header>
 
-                <Agenda></Agenda>
+                <div class="login2Box__left">
+                    <div class="login2Box-text">
+                        <div class="login2Box__label">
+                            <h2 class="login2Box__label-title mg-b20">50+ Eminent Speakers</h2>
+                            <p class="login2Box__label-desc">Two days of Engaging Sessions</p>
+                        </div>
+                        <div class="login2Box__video">
+                            <a href="#" class="login2Box__video__play"><i class="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a>
+                            <img src="assets/images/video-thumb.jpg" alt="" />
+                        </div>
+                    </div>
+                    <Agenda></Agenda>
+                </div>
 
                 <article className="login2Box">
                     <h1 className="login2Box__title mg-b40">Register Yourself</h1>
@@ -161,24 +193,24 @@ class Register extends Component {
                             <div className="col-50">
                                 <div className="form-group">
                                     <input type="text"
-                                           className="form-control"
-                                           placeholder="First Name"
-                                           name="firstName"
-                                           value={this.state.firstName}
-                                           onChange={this.handleInputChange}
+                                        className="form-control"
+                                        placeholder="First Name"
+                                        name="firstName"
+                                        value={this.state.firstName}
+                                        onChange={this.handleInputChange}
                                     />
                                     {this.state.errors.firstName &&
-                                    <span className="input-error2">{this.state.errors.firstName}</span>}
+                                        <span className="input-error2">{this.state.errors.firstName}</span>}
                                 </div>
                             </div>
                             <div className="col-50">
                                 <div className="form-group">
                                     <input type="text"
-                                           className="form-control"
-                                           placeholder="Last Name"
-                                           name="lastName"
-                                           value={this.state.lastName}
-                                           onChange={this.handleInputChange}
+                                        className="form-control"
+                                        placeholder="Last Name"
+                                        name="lastName"
+                                        value={this.state.lastName}
+                                        onChange={this.handleInputChange}
                                     />
                                 </div>
                             </div>
@@ -186,14 +218,14 @@ class Register extends Component {
 
                         <div className="form-group">
                             <input type="text"
-                                   className="form-control"
-                                   placeholder="Email"
-                                   name="email"
-                                   value={this.state.email}
-                                   onChange={this.handleInputChange}
+                                className="form-control"
+                                placeholder="Email"
+                                name="email"
+                                value={this.state.email}
+                                onChange={this.handleInputChange}
                             />
                             {this.state.errors.email &&
-                            <span className="input-error2">{this.state.errors.email}</span>}
+                                <span className="input-error2">{this.state.errors.email}</span>}
                         </div>
 
 
@@ -208,34 +240,34 @@ class Register extends Component {
                                 onChange={this.setValue}
                             />
                             {this.state.errors.phoneNumber &&
-                            <span className="input-error2">{this.state.errors.phoneNumber}</span>}
+                                <span className="input-error2">{this.state.errors.phoneNumber}</span>}
                         </div>
 
                         <div className="form-group">
                             <div className="custom-select">
                                 <select className="form-control"
-                                        name="profession"
-                                        value={this.state.profession}
-                                        onChange={this.handleInputChange}>
+                                    name="profession"
+                                    value={this.state.profession}
+                                    onChange={this.handleInputChange}>
                                     <option>Doctor</option>
                                     <option>Paramedics</option>
                                     <option>HCP</option>
                                 </select>
                                 {this.state.errors.profession &&
-                                <span className="input-error2">{this.state.errors.profession}</span>}
+                                    <span className="input-error2">{this.state.errors.profession}</span>}
                             </div>
                         </div>
                         <div className="form-group">
                             <div className="custom-select">
                                 <select className="form-control"
-                                        name="speciality"
-                                        value={this.state.speciality}
-                                        onChange={this.handleInputChange}>
+                                    name="speciality"
+                                    value={this.state.speciality}
+                                    onChange={this.handleInputChange}>
                                     <option>Your Speciality</option>
                                     <option>Your Speciality</option>
                                 </select>
                                 {this.state.errors.speciality &&
-                                <span className="input-error2">{this.state.errors.speciality}</span>}
+                                    <span className="input-error2">{this.state.errors.speciality}</span>}
                             </div>
                         </div>
                         <div className="form-group">
@@ -243,10 +275,10 @@ class Register extends Component {
                                 <CountryDropdown
                                     name="country" id="country" name="country" className="form-control"
                                     value={this.state.country}
-                                    onChange={(val) => this.setState({country: val})}
+                                    onChange={(val) => this.setState({ country: val })}
                                 />
                                 {this.state.errors.country &&
-                                <span className="input-error2">{this.state.errors.country}</span>}
+                                    <span className="input-error2">{this.state.errors.country}</span>}
                             </div>
                         </div>
                         <div className="form-group">
@@ -255,48 +287,49 @@ class Register extends Component {
                                     name="state" className="form-control"
                                     country={this.state.country}
                                     value={this.state.state}
-                                    onChange={(val) => this.setState({state: val})}
+                                    onChange={(val) => this.setState({ state: val })}
                                 />
                                 {this.state.errors.state &&
-                                <span className="input-error2">{this.state.errors.state}</span>}
+                                    <span className="input-error2">{this.state.errors.state}</span>}
                             </div>
                         </div>
                         <div className="form-group">
                             <input type="text"
-                                   className="form-control"
-                                   placeholder="City"
-                                   name="city"
-                                   value={this.state.city}
-                                   onChange={this.handleInputChange}
+                                className="form-control"
+                                placeholder="City"
+                                name="city"
+                                value={this.state.city}
+                                onChange={this.handleInputChange}
                             />
                             {this.state.errors.city &&
-                            <span className="input-error2">{this.state.errors.city}</span>}
+                                <span className="input-error2">{this.state.errors.city}</span>}
                         </div>
                         <div className="form-group mg-b30">
                             <input type="text"
-                                   className="form-control"
-                                   placeholder="Pincode"
-                                   name="pincode"
-                                   value={this.state.pincode}
-                                   onChange={this.handleInputChange}
+                                className="form-control"
+                                placeholder="Pincode"
+                                name="pincode"
+                                value={this.state.pincode}
+                                onChange={this.handleInputChange}
                             />
                             {this.state.errors.pincode &&
-                            <span className="input-error2">{this.state.errors.pincode}</span>}
+                                <span className="input-error2">{this.state.errors.pincode}</span>}
                         </div>
+                        <label className="custom-checkbox mg-b30">
+                            <input
+                                name="termsAndConditions"
+                                type="checkbox"
+                                checked={this.state.termsAndConditions}
+                                onChange={this.handleInputChange} />
+                            I accept term and condition</label>
+                        {this.state.errors.termsAndConditions &&
+                            <span className="input-error">{this.state.errors.termsAndConditions}</span>}
 
                         <div className="mg-b30 d-flex justify-content-between">
                             <button className="btn btn-secondary" type={"submit"}>Register</button>
                         </div>
 
-                        <label className="custom-checkbox">
-                            <input
-                                name="termsAndConditions"
-                                type="checkbox"
-                                checked={this.state.termsAndConditions}
-                                onChange={this.handleInputChange}/>
-                            I accept term and condition</label>
-                        {this.state.errors.termsAndConditions &&
-                        <span className="input-error">{this.state.errors.termsAndConditions}</span>}
+
                     </form>
 
                 </article>

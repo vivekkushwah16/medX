@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
+import AgendaCard from '../../../globalComponent/AgendaCard/AgendaCard';
+import VideoModal from '../../VideoModal/VideoModal'
+
 
 function PreEvent() {
+    const [showVideoModal, setVideoModalVisible] = useState(false);
+
+    const startVideo = () => {
+        setVideoModalVisible(true)
+    }
+
     return (
         <>
+            {
+                showVideoModal &&
+                <VideoModal link={'https://player.vimeo.com/video/184520235'} close={() => { setVideoModalVisible(false) }}></VideoModal>
+            }
             <section class="wrapper" id="root">
                 <div class="topicsBox__wrapper">
                     {/* Header */}
@@ -42,7 +55,7 @@ function PreEvent() {
                                     <p class="bannerBox__date mg-b40">9<sup>th</sup> &amp; 10<sup>th</sup> April 2021</p>
                                     <div class="d-flex">
                                         <a href="#" class="btn btn-secondary bannerBox__btn mg-r20">Add to Calender</a>
-                                        <a href="#" class="btn btn-secondary--outline bannerBox__btn">WATCH TRAILER</a>
+                                        <a href="#" class="btn btn-secondary--outline bannerBox__btn" onClick={() => startVideo()}>WATCH TRAILER</a>
                                     </div>
                                 </div>
                                 <div class="bannerBox__right">
@@ -60,110 +73,10 @@ function PreEvent() {
                             <h2 class="maincardBox__title mg-b25">AGENDA</h2>
 
                             <div class="maincardBox__card-wrapper">
-                                <div class="maincardBox__card maincardBox__card--large">
-                                    <div class="maincardBox__card-left">
-                                        <div class="maincardBox__card-video"
-                                            style={{ backgroundImage: 'url(assets/images/video-thumb.jpg)' }}>
-                                            <a href="javascript:void(0)" class="maincardBox__card-video__play"><i
-                                                class="icon-play"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="maincardBox__card-right">
-                                        <h4 class="mg-b15 maincardBox__card-title">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit.</h4>
-                                        <p class="mg-b25 maincardBox__card-desc">Neque est maecenas id arcu. Placerat in
-                                    faucibus amet massa consectetur vitae. Diam ipsum, risus, amet mauris neque. </p>
-                                        <p class="mg-b20 maincardBox__card-date">APRIL 9,
-                                    2021&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;10:30 AM</p>
-                                        <h4 class="mg-b20 maincardBox__card-title">SPEAKERS</h4>
-                                        <a href="#" class="maincardBox__card-profile">
-                                            <img class="maincardBox__card-profile-pic" src="assets/images/user.png" alt="" />
-                                            <div class="maincardBox__card-profile-text">
-                                                <p class="maincardBox__card-profile-title">Dr Jc halley</p>
-                                                <p class="maincardBox__card-profile-subtitle">MBBS, Aligarh University</p>
-                                            </div>
-                                        </a>
-                                        <button class="like-btn like-btn--active"><i class="icon-like"></i> 232</button>
-                                    </div>
-                                </div>
-                                <div class="maincardBox__card maincardBox__card--large">
-                                    <div class="maincardBox__card-left">
-                                        <div class="maincardBox__card-video"
-                                            style={{ backgroundImage: 'url(assets/images/video-thumb.jpg)' }}>
-                                            <a href="javascript:void(0)" class="maincardBox__card-video__play"><i
-                                                class="icon-play"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="maincardBox__card-right">
-                                        <h4 class="mg-b15 maincardBox__card-title">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit.</h4>
-                                        <p class="mg-b25 maincardBox__card-desc">Neque est maecenas id arcu. Placerat in
-                                    faucibus amet massa consectetur vitae. Diam ipsum, risus, amet mauris neque. </p>
-                                        <p class="mg-b20 maincardBox__card-date">APRIL 9,
-                                    2021&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;10:30 AM</p>
-                                        <h4 class="mg-b20 maincardBox__card-title">SPEAKERS</h4>
-                                        <a href="#" class="maincardBox__card-profile">
-                                            <img class="maincardBox__card-profile-pic" src="assets/images/user.png" alt="" />
-                                            <div class="maincardBox__card-profile-text">
-                                                <p class="maincardBox__card-profile-title">Dr Jc halley</p>
-                                                <p class="maincardBox__card-profile-subtitle">MBBS, Aligarh University</p>
-                                            </div>
-                                        </a>
-                                        <button class="like-btn like-btn--active"><i class="icon-like"></i> 232</button>
-                                    </div>
-                                </div>
-                                <div class="maincardBox__card maincardBox__card--large">
-                                    <div class="maincardBox__card-left">
-                                        <div class="maincardBox__card-video"
-                                            style={{ backgroundImage: 'url(assets/images/video-thumb.jpg)' }}>
-                                            <a href="javascript:void(0)" class="maincardBox__card-video__play"><i
-                                                class="icon-play"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="maincardBox__card-right">
-                                        <h4 class="mg-b15 maincardBox__card-title">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit.</h4>
-                                        <p class="mg-b25 maincardBox__card-desc">Neque est maecenas id arcu. Placerat in
-                                    faucibus amet massa consectetur vitae. Diam ipsum, risus, amet mauris neque. </p>
-                                        <p class="mg-b20 maincardBox__card-date">APRIL 9,
-                                    2021&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;10:30 AM</p>
-                                        <h4 class="mg-b20 maincardBox__card-title">SPEAKERS</h4>
-                                        <a href="#" class="maincardBox__card-profile">
-                                            <img class="maincardBox__card-profile-pic" src="assets/images/user.png" alt="" />
-                                            <div class="maincardBox__card-profile-text">
-                                                <p class="maincardBox__card-profile-title">Dr Jc halley</p>
-                                                <p class="maincardBox__card-profile-subtitle">MBBS, Aligarh University</p>
-                                            </div>
-                                        </a>
-                                        <button class="like-btn like-btn--active"><i class="icon-like"></i> 232</button>
-                                    </div>
-                                </div>
-                                <div class="maincardBox__card maincardBox__card--large">
-                                    <div class="maincardBox__card-left">
-                                        <div class="maincardBox__card-video"
-                                            style={{ backgroundImage: 'url(assets/images/video-thumb.jpg)' }}>
-                                            <a href="javascript:void(0)" class="maincardBox__card-video__play"><i
-                                                class="icon-play"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="maincardBox__card-right">
-                                        <h4 class="mg-b15 maincardBox__card-title">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit.</h4>
-                                        <p class="mg-b25 maincardBox__card-desc">Neque est maecenas id arcu. Placerat in
-                                    faucibus amet massa consectetur vitae. Diam ipsum, risus, amet mauris neque. </p>
-                                        <p class="mg-b20 maincardBox__card-date">APRIL 9,
-                                    2021&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;10:30 AM</p>
-                                        <h4 class="mg-b20 maincardBox__card-title">SPEAKERS</h4>
-                                        <a href="#" class="maincardBox__card-profile">
-                                            <img class="maincardBox__card-profile-pic" src="assets/images/user.png" alt="" />
-                                            <div class="maincardBox__card-profile-text">
-                                                <p class="maincardBox__card-profile-title">Dr Jc halley</p>
-                                                <p class="maincardBox__card-profile-subtitle">MBBS, Aligarh University</p>
-                                            </div>
-                                        </a>
-                                        <button class="like-btn like-btn--active"><i class="icon-like"></i> 232</button>
-                                    </div>
-                                </div>
+                                <AgendaCard handleClick={() => startVideo()} />
+                                <AgendaCard handleClick={() => startVideo()} />
+                                <AgendaCard handleClick={() => startVideo()} />
+                                <AgendaCard handleClick={() => startVideo()} />
 
                             </div>
 

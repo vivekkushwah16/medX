@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
-import {Link} from "react-router-dom";
-import firebase, {auth} from "../../../Firebase/firebase"
-import {withRouter} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from "react-router-dom";
+import firebase, { auth } from "../../../Firebase/firebase"
+import { withRouter } from 'react-router-dom';
 import Agenda from "../Agenda/Agenda";
 import './Login.css'
 import PhoneInput from "react-phone-number-input";
+import VideoModal from '../../VideoModal/VideoModal';
 
 class Login extends Component {
 
@@ -12,9 +13,10 @@ class Login extends Component {
         phoneNumber: "",
         otp: "",
         showOtp: false,
+        showVideo: false,
         errors: {
             phoneNumber: "",
-            otp:""
+            otp: ""
         }
     }
 
@@ -23,13 +25,13 @@ class Login extends Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        this.setState({[name]: value});
+        this.setState({ [name]: value });
         this.captcha = React.createRef();
 
     }
 
     redirectToHome = () => {
-        const {history} = this.props;
+        const { history } = this.props;
         if (history) history.push('/home');
     }
 
@@ -44,10 +46,9 @@ class Login extends Component {
             return;
         }
 
-        if(this.appVerifier){
+        if (this.appVerifier) {
             this.appVerifier.clear();
-            if(this.captcha && this.captcha.current)
-            {
+            if (this.captcha && this.captcha.current) {
                 this.captcha.current.innerHTML = `<div id="recaptcha-container"></div>`
             }
         }
@@ -62,18 +63,18 @@ class Login extends Component {
             .auth()
             .signInWithPhoneNumber(this.state.phoneNumber, this.appVerifier)
             .then((confirmationResult) => {
-                this.setState({showOtp: true});
+                this.setState({ showOtp: true });
                 window.confirmationResult = confirmationResult;
             })
             .catch((error) => {
                 let errors = this.state.errors;
 
-                if(error.code ===  "auth/invalid-phone-number"){
-                    errors.phoneNumber =  "Please enter a valid phone number.";
-                }else {
-                    errors.phoneNumber =  error.message;
+                if (error.code === "auth/invalid-phone-number") {
+                    errors.phoneNumber = "Please enter a valid phone number.";
+                } else {
+                    errors.phoneNumber = error.message;
                 }
-                this.setState({ errors: errors});
+                this.setState({ errors: errors });
 
             });
     }
@@ -83,7 +84,7 @@ class Login extends Component {
         const verificationId = this.state.otp;
         window.confirmationResult
             .confirm(verificationId)
-            .then( (result) => {
+            .then((result) => {
                 // User signed in successfully.
                 // var user = result.user;
                 // user.getIdToken().then(idToken => {
@@ -92,14 +93,14 @@ class Login extends Component {
                 this.redirectToHome();
             })
             .catch((error) => {
-               let errors = this.state.errors;
+                let errors = this.state.errors;
 
-               if(error.code === "auth/invalid-verification-code"){
-                   errors.otp =  "Invalid one time password.";
-               }else {
-                   errors.otp =  error.message;
-               }
-                this.setState({ errors: errors});
+                if (error.code === "auth/invalid-verification-code") {
+                    errors.otp = "Invalid one time password.";
+                } else {
+                    errors.otp = error.message;
+                }
+                this.setState({ errors: errors });
 
             });
 
@@ -110,7 +111,7 @@ class Login extends Component {
 
         errors.phoneNumber = this.state.phoneNumber.length > 0 ? '' : 'Please enter a valid phone number.';
 
-        this.setState({errors: errors});
+        this.setState({ errors: errors });
     }
 
     isValidForm = (errors) => {
@@ -121,7 +122,7 @@ class Login extends Component {
 
 
     setValue = (number) => {
-        this.setState({phoneNumber: number || ""});
+        this.setState({ phoneNumber: number || "" });
     }
 
     render() {
@@ -132,11 +133,42 @@ class Login extends Component {
                     <div id={"recaptcha-container"}></div>
                 </div>
 
-                <Agenda></Agenda>
+                {
+                    this.state.showVideo &&
+                    <VideoModal link={'https://player.vimeo.com/video/184520235'} close={() => { this.setState({ showVideo: false }) }}></VideoModal>
+                }
+                <header class="headerBox">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="headerBox__left">
+                            <a href="#" class="headerBox__logo">
+                                <img src="assets/images/logo2.png" alt="" />
+                            </a>
+                        </div>
+                        <div class="headerBox__right">
+                            <a href="#" class="headerBox__logo2">
+                                <img src="assets/images/cipla-logo.png" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="login2Box__left">
+                    <div class="login2Box-text">
+                        <div class="login2Box__label">
+                            <h2 class="login2Box__label-title mg-b20">50+ Eminent Speakers</h2>
+                            <p class="login2Box__label-desc">Two days of Engaging Sessions</p>
+                        </div>
+                        <div class="login2Box__video">
+                            <a href="#" class="login2Box__video__play"><i class="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a>
+                            <img src="assets/images/video-thumb.jpg" alt="" />
+                        </div>
+                    </div>
+                    <Agenda></Agenda>
+                </div>
 
 
                 <article className="login2Box login2Box__small">
-                    <img src="assets/images/login-bg-top.png" alt="" className="login-bg-top"/>
+                    <img src="assets/images/login-bg-top.png" alt="" className="login-bg-top" />
 
                     {
                         !this.state.showOtp &&
@@ -155,7 +187,7 @@ class Login extends Component {
                                         onChange={this.setValue}
                                     />
                                     {this.state.errors.phoneNumber &&
-                                    <span className="input-error2">{this.state.errors.phoneNumber}</span>}
+                                        <span className="input-error2">{this.state.errors.phoneNumber}</span>}
                                     {this.state.errors.phoneNumber && <span className="input-error">{this.state.errors.phoneNumber}</span>}
                                 </div>
 
@@ -180,7 +212,7 @@ class Login extends Component {
                                         value={this.state.otp}
                                         onChange={this.handleInputChange}
                                         className="form-control"
-                                        placeholder="OTP"/>
+                                        placeholder="OTP" />
                                     {this.state.errors.otp && <span className="input-error">{this.state.errors.otp}</span>}
 
                                 </div>
@@ -193,7 +225,7 @@ class Login extends Component {
                         </>
                     }
 
-                    <img src="assets/images/login-bg-bottom.png" alt="" className="login-bg-bottom"/>
+                    <img src="assets/images/login-bg-bottom.png" alt="" className="login-bg-bottom" />
 
                 </article>
 
