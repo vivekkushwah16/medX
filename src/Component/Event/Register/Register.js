@@ -94,12 +94,12 @@ class Register extends Component {
             phoneNumber: this.state.phoneNumber,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-            // hospitalName: this.state.hospitalName,
             profession: this.state.profession,
             speciality: this.state.speciality,
             country: this.state.country,
             state: this.state.state,
             city: this.state.city,
+            pincode: this.state.pincode,
             termsAndConditions: this.state.termsAndConditions,
         })
             .then(res => {
@@ -231,6 +231,7 @@ class Register extends Component {
                                         name="speciality"
                                         value={this.state.speciality}
                                         onChange={this.handleInputChange}>
+                                    <option>Your Speciality</option>
                                     <option>Your Speciality</option>
                                 </select>
                                 {this.state.errors.speciality &&
