@@ -201,7 +201,7 @@ class Register extends Component {
                             <PhoneInput
                                 international
                                 defaultCountry={"IN"}
-                                className="form-control"
+                                className="form-control "
                                 name="phoneNumber"
                                 placeholder="Enter phone number"
                                 value={this.state.phoneNumber}

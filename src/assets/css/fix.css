@@ -1,0 +1,4 @@
+.form-control input[type=tel]{
+    border: none;
+    outline: none;
+}
