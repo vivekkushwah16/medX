@@ -198,6 +198,7 @@ class Register extends Component {
 
                         <div className="form-group">
                             <PhoneInput
+                                international
                                 defaultCountry={"IN"}
                                 className="form-control"
                                 name="phoneNumber"
