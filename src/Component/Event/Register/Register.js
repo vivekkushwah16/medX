@@ -153,6 +153,7 @@ class Register extends Component {
                 <article className="login2Box">
                     <h1 className="login2Box__title mg-b40">Register Yourself</h1>
 
+                    <a className="btn btn-link" href="/login">Already Registered? Click here</a>
 
                     <form onSubmit={this.handleSubmit}>
 
@@ -283,8 +284,7 @@ class Register extends Component {
                         </div>
 
                         <div className="mg-b30 d-flex justify-content-between">
-                            <button className="btn btn-secondary" onClick={this.enterEvent}>Enter Event</button>
-                            <button className="btn btn-secondary--link" type={"submit"}>Sign Up</button>
+                            <button className="btn btn-secondary" type={"submit"}>Register</button>
                         </div>
 
                         <label className="custom-checkbox">
