@@ -11,11 +11,6 @@ import PreEvent from './Component/Event/PreEvent/PreEvent';
 import EventManager from './Managers/EventManager/EventManager';
 
 class App extends Component {
-
-    componentDidMount() {
-
-    }
-
     render() {
         return (
             <Router>
@@ -26,16 +21,16 @@ class App extends Component {
                     <Route path="/login">
                         <Login />
                     </Route>
-                    <Route path="/home">
-                        <PreEvent />
-                    </Route>
-                    <ProtectedRoute redirectTo="/register" path="/topics">
+                    <ProtectedRoute redirectTo="/login" path="/home">
+                    <PreEvent />
+                    </ProtectedRoute>
+                    <ProtectedRoute redirectTo="/login" path="/topics">
                         <About />
                     </ProtectedRoute>
-                    <ProtectedRoute redirectTo="/register" path="/about">
+                    <ProtectedRoute redirectTo="/login" path="/about">
                         <Topics />
                     </ProtectedRoute>
-                    <ProtectedRoute redirectTo="/register" path="/">
+                    <ProtectedRoute redirectTo="/login" path="/">
                         <Home />
                     </ProtectedRoute>
                 </Switch>
