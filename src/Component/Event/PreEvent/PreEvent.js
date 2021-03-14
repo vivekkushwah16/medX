@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { logout } from '../../../Firebase/firebase';
 import AgendaCard from '../../../globalComponent/AgendaCard/AgendaCard';
 import VideoModal from '../../VideoModal/VideoModal'
 
@@ -38,7 +39,7 @@ function PreEvent() {
                                     <a class="profile__user" href="#"><img src="assets/images/user.png" alt="" /></a>
                                     <ul class="profile__dropdown">
                                         <li><a href="#">Profile</a></li>
-                                        <li><a href="#">Logout</a></li>
+                                        <li><a href="#" onClick={() => logout()}>Logout</a></li>
                                     </ul>
                                 </div>
                             </div>

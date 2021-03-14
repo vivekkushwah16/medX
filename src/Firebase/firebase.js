@@ -22,3 +22,12 @@ export const firestore = firebase.firestore();
 export const database = firebase.database();
 export const analytics = firebase.analytics();
 export const auth = firebase.auth();
+
+export const logout = () => {
+    firebase.auth().signOut()
+        .then(function () {
+            // Sign-out successful.
+        }).catch(function (error) {
+            // An error happened.
+        });
+}

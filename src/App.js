@@ -9,36 +9,45 @@ import { UserContext } from './Context/Auth/UserContextProvider';
 import ProtectedRoute from './Component/ProtectedRoute/ProtectedRoute';
 import PreEvent from './Component/Event/PreEvent/PreEvent';
 import EventManager from './Managers/EventManager/EventManager';
+import NotLoggedInRoutes from './Component/NotLoggedInRoutes/NotLoggedInRoutes';
 
 class App extends Component {
     render() {
+        const { initalCheck } = this.context;
         return (
-            <Router>
-                <Switch>
-                    <Route path="/register">
-                        <Register />
-                    </Route>
-                    <Route path="/login">
+            <>
+                <Router>
+                    {
+                        initalCheck &&
+                        <Switch>
+                            <NotLoggedInRoutes redirectTo="/home" path="/register">
+                                <Register />
+                            </NotLoggedInRoutes>
+                            <NotLoggedInRoutes redirectTo="/home" path="/login">
+                                <Login />
+                            </NotLoggedInRoutes>
+                            <ProtectedRoute redirectTo="/login" path="/home">
+                                <PreEvent />
+                            </ProtectedRoute>
+                            <ProtectedRoute redirectTo="/login" path="/topics">
+                                <About />
+                            </ProtectedRoute>
+                            <ProtectedRoute redirectTo="/login" path="/about">
+                                <Topics />
+                            </ProtectedRoute>
+                            <ProtectedRoute redirectTo="/login" path="/">
+                                <PreEvent />
+                            </ProtectedRoute>
+                        </Switch>
+                    }
+                    {/* {
+                        !initalCheck &&
                         <Login />
-                    </Route>
-                    {/* <ProtectedRoute redirectTo="/login" path="/home">
-                        <About />
-                    </ProtectedRoute> */}
-                    <Route path="/home">
-                        <PreEvent />
-                    </Route>
-                    <ProtectedRoute redirectTo="/login" path="/topics">
-                        <About />
-                    </ProtectedRoute>
-                    <ProtectedRoute redirectTo="/login" path="/about">
-                        <Topics />
-                    </ProtectedRoute>
-                    <ProtectedRoute redirectTo="/login" path="/">
-                        <Home />
-                    </ProtectedRoute>
-                </Switch>
-            </Router>
+                    } */}
+                </Router>
+            </>
         );
     }
 }
+App.contextType = UserContext;
 export default App
