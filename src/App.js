@@ -7,6 +7,7 @@ import Login from "./Component/Event/Login/Login";
 import Topics from "./Component/Topics/Topics";
 import { UserContext } from './Context/Auth/UserContextProvider';
 import ProtectedRoute from './Component/ProtectedRoute/ProtectedRoute';
+import PreEvent from './Component/Event/PreEvent/PreEvent';
 
 class App extends Component {
     render() {
@@ -20,7 +21,7 @@ class App extends Component {
                         <Login />
                     </Route>
                     <Route path="/home">
-                        <Home />
+                        <PreEvent />
                     </Route>
                     <ProtectedRoute redirectTo="/register" path="/topics">
                         <About />
