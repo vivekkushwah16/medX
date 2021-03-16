@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "cipla-impact",
     "public": "build",
     "ignore": [
       "firebase.json",
