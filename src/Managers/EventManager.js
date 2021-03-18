@@ -237,7 +237,7 @@ const EventManager = {
                         throw (err)
                     }
                     transcation.update(ref, {
-                        tags: firebase.firestore.FieldValue.arrayUnion(tag)
+                        tags: firebase.firestore.FieldValue.arrayUnion(tag.toLowerCase())
                     })
                 })
                 res();
@@ -260,7 +260,7 @@ const EventManager = {
                         throw (err)
                     }
                     transcation.update(ref, {
-                        tags: firebase.firestore.FieldValue.arrayRemove(tag)
+                        tags: firebase.firestore.FieldValue.arrayRemove(tag.toLowerCase())
                     })
                 })
                 res();
@@ -279,6 +279,27 @@ const EventManager = {
                 }
                 let _data = query.docs.map(doc => doc.data())
                 res(_data);
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    getEventWithId: (eventId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const ref = firestore.collection(EVENT_COLLECTION).doc(eventId)
+                await firestore.runTransaction(async transcation => {
+                    let doc = await transcation.get(ref)
+                    if (!doc.exists) {
+                        let err = {
+                            code: 'NotValidId',
+                            message: "No EventId Found"
+                        }
+                        throw (err)
+                    }
+                    res(doc.data())
+                })
+                res();
             } catch (error) {
                 rej(error)
             }

@@ -11,6 +11,7 @@ import NotLoggedInRoutes from './Components/NotLoggedInRoutes/NotLoggedInRoutes'
 import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RootRoute, TOPIC_ROUTE, EVENT_ROUTE } from './AppConstants/Routes';
 import Home from './Pages/Home/Home';
 import VideoManager from './Managers/VideoManager';
+import { videoSortFilter } from './AppConstants/Filter';
 
 class App extends Component {
 
@@ -20,7 +21,7 @@ class App extends Component {
     }
 
     getData = async () => {
-        const ref = await VideoManager.getVideoWithTag(['covid'])
+        const ref = await VideoManager.getVideoWithTag(['ciplaMed'],10,null, videoSortFilter.ZtoA)
         console.log(ref)
     }
 

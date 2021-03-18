@@ -205,7 +205,7 @@ const VideoManager = {
                         throw (err)
                     }
                     transcation.update(ref, {
-                        tags: firebase.firestore.FieldValue.arrayUnion(tag)
+                        tags: firebase.firestore.FieldValue.arrayUnion(tag.toLowerCase())
                     })
                 })
                 res();
@@ -228,7 +228,7 @@ const VideoManager = {
                         throw (err)
                     }
                     transcation.update(ref, {
-                        tags: firebase.firestore.FieldValue.arrayRemove(tag)
+                        tags: firebase.firestore.FieldValue.arrayRemove(tag.toLowerCase())
                     })
                 })
                 res();
@@ -263,28 +263,35 @@ const VideoManager = {
     getVideoWithTag: (tag = [], limit = 10, docRefToStartFrom = null, filter = videoSortFilter.date) => {
         return new Promise(async (res, rej) => {
             try {
-                const docRef = firestore
+                let docRef = firestore
                     .collection(VIDEO_COLLECTION)
-                if (tag.length > 0){
-                    console.log(tag)
-                    docRef.where('tags', 'array-contains-any', tag)
+
+                const lowerCasedTag = tag.map(t => t.toLowerCase())
+
+                if (tag.length > 0) {
+                    docRef = docRef.where('tags', 'array-contains-any', lowerCasedTag)
                 }
+
+                console.log(filter)
                 switch (filter) {
                     case videoSortFilter.date:
-                        docRef.orderBy('timeStamp');
+                        docRef = docRef.orderBy('timeStamp');
                         break;
                     case videoSortFilter.AtoZ:
-                        docRef.orderBy('name', 'asc');
+                        docRef = docRef.orderBy('name', 'asc');
                         break;
                     case videoSortFilter.ZtoA:
-                        docRef.orderBy('name', 'desc');
+                        docRef = docRef.orderBy('name', 'desc');
                         break;
                     default:
-                        docRef.orderBy('timeStamp')
+                        docRef = docRef.orderBy('timeStamp')
                 }
-                if (docRefToStartFrom)
-                    docRef.startAfter(docRefToStartFrom)
-                docRef.limit(limit)
+
+
+                if (docRefToStartFrom !== null)
+                    docRef = docRef.startAfter(docRefToStartFrom)
+
+                docRef = docRef.limit(limit)
                 const query = await docRef.get()
                 if (query.empty) {
                     res([]);
@@ -294,6 +301,27 @@ const VideoManager = {
                     _data.push(doc.data())
                 })
                 res(_data);
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    getVideoWithId: (videoId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const ref = firestore.collection(VIDEO_COLLECTION).doc(videoId)
+                await firestore.runTransaction(async transcation => {
+                    let doc = await transcation.get(ref)
+                    if (!doc.exists) {
+                        let err = {
+                            code: 'NotValidId',
+                            message: "No EventId Found"
+                        }
+                        throw (err)
+                    }
+                    res(doc.data())
+                })
+                res();
             } catch (error) {
                 rej(error)
             }
