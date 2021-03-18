@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { logout } from '../../../Firebase/firebase';
-import AgendaCard from '../../../globalComponent/AgendaCard/AgendaCard';
-import VideoModal from '../../VideoModal/VideoModal'
+import { logout } from '../../Firebase/firebase';
+import AgendaCard from '../../Components/AgendaCard/AgendaCard';
+import VideoModal from '../../Components/VideoModal/VideoModal'
 
 
 function PreEvent() {

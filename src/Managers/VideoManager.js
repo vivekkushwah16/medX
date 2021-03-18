@@ -7,13 +7,14 @@ var uniqid = require('uniqid');
 // videoTimestamp = [{time:'', title:''}]
 //speakers = ['speakersId1',]
 const VideoManager = {
-    addVideo: (title, description, videoUrl, speakers = [], tags = [], videoTimestamp = []) => {
+    addVideo: (title, description, videoUrl, thumnailUrl, speakers = [], tags = [], videoTimestamp = []) => {
         return new Promise(async (res, rej) => {
             try {
                 let eventId = uniqid('video-')
                 await firestore.collection(VIDEO_COLLECTION).doc(eventId).set({
                     title,
                     description,
+                    thumnailUrl,
                     videoUrl,
                     like: 0,
                     views: 0,
@@ -23,7 +24,7 @@ const VideoManager = {
                     speakers: speakers,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 })
-                res();
+                res(eventId);
             } catch (error) {
                 rej(error)
             }
@@ -264,8 +265,10 @@ const VideoManager = {
             try {
                 const docRef = firestore
                     .collection(VIDEO_COLLECTION)
-                if (tag.length > 0)
-                    docRef.where('tags', 'in', tag)
+                if (tag.length > 0){
+                    console.log(tag)
+                    docRef.where('tags', 'array-contains-any', tag)
+                }
                 switch (filter) {
                     case videoSortFilter.date:
                         docRef.orderBy('timeStamp');

@@ -1,16 +1,29 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import About from "./Component/About/About";
-import Home from "./Component/Home/Home";
-import Register from "./Component/Event/Register/Register";
-import Login from "./Component/Event/Login/Login";
-import Topics from "./Component/Topics/Topics";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import About from "./Pages/About/About";
+import Register from "./Pages/EventRegister/Register";
+import Login from "./Pages/EventLogin/Login";
+import Topics from "./Pages/Topics/Topics";
 import { UserContext } from './Context/Auth/UserContextProvider';
-import ProtectedRoute from './Component/ProtectedRoute/ProtectedRoute';
-import PreEvent from './Component/Event/PreEvent/PreEvent';
-import NotLoggedInRoutes from './Component/NotLoggedInRoutes/NotLoggedInRoutes';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+import PreEvent from './Pages/PreEvent/PreEvent';
+import NotLoggedInRoutes from './Components/NotLoggedInRoutes/NotLoggedInRoutes';
+import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RootRoute, TOPIC_ROUTE, EVENT_ROUTE } from './AppConstants/Routes';
+import Home from './Pages/Home/Home';
+import VideoManager from './Managers/VideoManager';
 
 class App extends Component {
+
+    componentDidMount() {
+        this.getData()
+        // VideoManager.addVideo('Inhaled Corticosteroids ', "Use of Inhaled Corticosteroids in Children", "https://vimeo.com/525395281/5753ae3d66", 'assets/images/video-thumb.jpg', [], ['covid', 'ciplaMed'], [{ time: 20, endTime: 10, title: 'MainIntro' }])
+    }
+
+    getData = async () => {
+        const ref = await VideoManager.getVideoWithTag(['covid'])
+        console.log(ref)
+    }
+
     render() {
         const { initalCheck } = this.context;
         return (
@@ -19,30 +32,26 @@ class App extends Component {
                     {
                         initalCheck &&
                         <Switch>
-                            <NotLoggedInRoutes redirectTo="/home" path="/register">
+                            <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={REGISTER_ROUTE}>
                                 <Register />
                             </NotLoggedInRoutes>
-                            <NotLoggedInRoutes redirectTo="/home" path="/login">
+                            <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={LOGIN_ROUTE}>
                                 <Login />
                             </NotLoggedInRoutes>
-                            <ProtectedRoute redirectTo="/login" path="/home">
+                            <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>
                                 <PreEvent />
                             </ProtectedRoute>
-                            <ProtectedRoute redirectTo="/login" path="/topics">
+                            <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE}>
                                 <About />
                             </ProtectedRoute>
-                            <ProtectedRoute redirectTo="/login" path="/about">
+                            <ProtectedRoute redirectTo={LOGIN_ROUTE} path={TOPIC_ROUTE}>
                                 <Topics />
                             </ProtectedRoute>
-                            <ProtectedRoute redirectTo="/login" path="/">
-                                <PreEvent />
+                            <ProtectedRoute redirectTo={LOGIN_ROUTE} path={RootRoute}>
+                                <Home />
                             </ProtectedRoute>
                         </Switch>
                     }
-                    {/* {
-                        !initalCheck &&
-                        <Login />
-                    } */}
                 </Router>
             </>
         );
@@ -50,3 +59,6 @@ class App extends Component {
 }
 App.contextType = UserContext;
 export default App
+
+//include lazy loading of componenets
+//make speaker context, video context

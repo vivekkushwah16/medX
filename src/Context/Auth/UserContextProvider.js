@@ -4,7 +4,7 @@ import { auth } from '../../Firebase/firebase';
 export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
-    const [user, setUser] = useState(localStorage.getItem('userAuth'));
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('userAuth')));
     const [initalCheck, setInitalCheck] = useState(false)
 
     useEffect(() => {

@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { analytics } from '../../../Firebase/firebase';
+import { analytics } from '../../Firebase/firebase';
 
 import './Register.css'
-import Agenda from "../Agenda/Agenda";
+import Agenda from "../../Components/Event/Agenda/Agenda";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-import VideoModal from '../../VideoModal/VideoModal';
+import VideoModal from '../../Components/VideoModal/VideoModal';
+import { LOGIN_ROUTE } from '../../AppConstants/Routes';
 
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
@@ -53,7 +54,7 @@ class Register extends Component {
 
     redirectToLogin = () => {
         const { history } = this.props;
-        if (history) history.push('/login');
+        if (history) history.push(LOGIN_ROUTE);
     }
 
     validateForm = () => {

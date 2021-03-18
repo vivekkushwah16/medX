@@ -4,7 +4,7 @@ import firebase, { firestore } from "../Firebase/firebase";
 var uniqid = require('uniqid');
 
 const EventManager = {
-    addEvent: (title, description, videoUrl) => {
+    addEvent: (title, description = "", videoUrl = "") => {
         return new Promise(async (res, rej) => {
             try {
                 let eventId = uniqid('event-')
@@ -17,7 +17,7 @@ const EventManager = {
                     speakers: [],
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 })
-                res();
+                res(eventId);
             } catch (error) {
                 rej(error)
             }
@@ -50,7 +50,7 @@ const EventManager = {
             }
         })
     },
-    addEventTimeLine: (eventId, title = '', description = '', speakerIds = [], time) => {
+    addEventTimeLine: (eventId, title = '', description = '', speakerIds = [], startTime, duration = 60) => {
         return new Promise(async (res, rej) => {
             try {
                 let id = uniqid('timeline-')
@@ -69,10 +69,13 @@ const EventManager = {
                         title,
                         description,
                         likes: 0,
-                        speakers: speakerIds,
+                        speakers: speakerIds,//[]
                         id: id,
-                        time: time,
-                        eventId
+                        startTime: startTime,//timestamp
+                        eventId,
+                        thumnailUrL: '',
+                        videoUrl: '',
+                        duration,//in mins
                     })
                 })
                 res();

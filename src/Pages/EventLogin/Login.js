@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import firebase, { auth } from "../../../Firebase/firebase"
+import firebase, { auth } from "../../Firebase/firebase"
 import { withRouter } from 'react-router-dom';
-import Agenda from "../Agenda/Agenda";
+import Agenda from "../../Components/Event/Agenda/Agenda";
 import './Login.css'
 import PhoneInput from "react-phone-number-input";
-import VideoModal from '../../VideoModal/VideoModal';
+import VideoModal from '../../Components/VideoModal/VideoModal';
+import { HOME_ROUTE } from '../../AppConstants/Routes';
 
 class Login extends Component {
 
@@ -27,12 +27,11 @@ class Login extends Component {
         const name = target.name;
         this.setState({ [name]: value });
         this.captcha = React.createRef();
-
     }
 
     redirectToHome = () => {
         const { history } = this.props;
-        if (history) history.push('/home');
+        if (history) history.push(HOME_ROUTE);
     }
 
 

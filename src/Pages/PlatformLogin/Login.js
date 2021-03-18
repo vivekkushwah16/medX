@@ -4,6 +4,7 @@ import firebase, {auth} from "../../Firebase/firebase"
 import {withRouter} from 'react-router-dom';
 import './Login.css'
 import PhoneInput from "react-phone-number-input";
+import { HOME_ROUTE } from '../../AppConstants/Routes';
 
 class Login extends Component {
 
@@ -29,7 +30,7 @@ class Login extends Component {
 
     redirectToHome = () => {
         const {history} = this.props;
-        if (history) history.push('/home');
+        if (history) history.push(HOME_ROUTE);
     }
 
 
