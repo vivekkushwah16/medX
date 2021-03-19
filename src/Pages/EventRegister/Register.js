@@ -10,6 +10,7 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import VideoModal from '../../Components/VideoModal/VideoModal';
 import { LOGIN_ROUTE } from '../../AppConstants/Routes';
+import EventManager from '../../Managers/EventManager';
 
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
@@ -42,7 +43,13 @@ class Register extends Component {
             city: "",
             pincode: "",
             termsAndConditions: ""
-        }
+        },
+        agendaData: null
+    }
+
+    componentDidMount = async () => {
+        const agendaData = await EventManager.getAgenda('event-kmde59n5')
+        this.setState({ agendaData })
     }
 
     handleInputChange = (event) => {
@@ -80,7 +87,6 @@ class Register extends Component {
         Object.values(errors).forEach(val => val.length > 0 && (valid = false));
         return valid;
     }
-
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -180,7 +186,10 @@ class Register extends Component {
                             <img src="assets/images/video-thumb.jpg" alt="" />
                         </div>
                     </div>
-                    <Agenda></Agenda>
+                    {
+                        this.state.agendaData &&
+                        <Agenda data={this.state.agendaData} haveVideo={false} haveLikeButton={false}></Agenda>
+                    }
                 </div>
 
                 <article className="login2Box">

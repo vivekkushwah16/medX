@@ -4,11 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import UserContextProvider from './Context/Auth/UserContextProvider';
+import SpeakerContextProvider from './Context/Speaker/SpeakerContextProvider';
+import EventContextProvider from './Context/Event/EventContextProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <UserContextProvider>
-      <App />
+      <EventContextProvider>
+        <SpeakerContextProvider>
+          <App />
+        </SpeakerContextProvider>
+      </EventContextProvider>
     </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')

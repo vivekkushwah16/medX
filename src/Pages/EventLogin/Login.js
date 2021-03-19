@@ -6,6 +6,7 @@ import './Login.css'
 import PhoneInput from "react-phone-number-input";
 import VideoModal from '../../Components/VideoModal/VideoModal';
 import { HOME_ROUTE } from '../../AppConstants/Routes';
+import EventManager from '../../Managers/EventManager';
 
 class Login extends Component {
 
@@ -17,7 +18,13 @@ class Login extends Component {
         errors: {
             phoneNumber: "",
             otp: ""
-        }
+        },
+        agendaData: null,
+    }
+
+    componentDidMount = async () => {
+        const agendaData = await EventManager.getAgenda('event-kmde59n5')
+        this.setState({ agendaData })
     }
 
 
@@ -162,7 +169,10 @@ class Login extends Component {
                             <img src="assets/images/video-thumb.jpg" alt="" />
                         </div>
                     </div>
-                    <Agenda></Agenda>
+                    {
+                        this.state.agendaData &&
+                        <Agenda data={this.state.agendaData} haveVideo={false} haveLikeButton={false}  ></Agenda>
+                    }
                 </div>
 
 

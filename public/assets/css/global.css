@@ -220,7 +220,7 @@ html { scroll-behavior: smooth; }
 .gradient-bg4 { background: linear-gradient(180deg, #95A8DD 0%, #FFFFFF 100%); }
 .position-relative { position: relative; }
 .grey-bg { background: #F8F8F8; }
-.wrapper { position: relative; overflow: hidden; margin: 0 auto; max-width: 1440px; background: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.14); }
+.wrapper { position: relative; overflow: hidden; margin: 0 auto; background: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.14); }/* max-width: 1440px;  */
 .contentCntr { padding-top: 5.9375rem; min-height: 100vh; }
 .default-padding { padding-left: 2rem; padding-right: 2rem; }
 .page-level-loader { position: fixed; left: 0; top: 0; display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; z-index: 11; background: rgba(255, 255, 255, 0.8); }
@@ -666,4 +666,27 @@ html { scroll-behavior: smooth; }
 /* Iphone 11 above */
 @media only screen and (max-width: 767px) {
   body, html { font-size: 12px; }
+}
+
+/* width */
+::-webkit-scrollbar {
+  margin-left: 1rem;
+  width: 0.35rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(235, 235, 235, 0.233); 
+  border-radius: 0.15rem;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #015189; 
+  border-radius: 0.15rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #015189; 
 }

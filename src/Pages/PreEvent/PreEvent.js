@@ -1,11 +1,24 @@
-import React, { useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { logout } from '../../Firebase/firebase';
 import AgendaCard from '../../Components/AgendaCard/AgendaCard';
 import VideoModal from '../../Components/VideoModal/VideoModal'
+import { eventContext } from '../../Context/Event/EventContextProvider';
+import Agenda from '../../Components/Event/Agenda/Agenda';
 
 
 function PreEvent() {
     const [showVideoModal, setVideoModalVisible] = useState(false);
+    const [agendaData, setAgendaData] = useState([]);
+    const { getEvent, getTimelines } = useContext(eventContext)
+
+    useEffect(() => {
+        getAgendaData('event-kmde59n5')
+    }, [])
+
+    const getAgendaData = async (eventId) => {
+        const data = await getTimelines(eventId)
+        setAgendaData(data)
+    }
 
     const startVideo = () => {
         setVideoModalVisible(true)
@@ -69,19 +82,10 @@ function PreEvent() {
                     {/* Tab box */}
 
                     <div class="tabBox tabBox--new">
-                        <div class="maincardBox">
-
-                            <h2 class="maincardBox__title mg-b25">AGENDA</h2>
-
-                            <div class="maincardBox__card-wrapper">
-                                <AgendaCard handleClick={() => startVideo()} />
-                                <AgendaCard handleClick={() => startVideo()} />
-                                <AgendaCard handleClick={() => startVideo()} />
-                                <AgendaCard handleClick={() => startVideo()} />
-
-                            </div>
-
-                        </div>
+                        {
+                            agendaData &&
+                            <Agenda data={agendaData} haveVideo={true} haveLikeButton={true} startVideo={startVideo} />
+                        }
                     </div>
 
                     {/* footer box */}
