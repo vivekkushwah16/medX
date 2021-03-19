@@ -189,7 +189,7 @@ const EventManager = {
                         timeStamp: firebase.firestore.FieldValue.serverTimestamp()
                     })
                     transcation.update(timelineRef, {
-                        like: firebase.firestore.FieldValue.increment(1)
+                        likes: firebase.firestore.FieldValue.increment(1)
                     })
                 })
                 res();
@@ -214,7 +214,7 @@ const EventManager = {
                     }
                     transcation.delete(LikeRef)
                     transcation.update(timelineRef, {
-                        like: firebase.firestore.FieldValue.increment(-1)
+                        likes: firebase.firestore.FieldValue.increment(-1)
                     })
                 })
                 res();
@@ -284,6 +284,30 @@ const EventManager = {
             }
         })
     },
+    attachTimelineListener: (eventId, callback) => {
+        window.eventTimeline = firestore.collection(TIMELINE_COLLECTION).where('eventId', '==', eventId).onSnapshot(snapshot => {
+            if (snapshot.empty) {
+                if (callback) {
+                    callback([])
+                }
+                return
+            }
+            let _data = snapshot.docs.map(doc => doc.data())
+            if (callback) {
+                callback(_data)
+            }
+            return
+        }, err => {
+            if (callback) {
+                callback(null, err)
+            }
+        })
+    },
+    removeTimelineListener: () => {
+        if (window.eventTimeline) {
+            window.eventTimeline()
+        }
+    },
     getEventWithId: (eventId) => {
         return new Promise(async (res, rej) => {
             try {
@@ -304,7 +328,7 @@ const EventManager = {
                 rej(error)
             }
         })
-    }
+    },
 }
 
 export default EventManager;

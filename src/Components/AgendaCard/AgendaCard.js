@@ -1,11 +1,38 @@
-import React, { useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { MonthName } from '../../AppConstants/Months';
 import { SpeakerProfileType } from '../../AppConstants/SpeakerProfileType';
+import { LikeType } from '../../AppConstants/TypeConstant';
 import SpeakerProfile from '../../Containers/SpeakerProfile.js/SpeakerProfile';
+import { likeContext } from '../../Context/Like/LikeContextProvider';
 
 function AgendaCard(props) {
     const { timeline, haveVideo, haveLikeButton } = props
-    const [like, setLike] = useState(true);
+    const { getLike, addLike, removeLike } = useContext(likeContext)
+    const [like, setLike] = useState(false);
+
+    useEffect(() => {
+        getCurrentTargetLikeStatus()
+    }, [])
+
+    const getCurrentTargetLikeStatus = async () => {
+        if (haveLikeButton) {
+            if (timeline) {
+                const status = await getLike(timeline.id)
+                setLike(status)
+            }
+        }
+    }
+
+    const toggleLikeToTarget = async () => {
+        if (like) {
+            await removeLike(timeline.id, timeline.eventId, LikeType.TIMELINE_LIKE)
+        } else {
+            await addLike(timeline.id, timeline.eventId, LikeType.TIMELINE_LIKE)
+        }
+        setLike(!like)
+    }
+
+
     return (
         <div key={timeline.id} className={`maincardBox__card ${haveVideo ? 'maincardBox__card--large' : ''} `}>
             <div className="maincardBox__card-left">
@@ -35,7 +62,7 @@ function AgendaCard(props) {
                 <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={timeline.speakers[0]} />
                 {
                     haveLikeButton &&
-                    <button className={`like-btn ${like ? 'like-btn--active' : ''}`} onClick={() => setLike(!like)}><i className="icon-like"></i>{timeline.likes}</button>
+                    <button className={`like-btn ${like ? 'like-btn--active' : ''}`} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
                 }
             </div>
         </div>

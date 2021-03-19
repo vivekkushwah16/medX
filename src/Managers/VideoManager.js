@@ -134,7 +134,7 @@ const VideoManager = {
                         timeStamp: firebase.firestore.FieldValue.serverTimestamp()
                     })
                     transcation.update(docRef, {
-                        like: firebase.firestore.FieldValue.increment(1)
+                        likes: firebase.firestore.FieldValue.increment(1)
                     })
                 })
                 res();
@@ -159,7 +159,7 @@ const VideoManager = {
                     }
                     transcation.delete(LikeRef)
                     transcation.update(docRef, {
-                        like: firebase.firestore.FieldValue.increment(-1)
+                        likes: firebase.firestore.FieldValue.increment(-1)
                     })
                 })
                 res();

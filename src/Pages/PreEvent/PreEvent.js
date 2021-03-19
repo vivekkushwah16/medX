@@ -9,15 +9,24 @@ import Agenda from '../../Components/Event/Agenda/Agenda';
 function PreEvent() {
     const [showVideoModal, setVideoModalVisible] = useState(false);
     const [agendaData, setAgendaData] = useState([]);
-    const { getEvent, getTimelines } = useContext(eventContext)
+    const { attachTimelineListener, removeTimelineListener } = useContext(eventContext)
 
     useEffect(() => {
         getAgendaData('event-kmde59n5')
+        return () => {
+            removeTimelineListener()
+        }
     }, [])
 
     const getAgendaData = async (eventId) => {
-        const data = await getTimelines(eventId)
-        setAgendaData(data)
+        attachTimelineListener(eventId, (data, err) => {
+            if (err) {
+                console.log(err)
+                return
+            }
+            console.log(data)
+            setAgendaData(data)
+        })
     }
 
     const startVideo = () => {

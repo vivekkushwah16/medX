@@ -6,13 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import UserContextProvider from './Context/Auth/UserContextProvider';
 import SpeakerContextProvider from './Context/Speaker/SpeakerContextProvider';
 import EventContextProvider from './Context/Event/EventContextProvider';
+import LikeContextProvider from './Context/Like/LikeContextProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <UserContextProvider>
       <EventContextProvider>
         <SpeakerContextProvider>
-          <App />
+          <LikeContextProvider>
+            <App />
+          </LikeContextProvider>
         </SpeakerContextProvider>
       </EventContextProvider>
     </UserContextProvider>

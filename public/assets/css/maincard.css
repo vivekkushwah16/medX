@@ -15,7 +15,7 @@
 .maincardBox__card-profile-subtitle { font-size: 0.75rem; font-weight: 400; }
 .maincardBox__card-right .maincardBox__card-date { font-size: 0.9375rem; list-style-type: none; }
 
-.maincardBox__card.maincardBox__card--large { margin-bottom: 2rem; border: 1px solid #D0D0D0; }
+.maincardBox__card.maincardBox__card--large { margin-bottom: 2rem; border: 1px solid #D0D0D0; box-shadow: 0.15rem 0.15rem 0.5rem 0.25rem #80808042;}
 .maincardBox__card.maincardBox__card--large .maincardBox__card-left { padding: 0; min-width: 20rem; }
 .maincardBox__card.maincardBox__card--large .maincardBox__card-right { padding-right: 8rem; }
 .maincardBox__card.maincardBox__card--large .maincardBox__card-wrapper { height: auto; }

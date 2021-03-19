@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
+import { EVENT_COLLECTION } from '../../AppConstants/CollectionConstants';
 import { EVENTDATA_COOKIES, TIMELINEDATA_COOKIES } from '../../AppConstants/CookiesNames';
+import { firestore } from '../../Firebase/firebase';
 import EventManager from '../../Managers/EventManager';
 import { getCookies, saveCookies } from '../../utils/cookiesManager';
 
@@ -47,8 +49,16 @@ export default function EventContextProvider(props) {
         }
     }
 
+    const attachTimelineListener = (eventId, callback) => {
+        EventManager.attachTimelineListener(eventId, callback)
+    }
+
+    const removeTimelineListener = () => {
+        EventManager.removeTimelineListener()
+    }
+
     return (
-        <eventContext.Provider value={{ getEvent, getTimelines }}>
+        <eventContext.Provider value={{ getEvent, getTimelines, attachTimelineListener, removeTimelineListener }}>
             {props.children}
         </eventContext.Provider>
     )

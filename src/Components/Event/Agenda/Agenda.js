@@ -12,7 +12,7 @@ class Agenda extends Component {
                     {
                         data &&
                         data.map(timeline => (
-                            <AgendaCard timeline={timeline} haveVideo={haveVideo} haveLikeButton={haveLikeButton} handleClick={startVideo} />
+                            <AgendaCard timeline={timeline} haveVideo={haveVideo} haveLikeButton={haveLikeButton} handleClick={startVideo}  />
                         ))
                     }
                 </div>
