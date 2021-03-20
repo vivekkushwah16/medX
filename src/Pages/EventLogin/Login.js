@@ -61,7 +61,7 @@ class Login extends Component {
             .catch((error) => {
                 let errors = this.state.errors;
 
-                if (error.code === "auth/invalid-phone-number") {
+                if (error.code === "auth/user-not-found") {
                     errors.phoneNumber = "Please enter a valid phone number.";
                 } else {
                     errors.phoneNumber = error.message;
