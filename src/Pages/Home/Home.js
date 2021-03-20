@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import VideoRow from '../../Containers/VideoRow/VideoRow';
 import VideoManager from '../../Managers/VideoManager';
+import Header from '../../Containers/Header/Header';
 
 
 class Home extends Component {
@@ -19,10 +20,10 @@ class Home extends Component {
         data: null,
         videopopVisible: false,
         videoPopId: null,
-        rows: [{tag: 'ciplamed', header: 'Recommended Videos'},
-        {tag: 'covid', header: 'Videos on Covid19'},
-        {tag: 'tuberculosis', header: 'Videos on Tuberculosis'},
-        {tag: 'covid', header: 'Videos on Covid19'}]
+        rows: [{ tag: 'ciplamed', header: 'Recommended Videos' },
+        { tag: 'covid', header: 'Videos on Covid19' },
+        { tag: 'tuberculosis', header: 'Videos on Tuberculosis' },
+        { tag: 'covid', header: 'Videos on Covid19' }]
     }
 
     openVideoPop = (videoData) => {
@@ -44,35 +45,8 @@ class Home extends Component {
         return (
             <section className="wrapper" id="root">
                 <div className="topicsBox__wrapper">
-
-                    <div className="headerBox">
-                        <div className="d-flex align-items-center justify-content-between">
-                            <div className="headerBox__left">
-
-                            </div>
-                            <div className="headerBox__right headerBox__right--nogap">
-                                <button className="btn btn-secondary"><i className="icon-invite"></i> Invite your friends</button>
-                                <div className="notification">
-                                    <a className="notification__btn" href="#"><i className="icon-bell"></i></a>
-                                    <ul className="notification__dropdown">
-                                        <li><a href="#">Lorem ipsum dolor set amet, Lorem ipsum dolor set amet.</a></li>
-                                        <li><a href="#">Lorem ipsum dolor set amet, Lorem ipsum dolor set amet.</a></li>
-                                        <li><a href="#">Lorem ipsum dolor set amet, Lorem ipsum dolor set amet.</a></li>
-                                        <li><a href="#">Lorem ipsum dolor set amet, Lorem ipsum dolor set amet.</a></li>
-                                    </ul>
-                                </div>
-                                <div className="headerBox__profile">
-                                    <a className="profile__user" href="#"><img src="assets/images/user.png" alt="" /></a>
-                                    <ul className="profile__dropdown">
-                                        <li><a href="#">Profile</a></li>
-                                        <li><a href="#">Logout</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <Header />
                     <Banner />
-
                     <div className="tabBox">
                         <ul className="tabBox__list">
                             <li>Topics : </li>

@@ -271,11 +271,8 @@ const VideoManager = {
                     docRef = docRef.where('tags', 'array-contains-any', lowerCasedTag)
                     //.orderBy('tags');
                 }
-<<<<<<< HEAD
 
                 console.log(filter)
-=======
->>>>>>> 60857ea... added agenda like and someother files
                 // switch (filter) {
                 //     case videoSortFilter.date:
                 //         docRef = docRef.orderBy('timeStamp');
@@ -297,10 +294,7 @@ const VideoManager = {
                 docRef = docRef.limit(limit)
                 const query = await docRef.get()
                 console.log(query)
-<<<<<<< HEAD
-=======
 
->>>>>>> 60857ea... added agenda like and someother files
                 if (query.empty) {
                     res([]);
                 }
