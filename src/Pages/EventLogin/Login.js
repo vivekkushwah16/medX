@@ -52,25 +52,11 @@ class Login extends Component {
             return;
         }
 
-        if (this.appVerifier) {
-            this.appVerifier.clear();
-            if (this.captcha && this.captcha.current) {
-                this.captcha.current.innerHTML = `<div id="recaptcha-container"></div>`
-            }
-        }
-
-        this.appVerifier = new firebase.auth.RecaptchaVerifier(
-            "recaptcha-container",
-            {
-                'size': 'invisible'
-            }
-        );
         firebase
             .auth()
-            .signInWithPhoneNumber(this.state.phoneNumber, this.appVerifier)
+            .signInWithEmailAndPassword(this.state.phoneNumber + "@cipla.com", this.state.phoneNumber)
             .then((confirmationResult) => {
-                this.setState({ showOtp: true });
-                window.confirmationResult = confirmationResult;
+                this.redirectToHome();
             })
             .catch((error) => {
                 let errors = this.state.errors;
