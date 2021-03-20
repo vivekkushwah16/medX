@@ -20,14 +20,16 @@ class Home extends Component {
         data: null,
         videopopVisible: false,
         videoPopId: null,
+        currentVideosData: null,
         rows: [{ tag: 'ciplamed', header: 'Recommended Videos' },
         { tag: 'covid', header: 'Videos on Covid19' },
         { tag: 'tuberculosis', header: 'Videos on Tuberculosis' },
         { tag: 'covid', header: 'Videos on Covid19' }]
     }
 
-    openVideoPop = (videoData) => {
+    openVideoPop = (videoData, videosData) => {
         this.setState({
+            currentVideosData: videosData,
             videopopVisible: true,
             videoPopupData: videoData,
         })
@@ -35,6 +37,7 @@ class Home extends Component {
 
     closeVideoPop = () => {
         this.setState({
+            currentVideosData: null,
             videopopVisible: false,
             videoPopupData: null,
         })
@@ -88,7 +91,7 @@ class Home extends Component {
 
                 {
                     this.state.videopopVisible &&
-                    <VideoPopup videoData={this.state.videoPopupData} closeVideoPop={this.closeVideoPop} />
+                    <VideoPopup videoData={this.state.videoPopupData} currVideosData={this.state.currentVideosData} closeVideoPop={this.closeVideoPop} />
                 }
 
             </section>

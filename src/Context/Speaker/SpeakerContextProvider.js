@@ -35,7 +35,7 @@ export default function SpeakerContextProvider(props) {
     }
 
     return (
-        <speakerContext.Provider value={{ getSpeaker: getSpeaker }}>
+        <speakerContext.Provider value={{ getSpeaker }}>
             {props.children}
         </speakerContext.Provider>
     )

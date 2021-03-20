@@ -17,7 +17,7 @@ const VideoManager = {
                     description,
                     thumnailUrl,
                     videoUrl,
-                    like: 0,
+                    likes: 0,
                     views: 0,
                     videoTimestamp: videoTimestamp,
                     id: eventId,
@@ -103,13 +103,13 @@ const VideoManager = {
             }
         })
     },
-    addLike: (videoId, userId, eventId) => {
+    addLike: (videoId, userId) => {
         return new Promise(async (res, rej) => {
             try {
                 const docRef = firestore.collection(VIDEO_COLLECTION).doc(videoId)
                 const LikeRef = firestore.collection(LIKES_COLLECTION).doc(`${userId}+${videoId}`)
                 let id = uniqid('like-')
-                await firestore.runTransaction(async transcation => {
+                const like = await firestore.runTransaction(async transcation => {
                     let doc = await transcation.get(docRef)
                     let likeDoc = await transcation.get(LikeRef)
                     if (likeDoc.exists) {
@@ -128,17 +128,18 @@ const VideoManager = {
                     }
                     transcation.set(LikeRef, {
                         id: id,
-                        targetId: eventId,
+                        targetId: videoId,
                         type: LikeType.VIDEO_LIKE,
                         user: userId,
-                        eventId: eventId,
                         timeStamp: firebase.firestore.FieldValue.serverTimestamp()
                     })
                     transcation.update(docRef, {
                         likes: firebase.firestore.FieldValue.increment(1)
                     })
+
+                    return doc.data().likes ? doc.data().likes + 1 : 1
                 })
-                res();
+                res(like);
             } catch (error) {
                 rej(error)
             }
@@ -149,7 +150,7 @@ const VideoManager = {
             try {
                 const docRef = firestore.collection(VIDEO_COLLECTION).doc(videoId)
                 const LikeRef = firestore.collection(LIKES_COLLECTION).doc(`${userId}+${videoId}`)
-                await firestore.runTransaction(async transcation => {
+                const count = await firestore.runTransaction(async transcation => {
                     let likeDoc = await transcation.get(LikeRef)
                     if (!likeDoc.exists) {
                         let err = {
@@ -158,12 +159,14 @@ const VideoManager = {
                         }
                         throw (err)
                     }
+                    let videoDoc = await transcation.get(LikeRef)
                     transcation.delete(LikeRef)
                     transcation.update(docRef, {
                         likes: firebase.firestore.FieldValue.increment(-1)
                     })
+                    return videoDoc.data().likes ? videoDoc.data().likes - 1 : 0
                 })
-                res();
+                res(count);
             } catch (error) {
                 rej(error)
             }

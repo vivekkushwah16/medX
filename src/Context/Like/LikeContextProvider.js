@@ -38,6 +38,8 @@ export default function LikeContextProvider(props) {
 
     const addLike = async (tagetId, eventId, likeType) => {
         return new Promise(async (res, rej) => {
+            console.log(tagetId, user.uid, likeType)
+
             try {
                 if (!user) { return false }
                 switch (likeType) {
@@ -46,8 +48,9 @@ export default function LikeContextProvider(props) {
                         res(true)
                         break;
                     case LikeType.VIDEO_LIKE:
-                        await VideoManager.addLike(tagetId, user.uid, eventId)
-                        res(true)
+                        console.log(tagetId, user.uid)
+                        const count = await VideoManager.addLike(tagetId, user.uid)
+                        res(count)
                         break;
                     default:
                         res(false)
@@ -69,8 +72,8 @@ export default function LikeContextProvider(props) {
                         res(true)
                         break;
                     case LikeType.VIDEO_LIKE:
-                        await VideoManager.removeLike(tagetId, user.uid)
-                        res(true)
+                        const count = await VideoManager.removeLike(tagetId, user.uid)
+                        res(count)
                         break;
                     default:
                         res(false)
