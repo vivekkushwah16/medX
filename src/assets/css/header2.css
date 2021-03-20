@@ -2,12 +2,13 @@
 .headerBox { padding: 1.55rem 4.5rem; position: absolute; left: 0; top: 0; width: 100%; z-index: 10; }
 .headerBox__logo { width: 8.8125rem; display: block; }
 .headerBox__logo2 { width: 3.5625rem; display: block; }
+.headerBox__logo3 { width: 15.625rem; display: block; }
 
 .headerBox__left { padding-left: 0; display: flex; align-items: center; justify-content: space-between; }
 .headerBox__right { padding-right: 28.5rem; display: flex; align-items: center; }
 .headerBox__right.headerBox__right--nogap { padding-right: 0; }
 
-.headerBox__right .btn { margin-right: 0.5rem; padding: 0.75rem 1.25rem; font-weight: 300; border-radius: 40px; }
+.headerBox__right .btn { margin-right: 0.5rem; padding: 0.75rem 1.25rem; font-weight: 300; border-radius: 40px; min-width: 0; }
 .headerBox__right .btn i { margin-right: 10px;  }
 
 .header-toggle { margin-left: 2.5rem; list-style-type: none; display: flex; align-items: center; border-radius: 1.875rem; font-weight: 500; background: #fff; }

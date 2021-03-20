@@ -62,7 +62,17 @@ function AgendaCard(props) {
                 <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={timeline.speakers[0]} />
                 {
                     haveLikeButton &&
-                    <button className={`like-btn ${like ? 'like-btn--active' : ''}`} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
+                    <div class="rating-block">
+                        <button className={` mg-b40 mg-sm-b20 like-btn ${like ? 'like-btn--active' : ''}`} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
+                        <p class="font-12 mg-b20">Is this topic relevant to you?</p>
+                        <ul class="rating-block__stars">
+                            <li class="active"><i class="icon-star"></i></li>
+                            <li class="active"><i class="icon-star"></i></li>
+                            <li class="active"><i class="icon-star"></i></li>
+                            <li class="active"><i class="icon-star"></i></li>
+                            <li><i class="icon-star"></i></li>
+                        </ul>
+                    </div>
                 }
             </div>
         </div>

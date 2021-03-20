@@ -17,15 +17,11 @@
 
 .maincardBox__card.maincardBox__card--large { margin-bottom: 2rem; border: 1px solid #D0D0D0; }
 .maincardBox__card.maincardBox__card--large .maincardBox__card-left { padding: 0; min-width: 20rem; }
-.maincardBox__card.maincardBox__card--large .maincardBox__card-right { padding-right: 8rem; }
+.maincardBox__card.maincardBox__card--large .maincardBox__card-right { padding-right: 25rem; }
 .maincardBox__card.maincardBox__card--large .maincardBox__card-wrapper { height: auto; }
 
 .maincardBox__card-video { padding: 0; height: 100%; width: 100%; min-height: 15rem; position: relative; margin: 0; background-position: center center; background-size: cover; }
 .maincardBox__card-video__play { font-size: 0.875rem; position: absolute; left: 50%; top: 50%; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-left: -1.125rem; margin-top: -1.125rem; height: 2.25rem; width: 2.25rem; border-radius: 50%; background: rgba(0, 0, 0, 0.7); }
-
-.like-btn { padding: 0.75rem 1.5rem 0.75rem 1.5rem; cursor: pointer; position: absolute; right: 1rem; top: 1rem; font-size: 0.75rem; border: medium none; border: 1px solid #A6A6A6; color: #A6A6A6; border-radius: 0.625rem; background: transparent; }
-.like-btn i { font-size: 1.125rem; margin-right: 0.25rem;}
-.like-btn.like-btn--active { background: #015189; color: #fff; border-color: #015189; }
 
 .maincardBox__card-menu { position: absolute; right: 0; top: 0; z-index: 1; }
 .maincardBox__card-menu-btn { padding: 0.25rem 0.5rem; border: medium none; color: #C4C4C4; cursor: pointer; display: block; background: transparent; }
@@ -34,6 +30,11 @@
 .maincardBox__card-menu-dropdown > li > a { padding: 0.5rem 1rem; font-size: 0.75rem; display: block; color: rgba(0, 0, 0, 0.7); text-decoration: none; }
 .maincardBox__card-menu-dropdown > li > a:hover { background: rgba(0, 0, 0, 0.1); }
 .maincardBox__card-menu:hover .maincardBox__card-menu-dropdown { display: block; }
+
+.rating-block { padding: 1rem; height: 80%; border-left: 1px solid #D0D0D0; position: absolute; right: 0; top: 10%; width: 15rem; }
+.rating-block__stars { list-style-type: none; }
+.rating-block__stars > li { display: inline; color: #C4C4C4; }
+.rating-block__stars > li.active { color: #EC9229; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (max-width: 1199px) {
