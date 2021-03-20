@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import About from "./Pages/About/About";
 import Register from "./Pages/EventRegister/Register";
@@ -11,9 +11,20 @@ import NotLoggedInRoutes from './Components/NotLoggedInRoutes/NotLoggedInRoutes'
 import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RootRoute, TOPIC_ROUTE, EVENT_ROUTE } from './AppConstants/Routes';
 import Home from './Pages/Home/Home';
 
+// import css
+import './assets/css/modal.css'
+import VideoManager from './Managers/VideoManager';
+
+// 
+
 
 export default function App() {
     const { initalCheck } = useContext(UserContext)
+    useEffect(() => {
+        // VideoManager.getVideoWithTag(['covid']).then(data => console.log(data))
+        // VideoManager.addVideo('Tuberculosis - Use of Inhaled Corticosteroids in Children', 'A potentially serious infectious bacterial disease that mainly affects the lungs.', 'https://vimeo.com/525395281/5753ae3d66',
+        //     'assets/images/video-thumb.jpg', ['speaker-kmfz0vco'], ['Tuberculosis'], [{ title: 'part1', endTime: '30', startTime: '10' }])
+    }, [])
     return (
         <Router>
             {

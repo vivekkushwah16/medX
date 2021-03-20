@@ -11,6 +11,7 @@ const VideoManager = {
         return new Promise(async (res, rej) => {
             try {
                 let eventId = uniqid('video-')
+                let smallTag = tags.map(t => t.toLowerCase())
                 await firestore.collection(VIDEO_COLLECTION).doc(eventId).set({
                     title,
                     description,
@@ -20,7 +21,7 @@ const VideoManager = {
                     views: 0,
                     videoTimestamp: videoTimestamp,
                     id: eventId,
-                    tags: tags,
+                    tags: smallTag,
                     speakers: speakers,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 })
@@ -265,14 +266,16 @@ const VideoManager = {
             try {
                 let docRef = firestore
                     .collection(VIDEO_COLLECTION)
-
                 const lowerCasedTag = tag.map(t => t.toLowerCase())
-
-                if (tag.length > 0) {
+                if (lowerCasedTag.length > 0) {
                     docRef = docRef.where('tags', 'array-contains-any', lowerCasedTag)
+                    //.orderBy('tags');
                 }
+<<<<<<< HEAD
 
                 console.log(filter)
+=======
+>>>>>>> 60857ea... added agenda like and someother files
                 // switch (filter) {
                 //     case videoSortFilter.date:
                 //         docRef = docRef.orderBy('timeStamp');
@@ -294,6 +297,10 @@ const VideoManager = {
                 docRef = docRef.limit(limit)
                 const query = await docRef.get()
                 console.log(query)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 60857ea... added agenda like and someother files
                 if (query.empty) {
                     res([]);
                 }

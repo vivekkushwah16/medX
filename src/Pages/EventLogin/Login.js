@@ -7,6 +7,13 @@ import PhoneInput from "react-phone-number-input";
 import VideoModal from '../../Components/VideoModal/VideoModal';
 import { HOME_ROUTE } from '../../AppConstants/Routes';
 import EventManager from '../../Managers/EventManager';
+import { isMobileOnly } from 'react-device-detect';
+
+const TABS = {
+    bothTab: 2,
+    LoginTab: 0,
+    AgendaTab: 1,
+}
 
 class Login extends Component {
 
@@ -20,6 +27,7 @@ class Login extends Component {
             otp: ""
         },
         agendaData: null,
+        currentTab: !isMobileOnly ? TABS.bothTab : TABS.LoginTab
     }
 
     componentDidMount = async () => {
@@ -112,9 +120,23 @@ class Login extends Component {
         return valid;
     }
 
-
     setValue = (number) => {
         this.setState({ phoneNumber: number || "" });
+    }
+
+    ToggleTab = (event, currentTab) => {
+        if (event) {
+            event.preventDefault()
+        }
+        if (currentTab === TABS.AgendaTab) {
+            this.setState({
+                currentTab: TABS.LoginTab
+            })
+        } else {
+            this.setState({
+                currentTab: TABS.AgendaTab
+            })
+        }
     }
 
     render() {
@@ -155,14 +177,21 @@ class Login extends Component {
                             <img src="assets/images/video-thumb.jpg" alt="" />
                         </div>
                     </div>
+
+                    <ul class="mobile-tabs">
+                        <li class={`${this.state.currentTab === TABS.LoginTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.LoginTab)}><span>Login</span></a></li>
+                        <li class={`${this.state.currentTab === TABS.AgendaTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.AgendaTab)}><span>AGENDA</span></a></li>
+                    </ul>
+
+
                     {
-                        this.state.agendaData &&
+                        this.state.agendaData && this.state.currentTab !== TABS.LoginTab &&
                         <Agenda data={this.state.agendaData} haveVideo={false} haveLikeButton={false}  ></Agenda>
                     }
                 </div>
 
 
-                <article className="login2Box login2Box__small">
+                <article className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? 'd-none' : ''}`}>
                     <img src="assets/images/login-bg-top.png" alt="" className="login-bg-top" />
 
                     {

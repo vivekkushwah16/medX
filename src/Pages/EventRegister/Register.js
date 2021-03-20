@@ -11,10 +11,16 @@ import PhoneInput from 'react-phone-number-input'
 import VideoModal from '../../Components/VideoModal/VideoModal';
 import { LOGIN_ROUTE } from '../../AppConstants/Routes';
 import EventManager from '../../Managers/EventManager';
+import { isMobileOnly } from 'react-device-detect';
 
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
+const TABS = {
+    bothTab: 2,
+    Register: 0,
+    AgendaTab: 1,
+}
 class Register extends Component {
     state = {
         email: "",
@@ -44,7 +50,9 @@ class Register extends Component {
             pincode: "",
             termsAndConditions: ""
         },
-        agendaData: null
+        agendaData: null,
+        currentTab: !isMobileOnly ? TABS.bothTab : TABS.Register
+
     }
 
     componentDidMount = async () => {
@@ -153,6 +161,15 @@ class Register extends Component {
         this.handleSubmit(event);
     }
 
+    ToggleTab = (event, currentTab) => {
+        if (event) {
+            event.preventDefault()
+        }
+        this.setState({
+            currentTab: currentTab
+        })
+    }
+
     render() {
         return (
             <div className="login2Box__wrapper min-height-full gradient-bg3">
@@ -186,13 +203,17 @@ class Register extends Component {
                             <img src="assets/images/video-thumb.jpg" alt="" />
                         </div>
                     </div>
+                    <ul class="mobile-tabs">
+                        <li class={`${this.state.currentTab === TABS.Register ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.Register)}><span>Register</span></a></li>
+                        <li class={`${this.state.currentTab === TABS.AgendaTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.AgendaTab)}><span>AGENDA</span></a></li>
+                    </ul>
                     {
-                        this.state.agendaData &&
+                        this.state.agendaData && this.state.currentTab !== TABS.Register &&
                         <Agenda data={this.state.agendaData} haveVideo={false} haveLikeButton={false}></Agenda>
                     }
                 </div>
 
-                <article className="login2Box">
+                <article className={`login2Box ${this.state.currentTab === TABS.AgendaTab ? 'd-none' : ''}`}>
                     <h1 className="login2Box__title mg-b40">Register Yourself</h1>
 
                     <a className="btn btn-link" href="/login">Already Registered? Click here</a>
