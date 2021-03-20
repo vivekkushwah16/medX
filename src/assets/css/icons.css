@@ -24,6 +24,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-dots:before {
+  content: "\e90f";
+}
+.icon-link:before {
+  content: "\e90e";
+}
+.icon-close:before {
+  content: "\e90d";
+}
 .icon-angle-right:before {
   content: "\e90b";
 }

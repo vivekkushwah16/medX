@@ -4,7 +4,7 @@ import SpeakerProfile from '../../Containers/SpeakerProfile.js/SpeakerProfile'
 
 //props - mainTitle, subTitle, eventId, enterEvent()
 export function LiveEventBanner(props) {
-    const data = { props }
+    const {data} =  props 
     return (
         <div className="bannerBox__inner bannerBox__inner2 gradient-bg4">
             <div className="bannerBox__slide">
@@ -26,20 +26,20 @@ export function LiveEventBanner(props) {
 
 //props -  mainTitle, subTitle_line1, subTitle_line2, speakerId, mainImageUrl, watchTrailer()
 export function ImageSingleButtonBanner(props) {
-    const data = { props }
+    const {data} =  props 
+
     return (
         <div className="bannerBox__inner gradient-bg2">
             <div className="bannerBox__slide">
                 <div className="bannerBox__left">
                     <h1 className="bannerBox__featired-title mg-b50">{data.mainTitle}<br></br><span>{data.subTitle_line1}<br></br>{data.subTitle_line2}</span></h1>
                     <a href="#" className="bannerBox__profile mg-b50">
-                        <img className="bannerBox__profile-pic" src="assets/images/user.png" alt="" />
                         <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={data.speakerId} />
                     </a>
                     <a href="#" className="btn btn-secondary bannerBox__btn" onClick={() => props.watchTrailer(data.trailerUrl)}>Watch Trailer</a>
                 </div>
                 <div className="bannerBox__center">
-                    <img src={props.mainImageUrl} alt="" />
+                    <img src={data.mainImageUrl} alt="" />
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@ export function ImageSingleButtonBanner(props) {
 
 //props -  mainTitle, subTitle_line1, subTitle_line2, speakerId, mainImageUrl, watchTrailer()
 export function UpcompingEventBanner(props) {
-    const data = { props }
+    const {data} =  props 
     return (
         <div className="bannerBox__inner bannerBox__inner2 gradient-bg4">
             <div className="bannerBox__slide">

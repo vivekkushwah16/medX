@@ -13,33 +13,43 @@
 .login2Box__left { padding-top: 6rem; width: 100%; }
 .login2Box-text { display: flex; }
 
-.login2Box.login2Box__small { padding-top: 11rem; position: relative; }
+.login2Box.login2Box__small { padding-top: 11rem; padding-bottom: 11rem; position: relative; }
 .login2Box.login2Box__small > .login-bg-top { position: absolute; left: 0; top: 0; width: 100%; }
 .login2Box.login2Box__small > .login-bg-bottom { position: absolute; left: 0; bottom: 0; width: 100%; }
 
-
+.mobile-tabs { padding: 0 2rem; display: none; list-style-type: none; border-bottom: 1px solid #CBCBCB; }
+.mobile-tabs li { width: 50%; }
+.mobile-tabs li.active a, .mobile-tabs li a.active { color: #005188; }
+.mobile-tabs li.active a span, 
+.mobile-tabs li a.active span { border-color:#005188; }
+.mobile-tabs li a { padding: 0 1.5rem; display: block; text-align: center; font-weight: 700; color: #B7B7B7; text-decoration: none; background: #fff; }
+.mobile-tabs li a span { padding: 1.5rem 0 1.25rem; display: inline-block; border-bottom: 0.25rem solid transparent; }
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (max-width: 1199px) {
-    .login2Box { padding: 4rem 3rem; margin-left: 1rem; margin-right: 0; }
-    .login2Box.login2Box__small { margin: 1rem; }
-    .login2Box__label, .login2Box__label.login2Box__label--bottom { padding: 2rem; margin: 0; }
+    .login2Box { margin: 0 auto; min-height: auto; }
+    .login2Box__label, .login2Box__label.login2Box__label--bottom { padding: 2rem 1rem 1rem 4.5rem; margin: 0; }
+    .login2Box__label-desc,
+    .login2Box__label-title { font-size: 1.5rem; }
     .login2Box__video { margin: 0; padding: 0; }
 }
 
 /* All Mobile Sizes (devices and browser) */
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1023px) {
+    .login2Box__title { display: none; }
+    .login2Box { width: 100%; }
+    .login2Box__wrapper { display: block; background: #fff; }
+    .login2Box__label { display: none; }
+    .login2Box__video { width: 100%; }
+    .login2Box.login2Box__small > .login-bg-top,
+    .login2Box.login2Box__small > .login-bg-bottom { display: none; }
+    .mobile-tabs { display: flex; }
 }
 
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
-    .login2Box { background: transparent; }
-    .login2Box, .login2Box.login2Box__small { padding: 2rem; min-height: auto; margin: 0; width: 100%; min-width: auto; }
-    .login2Box__video { margin: 6rem 0 0rem 0; padding: 0; }
-    .login2Box__wrapper.login2Box__wrapper--cover {  background-image: none !important; }
-    .login2Box__wrapper { padding-top: 0; display: block; }
-    .login2Box__left { position: relative; }
-    .login2Box__label, .login2Box__label.login2Box__label--bottom { padding: 1rem 2rem 1rem; font-size: 1.25rem; max-width: 21rem; position: absolute; left: 0; bottom: 1.25rem; z-index: 1; }
+    .login2Box { padding: 2rem; }
+    .login2Box.login2Box__small { padding-top: 4rem; padding-bottom: 4rem; }
 }
 
 /* All Mobile Sizes (devices and browser) */

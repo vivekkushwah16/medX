@@ -273,19 +273,19 @@ const VideoManager = {
                 }
 
                 console.log(filter)
-                switch (filter) {
-                    case videoSortFilter.date:
-                        docRef = docRef.orderBy('timeStamp');
-                        break;
-                    case videoSortFilter.AtoZ:
-                        docRef = docRef.orderBy('name', 'asc');
-                        break;
-                    case videoSortFilter.ZtoA:
-                        docRef = docRef.orderBy('name', 'desc');
-                        break;
-                    default:
-                        docRef = docRef.orderBy('timeStamp')
-                }
+                // switch (filter) {
+                //     case videoSortFilter.date:
+                //         docRef = docRef.orderBy('timeStamp');
+                //         break;
+                //     case videoSortFilter.AtoZ:
+                //         docRef = docRef.orderBy('name', 'asc');
+                //         break;
+                //     case videoSortFilter.ZtoA:
+                //         docRef = docRef.orderBy('name', 'desc');
+                //         break;
+                //     default:
+                //         docRef = docRef.orderBy('timeStamp')
+                // }
 
 
                 if (docRefToStartFrom !== null)
@@ -293,6 +293,7 @@ const VideoManager = {
 
                 docRef = docRef.limit(limit)
                 const query = await docRef.get()
+                console.log(query)
                 if (query.empty) {
                     res([]);
                 }
