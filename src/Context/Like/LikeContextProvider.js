@@ -18,7 +18,8 @@ export default function LikeContextProvider(props) {
                 if (!user) { res(false) }
 
                 if (likeData.hasOwnProperty(tagetId)) {
-                    return likeData.tagetId
+                    console.log(likeData[tagetId],tagetId);
+                    res(likeData[tagetId]) 
                 } else {
                     const doc = await firestore.collection(LIKES_COLLECTION).doc(`${user.uid}+${tagetId}`).get()
                     if (doc.exists) {
@@ -38,8 +39,6 @@ export default function LikeContextProvider(props) {
 
     const addLike = async (tagetId, eventId, likeType) => {
         return new Promise(async (res, rej) => {
-            console.log(tagetId, user.uid, likeType)
-
             try {
                 if (!user) { return false }
                 switch (likeType) {
@@ -48,7 +47,6 @@ export default function LikeContextProvider(props) {
                         res(true)
                         break;
                     case LikeType.VIDEO_LIKE:
-                        console.log(tagetId, user.uid)
                         const count = await VideoManager.addLike(tagetId, user.uid)
                         res(count)
                         break;

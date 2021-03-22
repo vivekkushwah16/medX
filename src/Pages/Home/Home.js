@@ -91,7 +91,7 @@ class Home extends Component {
 
                 {
                     this.state.videopopVisible &&
-                    <VideoPopup videoData={this.state.videoPopupData} currVideosData={this.state.currentVideosData} closeVideoPop={this.closeVideoPop} />
+                    <VideoPopup videoData={this.state.videoPopupData} currVideosData={this.state.currentVideosData} closeVideoPop={this.closeVideoPop} openVideoPop={this.openVideoPop}/>
                 }
 
             </section>

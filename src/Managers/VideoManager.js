@@ -176,20 +176,21 @@ const VideoManager = {
         return new Promise(async (res, rej) => {
             try {
                 const docRef = firestore.collection(VIDEO_COLLECTION).doc(videoId)
-                await firestore.runTransaction(async transcation => {
+                const views = await firestore.runTransaction(async transcation => {
                     let doc = await transcation.get(docRef)
                     if (!doc.exists) {
                         let err = {
                             code: 'NotValidId',
-                            message: "No EventId Found"
+                            message: "No Video with ID Found"
                         }
                         throw (err)
                     }
                     transcation.update(docRef, {
                         views: firebase.firestore.FieldValue.increment(1)
                     })
+                    return doc.data().views + 1
                 })
-                res();
+                res(views);
             } catch (error) {
                 rej(error)
             }
@@ -273,22 +274,24 @@ const VideoManager = {
                 if (lowerCasedTag.length > 0) {
                     docRef = docRef.where('tags', 'array-contains-any', lowerCasedTag)
                     //.orderBy('tags');
+                } else {
+
+                    console.log(filter)
+                    switch (filter) {
+                        case videoSortFilter.date:
+                            docRef = docRef.orderBy('timeStamp');
+                            break;
+                        case videoSortFilter.AtoZ:
+                            docRef = docRef.orderBy('name', 'asc');
+                            break;
+                        case videoSortFilter.ZtoA:
+                            docRef = docRef.orderBy('name', 'desc');
+                            break;
+                        default:
+                            docRef = docRef.orderBy('timeStamp')
+                    }
                 }
 
-                console.log(filter)
-                // switch (filter) {
-                //     case videoSortFilter.date:
-                //         docRef = docRef.orderBy('timeStamp');
-                //         break;
-                //     case videoSortFilter.AtoZ:
-                //         docRef = docRef.orderBy('name', 'asc');
-                //         break;
-                //     case videoSortFilter.ZtoA:
-                //         docRef = docRef.orderBy('name', 'desc');
-                //         break;
-                //     default:
-                //         docRef = docRef.orderBy('timeStamp')
-                // }
 
 
                 if (docRefToStartFrom !== null)

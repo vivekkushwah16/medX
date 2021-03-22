@@ -8,19 +8,44 @@ import { LikeType } from '../../AppConstants/TypeConstant'
 import moment from 'moment'
 import TimelineBoxItem from '../../Components/TimelineBoxItem/TimelineBoxItem'
 import VideoThumbnail_Compact from '../../Components/VideoThumbnail_Compact/VideoThumbnail_Compact'
-
+import VideoManager from '../../Managers/VideoManager'
 
 function VideoPopup(props) {
     const playerRef = useRef(null);
-    const { currVideosData, videoData, closeVideoPop } = props
-
+    const { currVideosData, videoData: _vd, closeVideoPop, openVideoPop } = props
+    const [videoData, setVideoData] = useState(_vd)
     const { getLike, addLike, removeLike } = useContext(likeContext)
     const [like, setLike] = useState(false);
     const [likeCount, setLikeCount] = useState(videoData.likes);
 
+    const timeLimit = 10;
+    var currenttimeWatched = 0;
+    let timerRef = null;
+
     useEffect(() => {
-        getCurrentTargetLikeStatus()
+        VideoManager.getVideoWithId(videoData.id).then(data => {
+            setVideoData(data)
+        })
     }, [])
+
+    useEffect(() => {
+        setLikeCount(videoData.likes);
+        getCurrentTargetLikeStatus();
+
+    }, [props.videoData])
+
+    const addViewToVideo = async () => {
+        if (currenttimeWatched >= timeLimit) { return }
+        timerRef = setInterval(async () => {
+            currenttimeWatched += 1
+            if (currenttimeWatched >= timeLimit) {
+                clearInterval(timerRef)
+                let newCount = await VideoManager.addView(videoData.id);
+                console.log(newCount);
+            }
+        }, 1000)
+    }
+
 
     const getCurrentTargetLikeStatus = async () => {
         if (videoData) {
@@ -53,7 +78,10 @@ function VideoPopup(props) {
             <div className="modalBox__inner">
                 <div className="modalBox__header">
                     <h3 className="modalBox__title"></h3>
-                    <button className="modalBox__close-link" onClick={closeVideoPop}>CLOSE</button>
+                    <button className="modalBox__close-link" onClick={() => {
+                        closeVideoPop()
+                        clearInterval(timerRef)
+                    }}>CLOSE</button>
                 </div>
                 <div className="modalBox__body">
                     <div className="modalBox__video">
@@ -64,6 +92,10 @@ function VideoPopup(props) {
                             controls={true}
                             width='100%'
                             height='100%'
+                            onPlay={addViewToVideo}
+                            onPause={() => {
+                                clearInterval(timerRef)
+                            }}
                         ></ReactPlayer>
                         {/* <img src="assets/images/video2.jpg" alt="" /> */}
                     </div>
@@ -114,7 +146,7 @@ function VideoPopup(props) {
                                     <div className="videodetailBox__list">
                                         {
                                             moreVideos.map(currentVideoData =>
-                                                <VideoThumbnail_Compact />
+                                                <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={currentVideoData} openVideoPop={openVideoPop} />
                                             )
                                         }
                                     </div>
