@@ -1,0 +1,36 @@
+/* ### community Box ### */
+.communityBox hr { border-top-color: rgba(0, 0, 0, 0.15); }
+.communityBox__title { margin-bottom: 0.5rem; font-size: 0.9375rem; color: #005188; font-weight: 700; }
+
+.communityBox__send { padding: 1rem; border: 1px solid #A6A6A6; box-sizing: border-box; border-radius: 9px; display: flex; align-items: center; }
+.communityBox__send-pic { height: 2.375rem; width: 2.375rem; border-radius: 50%; }
+.communityBox__send .form-control { padding: 0.5rem; border-radius: 0; border: none; border-bottom: 1px solid #A6A6A6; }
+.communityBox__send .form-group { padding-left: 0.5rem; position: relative; padding-right: 2rem; margin-bottom: 0; }
+.communityBox__send .btn { padding: 0.5rem; min-width: 0; position: absolute; right: 0; top: 0; border: none; background: none; backdrop-filter: blur(0px); color: #005188; }
+.communityBox__send--submitted { padding-right: 2.5rem; position: relative; width: 100%; }
+.communityBox__send--submitted h3 { font-size: 0.625rem; font-weight: 700; color: #005188; }
+.communityBox__send--submitted p { font-size: 0.75rem; }
+.communityBox__send--submitted .close { padding: 0.5rem; position: absolute; right: 0; top: 0rem; border-radius: 50%; text-decoration: none; color: #fff; background: #01518A; }
+
+.communityBox__question { padding: 1.875rem 0; }
+.communityBox__question .btn { padding: 0.75rem 1.5rem; font-weight: 300; border-radius: 40px; min-width: 0; }
+.communityBox__options { padding: 1rem 0; list-style-type: none; }
+.communityBox__options > li { padding: 0.5rem 0; display: block; }
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (max-width: 1200px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 1023px) {
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+    .communityBox { padding-top: 0; }
+    .communityBox__question { padding: 0 0 1.875rem; }
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 480px) {
+}

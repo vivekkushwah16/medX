@@ -14,6 +14,7 @@ import Home from './Pages/Home/Home';
 // import css
 import './assets/css/modal.css'
 import VideoManager from './Managers/VideoManager';
+import Event from './Pages/Event/Event';
 
 // 
 
@@ -40,7 +41,7 @@ export default function App() {
                         <PreEvent />
                     </ProtectedRoute>
                     <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE}>
-                        <About />
+                        <Event />
                     </ProtectedRoute>
                     <ProtectedRoute redirectTo={LOGIN_ROUTE} path={TOPIC_ROUTE}>
                         <Topics />
