@@ -21,6 +21,10 @@ function VideoModal(props) {
                     controls={true}
                     width='100%'
                     height='100%'
+                    style={{
+                        background: 'black',
+                        borderRadius: '0.5rem'
+                    }}
                 />
                 <div className="videoModal_container_loader">
                     <div className="lds-dual-ring"></div>

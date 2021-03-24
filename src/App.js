@@ -40,7 +40,7 @@ export default function App() {
                     <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>
                         <PreEvent />
                     </ProtectedRoute>
-                    <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE}>
+                    <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE + '/:id'}>
                         <Event />
                     </ProtectedRoute>
                     <ProtectedRoute redirectTo={LOGIN_ROUTE} path={TOPIC_ROUTE}>

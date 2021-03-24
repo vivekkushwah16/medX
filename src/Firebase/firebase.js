@@ -3,6 +3,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/database';
 import 'firebase/analytics';
+import { PROFILE_COLLECTION } from '../AppConstants/CollectionConstants';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBjSPRUgzyQhITpWHb9FdzMMuLS45Zsd9s",
@@ -30,4 +31,19 @@ export const logout = () => {
         }).catch(function (error) {
             // An error happened.
         });
+}
+
+export const getUserProfile = (uid) => {
+    return new Promise(async (res, rej) => {
+        try {
+            const doc = await firestore.collection(PROFILE_COLLECTION).doc(uid).get()
+            if (doc.exists) {
+                res(doc.data())
+            }else{
+                res({})
+            }
+        } catch (error) {
+            rej(error)
+        }
+    })
 }

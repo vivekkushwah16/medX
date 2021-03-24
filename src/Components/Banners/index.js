@@ -1,10 +1,11 @@
 import React from 'react'
 import { SpeakerProfileType } from '../../AppConstants/SpeakerProfileType'
 import SpeakerProfile from '../../Containers/SpeakerProfile.js/SpeakerProfile'
+import AddToCalendar from '../AddToCalendar/AddToCalendar'
 
 //props - mainTitle, subTitle, eventId, enterEvent()
 export function LiveEventBanner(props) {
-    const {data} =  props 
+    const { data } = props
     return (
         <div className="bannerBox__inner bannerBox__inner2 gradient-bg4">
             <div className="bannerBox__slide">
@@ -26,7 +27,7 @@ export function LiveEventBanner(props) {
 
 //props -  mainTitle, subTitle_line1, subTitle_line2, speakerId, mainImageUrl, watchTrailer()
 export function ImageSingleButtonBanner(props) {
-    const {data} =  props 
+    const { data } = props
 
     return (
         <div className="bannerBox__inner gradient-bg2">
@@ -48,7 +49,7 @@ export function ImageSingleButtonBanner(props) {
 
 //props -  mainTitle, subTitle_line1, subTitle_line2, speakerId, mainImageUrl, watchTrailer()
 export function UpcompingEventBanner(props) {
-    const {data} =  props 
+    const { data } = props
     return (
         <div className="bannerBox__inner bannerBox__inner2 gradient-bg4">
             <div className="bannerBox__slide">
@@ -57,8 +58,9 @@ export function UpcompingEventBanner(props) {
                     <p className="bannerBox__subtitle mg-b70">{data.subTitle_line1}<br></br>{data.subTitle_line2}</p>
                     <p className="bannerBox__date mg-b40">{data.dateString}</p>
                     <div className="d-flex">
-                        <a href="#" className="btn btn-secondary bannerBox__btn mg-r20" onClick={() => props.addToCalendar(data.calendarData)}>Add to Calender</a>
-                        <a href="#" className="btn btn-secondary--outline bannerBox__btn" onClick={() => props.watchTrailer(data.trailerUrl)}>WATCH TRAILER</a>
+                        <AddToCalendar />
+                        {/* <a href="#" className="btn btn-secondary bannerBox__btn mg-r20" onClick={() => props.addToCalendar(data.calendarData)}>Add to Calender</a> */}
+                        <a href="#" className="btn btn-secondary--outline bannerBox__btn mg-l20" onClick={() => props.watchTrailer(data.trailerUrl)}>WATCH TRAILER</a>
                     </div>
                 </div>
                 <div className="bannerBox__right">

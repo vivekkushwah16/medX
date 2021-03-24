@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { analytics } from '../../Firebase/firebase';
+import { analytics, database } from '../../Firebase/firebase';
 
 import './Register.css'
 import Agenda from "../../Components/Event/Agenda/Agenda";
@@ -12,6 +12,7 @@ import VideoModal from '../../Components/VideoModal/VideoModal';
 import { LOGIN_ROUTE } from '../../AppConstants/Routes';
 import EventManager from '../../Managers/EventManager';
 import { isMobileOnly } from 'react-device-detect';
+var uniqid = require('uniqid');
 
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
@@ -119,13 +120,20 @@ class Register extends Component {
             pincode: this.state.pincode,
             termsAndConditions: this.state.termsAndConditions,
         })
-            .then(res => {
+            .then( async res => {
                 analytics.logEvent("user_registered", {
                     country: this.state.country,
                     state: this.state.state,
                     city: this.state.city,
                     date: new Date()
                 })
+                let _data = {
+                    country: this.state.country,
+                    state: this.state.state,
+                    city: this.state.city,
+                    date: new Date()
+                }
+                await database.ref(`/user_registered/${uniqid('user_registered_')}`).update(_data)
                 this.redirectToLogin();
             }).catch((error) => {
                 if (error.response) {

@@ -105,7 +105,7 @@ function Banner() {
                             }
                             {
                                 item.type === BannerType.UpcompingEvent &&
-                                <UpcompingEventBanner data={item} watchTrailer={watchTrailer} addToCalendar={addToCalendar} />
+                                <UpcompingEventBanner data={item} watchTrailer={watchTrailer} />
                             }
                         </>
                     ))
