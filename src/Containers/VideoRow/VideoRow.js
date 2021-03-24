@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -10,7 +10,8 @@ import VideoManager from '../../Managers/VideoManager';
 
 function VideoRow(props) {
     const { heading, tag, openVideoPop } = props;
-    const [videosData, setData] = useState(null)
+    const [videosData, setData] = useState(null);
+    const [dragging, setDragging] = useState(false);
 
     useEffect(() => {
         getVideos()
@@ -22,7 +23,28 @@ function VideoRow(props) {
         setData(arr)
     }
 
+    const handleBeforeChange = useCallback(() => {
+        console.log('handleBeforeChange')
+        setDragging(true)
+    }, [setDragging])
+
+    const handleAfterChange = useCallback(() => {
+        console.log('handleAfterChange')
+        setDragging(false)
+    }, [setDragging])
+
+    const handleOnItemClick = useCallback(
+        e => {
+            console.log('handleOnItemClick');
+            
+            if (dragging) e.stopPropagation()
+        },
+        [dragging]
+    ) 
+
     var settings = {
+        beforeChange:{handleBeforeChange},
+        afterChange:{handleAfterChange},
         dots: false,
         infinite: false,
         speed: 300,
@@ -64,7 +86,9 @@ function VideoRow(props) {
                 <Slider {...settings}>
                     {
                         videosData.map(vd => (
-                            <VideoThumbnail_Rich videoInfo={vd} videosData={videosData} openVideoPop={openVideoPop} />
+                            <VideoThumbnail_Rich onClickCapture={handleOnItemClick} videoInfo={vd} videosData={videosData} 
+                             openVideoPop={openVideoPop} 
+                            />
                         ))
                     }
                 </Slider>

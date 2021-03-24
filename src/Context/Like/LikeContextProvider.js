@@ -18,7 +18,7 @@ export default function LikeContextProvider(props) {
                 if (!user) { res(false) }
 
                 if (likeData.hasOwnProperty(tagetId)) {
-                    console.log(likeData[tagetId],tagetId);
+                    // console.log(likeData[tagetId],tagetId);
                     res(likeData[tagetId]) 
                 } else {
                     const doc = await firestore.collection(LIKES_COLLECTION).doc(`${user.uid}+${tagetId}`).get()

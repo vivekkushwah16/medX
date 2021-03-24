@@ -53,5 +53,7 @@
 }
 
 /* All Mobile Sizes (devices and browser) */
-@media only screen and (max-width: 480px) {
+@media only screen and (min-width: 1024px) {
+    .login2Box, 
+    .maincardBox { display: block !important; }
 }
