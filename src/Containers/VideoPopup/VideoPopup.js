@@ -90,6 +90,7 @@ function VideoPopup(props) {
                             width={"auto"}
                             height={"25rem"}
                             onPlay={addViewToVideo}
+                            style={{"backgroundColor":"black"}}
                             onPause={() => {
                                 clearInterval(timerRef)
                             }}

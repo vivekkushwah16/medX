@@ -1,0 +1,8 @@
+.tagDiv{
+    cursor: pointer;
+}
+
+.tagDivactive{
+    color: white !important;
+    background: #015189 !important;
+}

@@ -31,10 +31,15 @@ class Home extends Component {
         { tag: 'covid', header: 'Covid19' },
         { tag: 'tuberculosis', header: 'Tuberculosis' },
         { tag: 'vaccination', header: 'Vaccination' }],
+
+        activeTag:'',
+    }
+
+    onTagSelect=(tag)=>{
+        this.state.activeTag==tag ? this.setState({activeTag:''}): this.setState({activeTag:tag})
     }
 
     openVideoPop = (videoData, videosData) => {
-        console.log(videosData,videoData);
         this.setState({
             currentVideosData: videosData,
             videopopVisible: true,
@@ -58,7 +63,9 @@ class Home extends Component {
                     <Header />
                     <Banner />
                     <div className="tabBox">
-                        <TagsRow tags={this.state.tags}/> 
+
+                        <TagsRow tags={this.state.tags} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag}/> 
+
                         <div className="contentBox">
                             {
                                 this.state.rows.map(row =>
@@ -66,8 +73,9 @@ class Home extends Component {
                                 )
                             }
                         </div>
+
                     </div>
-                    <footer className="footerBox">
+                    {/* <footer className="footerBox">
                         <ul>
                             <li className="active"><a href="#">
                                 <i className="icon-home"></i>
@@ -86,7 +94,7 @@ class Home extends Component {
                             Profile</a>
                             </li>
                         </ul>
-                    </footer>
+                    </footer> */}
                 </div>
 
                 {
