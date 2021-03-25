@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext } from 'react'
-import { LIKES_COLLECTION } from '../../AppConstants/CollectionConstants';
+import { LIKES_COLLECTION, RATING_COLLECTION } from '../../AppConstants/CollectionConstants';
 import { LikeType } from '../../AppConstants/TypeConstant';
 import { firestore } from '../../Firebase/firebase';
 import EventManager from '../../Managers/EventManager';
@@ -11,6 +11,8 @@ export const likeContext = createContext({});
 export default function LikeContextProvider(props) {
     const { user } = useContext(UserContext)
     const [likeData, setLikeData] = useState({});
+    const [RatingData, setRatingData] = useState({});
+
 
     const getLike = (tagetId) => {
         return new Promise(async (res, rej) => {
@@ -18,8 +20,8 @@ export default function LikeContextProvider(props) {
                 if (!user) { res(false) }
 
                 if (likeData.hasOwnProperty(tagetId)) {
-                    // console.log(likeData[tagetId],tagetId);
-                    res(likeData[tagetId]) 
+                    console.log(likeData[tagetId], tagetId);
+                    res(likeData[tagetId])
                 } else {
                     const doc = await firestore.collection(LIKES_COLLECTION).doc(`${user.uid}+${tagetId}`).get()
                     if (doc.exists) {
@@ -35,6 +37,60 @@ export default function LikeContextProvider(props) {
             }
         })
 
+    }
+
+    const getRating = (tagetId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                if (!user) { res(false) }
+
+                if (RatingData.hasOwnProperty(tagetId)) {
+                    console.log(RatingData[tagetId], tagetId);
+                    res(RatingData[tagetId])
+                } else {
+                    const doc = await firestore.collection(RATING_COLLECTION).doc(`${user.uid}+${tagetId}`).get()
+                    if (doc.exists) {
+                        setRatingData({ ...RatingData, [tagetId]: doc.data().rating })
+                        res(doc.data().rating)
+                    } else {
+                        setRatingData({ ...RatingData, [tagetId]: 0 })
+                        res(0)
+                    }
+                }
+            } catch (error) {
+                rej(error)
+            }
+        })
+    }
+
+    const updateRating = (tagetId, eventId, rating) => {
+        return new Promise(async (res, rej) => {
+            try {
+                if (!user) { return false }
+                const ref = firestore.collection(RATING_COLLECTION).doc(`${user.uid}+${tagetId}`)
+                await firestore.runTransaction(async transcation => {
+                    const doc = transcation.get(ref)
+                    if (!doc.exits) {
+                        transcation.set(ref, {
+                            tagetId: tagetId,
+                            eventId: eventId,
+                            rating: rating,
+                            userId: user.uid
+                        })
+                    } else {
+                        transcation.update(ref, {
+                            tagetId: tagetId,
+                            eventId: eventId,
+                            rating: rating,
+                            userId: user.uid
+                        })
+                    }
+                })
+                res()
+            } catch (error) {
+                rej(error)
+            }
+        });
     }
 
     const addLike = async (tagetId, eventId, likeType) => {
@@ -57,7 +113,6 @@ export default function LikeContextProvider(props) {
                 rej(error)
             }
         });
-
     }
 
     const removeLike = async (tagetId, eventId, likeType) => {
@@ -83,7 +138,7 @@ export default function LikeContextProvider(props) {
     }
 
     return (
-        <likeContext.Provider value={{ getLike, addLike, removeLike }}>
+        <likeContext.Provider value={{ getLike, addLike, removeLike, getRating, updateRating }}>
             {props.children}
         </likeContext.Provider>
     )

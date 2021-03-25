@@ -16,6 +16,7 @@ function InviteFriendBtn(props) {
 
 
 export default function InviteFriend(props) {
+    console.log(props)
     return (
         <>
             <InviteFriendBtn handleClick={() => props.toggleInviteFriendModal(true)} />

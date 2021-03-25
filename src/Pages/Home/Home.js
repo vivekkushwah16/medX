@@ -13,6 +13,7 @@ import VideoRow from '../../Containers/VideoRow/VideoRow';
 // import VideoManager from '../../Managers/VideoManager';
 import Header from '../../Containers/Header/Header';
 import TagsRow from '../../Containers/TagsRow/TagsRow';
+import Footer from '../../Containers/Footer/Footer';
 
 
 class Home extends Component {
@@ -75,26 +76,7 @@ class Home extends Component {
                         </div>
 
                     </div>
-                    {/* <footer className="footerBox">
-                        <ul>
-                            <li className="active"><a href="#">
-                                <i className="icon-home"></i>
-                            Home</a>
-                            </li>
-                            <li><a href="#">
-                                <i className="icon-search"></i>
-                            Search</a>
-                            </li>
-                            <li><a href="#">
-                                <i className="icon-notifications2"></i>
-                            Notification</a>
-                            </li>
-                            <li><a href="#">
-                                <i className="icon-profile"></i>
-                            Profile</a>
-                            </li>
-                        </ul>
-                    </footer> */}
+                    <Footer />
                 </div>
 
                 {

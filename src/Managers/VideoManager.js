@@ -1,6 +1,6 @@
-import { EVENT_COLLECTION, LIKES_COLLECTION, VIDEO_COLLECTION } from '../AppConstants/CollectionConstants';
+import { EVENT_COLLECTION, LIKES_COLLECTION, VIDEO_COLLECTION, MEDIAMETADATA_COLLECTION } from '../AppConstants/CollectionConstants';
 import { videoSortFilter } from '../AppConstants/Filter';
-import { LikeType } from '../AppConstants/TypeConstant';
+import { LikeType, MediaType } from '../AppConstants/TypeConstant';
 import firebase, { firestore } from "../Firebase/firebase";
 var uniqid = require('uniqid');
 
@@ -326,6 +326,33 @@ const VideoManager = {
                             message: "No EventId Found"
                         }
                         throw (err)
+                    }
+                    res(doc.data())
+                })
+                res();
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    setVideoLastKnownTimestamp: (videoId, userId, lastKnownTimestamp) => {
+        return new Promise(async (res, rej) => {
+            try {
+                let docId = `${videoId}_${userId}`
+                const ref = firestore.collection(MEDIAMETADATA_COLLECTION).doc(docId)
+                await firestore.runTransaction(async transcation => {
+                    let doc = await transcation.get(ref)
+                    let _data = {
+                        videoId: videoId,
+                        userId: userId,
+                        type: MediaType.VIDEO_MEDIA,
+                        lastKnownTimestamp: lastKnownTimestamp
+                    }
+                    
+                    if (!doc.exists) {
+                        transcation.set(ref, _data)
+                    } else {
+                        transcation.update(ref, _data)
                     }
                     res(doc.data())
                 })

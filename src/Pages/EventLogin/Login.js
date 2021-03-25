@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase, { auth } from "../../Firebase/firebase"
+import firebase, { analytics, auth } from "../../Firebase/firebase"
 import { withRouter } from 'react-router-dom';
 import Agenda from "../../Components/Event/Agenda/Agenda";
 import './Login.css'
@@ -128,7 +128,7 @@ class Login extends Component {
         if (event) {
             event.preventDefault()
         }
-        if (currentTab === TABS.AgendaTab) {
+        if (currentTab === TABS.LoginTab) {
             this.setState({
                 currentTab: TABS.LoginTab
             })
@@ -151,36 +151,36 @@ class Login extends Component {
                     this.state.showVideo &&
                     <VideoModal link={'https://player.vimeo.com/video/184520235'} close={() => { this.setState({ showVideo: false }) }}></VideoModal>
                 }
-                <header class="headerBox">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="headerBox__left">
-                            <a href="#" class="headerBox__logo">
+                <header className="headerBox">
+                    <div className="d-flex align-items-center justify-content-between">
+                        <div className="headerBox__left">
+                            <a href="#" className="headerBox__logo">
                                 <img src="assets/images/logo2.png" alt="" />
                             </a>
                         </div>
-                        <div class="headerBox__right">
-                            <a href="#" class="headerBox__logo2">
+                        <div className="headerBox__right">
+                            <a href="#" className="headerBox__logo2">
                                 <img src="assets/images/cipla-logo.png" alt="" />
                             </a>
                         </div>
                     </div>
                 </header>
 
-                <div class="login2Box__left">
-                    <div class="login2Box-text">
-                        <div class="login2Box__label">
-                            <h2 class="login2Box__label-title mg-b20">50+ Eminent Speakers</h2>
-                            <p class="login2Box__label-desc">Two days of Engaging Sessions</p>
+                <div className="login2Box__left">
+                    <div className="login2Box-text">
+                        <div className="login2Box__label">
+                            <h2 className="login2Box__label-title mg-b20">50+ Eminent Speakers</h2>
+                            <p className="login2Box__label-desc">Two days of Engaging Sessions</p>
                         </div>
-                        <div class="login2Box__video">
-                            <a href="#" class="login2Box__video__play"><i class="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a>
+                        <div className="login2Box__video">
+                            {/* <a href="#" className="login2Box__video__play"><i className="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a> */}
                             <img src="assets/images/video-thumb.jpg" alt="" />
                         </div>
                     </div>
 
-                    <ul class="mobile-tabs">
-                        <li class={`${this.state.currentTab === TABS.LoginTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.LoginTab)}><span>Login</span></a></li>
-                        <li class={`${this.state.currentTab === TABS.AgendaTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.AgendaTab)}><span>AGENDA</span></a></li>
+                    <ul className="mobile-tabs">
+                        <li className={`${this.state.currentTab === TABS.LoginTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.LoginTab)}><span>Login</span></a></li>
+                        <li className={`${this.state.currentTab === TABS.AgendaTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.AgendaTab)}><span>AGENDA</span></a></li>
                     </ul>
 
 

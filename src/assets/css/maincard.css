@@ -2,6 +2,9 @@
 .maincardBox { padding: 1.5rem 4.5rem; }
 .maincardBox__title { font-weight: 700; font-size: 1.3125rem; color: #01518A; }
 .maincardBox__card-wrapper { overflow: auto; height: 450px; height: calc(100vh - 420px); min-height: 200px; }
+.maincardBox__card { margin-bottom: 1rem; padding: 0; display: flex; border-radius: 0.625rem; background: #fff; margin-right: 0.5rem;}
+.maincardBox__card-left { padding: 1rem; width: 10rem; }
+.maincardBox__card-right { padding: 1rem; position: relative; width: 100%; color: rgba(0, 0, 0, 0.6); }
 .maincardBox__card { margin-bottom: 1rem; padding: 0; display: flex; border-radius: 0.625rem; background: #fff; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); }
 .maincardBox__card-date { font-size: 1.25rem; font-weight: 700; color: #01518A; }
 .maincardBox__card-time { font-size: 1rem; color: #01518A; }

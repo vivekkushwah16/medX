@@ -36,12 +36,49 @@
 .modalBox.active { display: flex; }
 .modalBox.active .modalBox__inner { margin-top: 0; opacity: 1; }
 
+.icon-link {
+    cursor: pointer;
+  }
+.form-group__has-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+.share__btns {
+    position: absolute;
+    right: 2%;
+    /* top: 9%; */
+    display: flex;
+  }
+  .share__btns img {
+    margin-right: 5px;
+  }
+  .single__share {
+    display: none;
+  }
+
+  .blackTint{
+      background: rgba(0, 0, 0, 0.411);
+  }
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (max-width: 1200px) {
 }
 
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 992px) {
+    .share__btns {
+        display: none;
+      }
+      .single__share {
+        display: block;
+        position: absolute;
+        right: 7%;
+        height: 30px;
+        width: 60px;
+        border-radius: 0.625rem;
+        border: none;
+        outline: none;
+      }
 }
 
 /* All Mobile Sizes (devices and browser) */

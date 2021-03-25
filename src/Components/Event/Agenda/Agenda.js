@@ -5,7 +5,7 @@ class Agenda extends Component {
     render() {
         const { data, haveVideo, haveLikeButton, startVideo } = this.props
         return <>
-            <div className={`maincardBox`}>
+            <div className={`maincardBox`} style={{display: 'flex'}}>
 
                 <h2 className="maincardBox__title mg-b25">AGENDA</h2>
                 <div className="maincardBox__card-wrapper">
