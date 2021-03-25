@@ -41,7 +41,7 @@
 .slider-banner-desktop .bannerBox__slide { padding: 12rem 8rem 1rem; }
 
 /* ### tab Box ### */
-.tabBox { margin: -13.5rem 0 0 0; position: relative; padding: 4rem 0rem 5rem; z-index: 1; }
+.tabBox { margin: -13.5rem 0 0 0; position: relative; padding: 4rem 0rem 5rem; z-index: 1; max-width: 1680px;}
 .tabBox.tabBox--new { margin-top: -25rem; }
 .tabBox.tabBox--new .maincardBox { display: block; }
 .tabBox.tabBox--new .maincardBox__card-wrapper { max-width: 100%; height: auto; }

@@ -17,6 +17,7 @@ function VideoModal(props) {
                     }}
                     playing={true}
                     url={props.link}
+                    playsinline={true}
                     volume={0.85}
                     controls={true}
                     width='100%'

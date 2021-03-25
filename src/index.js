@@ -7,6 +7,15 @@ import UserContextProvider from './Context/Auth/UserContextProvider';
 import SpeakerContextProvider from './Context/Speaker/SpeakerContextProvider';
 import EventContextProvider from './Context/Event/EventContextProvider';
 import LikeContextProvider from './Context/Like/LikeContextProvider';
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
+
+const options = {
+  position: positions.BOTTOM_RIGHT,
+  timeout: 2500,
+  offset: '30px',
+  transition: transitions.SCALE
+}
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,7 +23,9 @@ ReactDOM.render(
       <EventContextProvider>
         <SpeakerContextProvider>
           <LikeContextProvider>
-            <App />
+            <AlertProvider template={AlertTemplate} {...options}>
+              <App />
+            </AlertProvider>
           </LikeContextProvider>
         </SpeakerContextProvider>
       </EventContextProvider>

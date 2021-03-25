@@ -1,6 +1,6 @@
 /* ### login box ### */
 .login2Box__wrapper { display: flex; justify-content: space-between; background-repeat: no-repeat; background-size: auto 100%; }
-.login2Box { padding: 2rem 4rem; overflow: auto; min-height: 100vh; min-width: 31.25rem; width: 31.25rem; background: #fff; }
+.login2Box { padding: 2rem 4rem; overflow: auto; min-height: 100vh; min-width: 31.25rem; width: 31.25rem; background: #fff; box-shadow: 1px 0px 20px 3px rgb(0 0 0 / 28%);}
 .login2Box__title { font-size: 1.5625rem; font-weight: 700; color: #005188; }
 .login2Box__label { padding: 4.25rem 2rem 1rem 4.5rem; width: 52.5%; background: #4F6090; border-right: 0.625rem solid #A8B8E5; }
 .login2Box__label-title { font-size: 1.75rem; color: #fff; font-weight: 700; }
@@ -48,7 +48,7 @@
 
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
-    .login2Box { padding: 2rem; }
+    .login2Box { padding: 2rem; min-width: unset;}
     .login2Box.login2Box__small { padding-top: 4rem; padding-bottom: 4rem; }
 }
 

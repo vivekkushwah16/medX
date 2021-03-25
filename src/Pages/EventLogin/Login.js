@@ -18,6 +18,7 @@ const TABS = {
 class Login extends Component {
 
     state = {
+        isLoading: false,
         phoneNumber: "",
         otp: "",
         showOtp: false,
@@ -33,6 +34,24 @@ class Login extends Component {
     componentDidMount = async () => {
         const agendaData = await EventManager.getAgenda('event-kmde59n5')
         this.setState({ agendaData })
+        this.handleResize();
+        window.addEventListener('resize', this.handleResize)
+    }
+
+    componentWillUnmount = () => {
+        window.removeEventListener('resize', this.handleResize)
+    }
+
+    handleResize = () => {
+        if (window.innerWidth > 991) {
+            this.setState({
+                currentTab: TABS.bothTab
+            })
+        } else {
+            this.setState((prevState) => ({
+                currentTab: prevState.currentTab === TABS.LoginTab ? TABS.LoginTab : TABS.AgendaTab
+            }))
+        }
     }
 
 
@@ -52,11 +71,12 @@ class Login extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-
+        this.setState({ isLoading: true })
         this.validateForm();
 
         if (!this.isValidForm(this.state.errors)) {
             console.log(this.state.errors);
+            this.setState({ isLoading: false })
             return;
         }
 
@@ -65,6 +85,7 @@ class Login extends Component {
             .signInWithEmailAndPassword(this.state.phoneNumber + "@cipla.com", this.state.phoneNumber)
             .then((confirmationResult) => {
                 this.redirectToHome();
+                this.setState({ isLoading: false })
             })
             .catch((error) => {
                 let errors = this.state.errors;
@@ -75,6 +96,7 @@ class Login extends Component {
                     errors.phoneNumber = error.message;
                 }
                 this.setState({ errors: errors });
+                this.setState({ isLoading: false })
 
             });
     }
@@ -208,7 +230,9 @@ class Login extends Component {
                                         name="phoneNumber"
                                         placeholder="Enter phone number"
                                         value={this.state.phoneNumber}
-                                        onChange={this.setValue}
+                                        onChange={(number) =>
+                                            this.setValue(number)
+                                        }
                                     />
                                     {this.state.errors.phoneNumber &&
                                         <span className="input-error2">{this.state.errors.phoneNumber}</span>}
@@ -217,7 +241,13 @@ class Login extends Component {
 
 
                                 <div className="mg-b0 d-flex justify-content-between">
-                                    <button id={"sign-in"} type={"submit"} className="btn btn-secondary">Log in</button>
+                                    <button id={"sign-in"} type={"submit"} className="btn btn-secondary" disabled={this.state.isLoading ? true : false} >
+                                        {this.state.isLoading ? (
+                                            <>
+                                                <img src="/assets/images/loader.gif" alt="loading" />
+                                            </>
+                                        ) : ' Log in'}
+                                    </button>
                                 </div>
                                 <a className="btn btn-link" href="/register">Not Registered? Click here</a>
                             </form>

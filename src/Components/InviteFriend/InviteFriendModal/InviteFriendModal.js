@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useAlert } from 'react-alert';
 import fb from "./assets/fb.png";
 import twitter from "./assets/twitter.png";
 import whatsapp from "./assets/whatsapp.png";
 
 export default function InviteFriendModal(props) {
+    const alert = useAlert();
     const [url, setUrl] = useState(window.location.href);
     const [textArea, setTextarea] = useState({});
 
@@ -12,6 +14,7 @@ export default function InviteFriendModal(props) {
         const el = textArea;
         el.select();
         document.execCommand("copy");
+        alert.success("Copied to clipboard!!")
         textArea.disabled = true;
     };
 
@@ -24,8 +27,8 @@ export default function InviteFriendModal(props) {
     };
 
     return (
-        <div className="modalBox modalBox--small active blackTint">
-            <div className="modalBox__inner">
+        <div className="modalBox modalBox--small active blackTint modalBoxAppearAnim">
+            <div className="modalBox__inner modalBoxChildScaleAnim">
                 <div className="modalBox__header">
                     <h3 className="modalBox__title">Invite your friends</h3>
                     <button
@@ -44,7 +47,10 @@ export default function InviteFriendModal(props) {
                             <i
                                 className="icon-link"
                                 onClick={() => copyCodeToClipboard()}
-                            ></i>
+                            >
+                                <span class="link-tooltip">Click here to copy.</span>
+                            </i>
+
                             <input
                                 type="text"
                                 className="form-control"

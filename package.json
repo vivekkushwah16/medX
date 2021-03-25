@@ -12,6 +12,8 @@
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-add-to-calendar-hoc": "^1.0.10",
+    "react-alert": "^7.0.2",
+    "react-alert-template-basic": "^1.0.0",
     "react-country-region-selector": "^3.0.2",
     "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.1",

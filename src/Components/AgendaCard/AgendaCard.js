@@ -9,7 +9,7 @@ import { analytics, database } from '../../Firebase/firebase';
 import StartRating from '../StartRating/StartRating';
 
 function AgendaCard(props) {
-    const { timeline, haveVideo, haveLikeButton } = props
+    const { timeline, haveVideo, haveLikeButton, animate, placeIndex } = props
     const { getLike, addLike, removeLike, getRating, updateRating } = useContext(likeContext)
     const { userInfo, user } = useContext(UserContext)
     const [like, setLike] = useState(false);
@@ -79,16 +79,22 @@ function AgendaCard(props) {
 
 
     return (
-        <div key={timeline.id} className={`maincardBox__card ${haveVideo ? 'maincardBox__card--large' : ''} `}>
+        <div key={timeline.id} className={`maincardBox__card ${haveVideo ? 'maincardBox__card--large' : ''} ${animate ? 'maincardBox__card_animate' : ''}`}
+            style={animate ? {
+                animationDelay: `${placeIndex ? placeIndex * 0.25 : 0}s`
+            } : {}}
+        >
             <div className="maincardBox__card-left">
                 {
                     haveVideo &&
                     <>
+
                         <div className="maincardBox__card-video"
-                            onClick={() => { props.handleClick() }}
+                            // onClick={() => { props.handleClick() }}
                             style={{ backgroundImage: `url(${timeline.thumnailUrL})` }}>
                             {/* <a href="#" className="maincardBox__card-video__play"><i
                                 className="icon-play"></i></a> */}
+                            <div className="tint"></div>
                         </div>
                     </>
                 }
@@ -112,7 +118,7 @@ function AgendaCard(props) {
                         {
                             rating !== null &&
                             <>
-                                <p class="font-12 mg-b20">Is this topic relevant to you?</p>
+                                <p class="font-14 mg-b20">Is this topic relevant to you?</p>
                                 <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
                             </>
                         }

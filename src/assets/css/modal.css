@@ -14,9 +14,9 @@
 .modalBox__close-link { padding: 0.5rem 2rem; cursor: pointer; text-decoration: underline; background: transparent; border: medium none; color: #9D9D9D; }
 .modalBox__close-link:focus, 
 .modalBox__close-link:hover { text-decoration: none; outline: none; }
-.modalBox__close { padding: 1rem; font-size: 1.5rem; line-height: 1.25rem; font-weight: 700; position: absolute; right: 0.25rem; top: 0.25rem; border: medium none; color: #fff; cursor: pointer; border-radius: 50%; background: #015189; }
+.modalBox__close { transition: 0.25s; transform: rotate(0deg); padding: 1rem; font-size: 1.5rem; line-height: 1.25rem; font-weight: 700; position: absolute; right: 0.25rem; top: 0.25rem; border: medium none; color: #fff; cursor: pointer; border-radius: 50%; background: #015189; }
 .modalBox.modalBox--small .modalBox__close { position: static; padding: 0.5rem; height: 2rem; width: 2rem; line-height: 1rem; font-size: 1rem; }
-
+.modalBox__close:hover{  transform: rotate(90deg);}
 .modalBox.modalBox--large .modalBox__inner { height: auto; }
 .modalBox.modalBox--large .modalBox__header { padding: 1.75rem 0.75rem 1.75rem 1.75rem; }
 .modalBox.modalBox--large .modalBox__body { padding: 0; }
@@ -38,7 +38,39 @@
 
 .icon-link {
     cursor: pointer;
+    position: relative;
   }
+
+.icon-link .link-tooltip{
+    visibility: hidden;
+    background-color: #000000ad;
+    color: #e4e4e4;
+    text-align: center;
+    padding: 0.5rem 0.85rem;
+    border-radius: 0.5rem;
+    position: absolute;
+    z-index: 1;
+    width: 5rem;
+    font-size: 0.75rem;
+    max-height: 2rem;
+    top: -2.65rem;
+    left: -2.9rem;
+    box-sizing: content-box;
+}
+.icon-link .link-tooltip::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #000000ad transparent transparent transparent;
+}
+.icon-link:hover .link-tooltip {
+  visibility: visible;
+}
+
 .form-group__has-icon {
     position: relative;
     display: flex;
@@ -57,9 +89,30 @@
     display: none;
   }
 
+  .share__btns a{
+    transition: 0.25s;
+    transform: scale(1);
+  }
+  .share__btns a:hover{
+    transform: scale(1.1);
+  }
+
   .blackTint{
       background: rgba(0, 0, 0, 0.411);
   }
+
+  .modalBoxAppearAnim{
+    opacity: 0;
+    animation: 0.25s modalBoxAppearAnim forwards;
+  }
+  @keyframes modalBoxAppearAnim{0%{opacity: 0;}100%{opacity: 1;}}
+
+  .modalBoxChildScaleAnim{
+    opacity: 0;
+    animation: 0.5s modalBoxChildScaleAnim forwards;
+  }
+  @keyframes modalBoxChildScaleAnim{0%{opacity: 0;transform: scale(0.65);}100%{opacity: 1;transform: scale(1);}}
+
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (max-width: 1200px) {
 }
@@ -72,10 +125,10 @@
       .single__share {
         display: block;
         position: absolute;
-        right: 7%;
-        height: 30px;
-        width: 60px;
-        border-radius: 0.625rem;
+        right: 0.25rem;
+        /* height: 30px; */
+        /* width: 60px; */
+        border-radius: 0.625rem!important;
         border: none;
         outline: none;
       }

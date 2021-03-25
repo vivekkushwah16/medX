@@ -23,13 +23,16 @@ const TABS = {
     AgendaTab: 1,
 }
 class Register extends Component {
+    pagetop = React.createRef();
+
     state = {
+        isLoading: false,
         email: "",
         phoneNumber: "",
         firstName: "",
         lastName: "",
         // hospitalName: "",
-        profession: "Profession",
+        profession: "",
         speciality: "",
         country: "India",
         state: "",
@@ -49,7 +52,8 @@ class Register extends Component {
             state: "",
             city: "",
             pincode: "",
-            termsAndConditions: ""
+            termsAndConditions: "",
+            alreadyRegistered: false,
         },
         agendaData: null,
         currentTab: !isMobileOnly ? TABS.bothTab : TABS.Register
@@ -59,7 +63,26 @@ class Register extends Component {
     componentDidMount = async () => {
         const agendaData = await EventManager.getAgenda('event-kmde59n5')
         this.setState({ agendaData })
+        window.addEventListener('resize', this.handleResize)
     }
+
+    componentWillUnmount = () => {
+        window.removeEventListener('resize', this.handleResize)
+    }
+
+    handleResize = () => {
+        if (window.innerWidth > 991) {
+            this.setState({
+                currentTab: TABS.bothTab
+            })
+        } else {
+            this.setState((prevState) => ({
+                currentTab: prevState.currentTab === TABS.Register ? TABS.Register : TABS.AgendaTab
+            }))
+        }
+    }
+
+
 
     handleInputChange = (event) => {
         const target = event.target;
@@ -99,11 +122,13 @@ class Register extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+        this.setState({ isLoading: true })
 
         this.validateForm();
 
         if (!this.isValidForm(this.state.errors)) {
             console.log(this.state.errors);
+            this.setState({ isLoading: false })
             return;
         }
 
@@ -134,15 +159,21 @@ class Register extends Component {
                     date: new Date()
                 }
                 await database.ref(`/user_registered/${uniqid('user_registered_')}`).update(_data)
+                this.setState({ isLoading: false })
                 this.redirectToLogin();
             }).catch((error) => {
                 if (error.response) {
                     let data = error.response.data;
-
                     if (data.message && data.message.code === "auth/email-already-exists") {
-                        let errors = this.state.errors;
-                        errors.email = data.message.message;
-                        this.setState({ errors: errors });
+                        this.setState((prev) => ({
+                            errors: { ...prev.errors, alreadyRegistered: true }
+                        }))
+                        if (this.pagetop.current) {
+                            this.pagetop.current.scrollIntoView();
+                        }
+                        // let errors = this.state.errors;
+                        // errors.email = data.message.message;
+                        // this.setState({ errors: errors });
                     }
                     if (data.message && data.message.code === "auth/invalid-phone-number") {
                         let errors = this.state.errors;
@@ -156,6 +187,7 @@ class Register extends Component {
                     alert('Error ' + error.message);
                 }
                 console.log(error.config);
+                this.setState({ isLoading: false })
             });
 
     }
@@ -185,35 +217,35 @@ class Register extends Component {
                     this.state.showVideo &&
                     <VideoModal link={'https://player.vimeo.com/video/184520235'} close={() => { this.setState({ showVideo: false }) }}></VideoModal>
                 }
-                <header class="headerBox">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="headerBox__left">
-                            <a href="#" class="headerBox__logo">
+                <header className="headerBox">
+                    <div className="d-flex align-items-center justify-content-between">
+                        <div className="headerBox__left">
+                            <a href="#" className="headerBox__logo">
                                 <img src="assets/images/logo2.png" alt="" />
                             </a>
                         </div>
-                        <div class="headerBox__right">
-                            <a href="#" class="headerBox__logo2">
+                        <div className="headerBox__right">
+                            <a href="#" className="headerBox__logo2">
                                 <img src="assets/images/cipla-logo.png" alt="" />
                             </a>
                         </div>
                     </div>
                 </header>
 
-                <div class="login2Box__left">
-                    <div class="login2Box-text">
-                        <div class="login2Box__label">
-                            <h2 class="login2Box__label-title mg-b20">50+ Eminent Speakers</h2>
-                            <p class="login2Box__label-desc">Two days of Engaging Sessions</p>
+                <div className="login2Box__left">
+                    <div className="login2Box-text">
+                        <div className="login2Box__label">
+                            <h2 className="login2Box__label-title mg-b20">50+ Eminent Speakers</h2>
+                            <p className="login2Box__label-desc">Two days of Engaging Sessions</p>
                         </div>
-                        <div class="login2Box__video">
-                            {/* <a href="#" class="login2Box__video__play"><i class="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a> */}
+                        <div className="login2Box__video">
+                            {/* <a href="#" className="login2Box__video__play"><i className="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a> */}
                             <img src="assets/images/video-thumb.jpg" alt="" />
                         </div>
                     </div>
-                    <ul class="mobile-tabs">
-                        <li class={`${this.state.currentTab === TABS.Register ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.Register)}><span>Register</span></a></li>
-                        <li class={`${this.state.currentTab === TABS.AgendaTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.AgendaTab)}><span>AGENDA</span></a></li>
+                    <ul className="mobile-tabs">
+                        <li className={`${this.state.currentTab === TABS.Register ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.Register)}><span>Register</span></a></li>
+                        <li className={`${this.state.currentTab === TABS.AgendaTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.AgendaTab)}><span>AGENDA</span></a></li>
                     </ul>
                     {
                         this.state.agendaData && this.state.currentTab !== TABS.Register &&
@@ -221,9 +253,14 @@ class Register extends Component {
                     }
                 </div>
 
-                <article className={`login2Box ${this.state.currentTab === TABS.AgendaTab ? 'd-none' : ''}`}>
+                <article ref={this.pagetop} className={`login2Box ${this.state.currentTab === TABS.AgendaTab ? 'd-none' : ''}`}>
                     <h1 className="login2Box__title mg-b40">Register Yourself</h1>
-
+                    {
+                        this.state.errors.alreadyRegistered &&
+                        <>
+                            <span style={{ color: 'red' }}>*You are Already Registered</span><br></br>
+                        </>
+                    }
                     <a className="btn btn-link" href="/login">Already Registered? Click here</a>
 
                     <form onSubmit={this.handleSubmit}>
@@ -288,7 +325,7 @@ class Register extends Component {
                                     name="profession"
                                     value={this.state.profession}
                                     onChange={this.handleInputChange}>
-                                    <option>Profession</option>
+                                    <option>Select Profession</option>
                                     <option>Doctor</option>
                                     <option>Paramedics</option>
                                     <option>HCP</option>
@@ -334,6 +371,7 @@ class Register extends Component {
                         <div className="form-group">
                             <div className="custom-select">
                                 <CountryDropdown
+                                    defaultOptionLabel="Select country"
                                     name="country" id="country" name="country" className="form-control"
                                     value={this.state.country}
                                     onChange={(val) => this.setState({ country: val })}
@@ -345,6 +383,7 @@ class Register extends Component {
                         <div className="form-group">
                             <div className="custom-select">
                                 <RegionDropdown
+                                    defaultOptionLabel="Select State"
                                     name="state" className="form-control"
                                     country={this.state.country}
                                     value={this.state.state}
@@ -372,6 +411,7 @@ class Register extends Component {
                                 name="pincode"
                                 value={this.state.pincode}
                                 onChange={this.handleInputChange}
+                                maxLength={6}
                             />
                             {this.state.errors.pincode &&
                                 <span className="input-error2">{this.state.errors.pincode}</span>}
@@ -387,7 +427,13 @@ class Register extends Component {
                             <span className="input-error">{this.state.errors.termsAndConditions}</span>}
 
                         <div className="mg-b30 d-flex justify-content-between">
-                            <button className="btn btn-secondary" type={"submit"}>Register</button>
+                            <button className="btn btn-secondary" id="RegisterBtn" type={"submit"} disabled={this.state.isLoading ? true : false}>
+                                {this.state.isLoading ? (
+                                    <>
+                                        <img src="/assets/images/loader.gif" alt="loading" />
+                                    </>
+                                ) : 'Register'}
+                            </button>
                         </div>
 
 

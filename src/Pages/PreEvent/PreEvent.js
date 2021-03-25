@@ -75,7 +75,7 @@ function PreEvent() {
                     </div>
 
                     {/* footer box */}
-                   <Footer />
+                   {/* <Footer /> */}
                 </div>
             </section>
         </>
