@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
     return (
-        <footer class="footerBox">
+        <footer class="footerBox" style={{zIndex: 5}}>
             <ul>
                 <li class="active"><a href="#">
                     <i class="icon-home"></i>

@@ -87,8 +87,8 @@ function AgendaCard(props) {
                         <div className="maincardBox__card-video"
                             onClick={() => { props.handleClick() }}
                             style={{ backgroundImage: `url(${timeline.thumnailUrL})` }}>
-                            <a href="#" className="maincardBox__card-video__play"><i
-                                className="icon-play"></i></a>
+                            {/* <a href="#" className="maincardBox__card-video__play"><i
+                                className="icon-play"></i></a> */}
                         </div>
                     </>
                 }

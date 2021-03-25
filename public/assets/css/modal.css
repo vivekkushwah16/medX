@@ -1,5 +1,5 @@
 /* ### footer box ### */
-.modalBox { padding: 1rem; position: fixed; left: 0; bottom: 0; width: 100%; height: 100%; display: none; align-items: center; justify-content: center; z-index: 12; }
+.modalBox { padding: 1rem; position: fixed; left: 0; bottom: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 12; }
 .modalBox__overlay { position: fixed; left: 0; top: 0; height: 100%; width: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1; cursor: pointer; }
 .modalBox__inner { position: relative; margin-top: 2rem; opacity: 0; width: 56.25rem; min-height: 31.25rem; border-radius: 0.25rem; background: #fff; max-height: 100%; z-index: 1; overflow: auto; transition: all 0.3s; z-index: 2; }
 .modalBox__video { border-radius: 0.25rem; }
@@ -35,15 +35,6 @@
 
 .modalBox.active { display: flex; }
 .modalBox.active .modalBox__inner { margin-top: 0; opacity: 1; }
-
-.icon-link {
-    cursor: pointer;
-  }
-.form-group__has-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
 .share__btns {
     position: absolute;
     right: 2%;
@@ -55,10 +46,6 @@
   }
   .single__share {
     display: none;
-  }
-
-  .blackTint{
-      background: rgba(0, 0, 0, 0.411);
   }
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (max-width: 1200px) {

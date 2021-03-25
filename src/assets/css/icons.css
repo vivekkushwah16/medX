@@ -24,7 +24,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.icon-crown:before {
+  content: "\e911";
+}
 .icon-tick:before {
   content: "\e910";
 }

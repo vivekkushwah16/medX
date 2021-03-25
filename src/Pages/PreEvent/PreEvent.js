@@ -4,6 +4,7 @@ import { eventContext } from '../../Context/Event/EventContextProvider';
 import Agenda from '../../Components/Event/Agenda/Agenda';
 import Header from '../../Containers/Header/Header';
 import AddToCalendar from '../../Components/AddToCalendar/AddToCalendar';
+import Footer from '../../Containers/Footer/Footer';
 
 function PreEvent() {
     const [showVideoModal, setVideoModalVisible] = useState(false);
@@ -74,26 +75,7 @@ function PreEvent() {
                     </div>
 
                     {/* footer box */}
-                    <footer class="footerBox">
-                        <ul>
-                            <li class="active"><a href="#">
-                                <i class="icon-home"></i>
-                            Home</a>
-                            </li>
-                            <li><a href="#">
-                                <i class="icon-search"></i>
-                            Search</a>
-                            </li>
-                            <li><a href="#">
-                                <i class="icon-notifications2"></i>
-                            Notification</a>
-                            </li>
-                            <li><a href="#">
-                                <i class="icon-profile"></i>
-                            Profile</a>
-                            </li>
-                        </ul>
-                    </footer>
+                   <Footer />
                 </div>
             </section>
         </>

@@ -128,7 +128,7 @@ class Login extends Component {
         if (event) {
             event.preventDefault()
         }
-        if (currentTab === TABS.AgendaTab) {
+        if (currentTab === TABS.LoginTab) {
             this.setState({
                 currentTab: TABS.LoginTab
             })
@@ -173,7 +173,7 @@ class Login extends Component {
                             <p className="login2Box__label-desc">Two days of Engaging Sessions</p>
                         </div>
                         <div className="login2Box__video">
-                            <a href="#" className="login2Box__video__play"><i className="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a>
+                            {/* <a href="#" className="login2Box__video__play"><i className="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a> */}
                             <img src="assets/images/video-thumb.jpg" alt="" />
                         </div>
                     </div>

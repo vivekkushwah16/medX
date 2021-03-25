@@ -23,15 +23,11 @@ function VideoPopup(props) {
     let timerRef = null;
 
     useEffect(() => {
-        VideoManager.getVideoWithId(videoData.id).then(data => {
+        setLikeCount(props.videoData.likes);
+        getCurrentTargetLikeStatus();
+        VideoManager.getVideoWithId(props.videoData.id).then(data => {
             setVideoData(data)
         })
-    }, [])
-
-    useEffect(() => {
-        setLikeCount(videoData.likes);
-        getCurrentTargetLikeStatus();
-
     }, [props.videoData])
 
     const addViewToVideo = async () => {
@@ -74,7 +70,8 @@ function VideoPopup(props) {
 
     return (
 
-        <div className="modalBox modalBox--large"  >
+        <div className="modalBox modalBox--large active"  >
+            <span class="modalBox__overlay" onClick={() => {closeVideoPop(); clearInterval(timerRef)}}></span>
             <div className="modalBox__inner">
                 <div className="modalBox__header">
                     <h3 className="modalBox__title"></h3>
@@ -90,8 +87,8 @@ function VideoPopup(props) {
                             url={videoData.videoUrl}
                             volume={0.85}
                             controls={true}
-                            width='100%'
-                            height='100%'
+                            width={"auto"}
+                            height={"25rem"}
                             onPlay={addViewToVideo}
                             onPause={() => {
                                 clearInterval(timerRef)

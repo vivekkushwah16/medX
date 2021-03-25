@@ -24,7 +24,7 @@ export default function InviteFriendModal(props) {
     };
 
     return (
-        <div className="modalBox modalBox--small">
+        <div className="modalBox modalBox--small active blackTint">
             <div className="modalBox__inner">
                 <div className="modalBox__header">
                     <h3 className="modalBox__title">Invite your friends</h3>

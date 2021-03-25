@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
+// import { Splide, SplideSlide } from '@splidejs/react-splide';
 import VideoPopup from '../../Containers/VideoPopup/VideoPopup';
-import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+// import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import './Home.css'
 
 import Banner from '../../Containers/Banner/Banner';
 
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import Slider from "react-slick";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 import VideoRow from '../../Containers/VideoRow/VideoRow';
-import VideoManager from '../../Managers/VideoManager';
+// import VideoManager from '../../Managers/VideoManager';
 import Header from '../../Containers/Header/Header';
+import TagsRow from '../../Containers/TagsRow/TagsRow';
+import Footer from '../../Containers/Footer/Footer';
 
 
 class Home extends Component {
@@ -24,10 +26,16 @@ class Home extends Component {
         rows: [{ tag: 'ciplamed', header: 'Recommended Videos' },
         { tag: 'covid', header: 'Videos on Covid19' },
         { tag: 'tuberculosis', header: 'Videos on Tuberculosis' },
-        { tag: 'covid', header: 'Videos on Covid19' }]
+        { tag: 'vaccination', header: 'Videos on Vaccination' }],
+
+        tags: [{ tag: 'ciplamed', header: 'Ciplamed' },
+        { tag: 'covid', header: 'Covid19' },
+        { tag: 'tuberculosis', header: 'Tuberculosis' },
+        { tag: 'vaccination', header: 'Vaccination' }],
     }
 
     openVideoPop = (videoData, videosData) => {
+        console.log(videosData,videoData);
         this.setState({
             currentVideosData: videosData,
             videopopVisible: true,
@@ -51,14 +59,7 @@ class Home extends Component {
                     <Header />
                     <Banner />
                     <div className="tabBox">
-                        <ul className="tabBox__list">
-                            <li>Topics : </li>
-                            <li><a href="#">Vaccination</a></li>
-                            <li><a href="#">Resp. Devices</a></li>
-                            <li><a href="#">CT Scans</a></li>
-                            <li><a href="#">DRTB</a></li>
-                            <li><a href="#">Neurology</a></li>
-                        </ul>
+                        <TagsRow tags={this.state.tags}/> 
                         <div className="contentBox">
                             {
                                 this.state.rows.map(row =>
@@ -67,31 +68,15 @@ class Home extends Component {
                             }
                         </div>
                     </div>
-                    <footer className="footerBox">
-                        <ul>
-                            <li className="active"><a href="#">
-                                <i className="icon-home"></i>
-                            Home</a>
-                            </li>
-                            <li><a href="#">
-                                <i className="icon-search"></i>
-                            Search</a>
-                            </li>
-                            <li><a href="#">
-                                <i className="icon-notifications2"></i>
-                            Notification</a>
-                            </li>
-                            <li><a href="#">
-                                <i className="icon-profile"></i>
-                            Profile</a>
-                            </li>
-                        </ul>
-                    </footer>
+                    <Footer />
                 </div>
 
                 {
                     this.state.videopopVisible &&
-                    <VideoPopup videoData={this.state.videoPopupData} currVideosData={this.state.currentVideosData} closeVideoPop={this.closeVideoPop} openVideoPop={this.openVideoPop}/>
+                    <VideoPopup videoData={this.state.videoPopupData} 
+                    currVideosData={this.state.currentVideosData} 
+                    closeVideoPop={this.closeVideoPop} 
+                    openVideoPop={this.openVideoPop}/>
                 }
 
             </section>

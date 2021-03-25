@@ -29,7 +29,7 @@ class Register extends Component {
         firstName: "",
         lastName: "",
         // hospitalName: "",
-        profession: "Doctor",
+        profession: "Profession",
         speciality: "",
         country: "India",
         state: "",
@@ -120,7 +120,7 @@ class Register extends Component {
             pincode: this.state.pincode,
             termsAndConditions: this.state.termsAndConditions,
         })
-            .then( async res => {
+            .then(async res => {
                 analytics.logEvent("user_registered", {
                     country: this.state.country,
                     state: this.state.state,
@@ -207,7 +207,7 @@ class Register extends Component {
                             <p class="login2Box__label-desc">Two days of Engaging Sessions</p>
                         </div>
                         <div class="login2Box__video">
-                            <a href="#" class="login2Box__video__play"><i class="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a>
+                            {/* <a href="#" class="login2Box__video__play"><i class="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a> */}
                             <img src="assets/images/video-thumb.jpg" alt="" />
                         </div>
                     </div>
@@ -288,6 +288,7 @@ class Register extends Component {
                                     name="profession"
                                     value={this.state.profession}
                                     onChange={this.handleInputChange}>
+                                    <option>Profession</option>
                                     <option>Doctor</option>
                                     <option>Paramedics</option>
                                     <option>HCP</option>
@@ -303,7 +304,28 @@ class Register extends Component {
                                     value={this.state.speciality}
                                     onChange={this.handleInputChange}>
                                     <option>Your Speciality</option>
-                                    <option>Your Speciality</option>
+                                    <option value="CRITICAL CARE MEDICINE">CRITICAL CARE MEDICINE</option>
+                                    <option value="INFECTIOUS DISEASES">INFECTIOUS DISEASES</option>
+                                    <option value="INFECTIOUS DISEASES">NEPHROLOGY</option>
+                                    <option value="GASTROENTEROLOGY &mp; HEPATOLOGY">GASTROENTEROLOGY &amp; HEPATOLOGY</option>
+                                    <option value="HIV / AIDS">HIV / AIDS</option>
+                                    <option value="ONCOLOGY">ONCOLOGY</option>
+                                    <option value="ONCOLOGY">PULMONOLOGIST</option>
+                                    <option value="GENERAL MEDICINE">GENERAL MEDICINE</option>
+                                    <option value="CARDIOLOGY">CARDIOLOGY</option>
+                                    <option value="DERMATOLOGY">DERMATOLOGY</option>
+                                    <option value="DENTISTRY">DENTISTRY</option>
+                                    <option value="DIABETOLOGY">DIABETOLOGY</option>
+                                    <option value="ENT">ENT</option>
+                                    <option value="MUSCULOSKELETAL DISEASES">MUSCULOSKELETAL DISEASES</option>
+                                    <option value="NEUROPSYCHIATRY">NEUROPSYCHIATRY</option>
+                                    <option value="OBSTETRICS &amp; GYNAECOLOGY">OBSTETRICS &amp; GYNAECOLOGY</option>
+                                    <option value="OPHTHALMOLOGY">OPHTHALMOLOGY</option>
+                                    <option value="PEDIATRICS">PEDIATRICS</option>
+                                    <option value="RESPIRATORY MEDICINE">RESPIRATORY MEDICINE</option>
+                                    <option value="SURGERY">SURGERY</option>
+                                    <option value="UROLOGY">UROLOGY</option>
+                                    <option value="OTHER">OTHER</option>
                                 </select>
                                 {this.state.errors.speciality &&
                                     <span className="input-error2">{this.state.errors.speciality}</span>}

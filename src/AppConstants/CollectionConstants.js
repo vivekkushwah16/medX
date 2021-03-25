@@ -6,3 +6,4 @@ export const SPEAKERS_COLLECTION = 'speakers'
 export const QNA_COLLECTION = 'qna'
 export const RATING_COLLECTION = "ratings"
 export const PROFILE_COLLECTION = 'profiles'
+export const MEDIAMETADATA_COLLECTION = 'mediaMetaData'
