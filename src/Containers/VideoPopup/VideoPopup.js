@@ -56,10 +56,12 @@ function VideoPopup(props) {
 
     const toggleLikeToTarget = async () => {
         if (like) {
+            console.log("removeLike")
             const count = await removeLike(videoData.id, null, LikeType.VIDEO_LIKE)
             setLikeCount(count)
 
         } else {
+            console.log("addLike")
             const count = await addLike(videoData.id, null, LikeType.VIDEO_LIKE)
             setLikeCount(count)
         }

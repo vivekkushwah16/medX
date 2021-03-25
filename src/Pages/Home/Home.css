@@ -8,3 +8,6 @@
 @import url("/src/assets/css/videodetail.css");
 @import url("/src/assets/css/homepage2.css");
 
+.slick-track{
+    margin-left: unset!important;
+}

@@ -160,11 +160,13 @@ const VideoManager = {
                         throw (err)
                     }
                     let videoDoc = await transcation.get(LikeRef)
+                    let mainDoc = await transcation.get(docRef)
                     transcation.delete(LikeRef)
                     transcation.update(docRef, {
                         likes: firebase.firestore.FieldValue.increment(-1)
                     })
-                    return videoDoc.data().likes ? videoDoc.data().likes - 1 : 0
+                    console.log(mainDoc.data())
+                    return mainDoc.data().likes ? mainDoc.data().likes - 1 : 0
                 })
                 res(count);
             } catch (error) {

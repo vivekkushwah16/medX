@@ -9,7 +9,7 @@ function VideoThumbnail_Rich(props) {
     useEffect(() => {
         getVideoMetaData(videoInfo.id).then((data) => {
             setMetadata(data);
-            console.log(data);
+            // console.log(data);
         });
     }, [videoInfo,mediaMetaData])
 
