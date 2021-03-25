@@ -9,14 +9,16 @@ import moment from 'moment'
 import TimelineBoxItem from '../../Components/TimelineBoxItem/TimelineBoxItem'
 import VideoThumbnail_Compact from '../../Components/VideoThumbnail_Compact/VideoThumbnail_Compact'
 import VideoManager from '../../Managers/VideoManager'
+import { UserContext } from '../../Context/Auth/UserContextProvider'
 
 function VideoPopup(props) {
     const playerRef = useRef(null);
-    const { currVideosData, videoData: _vd, closeVideoPop, openVideoPop } = props
+    const { metadata, currVideosData, videoData: _vd, closeVideoPop, openVideoPop } = props
     const [videoData, setVideoData] = useState(_vd)
     const { getLike, addLike, removeLike } = useContext(likeContext)
     const [like, setLike] = useState(false);
     const [likeCount, setLikeCount] = useState(videoData.likes);
+    const { setVideoMetaData } = useContext(UserContext);
 
     const timeLimit = 10;
     var currenttimeWatched = 0;
@@ -28,6 +30,8 @@ function VideoPopup(props) {
         VideoManager.getVideoWithId(props.videoData.id).then(data => {
             setVideoData(data)
         })
+        console.log(metadata.lastKnownTimestamp);
+        seekTo(metadata.lastKnownTimestamp);
     }, [props.videoData])
 
     const addViewToVideo = async () => {
@@ -71,13 +75,15 @@ function VideoPopup(props) {
     return (
 
         <div className="modalBox modalBox--large active"  >
-            <span class="modalBox__overlay" onClick={() => {closeVideoPop(); clearInterval(timerRef)}}></span>
+            <span class="modalBox__overlay" onClick={() => {console.log(videoData.id,playerRef.current.getDuration(),playerRef.current.getCurrentTime());closeVideoPop(videoData); clearInterval(timerRef); setVideoMetaData(videoData.id,playerRef.current.getCurrentTime(),playerRef.current.getDuration());}}></span>
             <div className="modalBox__inner">
                 <div className="modalBox__header">
                     <h3 className="modalBox__title"></h3>
                     <button className="modalBox__close-link" onClick={() => {
-                        closeVideoPop()
-                        clearInterval(timerRef)
+                        closeVideoPop(videoData);
+                        clearInterval(timerRef);
+                        console.log(videoData.id,playerRef.current.getDuration(),playerRef.current.getCurrentTime());
+                        setVideoMetaData(videoData.id,playerRef.current.getCurrentTime(),playerRef.current.getDuration());
                     }}>CLOSE</button>
                 </div>
                 <div className="modalBox__body">

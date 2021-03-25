@@ -7,44 +7,22 @@ import VideoThumbnail_Rich from '../../Components/VideoThumbnail_Rich/VideoThumb
 import VideoManager from '../../Managers/VideoManager';
 
 
-
 function VideoRow(props) {
-    const { heading, tag, openVideoPop } = props;
+    const { heading, tag, lastPlayed, openVideoPop, grid } = props;
     const [videosData, setData] = useState(null);
-    const [dragging, setDragging] = useState(false);
 
     useEffect(() => {
         getVideos()
-    }, [])
+    }, [tag])
 
     const getVideos = async () => {
-        const arr = await VideoManager.getVideoWithTag([tag])
+        const arr = await VideoManager.getVideoWithTag([tag]);
         console.log(arr);
-        setData(arr)
+        setData(arr);
     }
 
-    const handleBeforeChange = useCallback(() => {
-        console.log('handleBeforeChange')
-        setDragging(true)
-    }, [setDragging])
-
-    const handleAfterChange = useCallback(() => {
-        console.log('handleAfterChange')
-        setDragging(false)
-    }, [setDragging])
-
-    const handleOnItemClick = useCallback(
-        e => {
-            console.log('handleOnItemClick');
-            
-            if (dragging) e.stopPropagation()
-        },
-        [dragging]
-    ) 
 
     var settings = {
-        beforeChange:{handleBeforeChange},
-        afterChange:{handleAfterChange},
         dots: false,
         infinite: false,
         speed: 300,
@@ -81,44 +59,61 @@ function VideoRow(props) {
             <h2 className="contentBox__title" >{heading} </h2>
 
             {
-                videosData &&
-
-                <Slider {...settings}>
+                videosData ?
+                    <>
                     {
-                        videosData.map(vd => (
-                            <VideoThumbnail_Rich onClickCapture={handleOnItemClick} videoInfo={vd} videosData={videosData} 
-                             openVideoPop={openVideoPop} 
-                            />
-                        ))
+                        grid ?
+                            <>
+                                <div className="contentBox__item-wrapper row">
+                                    {
+                                        videosData.map(vd => (
+                                            <VideoThumbnail_Rich videoInfo={vd} videosData={videosData}
+                                                openVideoPop={openVideoPop} grid={grid}
+                                            />
+                                        ))
+                                    }
+                                </div>
+                            </>
+                            :
+                            <>
+                                <Slider {...settings}>
+                                    {
+                                        videosData.map(vd => (
+                                            <VideoThumbnail_Rich videoInfo={vd} videosData={videosData}
+                                                openVideoPop={openVideoPop} grid={grid}
+                                            />
+                                        ))
+                                    }
+                                </Slider>
+                            </>
                     }
-                </Slider>
+                    </>
+                    :
+                    <>
+                    <Slider {...settings}>
+                        <div className="contentBox__item">
+                            <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
+                            {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
+                            <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
+                        </div>
+                        <div className="contentBox__item">
+                            <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
+                            {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
+                            <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
+                        </div>
+                        <div className="contentBox__item">
+                            <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
+                            {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
+                            <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
+                        </div>
+                        <div className="contentBox__item">
+                            <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
+                            {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
+                            <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
+                        </div>
+                    </Slider>
+                    </>
             }
-            {
-                !videosData &&
-                <Slider {...settings}>
-                    <div className="contentBox__item">
-                        <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                        <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a>
-                        <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                    </div>
-                    <div className="contentBox__item">
-                        <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                        <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a>
-                        <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                    </div>
-                    <div className="contentBox__item">
-                        <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                        <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a>
-                        <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                    </div>
-                    <div className="contentBox__item">
-                        <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                        <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a>
-                        <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                    </div>
-                </Slider>
-            }
-
         </>
     )
 }

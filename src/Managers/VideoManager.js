@@ -335,7 +335,7 @@ const VideoManager = {
             }
         })
     },
-    setVideoLastKnownTimestamp: (videoId, userId, lastKnownTimestamp) => {
+    setVideoLastKnownTimestamp: (videoId, userId, lastKnownTimestamp, duration) => {
         return new Promise(async (res, rej) => {
             try {
                 let docId = `${videoId}_${userId}`
@@ -346,7 +346,8 @@ const VideoManager = {
                         videoId: videoId,
                         userId: userId,
                         type: MediaType.VIDEO_MEDIA,
-                        lastKnownTimestamp: lastKnownTimestamp
+                        lastKnownTimestamp: lastKnownTimestamp,
+                        duration:duration
                     }
                     
                     if (!doc.exists) {

@@ -56,8 +56,8 @@ export default function App() {
                         <Topics />
                     </ProtectedRoute>
                     <ProtectedRoute redirectTo={LOGIN_ROUTE} path={RootRoute}>
-                        <PreEvent />
-                        {/* <Home /> */}
+                        {/* <PreEvent /> */}
+                        <Home />
                     </ProtectedRoute>
                 </Switch>
             }

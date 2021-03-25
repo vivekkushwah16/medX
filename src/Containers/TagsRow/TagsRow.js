@@ -8,7 +8,7 @@ export default function TagsRow(props) {
             <li>Topics : </li>
             {
                 tags.map(currTag => 
-                    <li><a className={activeTag==currTag.tag?"tagDiv tagDivactive":"tagDiv"} onClick={()=>onTagSelect(currTag.tag)}>{currTag.header}</a></li>
+                    <li><a className={activeTag.tag==currTag.tag?"tagDiv tagDivactive":"tagDiv"} onClick={()=>onTagSelect(currTag)}>{currTag.header}</a></li>
                 )
             }
         </ul>
