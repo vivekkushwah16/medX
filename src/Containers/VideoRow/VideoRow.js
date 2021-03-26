@@ -1,15 +1,17 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useContext } from 'react'
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import VideoThumbnail_Rich from '../../Components/VideoThumbnail_Rich/VideoThumbnail_Rich';
 import VideoManager from '../../Managers/VideoManager';
+import { UserContext } from '../../Context/Auth/UserContextProvider';
 
 
 function VideoRow(props) {
     const { heading, tag, lastPlayed, openVideoPop, grid } = props;
     const [videosData, setData] = useState(null);
+    const { mediaMetaData } = useContext(UserContext);
 
     useEffect(() => {
         getVideos()
@@ -26,22 +28,22 @@ function VideoRow(props) {
         dots: false,
         infinite: false,
         speed: 300,
-        slidesToShow: 3.25,
-        slidesToScroll: 3.25,
+        slidesToShow: 4,
+        slidesToScroll: 4,
 
         responsive: [
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 2.5,
-                    slidesToScroll: 2.5,
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
                 }
             },
             {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: 1.5,
-                    slidesToScroll: 1.5
+                    slidesToShow: 2,
+                    slidesToScroll: 2
                 }
             },
             {
@@ -61,57 +63,64 @@ function VideoRow(props) {
             {
                 videosData ?
                     <>
-                    {
-                        grid ?
-                            <>
-                                <div className="contentBox__item-wrapper row">
-                                    {
-                                        videosData.map(vd => (
-                                            <VideoThumbnail_Rich videoInfo={vd} videosData={videosData}
-                                                openVideoPop={openVideoPop} grid={grid}
-                                            />
-                                        ))
-                                    }
-                                </div>
-                            </>
-                            :
-                            <>
-                                <Slider {...settings}>
-                                    {
-                                        videosData.map(vd => (
-                                            <VideoThumbnail_Rich videoInfo={vd} videosData={videosData}
-                                                openVideoPop={openVideoPop} grid={grid}
-                                            />
-                                        ))
-                                    }
-                                </Slider>
-                            </>
-                    }
+                        {
+                            grid ?
+                                <>
+                                    <div className="contentBox__item-wrapper row">
+                                        {
+                                            videosData.map(vd => (
+                                                <>
+                                                    {
+                                                        vd.id == lastPlayed.id &&
+                                                        <VideoThumbnail_Rich videoInfo={vd} videosData={videosData}
+                                                            openVideoPop={openVideoPop} grid={grid}
+                                                            refresh={lastPlayed && vd.id == lastPlayed.id ? Math.random() : ""}
+                                                        />
+                                                    }
+                                                </>
+                                            ))
+                                        }
+                                    </div>
+                                </>
+                                :
+                                <>
+                                    <Slider {...settings}>
+                                        {
+                                            videosData.map(vd => (
+                                                <VideoThumbnail_Rich videoInfo={vd} videosData={videosData}
+                                                    openVideoPop={openVideoPop} grid={grid}
+                                                    refresh={lastPlayed && vd.id == lastPlayed.id ? Math.random() : ""}
+                                                />
+                                            ))
+                                        }
+                                    </Slider>
+                                </>
+                        }
                     </>
                     :
                     <>
-                    <Slider {...settings}>
-                        <div className="contentBox__item">
-                            <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                            {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
-                            <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                        </div>
-                        <div className="contentBox__item">
-                            <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                            {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
-                            <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                        </div>
-                        <div className="contentBox__item">
-                            <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                            {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
-                            <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                        </div>
-                        <div className="contentBox__item">
-                            <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                            {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
-                            <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                        </div>
-                    </Slider>
+                        <Slider {...settings}>
+                            <div className="contentBox__item">
+                                <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
+                                {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
+                                <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
+                            </div>
+                            <div className="contentBox__item">
+                                <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
+                                {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
+                                <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
+                            </div>
+                            <div className="contentBox__item">
+                                <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
+                                {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
+                                <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
+                            </div>
+                            <div className="contentBox__item">
+                                <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
+                                {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
+                                <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
+                            </div>
+                        </Slider>
                     </>
             }
         </>

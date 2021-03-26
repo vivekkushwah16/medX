@@ -2,16 +2,16 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 
 function VideoThumbnail_Rich(props) {
-    const { videosData, refresh, videoInfo, openVideoPop, handleOnItemClick, grid } = props
+    const { videosData, videoInfo, openVideoPop, grid, refresh } = props
     const [metadata, setMetadata] = useState(null);
-    const { getVideoMetaData, mediaMetaData } = useContext(UserContext);
+    const { getVideoMetaData } = useContext(UserContext);
 
     useEffect(() => {
         getVideoMetaData(videoInfo.id).then((data) => {
             setMetadata(data);
-            // console.log(data);
+              console.log(data);
         });
-    }, [videoInfo,mediaMetaData])
+    }, [videoInfo,refresh])
 
     return (
         <div className={grid ? "col-25" : "col-100"}>

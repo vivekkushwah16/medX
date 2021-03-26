@@ -94,7 +94,7 @@ const UserContextProvider = (props) => {
         if (doc.exists) {
             data = doc.data()
         }
-        console.log(data)
+        // console.log(data)
         let newData = { ...mediaMetaData, [mediaId]: data }
         setMediaMetaData(newData)
         return data;

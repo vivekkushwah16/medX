@@ -11,6 +11,9 @@ import VideoThumbnail_Compact from '../../Components/VideoThumbnail_Compact/Vide
 import VideoManager from '../../Managers/VideoManager'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 
+const timeLimit = 10;
+let currenttimeWatched = 0;
+
 function VideoPopup(props) {
     const playerRef = useRef(null);
     const { metadata, currVideosData, videoData: _vd, closeVideoPop, openVideoPop } = props
@@ -20,9 +23,6 @@ function VideoPopup(props) {
     const [likeCount, setLikeCount] = useState(videoData.likes);
     const { setVideoMetaData } = useContext(UserContext);
 
-    const timeLimit = 10;
-    var currenttimeWatched = 0;
-    let timerRef = null;
 
     useEffect(() => {
         setLikeCount(props.videoData.likes);
@@ -30,22 +30,52 @@ function VideoPopup(props) {
         VideoManager.getVideoWithId(props.videoData.id).then(data => {
             setVideoData(data)
         })
-        console.log(metadata.lastKnownTimestamp);
-        seekTo(metadata.lastKnownTimestamp);
     }, [props.videoData])
 
-    const addViewToVideo = async () => {
+    useEffect(() => {
+        if (playerRef.current){
+            seekTo(metadata.lastKnownTimestamp);
+            currenttimeWatched=0;
+        }
+    }, [playerRef.current])
+
+    const [runningTimer, setRunningTimer] = useState(false);
+    const runTimer = async () => {
+        console.log('Still being called');
         if (currenttimeWatched >= timeLimit) { return }
-        timerRef = setInterval(async () => {
-            currenttimeWatched += 1
-            if (currenttimeWatched >= timeLimit) {
-                clearInterval(timerRef)
-                let newCount = await VideoManager.addView(videoData.id);
-                console.log(newCount);
-            }
-        }, 1000)
+        currenttimeWatched += 1
+        console.log('inc timer ', currenttimeWatched)
+        if (currenttimeWatched >= timeLimit) {
+            stopTimer();
+            let newCount = await VideoManager.addView(videoData.id);
+            console.log(newCount);
+        }
     }
 
+    useEffect(
+        function () {
+            if (!runningTimer) {
+                return;
+            }
+
+            const intervalId = setInterval(() => {
+                runTimer();
+            }, 1000);
+            return () => {
+                console.log('Reached cleanup function');
+                clearInterval(intervalId);
+            };
+        },
+        [runningTimer]
+    );
+
+    function startTimer() {
+        setRunningTimer(true);
+    }
+
+    function stopTimer() {
+        setRunningTimer(false);
+    }
 
     const getCurrentTargetLikeStatus = async () => {
         if (videoData) {
@@ -77,15 +107,34 @@ function VideoPopup(props) {
     return (
 
         <div className="modalBox modalBox--large active"  >
-            <span class="modalBox__overlay" onClick={() => {console.log(videoData.id,playerRef.current.getDuration(),playerRef.current.getCurrentTime());closeVideoPop(videoData); clearInterval(timerRef); setVideoMetaData(videoData.id,playerRef.current.getCurrentTime(),playerRef.current.getDuration());}}></span>
+            <span class="modalBox__overlay" onClick={() => {
+                stopTimer();
+                if (playerRef.current) {
+                    var currentTime = playerRef.current.getCurrentTime();
+                    var duration = playerRef.current.getDuration();
+                    console.log(videoData.id, currentTime, duration);
+                    if (currentTime && duration) {
+                        setVideoMetaData(videoData.id, currentTime, duration);
+                        console.log(videoData.id, currentTime, duration);
+                    }
+                }
+                closeVideoPop(videoData);
+            }}></span>
             <div className="modalBox__inner">
                 <div className="modalBox__header">
                     <h3 className="modalBox__title"></h3>
                     <button className="modalBox__close-link" onClick={() => {
+                        stopTimer();
+                        if (playerRef.current) {
+                            var currentTime = playerRef.current.getCurrentTime();
+                            var duration = playerRef.current.getDuration();
+                            console.log(videoData.id, currentTime, duration);
+                            if (currentTime && duration) {
+                                setVideoMetaData(videoData.id, currentTime, duration);
+                                console.log(videoData.id, currentTime, duration);
+                            }
+                        }
                         closeVideoPop(videoData);
-                        clearInterval(timerRef);
-                        console.log(videoData.id,playerRef.current.getDuration(),playerRef.current.getCurrentTime());
-                        setVideoMetaData(videoData.id,playerRef.current.getCurrentTime(),playerRef.current.getDuration());
                     }}>CLOSE</button>
                 </div>
                 <div className="modalBox__body">
@@ -97,13 +146,12 @@ function VideoPopup(props) {
                             controls={true}
                             width={"auto"}
                             height={"25rem"}
-                            onPlay={addViewToVideo}
-                            style={{"backgroundColor":"black"}}
+                            onPlay={startTimer}
+                            style={{ "backgroundColor": "black" }}
                             onPause={() => {
-                                clearInterval(timerRef)
+                                stopTimer()
                             }}
                         ></ReactPlayer>
-                        {/* <img src="assets/images/video2.jpg" alt="" /> */}
                     </div>
 
                     <div className="videodetailBox">
