@@ -14,23 +14,23 @@ export default function Profile() {
                 <img src={defaultImageUrl} alt="" />
             </a>
             <ul className="profile__dropdown">
-                <a href="#" class="profile__dropdown-profile">
-                    <div class="profile__dropdown-profile-pic">
+                <a href="#" className="profile__dropdown-profile">
+                    <div className="profile__dropdown-profile-pic">
                         <img src={defaultImageUrl} alt="" />
-                        {/* <i class="icon-crown"></i> */}
+                        {/* <i className="icon-crown"></i> */}
                     </div>
-                    <div class="profile__dropdown-profile-text">
-                        <p class="profile__dropdown-profile-title">{userInfo.firstName},{userInfo.profession}</p>
-                        <p class="profile__dropdown-profile-subtitle">{userInfo.phoneNumber}</p>
+                    <div className="profile__dropdown-profile-text">
+                        <p className="profile__dropdown-profile-title">{userInfo.firstName} {userInfo.profession}</p>
+                        <p className="profile__dropdown-profile-subtitle">{userInfo.phoneNumber}</p>
                     </div>
                 </a>
-                <ul class="">
+                {/* <ul className="">
                     <li><a href="#">My Account</a></li>
                     <li><a href="#">Achievement</a></li>
                     <li><a href="#">Watchlist</a></li>
                     <li><a href="#">Community connections</a></li>
-                </ul>
-                <button class="btn btn-block btn-grey" onClick={logout}>Log out</button>
+                </ul> */}
+                <button className="btn btn-block btn-grey" onClick={logout}>Log out</button>
             </ul>
         </div >
     )

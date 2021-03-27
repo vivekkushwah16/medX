@@ -9,7 +9,7 @@ import { analytics, database } from '../../Firebase/firebase';
 import StartRating from '../StartRating/StartRating';
 
 function AgendaCard(props) {
-    const { timeline, haveVideo, haveLikeButton, animate, placeIndex } = props
+    const { timeline, haveVideo, haveLikeButton, animate, placeIndex, forEventPage } = props
     const { getLike, addLike, removeLike, getRating, updateRating } = useContext(likeContext)
     const { userInfo, user } = useContext(UserContext)
     const [like, setLike] = useState(false);
@@ -109,10 +109,21 @@ function AgendaCard(props) {
             <div className="maincardBox__card-right">
                 <h4 className="mg-b15 maincardBox__card-title">{timeline.title}</h4>
                 <p className="mg-b25 maincardBox__card-desc">{timeline.description}</p>
-                <h4 className="mg-b20 maincardBox__card-title">SPEAKERS</h4>
-                <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={timeline.speakers[0]} />
                 {
-                    haveLikeButton &&
+                    haveVideo &&
+                    <p className="mg-b25 maincardBox__card-time " style={{ fontWeight: 'bold' }}>{`${MonthName[new Date(timeline.startTime).getMonth()]} ${new Date(timeline.startTime).getDate()}, ${new Date(timeline.startTime).getFullYear()} | ${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p>
+                }
+                <h4 className="mg-b20 maincardBox__card-title">SPEAKERS</h4>
+                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                    {
+                        timeline.speakers.map(id => (
+                            <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={id} />
+                        ))
+                    }
+                </div>
+
+                {
+                    haveLikeButton && !forEventPage &&
                     <div class="rating-block">
                         <button className={` mg-b40 mg-sm - b20 like-btn ${like ? 'like-btn--active' : ''} `} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
                         {
@@ -125,6 +136,19 @@ function AgendaCard(props) {
                     </div>
                 }
             </div>
+            {
+                forEventPage &&
+                <div class="rating-block">
+                    <button className={` mg-b40 mg-sm - b20 like-btn ${like ? 'like-btn--active' : ''} `} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
+                    {
+                        rating !== null &&
+                        <>
+                            <p class="font-14 mg-b20">Is this topic relevant to you?</p>
+                            <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
+                        </>
+                    }
+                </div>
+            }
         </div>
     )
 }

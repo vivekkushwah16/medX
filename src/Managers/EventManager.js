@@ -312,18 +312,15 @@ const EventManager = {
         return new Promise(async (res, rej) => {
             try {
                 const ref = firestore.collection(EVENT_COLLECTION).doc(eventId)
-                await firestore.runTransaction(async transcation => {
-                    let doc = await transcation.get(ref)
-                    if (!doc.exists) {
-                        let err = {
-                            code: 'NotValidId',
-                            message: "No EventId Found"
-                        }
-                        throw (err)
+                let doc = await ref.get()
+                if (!doc.exists) {
+                    let err = {
+                        code: 'NotValidId',
+                        message: "No EventId Found"
                     }
-                    res(doc.data())
-                })
-                res();
+                    throw (err)
+                }
+                res(doc.data())
             } catch (error) {
                 rej(error)
             }

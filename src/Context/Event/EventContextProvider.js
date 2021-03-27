@@ -23,17 +23,29 @@ export default function EventContextProvider(props) {
     const [eventData, setEventData] = useState(getCookiesFromData(EVENTDATA_COOKIES))
     const [timelineData, setTimelineData] = useState(getCookiesFromData(TIMELINEDATA_COOKIES))
 
-    const getEvent = async (eventId) => {
-        const eventIds = Object.keys(eventData)
-        if (eventIds.indexOf(eventId) !== -1) {
-            return eventData[eventId]
-        } else {
-            const _data = await EventManager.getEventWithId(eventId)
-            let newData = { ...eventData, [eventId]: _data }
-            setEventData(newData)
-            setDataInCookies(EVENTDATA_COOKIES, newData)
-            return _data;
-        }
+    const getEvent = (eventId, forceNewValue = false) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const eventIds = Object.keys(eventData)
+                if (!forceNewValue) {
+                    if (eventIds.length > 0) {
+                        if (eventIds.indexOf(eventId) !== -1) {
+                            res(eventData[eventId])
+                            return
+                        }
+                    }
+                }
+
+                const _data = await EventManager.getEventWithId(eventId)
+                let newData = { ...eventData, [eventId]: _data }
+                setEventData(newData)
+                setDataInCookies(EVENTDATA_COOKIES, newData)
+                res(_data)
+            } catch (error) {
+                rej(error)
+            }
+        })
+
     }
 
     const getTimelines = async (eventId) => {

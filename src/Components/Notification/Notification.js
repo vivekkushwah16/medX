@@ -3,13 +3,13 @@ import React from 'react'
 export default function Notification(props) {
     const { data } = props
     return (
-        <div class="notification">
-            <a class="notification__btn" href="#"><i class="icon-bell"></i></a>
-            <ul class="notification__dropdown">
+        <div className="notification">
+            <a className="notification__btn" href="#"><i className="icon-bell"></i></a>
+            <ul className="notification__dropdown">
                 {
-                    data.map(notification => (
+                    data.map((notification, index) => (
                         <li>
-                            <a href="#">{notification}</a>
+                            <a key={index} href="#">{notification}</a>
                         </li>
                     ))
                 }

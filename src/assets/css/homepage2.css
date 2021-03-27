@@ -14,7 +14,7 @@
 .bannerBox__featired-title { font-size: 2.125rem; font-weight: 700;  color: #0B55A0;}
 .bannerBox__featired-title span { font-weight: 400; }
 .bannerBox__subtitle { font-weight: 700; font-size: 1.875rem; display: flex; align-items: center; color: #0B55A0; }
-.bannerBox__date { font-weight: 700; font-family: 'Lato'; font-size: 1.875rem; display: flex; align-items: center; color: #0B55A0; }
+.bannerBox__date { font-weight: 700; font-size: 1.875rem; display: flex; align-items: center; color: #0B55A0; }
 .bannerBox__date > sup { font-size: 50%; display: inline-block; margin-top: -20px; font-weight: 900; }
 .bannerBox__status { display: flex; align-items: center; }
 .bannerBox__status-title { padding-right: 0.5rem; font-weight: 700; font-size: 1.1875rem; color: #015189; text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15); }

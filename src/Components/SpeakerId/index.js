@@ -38,14 +38,18 @@ export function CardSpeaker(props) {
                 <div className="maincardBox__card-profile-popover-text">
                     <h3 className="maincardBox__card-profile-popover-title">{profile.name}</h3>
                     <ul className="maincardBox__card-profile-popover-desc">
-                        <li>- Research Fellow at AIIMS</li>
-                        <li>- Member of ESA</li>
-                        <li>- Speaker for Past 3 IMPACT Conferences</li>
+
                         {
-                            profile.profileLine.length > 0 &&
-                            profile.profileLine.map(line => (
-                                <li>- {line}</li>
-                            ))
+                            profile.profileLine.length > 0 ?
+                                profile.profileLine.map(line => (
+                                    <li>- {line}</li>
+                                ))
+                                :
+                                <>
+                                    <li>- Research Fellow at AIIMS</li>
+                                    <li>- Member of ESA</li>
+                                    <li>- Speaker for Past 3 IMPACT Conferences</li>
+                                </>
                         }
                     </ul>
 
@@ -68,11 +72,9 @@ export function CardSpeaker(props) {
                 </div>
             </div>
             <img className="maincardBox__card-profile-pic" src={profile.photoURL} alt="" onClick={() => {
-                console.log('xxxxxxxxx////////////')
                 setIsProfileActive(true)
             }} />
             <div className="maincardBox__card-profile-text" onClick={() => {
-                console.log('xxxxxxxxx////////////')
                 setIsProfileActive(true)
             }}>
                 <p className="maincardBox__card-profile-title">{profile.name}</p>

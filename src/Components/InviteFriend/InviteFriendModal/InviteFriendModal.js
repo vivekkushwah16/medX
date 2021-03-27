@@ -7,7 +7,9 @@ import whatsapp from "./assets/whatsapp.png";
 import { UserContext } from '../../../Context/Auth/UserContextProvider';
 import './invite.css'
 
-const mailUrl = 'http://event.markonnect.in/inviteFriend'
+const mailUrl = 'https://cipla-impact.el.r.appspot.com/inviteFriends'
+// const mailUrl = 'http://localhost:8080/inviteFriends'
+
 
 function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -56,15 +58,18 @@ export default function InviteFriendModal(props) {
                 setError(true)
                 setLoading(false)
             }
+            const link = window.location.hostname === 'localhost' ? 'https://cipla-impact.web.app/' : window.location.href
             axios.post(mailUrl,
                 {
                     name: user.displayName,
-                    senderMail: email.toLowerCase(),
-                    email: userInfo.email,
+                    email: email.toLowerCase(),
+                    senderMail : userInfo.email,
+                    link,
                 }).then(res => {
                     alert.success("Mail sent successfully!!")
                     setLoading(false)
                 }).catch(err => {
+                    console.log(err)
                     setError(true)
                     alert.error("Failed: Mail not sent.")
                     setLoading(false)

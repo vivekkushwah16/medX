@@ -38,7 +38,7 @@ function PreEvent() {
 
             {
                 showVideoModal &&
-                <VideoModal link={'https://player.vimeo.com/video/184520235'} close={() => { setVideoModalVisible(false) }}></VideoModal>
+                <VideoModal link={'https://player.vimeo.com/video/528854507'} close={() => { setVideoModalVisible(false) }}></VideoModal>
             }
             <section class="wrapper" id="root">
                 <div class="topicsBox__wrapper">
@@ -50,9 +50,9 @@ function PreEvent() {
                         <div class="bannerBox__inner bannerBox__inner2 gradient-bg4">
                             <div class="bannerBox__slide">
                                 <div class="bannerBox__left">
-                                    <h1 class="bannerBox__maintitle">50+ Eminent Speakers</h1>
-                                    <p class="bannerBox__subtitle mg-b70">Two days of engaging<br />sessions</p>
-                                    <p class="bannerBox__date mg-b40">9<sup>th</sup> &amp; 10<sup>th</sup> April 2021</p>
+                                    {/* <h1 class="bannerBox__maintitle"> </h1> */}
+                                    <p class="bannerBox__subtitle mg-b70">Do tune in on 16th April 2021 for 2 days of cutting-edge academic feast with experts in Respiratory Medicine</p>
+                                    <p class="bannerBox__date mg-b40">16<sup>th</sup> April 2021</p>
                                     <div class="d-flex">
                                         <AddToCalendar />
                                         <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20" onClick={() => startVideo()}>WATCH TRAILER</a>

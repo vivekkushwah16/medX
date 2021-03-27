@@ -215,28 +215,28 @@ class Register extends Component {
             <div className="login2Box__wrapper min-height-full gradient-bg3">
                 {
                     this.state.showVideo &&
-                    <VideoModal link={'https://player.vimeo.com/video/184520235'} close={() => { this.setState({ showVideo: false }) }}></VideoModal>
+                    <VideoModal link={'https://player.vimeo.com/video/528854507'} close={() => { this.setState({ showVideo: false }) }}></VideoModal>
                 }
                 <header className="headerBox">
                     <div className="d-flex align-items-center justify-content-between">
                         <div className="headerBox__left">
                             <a href="#" className="headerBox__logo">
-                                <img src="assets/images/logo2.png" alt="" />
+                                <img src="assets/images/cipla-logo.png" alt="" />
                             </a>
                         </div>
                         <div className="headerBox__right">
                             <a href="#" className="headerBox__logo2">
-                                <img src="assets/images/cipla-logo.png" alt="" />
+                                <img src="assets/images/logo2.png" alt="" />
                             </a>
                         </div>
                     </div>
                 </header>
-
+                {/* 2 days of cutting edge academic feast with 7 international and 14 national experts in Respiratory Medicine  */}
                 <div className="login2Box__left">
                     <div className="login2Box-text">
                         <div className="login2Box__label">
-                            <h2 className="login2Box__label-title mg-b20">50+ Eminent Speakers</h2>
-                            <p className="login2Box__label-desc">Two days of Engaging Sessions</p>
+                            <h2 className="login2Box__label-title mg-b20" style={{ textTransform: 'uppercase' }}>2 Days of cutting edge academic feast  </h2>
+                            <p className="login2Box__label-desc">with 7 international and 14 national experts in Respiratory Medicine</p>
                         </div>
                         <div className="login2Box__video">
                             {/* <a href="#" className="login2Box__video__play"><i className="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a> */}

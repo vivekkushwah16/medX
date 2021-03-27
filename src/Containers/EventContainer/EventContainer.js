@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import ReactPlayer from 'react-player'
 import CommunityBox from '../../Components/CommunityBox/CommunityBox'
+import About from '../../Components/Event/About/About'
+import AgendaTab from '../../Components/Event/AgendaTab/AgendaTab'
 import EventMenu from '../../Components/Event/EventMenu'
+import Trending from '../../Components/Event/Trending/Trending'
 
 const menuItemsId = {
     About: 'About',
@@ -19,7 +22,8 @@ const menuItems = [
     { id: menuItemsId.Partner_with_us, name: 'Partner with us', className: '' },
 ]
 
-export default function EventContainer() {
+export default function EventContainer(props) {
+    const { data, agendaData } = props;
     const [activeMenu, setActiveMenu] = useState(menuItems[0])
     const like = { count: 20, status: true }
     const toggleLike = (value) => {
@@ -48,6 +52,22 @@ export default function EventContainer() {
                             <div className="text-right pd-t20 pd-b20 hide-on-desktop">
                                 <a href="#" className={`like-btn ${like.status ? 'like-btn--active' : ''}`} onClick={toggleLike}><i className="icon-like"></i>{like.count}</a>
                             </div>
+
+                            {
+                                activeMenu.id === menuItemsId.About &&
+                                <About data={data} />
+                            }
+
+                            {
+                                activeMenu.id === menuItemsId.Agenda && agendaData &&
+                                <AgendaTab data={agendaData} haveVideo={false} haveLikeButton={true} />
+                            }
+
+                            {
+                                activeMenu.id === menuItemsId.Trending &&
+                                <Trending />
+                            }
+
                         </div>
                     </div>
 
