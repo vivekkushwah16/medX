@@ -68,6 +68,14 @@ export default function EventContainer(props) {
                                 <Trending />
                             }
 
+                            {
+                                activeMenu.id === menuItemsId.Polls &&
+                                <div id="tab4" class="eventBox__tabs-content active">
+                                    <CommunityBox />
+                                </div>
+                            }
+                            
+
                         </div>
                     </div>
 
