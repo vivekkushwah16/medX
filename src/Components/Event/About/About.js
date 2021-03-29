@@ -4,7 +4,6 @@ import SpeakerProfile from '../../../Containers/SpeakerProfile.js/SpeakerProfile
 
 export default function About(props) {
     const { data } = props
-    console.log(data)
     return (
         <div id="tab1" className="eventBox__tabs-content active">
             <h1 className="eventBox__title mg-b30">{data.title}</h1>

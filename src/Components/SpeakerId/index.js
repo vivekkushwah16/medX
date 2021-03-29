@@ -27,6 +27,20 @@ export function CardSpeaker(props) {
 
     return (
         <div key={profile.name} className={`maincardBox__card-profile ${isProfileActive ? 'active' : ''}`} >
+            {
+                isProfileActive &&
+                <div className="maincardBox__card-profile-popover-closeConatiner" style={{
+                    // background: 'red',
+                    width: '100%',
+                    height: '100%',
+                    position: 'fixed',
+                    top: '0',
+                    left: '0',
+                }} onClick={(e) => {
+                    e.preventDefault()
+                    setIsProfileActive(false)
+                }}></div>
+            }
             <div className={`maincardBox__card-profile-popover`}>
                 <a href="#" className="maincardBox__card-profile-popover-close" onClick={(e) => {
                     e.preventDefault()

@@ -2,6 +2,7 @@ import React from 'react'
 import ReactPlayer from 'react-player'
 import './VideoModal.css'
 
+//close, link
 function VideoModal(props) {
     return (
         <div className="videoModal" onClick={(e) => {

@@ -5,8 +5,7 @@ import { logout } from '../../Firebase/firebase'
 const defaultImageUrl = "https://firebasestorage.googleapis.com/v0/b/djfarmademo.appspot.com/o/profileimages%2Fblank-avatar.png?alt=media&token=2af15226-9bd7-47ce-bc72-f3c1a12a0780";
 
 export default function Profile() {
-    const { userInfo, user } = useContext(UserContext)
-
+    const { userInfo } = useContext(UserContext)
 
     return (
         <div className="headerBox__profile">
@@ -20,7 +19,8 @@ export default function Profile() {
                         {/* <i className="icon-crown"></i> */}
                     </div>
                     <div className="profile__dropdown-profile-text">
-                        <p className="profile__dropdown-profile-title">{userInfo.firstName} {userInfo.profession}</p>
+                        <p className="profile__dropdown-profile-title">{userInfo.firstName} {userInfo.lastName}</p>
+                        <p className="profile__dropdown-profile-subtitle">{userInfo.profession}, {userInfo.speciality}</p>
                         <p className="profile__dropdown-profile-subtitle">{userInfo.phoneNumber}</p>
                     </div>
                 </a>

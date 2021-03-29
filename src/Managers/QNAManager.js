@@ -7,13 +7,11 @@ const QNAManager = {
             try {
                 let id = uniqid('qna-')
                 let docRef = firestore.collection(QNA_COLLECTION).doc(id)
-                await firestore.runTransaction(transaction => {
-                    transaction.set(docRef, {
-                        userId,
-                        eventId,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                        question: question,
-                    })
+                await docRef.set({
+                    userId,
+                    eventId,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    question: question,
                 })
                 res()
             } catch (error) {

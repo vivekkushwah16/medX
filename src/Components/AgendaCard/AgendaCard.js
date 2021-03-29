@@ -6,6 +6,7 @@ import SpeakerProfile from '../../Containers/SpeakerProfile.js/SpeakerProfile';
 import { UserContext } from '../../Context/Auth/UserContextProvider';
 import { likeContext } from '../../Context/Like/LikeContextProvider';
 import { analytics, database } from '../../Firebase/firebase';
+import ReadMore from '../ReadMore/ReadMore';
 import StartRating from '../StartRating/StartRating';
 
 function AgendaCard(props) {
@@ -108,7 +109,7 @@ function AgendaCard(props) {
             </div>
             <div className="maincardBox__card-right">
                 <h4 className="mg-b15 maincardBox__card-title">{timeline.title}</h4>
-                <p className="mg-b25 maincardBox__card-desc">{timeline.description}</p>
+                <ReadMore className="mg-b25 maincardBox__card-desc" description={timeline.description} />
                 {
                     haveVideo &&
                     <p className="mg-b25 maincardBox__card-time " style={{ fontWeight: 'bold' }}>{`${MonthName[new Date(timeline.startTime).getMonth()]} ${new Date(timeline.startTime).getDate()}, ${new Date(timeline.startTime).getFullYear()} | ${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p>

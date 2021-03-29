@@ -1,7 +1,9 @@
-import { EVENT_COLLECTION, LIKES_COLLECTION, TIMELINE_COLLECTION } from "../AppConstants/CollectionConstants";
+import { EVENT_COLLECTION, LIKES_COLLECTION, PARTNERWITHUSAGREE_COLLECTION, PARTNERWITHUS_COLLECTION, TIMELINE_COLLECTION, TRENDINGITEM_COLLECTION } from "../AppConstants/CollectionConstants";
 import { LikeType } from "../AppConstants/TypeConstant";
 import firebase, { firestore } from "../Firebase/firebase";
 var uniqid = require('uniqid');
+
+let trendingListenerRef = null;
 
 const EventManager = {
     addEvent: (title, description = "", videoUrl = "") => {
@@ -326,6 +328,191 @@ const EventManager = {
             }
         })
     },
+    addTrendingItem: (eventId, type, title = "", description = "", link, thumbnailUrl = "", disabled = true) => {
+        return new Promise(async (res, rej) => {
+            try {
+                let itemId = uniqid('trending-')
+                await firestore.collection(TRENDINGITEM_COLLECTION).doc(itemId).set({
+                    itemId,
+                    type,
+                    title: title ? title : "",
+                    description: description ? description : "",
+                    eventId,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    link,
+                    thumbnailUrl: thumbnailUrl ? thumbnailUrl : "",
+                    disabled
+                })
+                res(itemId);
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    removeTrendingItem: (itemId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                await firestore.collection(TRENDINGITEM_COLLECTION).doc(itemId).delete()
+                res();
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    disableTrendingItem: (itemId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                await firestore.collection(TRENDINGITEM_COLLECTION).doc(itemId).update({
+                    disabled: true
+                })
+                res();
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    enableTrendingItem: (itemId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                await firestore.collection(TRENDINGITEM_COLLECTION).doc(itemId).update({
+                    disabled: false
+                })
+                res();
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    getTrending: (eventId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const ref = firestore.collection(TRENDINGITEM_COLLECTION).where('eventId', '==', eventId)
+                const query = await ref.get()
+                if (query.empty) {
+                    res([]);
+                }
+                let _data = query.docs.map(doc => doc.data())
+                res(_data);
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    attachTrendingListener: (eventId, callback) => {
+        trendingListenerRef = firestore.collection(TRENDINGITEM_COLLECTION).where('eventId', '==', eventId).onSnapshot(snapshot => {
+            if (snapshot.empty) {
+                if (callback) {
+                    callback([])
+                }
+                return
+            }
+            let _data = snapshot.docs.map(doc => doc.data())
+            if (callback) {
+                callback(_data)
+            }
+            return
+        }, err => {
+            if (callback) {
+                callback(null, err)
+            }
+        })
+    },
+    removeTrendingListener: () => {
+        if (trendingListenerRef) { trendingListenerRef() }
+    },
+    addPartnerWithUs: (eventId, title = "", description = "", subTitle = "", subDesciption = "", thumbnailUrl = "") => {
+        return new Promise(async (res, rej) => {
+            try {
+                let id = uniqid('partnerWithUs-')
+                await firestore.collection(PARTNERWITHUS_COLLECTION).doc(id).set({
+                    id,
+                    title: title ? title : "",
+                    description: description ? description : "",
+                    subTitle: subTitle ? subTitle : "",
+                    subDesciption: subDesciption ? subDesciption : "",
+                    eventId,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    thumbnailUrl: thumbnailUrl ? thumbnailUrl : "",
+                    disabled: false
+                })
+                res(id);
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    getPartnerWithUs: (eventId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const ref = firestore.collection(PARTNERWITHUS_COLLECTION).where('eventId', '==', eventId)
+                const query = await ref.get()
+                if (query.empty) {
+                    res([]);
+                }
+                let _data = query.docs.map(doc => doc.data())
+                res(_data);
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    addPartnerWithUsInput: (eventId, id, userId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const partnerDocRef = firestore.collection(PARTNERWITHUS_COLLECTION).doc(id)
+                const LikeRef = firestore.collection(PARTNERWITHUSAGREE_COLLECTION).doc(`${userId}+${id}`)
+                await firestore.runTransaction(async transcation => {
+                    let doc = await transcation.get(partnerDocRef)
+                    let likeDoc = await transcation.get(LikeRef)
+                    if (likeDoc.exists) {
+                        let err = {
+                            code: 'AlreadyAgreed',
+                            message: "Already counted you in."
+                        }
+                        throw (err)
+                    }
+                    if (!doc.exists) {
+                        let err = {
+                            code: 'NotValidId',
+                            message: "No partnerWithUs Data Found"
+                        }
+                        throw (err)
+                    }
+                    transcation.set(LikeRef, {
+                        id: `${userId}+${id}`,
+                        targetId: id,
+                        user: userId,
+                        eventId: eventId,
+                        timeStamp: firebase.firestore.FieldValue.serverTimestamp()
+                    })
+                    transcation.update(partnerDocRef, {
+                        agreedCount: firebase.firestore.FieldValue.increment(1)
+                    })
+                })
+                res();
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    checkForAlreadyAgreedPartner: (id, uid) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const LikeRef = firestore.collection(PARTNERWITHUSAGREE_COLLECTION).doc(`${uid}+${id}`)
+                await firestore.runTransaction(async transcation => {
+                    const doc = await transcation.get(LikeRef)
+                    if (doc.exists) {
+                        res(doc.data)
+                    }
+                    else {
+                        res(null)
+                    }
+                })
+            } catch (error) {
+                rej(error)
+            }
+        })
+    }
 }
 
 export default EventManager;

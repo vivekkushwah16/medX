@@ -4,6 +4,7 @@ import CommunityBox from '../../Components/CommunityBox/CommunityBox'
 import About from '../../Components/Event/About/About'
 import AgendaTab from '../../Components/Event/AgendaTab/AgendaTab'
 import EventMenu from '../../Components/Event/EventMenu'
+import PartnerWithUs from '../../Components/Event/PartnerWithUs/PartnerWithUs'
 import Trending from '../../Components/Event/Trending/Trending'
 
 const menuItemsId = {
@@ -23,7 +24,7 @@ const menuItems = [
 ]
 
 export default function EventContainer(props) {
-    const { data, agendaData } = props;
+    const { id, data, agendaData, trendingData, partnerWithUsData, countPartnerWithUsAgree, sendQuestion } = props;
     const [activeMenu, setActiveMenu] = useState(menuItems[0])
     const like = { count: 20, status: true }
     const toggleLike = (value) => {
@@ -62,25 +63,29 @@ export default function EventContainer(props) {
                                 activeMenu.id === menuItemsId.Agenda && agendaData &&
                                 <AgendaTab data={agendaData} haveVideo={false} haveLikeButton={true} />
                             }
-
                             {
-                                activeMenu.id === menuItemsId.Trending &&
-                                <Trending />
+                                activeMenu.id === menuItemsId.Trending && trendingData &&
+                                <Trending data={trendingData} />
                             }
 
                             {
                                 activeMenu.id === menuItemsId.Polls &&
                                 <div id="tab4" class="eventBox__tabs-content active">
-                                    <CommunityBox />
+                                    <CommunityBox sendQuestion={sendQuestion} id={id} />
                                 </div>
                             }
-                            
+
+                            {
+                                activeMenu.id === menuItemsId.Partner_with_us && partnerWithUsData &&
+                                <PartnerWithUs data={partnerWithUsData} countIn={countPartnerWithUsAgree} />
+                            }
+
 
                         </div>
                     </div>
 
                     <div className="eventBox__right show-on-desktop col">
-                        <CommunityBox />
+                        <CommunityBox sendQuestion={sendQuestion} id={id} />
                     </div>
                 </div>
             </div>

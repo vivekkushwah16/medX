@@ -1,7 +1,7 @@
 /* ### partner Box ### */
 .partnerBox { display: flex; flex-wrap: wrap; }
 .partnerBox__item { margin: 1rem -4rem 3rem; transition: all 0.3s; opacity: 0.2; width: 22.125rem; display: flex; flex-direction: column; border-radius: 0.625rem; box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25); background: #fff; }
-.partnerBox__item.slick-center { opacity: 1; transform: scale(1.5); z-index: 11; position: relative; }
+.slick-center .partnerBox__item { opacity: 1; transform: scale(1.5); z-index: 11; position: relative; }
 .partnerBox__item-pic { width: 100%; }
 .partnerBox__item-pic > img { width: 100%;}
 .partnerBox__item-text { padding: 1rem 8.5rem 0.5rem 1rem; position: relative; }

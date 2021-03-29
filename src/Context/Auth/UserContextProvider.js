@@ -15,6 +15,7 @@ const UserContextProvider = (props) => {
     useEffect(() => {
         auth.onAuthStateChanged(function (user) {
             if (user) {
+                console.log(user.email)
                 localStorage.setItem('userAuth', JSON.stringify(user))
                 setUser(user)
                 setInitalCheck(true)

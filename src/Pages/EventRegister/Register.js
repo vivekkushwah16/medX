@@ -32,7 +32,7 @@ class Register extends Component {
         firstName: "",
         lastName: "",
         // hospitalName: "",
-        profession: "",
+        profession: "Doctor",
         speciality: "",
         country: "India",
         state: "",
@@ -258,10 +258,10 @@ class Register extends Component {
                     {
                         this.state.errors.alreadyRegistered &&
                         <>
-                            <span style={{ color: 'red' }}>*You are Already Registered</span><br></br>
+                            <span style={{ color: 'red' }}>*This Mobile Number/Email-Id is already in use.</span><br></br>
                         </>
                     }
-                    <a className="btn btn-link" href="/login">Already Registered? Click here</a>
+                    <a className="btn btn-link" href="/login">Already Registered? Login</a>
 
                     <form onSubmit={this.handleSubmit}>
 
@@ -308,6 +308,7 @@ class Register extends Component {
                         <div className="form-group">
                             <PhoneInput
                                 international
+                                countryCallingCodeEditable={false}
                                 defaultCountry={"IN"}
                                 className="form-control "
                                 name="phoneNumber"
@@ -325,7 +326,7 @@ class Register extends Component {
                                     name="profession"
                                     value={this.state.profession}
                                     onChange={this.handleInputChange}>
-                                    <option>Select Profession</option>
+                                    {/* <option>Select Profession</option> */}
                                     <option>Doctor</option>
                                     <option>Paramedics</option>
                                     <option>HCP</option>
@@ -422,7 +423,7 @@ class Register extends Component {
                                 type="checkbox"
                                 checked={this.state.termsAndConditions}
                                 onChange={this.handleInputChange} />
-                            I accept term and condition</label>
+                            I accept <a href="http://www.africau.edu/images/default/sample.pdf" target="_blank">term and condition</a> </label>
                         {this.state.errors.termsAndConditions &&
                             <span className="input-error">{this.state.errors.termsAndConditions}</span>}
 

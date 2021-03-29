@@ -53,9 +53,9 @@
 .maincardBox__card.maincardBox__card--large .maincardBox__card-wrapper { height: auto; }
 
 .maincardBox__card{ transition: 0.25s; transform: scale(1); cursor: pointer;}
-.maincardBox__card:hover{  background-color: #01518A; }
+/* .maincardBox__card:hover{  background-color: #01518A; }
 .maincardBox__card:hover .maincardBox__card-right,.maincardBox__card:hover  .maincardBox__card-profile ,.maincardBox__card:hover .maincardBox__card-time,.maincardBox__card:hover .maincardBox__card-date{ color: #fff!important; }
-.maincardBox__card:hover .like-btn--active{border-color: #fff;}
+.maincardBox__card:hover .like-btn--active{border-color: #fff;} */
 
 
 .maincardBox__card-video { padding: 0; height: 100%; width: 100%; min-height: 15rem; cursor: pointer; position: relative; margin: 0; background-position: center center; background-size: cover; border-top-left-radius: 0.65rem; border-bottom-left-radius: 0.65rem;  transition: 0.75s; background-size: 115% 115%;}

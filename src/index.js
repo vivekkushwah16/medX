@@ -9,6 +9,7 @@ import EventContextProvider from './Context/Event/EventContextProvider';
 import LikeContextProvider from './Context/Like/LikeContextProvider';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
+import MediaModalContextProvider from './Context/MedialModal/MediaModalContextProvider';
 
 const options = {
   position: positions.BOTTOM_RIGHT,
@@ -23,9 +24,11 @@ ReactDOM.render(
       <EventContextProvider>
         <SpeakerContextProvider>
           <LikeContextProvider>
-            <AlertProvider template={AlertTemplate} {...options}>
-              <App />
-            </AlertProvider>
+            <MediaModalContextProvider>
+              <AlertProvider template={AlertTemplate} {...options}>
+                <App />
+              </AlertProvider>
+            </MediaModalContextProvider>
           </LikeContextProvider>
         </SpeakerContextProvider>
       </EventContextProvider>
