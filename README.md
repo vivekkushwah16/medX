@@ -3,7 +3,26 @@ npm run build
 firebase deploy --only hosting 
 ```
 
-
+{
+"source": "/register",
+"destination": "/index.html"
+},
+{
+"source": "/login",
+"destination": "/index.html"
+},
+{
+"source": "/topics",
+"destination": "/index.html"
+},
+{
+"source": "/home",
+"destination": "/index.html"
+},
+{
+"source": "/accounts",
+"function": "accounts"
+}
 
 
 

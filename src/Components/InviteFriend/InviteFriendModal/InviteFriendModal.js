@@ -6,6 +6,8 @@ import axios from 'axios';
 import whatsapp from "./assets/whatsapp.png";
 import { UserContext } from '../../../Context/Auth/UserContextProvider';
 import './invite.css'
+import { AnalyticsContext } from '../../../Context/Analytics/AnalyticsContextProvider';
+import { INVITEYOURFRIEND_EVENT_EMAIL, INVITEYOURFRIEND_EVENT_FACEBOOK, INVITEYOURFRIEND_EVENT_TWITTER, INVITEYOURFRIEND_EVENT_WHATSAPP } from '../../../AppConstants/AnalyticsEventName';
 
 const mailUrl = 'https://cipla-impact.el.r.appspot.com/inviteFriends'
 // const mailUrl = 'http://localhost:8080/inviteFriends'
@@ -26,6 +28,8 @@ export default function InviteFriendModal(props) {
     const [isLoading, setLoading] = useState(false)
 
     const { user, userInfo } = useContext(UserContext)
+
+    const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
 
 
     const copyCodeToClipboard = () => {
@@ -63,11 +67,12 @@ export default function InviteFriendModal(props) {
                 {
                     name: user.displayName,
                     email: email.toLowerCase(),
-                    senderMail : userInfo.email,
+                    senderMail: userInfo.email,
                     link,
                 }).then(res => {
                     alert.success("Mail sent successfully!!")
                     setLoading(false)
+                    addAnalytics(INVITEYOURFRIEND_EVENT_EMAIL)
                 }).catch(err => {
                     console.log(err)
                     setError(true)
@@ -75,6 +80,11 @@ export default function InviteFriendModal(props) {
                     setLoading(false)
                 })
         })
+    }
+
+    const addAnalytics = (name) => {
+        addGAWithUserInfo(name)
+        addCAWithUserInfo(name, true, {}, true)
     }
 
     return (
@@ -119,16 +129,25 @@ export default function InviteFriendModal(props) {
                                 <a
                                     href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
                                     target="_blank"
+                                    onClick={() => {
+                                        addAnalytics(INVITEYOURFRIEND_EVENT_FACEBOOK)
+                                    }}
                                 >
                                     <img src={fb} alt="" />
                                 </a>
                                 <a
                                     href={`https://twitter.com/intent/tweet?url=${url}`}
                                     target="_blank"
+                                    onClick={() => {
+                                        addAnalytics(INVITEYOURFRIEND_EVENT_TWITTER)
+                                    }}
                                 >
                                     <img src={twitter} alt="" />
                                 </a>
-                                <a href={`https://wa.me/?text=${url}`} target="_blank">
+                                <a href={`https://wa.me/?text=${url}`} target="_blank"
+                                    onClick={() => {
+                                        addAnalytics(INVITEYOURFRIEND_EVENT_WHATSAPP)
+                                    }}>
                                     <img src={whatsapp} alt="" />
                                 </a>
                             </div>

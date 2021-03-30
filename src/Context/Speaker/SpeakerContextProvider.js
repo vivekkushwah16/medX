@@ -34,7 +34,7 @@ export default function SpeakerContextProvider(props) {
             return speakersData[speakerIds]
         } else {
             const data = await SpeakerManager.getSpeaker(speakerId)
-            console.log(data)
+            // console.log(data)
             let newData = { ...speakersData, [speakerId]: data }
             setSpeakersData(newData)
             setSpeakerDataInCookies(newData)

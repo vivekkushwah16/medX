@@ -50,9 +50,9 @@ export default function EventContainer(props) {
                         <div className="eventBox__tabs-wrapper">
                             <EventMenu menuItems={menuItems} activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
 
-                            <div className="text-right pd-t20 pd-b20 hide-on-desktop">
+                            {/* <div className="text-right pd-t20 pd-b20 hide-on-desktop">
                                 <a href="#" className={`like-btn ${like.status ? 'like-btn--active' : ''}`} onClick={toggleLike}><i className="icon-like"></i>{like.count}</a>
-                            </div>
+                            </div> */}
 
                             {
                                 activeMenu.id === menuItemsId.About &&

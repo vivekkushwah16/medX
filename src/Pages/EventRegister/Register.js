@@ -150,9 +150,17 @@ class Register extends Component {
                     country: this.state.country,
                     state: this.state.state,
                     city: this.state.city,
+                    profession: this.state.profession,
+                    speciality: this.state.speciality,
                     date: new Date()
                 })
                 let _data = {
+                    email: this.state.email,
+                    phoneNumber: this.state.phoneNumber,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    profession: this.state.profession,
+                    speciality: this.state.speciality,
                     country: this.state.country,
                     state: this.state.state,
                     city: this.state.city,

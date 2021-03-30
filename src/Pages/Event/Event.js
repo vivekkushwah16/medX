@@ -8,7 +8,11 @@ import { eventContext } from '../../Context/Event/EventContextProvider'
 
 export default function Event() {
     let param = useParams()
-    let { getEvent, getTimelines, attachTrendingDataListener, removeTrendingDataListener, getPartnerWithUs, countPartnerWithUsAgree, sendQuestion } = useContext(eventContext)
+    let {
+        getEvent, getTimelines,
+        attachTrendingDataListener, removeTrendingDataListener,
+        getPartnerWithUs, countPartnerWithUsAgree,
+        sendQuestion } = useContext(eventContext)
     const [eventData, setEventData] = useState({})
     const [agendaData, setAgendaData] = useState({})
     const [trendingData, setTrendingData] = useState({})

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { MEDIAMETADATA_COLLECTION } from '../../AppConstants/CollectionConstants';
 import { MediaType } from '../../AppConstants/TypeConstant';
-import { analytics, auth, database, getUserProfile, firestore } from '../../Firebase/firebase';
+import firebase, { analytics, auth, database, getUserProfile, firestore } from '../../Firebase/firebase';
 import VideoManager from '../../Managers/VideoManager';
 
 export const UserContext = createContext();
@@ -13,13 +13,16 @@ const UserContextProvider = (props) => {
     const [mediaMetaData, setMediaMetaData] = useState({})
 
     useEffect(() => {
-        auth.onAuthStateChanged(function (user) {
+        auth.onAuthStateChanged(async (user) => {
             if (user) {
                 console.log(user.email)
                 localStorage.setItem('userAuth', JSON.stringify(user))
                 setUser(user)
                 setInitalCheck(true)
                 addUserLoginAnalytics(user.uid)
+                const userInfo = await getUserProfile(user.uid)
+                console.log(userInfo)
+                // setuserInfo(userInfo)
             } else {
                 localStorage.removeItem('userAuth')
                 setUser(null)
@@ -29,16 +32,27 @@ const UserContextProvider = (props) => {
     }, [])
 
     const addUserLoginAnalytics = async (uid) => {
+        console.log("addUserLoginAnalytics ",uid)
         const userInfo = await getUserProfile(uid)
         let _data = {
             userId: uid,
+            profession: userInfo.profession,
+            speciality: userInfo.speciality,
             country: userInfo.country,
             state: userInfo.state,
             city: userInfo.city,
             date: new Date()
         }
         analytics.logEvent("user_login", _data)
-        await database.ref(`/user_login/${uid}_${new Date().getTime()}`).update(_data)
+        // /user_login/${uid}_${new Date().getTime()}
+        await database.ref(`/user_login/${uid}`).update({
+            ..._data,
+            email: userInfo.email,
+            phoneNumber: userInfo.phoneNumber,
+            firstName: userInfo.firstName,
+            lastName: userInfo.lastName,
+            loginTimestamp: firebase.database.ServerValue.TIMESTAMP
+        })
         setuserInfo(userInfo)
     }
 
@@ -103,7 +117,7 @@ const UserContextProvider = (props) => {
 
     return (
         <>
-            <UserContext.Provider value={{ user: user, initalCheck, userInfo, getVideoMetaData, setVideoMetaData, mediaMetaData}}>
+            <UserContext.Provider value={{ user: user, initalCheck, userInfo, getVideoMetaData, setVideoMetaData, mediaMetaData }}>
                 {props.children}
             </UserContext.Provider>
         </>

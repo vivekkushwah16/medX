@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react'
+import { INVITEYOURFRIEND_EVENT_WHATSAPP, TIMELINE_LIKE_EVENT } from '../../AppConstants/AnalyticsEventName';
 import { MonthName } from '../../AppConstants/Months';
 import { SpeakerProfileType } from '../../AppConstants/SpeakerProfileType';
 import { LikeType } from '../../AppConstants/TypeConstant';
 import SpeakerProfile from '../../Containers/SpeakerProfile.js/SpeakerProfile';
+import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider';
 import { UserContext } from '../../Context/Auth/UserContextProvider';
 import { likeContext } from '../../Context/Like/LikeContextProvider';
 import { analytics, database } from '../../Firebase/firebase';
@@ -13,6 +15,8 @@ function AgendaCard(props) {
     const { timeline, haveVideo, haveLikeButton, animate, placeIndex, forEventPage } = props
     const { getLike, addLike, removeLike, getRating, updateRating } = useContext(likeContext)
     const { userInfo, user } = useContext(UserContext)
+    const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
+
     const [like, setLike] = useState(false);
     const [rating, setRating] = useState(null);
 
@@ -69,11 +73,15 @@ function AgendaCard(props) {
         if (like) {
             await removeLike(timeline.id, timeline.eventId, LikeType.TIMELINE_LIKE)
             analytics.logEvent("timeline_revertedlike", _data)
-            await database.ref(`/timeline_revertedlike/${user.uid}_${timeline.id}`).update(_data)
+            // await database.ref(`/timeline_revertedlike/${user.uid}_${timeline.id}`).update(_data)
+            await database.ref(`/timeline_like/${user.uid}_${timeline.id}`).remove()
+
         } else {
             await addLike(timeline.id, timeline.eventId, LikeType.TIMELINE_LIKE)
-            analytics.logEvent("timeline_like", _data)
-            await database.ref(`/timeline_like/${user.uid}_${timeline.id}`).update(_data)
+            addGAWithUserInfo(TIMELINE_LIKE_EVENT, { timline: timeline.id, })
+            addCAWithUserInfo(`/${TIMELINE_LIKE_EVENT}/${user.uid}_${timeline.id}`, false, { timline: timeline.id })
+            // analytics.logEvent("timeline_like", _data)
+            // await database.ref(`/timeline_like/${user.uid}_${timeline.id}`).update(_data)
         }
         setLike(!like)
     }

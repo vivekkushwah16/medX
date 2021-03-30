@@ -1,0 +1,8 @@
+export const WATCHTRAILER_ANALYTICS_EVENT = 'watch_Trailer'
+export const ADDTOCALENDAR_ANALYTICS_EVENT = 'addToCalendar'
+export const INVITEYOURFRIEND_EVENT_EMAIL = 'inviteYourFriend_email'
+export const INVITEYOURFRIEND_EVENT_FACEBOOK = 'inviteYourFriend_facebook'
+export const INVITEYOURFRIEND_EVENT_TWITTER = 'inviteYourFriend_twitter'
+export const INVITEYOURFRIEND_EVENT_WHATSAPP = 'inviteYourFriend_whatsapp'
+export const TIMELINE_LIKE_EVENT = 'timeline_like'
+export const SPEAKER_PROFILE_CLICK_EVENT = 'speakerProfileClick'

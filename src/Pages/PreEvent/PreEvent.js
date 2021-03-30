@@ -4,12 +4,16 @@ import { eventContext } from '../../Context/Event/EventContextProvider';
 import Agenda from '../../Components/Event/Agenda/Agenda';
 import Header from '../../Containers/Header/Header';
 import AddToCalendar from '../../Components/AddToCalendar/AddToCalendar';
-import Footer from '../../Containers/Footer/Footer';
+import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider';
+import { MediaModalType } from '../../AppConstants/ModalType';
+import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider';
+import { WATCHTRAILER_ANALYTICS_EVENT } from '../../AppConstants/AnalyticsEventName';
 
 function PreEvent() {
-    const [showVideoModal, setVideoModalVisible] = useState(false);
+    const { showMediaModal } = useContext(MediaModalContext)
     const [agendaData, setAgendaData] = useState([]);
     const { attachTimelineListener, removeTimelineListener } = useContext(eventContext)
+    const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
 
     useEffect(() => {
         getAgendaData('event-kmde59n5')
@@ -24,22 +28,17 @@ function PreEvent() {
                 console.log(err)
                 return
             }
-            console.log(data)
             setAgendaData(data)
         })
     }
 
     const startVideo = () => {
-        setVideoModalVisible(true)
+        showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/528854507')
+        // setVideoModalVisible(true)
     }
 
     return (
         <>
-
-            {
-                showVideoModal &&
-                <VideoModal link={'https://player.vimeo.com/video/528854507'} close={() => { setVideoModalVisible(false) }}></VideoModal>
-            }
             <section class="wrapper" id="root">
                 <div class="topicsBox__wrapper">
                     {/* Header */}
@@ -55,7 +54,11 @@ function PreEvent() {
                                     <p class="bannerBox__date mg-b40">16<sup>th</sup> April 2021</p>
                                     <div class="d-flex">
                                         <AddToCalendar />
-                                        <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20" onClick={() => startVideo()}>WATCH TRAILER</a>
+                                        <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20" onClick={() => {
+                                            startVideo()
+                                            addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: 'event-kmde59n5' })
+                                            addCAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, true, { eventId: 'event-kmde59n5' }, true)
+                                        }}>WATCH TRAILER</a>
                                     </div>
                                 </div>
                                 <div class="bannerBox__right">
@@ -75,7 +78,7 @@ function PreEvent() {
                     </div>
 
                     {/* footer box */}
-                   {/* <Footer /> */}
+                    {/* <Footer /> */}
                 </div>
             </section>
         </>

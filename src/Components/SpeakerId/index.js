@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { SPEAKER_PROFILE_CLICK_EVENT } from '../../AppConstants/AnalyticsEventName'
+import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider'
+import { UserContext } from '../../Context/Auth/UserContextProvider'
 
 export function BannerSpeaker(props) {
     const { profile } = props
@@ -20,13 +23,15 @@ const LINKEDINLink = "https://www.linkedin.com/"
 export function CardSpeaker(props) {
     const { profile } = props
     const [isProfileActive, setIsProfileActive] = useState(false)
+    const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
+    const { user } = useContext(UserContext)
 
     const openSocialLink = (link) => {
         window.open(link, "_Blank")
     }
 
     return (
-        <div key={profile.name} className={`maincardBox__card-profile ${isProfileActive ? 'active' : ''}`} >
+        <div key={`${profile.id}-profile`} className={`maincardBox__card-profile ${isProfileActive ? 'active' : ''}`} >
             {
                 isProfileActive &&
                 <div className="maincardBox__card-profile-popover-closeConatiner" style={{
@@ -55,8 +60,8 @@ export function CardSpeaker(props) {
 
                         {
                             profile.profileLine.length > 0 ?
-                                profile.profileLine.map(line => (
-                                    <li>- {line}</li>
+                                profile.profileLine.map((line, index) => (
+                                    <li key={`underline-${profile.id}-${index}`} >- {line}</li>
                                 ))
                                 :
                                 <>
@@ -90,8 +95,10 @@ export function CardSpeaker(props) {
             }} />
             <div className="maincardBox__card-profile-text" onClick={() => {
                 setIsProfileActive(true)
+                addGAWithUserInfo(SPEAKER_PROFILE_CLICK_EVENT, { id: profile.id })
+                addCAWithUserInfo(`/${SPEAKER_PROFILE_CLICK_EVENT}/${user.uid}_${profile.id}`, false, { id: profile.id }, true)
             }}>
-                <p className="maincardBox__card-profile-title">{profile.name}</p>
+                <p className="maincardBox__card-profile-title" style={{ textDecoration: 'underline' }}>{profile.name}</p>
                 <p className="maincardBox__card-profile-subtitle">{profile.designation}</p>
             </div>
         </div>

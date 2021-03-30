@@ -10,6 +10,7 @@ import LikeContextProvider from './Context/Like/LikeContextProvider';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 import MediaModalContextProvider from './Context/MedialModal/MediaModalContextProvider';
+import AnalyticsContextProvider, { AnalyticsContext } from './Context/Analytics/AnalyticsContextProvider';
 
 const options = {
   position: positions.BOTTOM_RIGHT,
@@ -21,17 +22,19 @@ const options = {
 ReactDOM.render(
   <React.StrictMode>
     <UserContextProvider>
-      <EventContextProvider>
-        <SpeakerContextProvider>
-          <LikeContextProvider>
-            <MediaModalContextProvider>
-              <AlertProvider template={AlertTemplate} {...options}>
-                <App />
-              </AlertProvider>
-            </MediaModalContextProvider>
-          </LikeContextProvider>
-        </SpeakerContextProvider>
-      </EventContextProvider>
+      <AnalyticsContextProvider>
+        <EventContextProvider>
+          <SpeakerContextProvider>
+            <LikeContextProvider>
+              <MediaModalContextProvider>
+                <AlertProvider template={AlertTemplate} {...options}>
+                  <App />
+                </AlertProvider>
+              </MediaModalContextProvider>
+            </LikeContextProvider>
+          </SpeakerContextProvider>
+        </EventContextProvider>
+      </AnalyticsContextProvider>
     </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
