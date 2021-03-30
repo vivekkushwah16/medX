@@ -12,7 +12,10 @@ export default function ButtonWithLoader(props) {
     }
 
     return (
-        <button className={className} id={id ? id : ""} disabled={disabled ? disabled : isLoading} onClick={handleLocalClick}>
+        <button className={className} id={id ? id : ""} disabled={disabled ? disabled : isLoading} onClick={handleLocalClick} style={{
+            display: 'flex',
+            justifyContent: 'center'
+        }}>
             {isLoading ? (
                 <>
                     <img src="/assets/images/loader.gif" alt="loading" style={{ maxWidth: '1.5rem' }} />

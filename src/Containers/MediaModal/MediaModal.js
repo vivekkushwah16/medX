@@ -11,17 +11,19 @@ export default function MediaModal() {
             {
                 mediaModalStatus &&
                 <>
-                    <div className="mediaModal" onClick={(e) => {
-                        if (e) { e.preventDefault() }
-                        closeMediaModal()
-                    }}>
-                        <div className="mediaModal_container">
+
+                    <div className="mediaModal">
+                        <div className="mediaModalCloser" onClick={(e) => {
+                            if (e) { e.preventDefault() }
+                            closeMediaModal()
+                        }}></div>
+                        <div className="mediaModal_container" style={modalDetails.type === MediaModalType.Component ? {width: 'auto'}:{}}>
                             {
                                 modalDetails.type === MediaModalType.Image &&
                                 <img src={modalDetails.link} alt="imageLink" />
                             }
                             {
-                                 modalDetails.type === MediaModalType.Videos &&
+                                modalDetails.type === MediaModalType.Videos &&
                                 <ReactPlayer
                                     playing={true}
                                     url={modalDetails.link}
@@ -39,6 +41,10 @@ export default function MediaModal() {
                             {
                                 modalDetails.type === MediaModalType.PDF &&
                                 <iframe src={modalDetails.link} title="pdfViewer" />
+                            }
+                            {
+                                modalDetails.type === MediaModalType.Component &&
+                                <modalDetails.link />
                             }
                             <div className="mediaModal_container_loader">
                                 <div className="lds-dual-ring"></div>

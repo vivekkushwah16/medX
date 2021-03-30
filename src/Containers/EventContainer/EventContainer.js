@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { isMobileOnly } from 'react-device-detect'
 import ReactPlayer from 'react-player'
 import CommunityBox from '../../Components/CommunityBox/CommunityBox'
 import About from '../../Components/Event/About/About'
@@ -83,10 +84,12 @@ export default function EventContainer(props) {
 
                         </div>
                     </div>
-
-                    <div className="eventBox__right show-on-desktop col">
-                        <CommunityBox sendQuestion={sendQuestion} id={id} />
-                    </div>
+                    {
+                        !isMobileOnly &&
+                        <div className="eventBox__right show-on-desktop col">
+                            <CommunityBox sendQuestion={sendQuestion} id={id} />
+                        </div>
+                    }
                 </div>
             </div>
         </div>

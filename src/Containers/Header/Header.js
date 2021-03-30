@@ -1,13 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import InviteFriend from '../../Components/InviteFriend/InviteFriend'
 import Notification from '../../Components/Notification/Notification'
 import Profile from '../../Components/Profile/Profile'
 import CIPLAMEDXLOGO from '../../assets/images/medXlogo.png'
-import {  RootRoute } from '../../AppConstants/Routes'
+import { RootRoute } from '../../AppConstants/Routes'
+import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider'
+import { MediaType } from '../../AppConstants/TypeConstant'
+import { MediaModalType } from '../../AppConstants/ModalType'
+import Certificate from '../../Components/Certificate/Certificate'
 
 //showCertificate, showFeedback 
 export default function Header(props) {
     const [showInviteFriendModal, toggleInviteFriendModal] = useState(false)
+    const { showMediaModal } = useContext(MediaModalContext)
 
     return (
         <div className="headerBox">
@@ -20,7 +25,7 @@ export default function Header(props) {
                 <div className="headerBox__right headerBox__right--nogap">
                     {
                         props.showCertificate &&
-                        <button className="btn btn-secondary">Get your certificate</button>
+                        <button className="btn btn-secondary" onClick={() => showMediaModal(MediaModalType.Component, Certificate)}>Get your certificate</button>
                     }
                     {
                         props.showFeedback &&

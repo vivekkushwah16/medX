@@ -22,6 +22,21 @@ const TABS = {
     Register: 0,
     AgendaTab: 1,
 }
+const defaultErr = {
+    email: "",
+    phoneNumber: "",
+    firstName: "",
+    lastName: "",
+    // hospitalName: "",
+    profession: "",
+    speciality: "",
+    country: "",
+    state: "",
+    city: "",
+    pincode: "",
+    termsAndConditions: "",
+    alreadyRegistered: false,
+}
 class Register extends Component {
     pagetop = React.createRef();
 
@@ -40,21 +55,7 @@ class Register extends Component {
         pincode: "",
         termsAndConditions: false,
         showVideo: false,
-        errors: {
-            email: "",
-            phoneNumber: "",
-            firstName: "",
-            lastName: "",
-            // hospitalName: "",
-            profession: "",
-            speciality: "",
-            country: "",
-            state: "",
-            city: "",
-            pincode: "",
-            termsAndConditions: "",
-            alreadyRegistered: false,
-        },
+        errors: { ...defaultErr },
         agendaData: null,
         currentTab: !isMobileOnly ? TABS.bothTab : TABS.Register
 
@@ -88,7 +89,10 @@ class Register extends Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        this.setState({ [name]: value });
+        this.setState({
+            [name]: value,
+            errors: {...defaultErr}
+        });
     }
 
     redirectToLogin = () => {
@@ -201,7 +205,10 @@ class Register extends Component {
     }
 
     setValue = (number) => {
-        this.setState({ phoneNumber: number || "" });
+        this.setState({
+            phoneNumber: number || "",
+            errors: {...defaultErr}
+        });
     }
 
     enterEvent = (event) => {

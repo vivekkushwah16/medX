@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { UpcompingEventBanner, LiveEventBanner, ImageSingleButtonBanner } from '../../Components/Banners'
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useHistory } from 'react-router-dom';
+import { EVENT_ROUTE } from '../../AppConstants/Routes';
+import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider';
+import { MediaModalType } from '../../AppConstants/ModalType';
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -58,17 +62,17 @@ const BannerData = [
 ]
 
 function Banner() {
+    let history = useHistory();
+    const { showMediaModal } = useContext(MediaModalContext)
+
 
     const enterEvent = (eventId) => {
-        //redirectToEventId
+        history.push(`${EVENT_ROUTE}/event-kmde59n5`);
     }
 
     const watchTrailer = (videoUrl) => {
         //open video
-    }
-
-    const addToCalendar = (details) => {
-        //openAdd To Calendar
+        showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/528854507')
     }
 
     var settings = {

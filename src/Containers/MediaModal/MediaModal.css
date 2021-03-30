@@ -41,7 +41,7 @@
     }
 }
 
-.mediaModal_container img {
+.mediaModal_container > img {
     width: 100%;
     height: 100%;
     position: relative;
@@ -87,6 +87,12 @@
     border: 6px solid #fff;
     border-color: #fff transparent #fff transparent;
     animation: lds-dual-ring 1.2s linear infinite;
+}
+
+.mediaModalCloser{
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
 
 @keyframes lds-dual-ring {
