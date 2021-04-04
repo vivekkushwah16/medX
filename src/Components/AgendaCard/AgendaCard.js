@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { INVITEYOURFRIEND_EVENT_WHATSAPP, TIMELINE_LIKE_EVENT } from '../../AppConstants/AnalyticsEventName';
+import { INVITEYOURFRIEND_EVENT_WHATSAPP, TIMELINE_LIKE_EVENT, TIMELINE_RATING_EVENT } from '../../AppConstants/AnalyticsEventName';
 import { MonthName } from '../../AppConstants/Months';
 import { SpeakerProfileType } from '../../AppConstants/SpeakerProfileType';
 import { LikeType } from '../../AppConstants/TypeConstant';
@@ -12,7 +12,7 @@ import ReadMore from '../ReadMore/ReadMore';
 import StartRating from '../StartRating/StartRating';
 
 function AgendaCard(props) {
-    const { timeline, haveVideo, haveLikeButton, animate, placeIndex, forEventPage } = props
+    const { timeline, haveVideo, haveLikeButton, animate, placeIndex, forEventPage, wantHeaderFooter } = props
     const { getLike, addLike, removeLike, getRating, updateRating } = useContext(likeContext)
     const { userInfo, user } = useContext(UserContext)
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
@@ -20,10 +20,9 @@ function AgendaCard(props) {
     const [like, setLike] = useState(false);
     const [rating, setRating] = useState(null);
 
-
     useEffect(() => {
         getCurrentTargetLikeStatus()
-        getCurrentTargetRatingStatus()
+        // getCurrentTargetRatingStatus()
     }, [])
 
     const getCurrentTargetLikeStatus = async () => {
@@ -48,44 +47,67 @@ function AgendaCard(props) {
 
     const updatingTimelineRating = async (rating) => {
         await updateRating(timeline.id, timeline.eventId, rating)
-        let _data = {
-            uid: user.uid,
-            country: userInfo.country,
-            state: userInfo.state,
-            city: userInfo.city,
-            date: new Date(),
-            rating: rating,
-            timline: timeline.id,
-        }
-        analytics.logEvent("timeline_Rating", _data)
-        await database.ref(`/timeline_Rating/${user.uid}_${timeline.id}`).update(_data)
+        addGAWithUserInfo(TIMELINE_RATING_EVENT, { timeline: timeline.id, rating: rating })
+        addCAWithUserInfo(`/${TIMELINE_RATING_EVENT}/${user.uid}_${timeline.id}`, false, { timeline: timeline.id, rating: rating })
     }
 
     const toggleLikeToTarget = async () => {
-        let _data = {
-            uid: user.uid,
-            country: userInfo.country,
-            state: userInfo.state,
-            city: userInfo.city,
-            date: new Date(),
-            timline: timeline.id,
-        }
+
         if (like) {
             await removeLike(timeline.id, timeline.eventId, LikeType.TIMELINE_LIKE)
-            analytics.logEvent("timeline_revertedlike", _data)
-            // await database.ref(`/timeline_revertedlike/${user.uid}_${timeline.id}`).update(_data)
-            await database.ref(`/timeline_like/${user.uid}_${timeline.id}`).remove()
+            addGAWithUserInfo(TIMELINE_LIKE_EVENT, { timeline: timeline.id, status: false })
+            await database.ref(`/${TIMELINE_LIKE_EVENT}/${user.uid}_${timeline.id}`).remove()
 
         } else {
             await addLike(timeline.id, timeline.eventId, LikeType.TIMELINE_LIKE)
-            addGAWithUserInfo(TIMELINE_LIKE_EVENT, { timline: timeline.id, })
-            addCAWithUserInfo(`/${TIMELINE_LIKE_EVENT}/${user.uid}_${timeline.id}`, false, { timline: timeline.id })
-            // analytics.logEvent("timeline_like", _data)
-            // await database.ref(`/timeline_like/${user.uid}_${timeline.id}`).update(_data)
+            addGAWithUserInfo(TIMELINE_LIKE_EVENT, { timeline: timeline.id, status: true })
+            addCAWithUserInfo(`/${TIMELINE_LIKE_EVENT}/${user.uid}_${timeline.id}`, false, { timeline: timeline.id })
         }
         setLike(!like)
     }
 
+    if (wantHeaderFooter) {
+        return (
+            <div key={`AgendaCard-${timeline.id}`} id={`AgendaCard-${timeline.id}`} className={`maincardBox__card `}>
+                {
+                    haveVideo &&
+                    <div className="maincardBox__card-video"
+                        style={{ backgroundImage: `url(${timeline.thumnailUrL})` }}>
+                        {/* <a href="#" className="maincardBox__card-video__play"><i className="icon-play"></i></a> */}
+                    </div>
+                }
+                <div class="maincardBox__card-body">
+                    <div class="text-block">
+                        <h4 className="mg-b15 maincardBox__card-title">{timeline.title}</h4>
+                        <h2 class="maincardBox__card-date mg-b10"> {`${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</h2>
+                        <ReadMore className="mg-b25 maincardBox__card-desc" description={timeline.description} />
+
+                    </div>
+                    {
+                        haveLikeButton && !forEventPage &&
+                        <div class="rating-block">
+                            <button className={`mg-b40 mg-sm-b20 like-btn ${like ? 'like-btn--active' : ''} `} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
+                            {/* {
+                                rating !== null &&
+                                <>
+                                    <p class="font-14 mg-b20">Is this topic relevant to you?</p>
+                                    <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
+                                </>
+                            } */}
+                        </div>
+                    }
+                </div>
+                <div class="maincardBox__card-footer">
+                    <h4 class="maincardBox__card-footer-title">Speakers</h4>
+                    {
+                        timeline.speakers.map(id => (
+                            <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={id} />
+                        ))
+                    }
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div key={timeline.id} className={`maincardBox__card ${haveVideo ? 'maincardBox__card--large' : ''} ${animate ? 'maincardBox__card_animate' : ''}`}

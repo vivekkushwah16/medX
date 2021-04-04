@@ -7,16 +7,16 @@ import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvid
 import { ADDTOCALENDAR_ANALYTICS_EVENT } from '../../AppConstants/AnalyticsEventName';
 
 export default function AddToCalendar() {
-    const startDatetime = moment('2021-04-10').utc();
-    const endDatetime = startDatetime.clone().add(6, 'hours');
+    const startDatetime = moment('2021-04-16 19:00:00').utc();
+    const endDatetime = startDatetime.clone().add(2.5, 'hours');
     const duration = endDatetime.diff(startDatetime, 'hours');
     const event = {
-        description: 'Description of event. Going to have a lot of fun doing things that we scheduled ahead of time.',
+        description: '2 days of cutting-edge academic feast with experts in Respiratory Medicine',
         duration,
         endDatetime: endDatetime.format('YYYYMMDDTHHmmssZ'),
-        location: 'Online',
+        location: 'https://ciplamedx.com/register/impact',
         startDatetime: startDatetime.format('YYYYMMDDTHHmmssZ'),
-        title: 'Cipla Impact',
+        title: 'Cipla Impact 21 - Academic feast with experts in Respiratory Medicine',
     }
     const AddToCalendarComp = AddToCalendarHOC(addToCalendarBtn, AddToCalendarDropDown);
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)

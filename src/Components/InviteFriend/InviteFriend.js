@@ -10,7 +10,7 @@ function InviteFriendBtn(props) {
                     props.handleClick();
                 }}
             >
-                <i className="icon-invite"></i> Invite your friends
+                <i className="icon-invite"></i> Invite your peers
         </button>
             <button
                 className="btn btn-secondary invite-btn hide-on-desktop"

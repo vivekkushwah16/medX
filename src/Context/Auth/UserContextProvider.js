@@ -22,6 +22,7 @@ const UserContextProvider = (props) => {
                 addUserLoginAnalytics(user.uid)
                 const userInfo = await getUserProfile(user.uid)
                 console.log(userInfo)
+                analytics.setUserId(user.uid)
                 // setuserInfo(userInfo)
             } else {
                 localStorage.removeItem('userAuth')
@@ -32,7 +33,6 @@ const UserContextProvider = (props) => {
     }, [])
 
     const addUserLoginAnalytics = async (uid) => {
-        console.log("addUserLoginAnalytics ",uid)
         const userInfo = await getUserProfile(uid)
         let _data = {
             userId: uid,

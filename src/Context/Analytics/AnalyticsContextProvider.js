@@ -7,20 +7,26 @@ export const AnalyticsContext = createContext()
 export default function AnalyticsContextProvider(props) {
     const { user, userInfo } = useContext(UserContext);
     const addGAWithUserInfo = async (eventName, data = {}) => {
-        if (!userInfo) {
-            console.error("No UsrInfo Found")
-            return
+        try {
+            // console.log(eventName, data);
+            if (!userInfo) {
+                console.error("No UsrInfo Found")
+                return
+            }
+            let baseData = {
+                userId: user.uid,
+                profession: userInfo.profession,
+                speciality: userInfo.speciality,
+                country: userInfo.country,
+                state: userInfo.state,
+                city: userInfo.city,
+                date: new Date(),
+                dateTimeStamp: new Date().getTime()
+            }
+            analytics.logEvent(eventName, { ...baseData, ...data })
+        } catch (error) {
+            console.log(error)
         }
-        let baseData = {
-            userId: user.uid,
-            profession: userInfo.profession,
-            speciality: userInfo.speciality,
-            country: userInfo.country,
-            state: userInfo.state,
-            city: userInfo.city,
-            date: new Date()
-        }
-        analytics.logEvent(eventName, { ...baseData, ...data })
     }
 
     const addCAWithUserInfo = async (path, addUid, data = {}, countInc = false) => {

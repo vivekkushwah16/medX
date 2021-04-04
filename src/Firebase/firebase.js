@@ -8,6 +8,7 @@ import { PROFILE_COLLECTION } from '../AppConstants/CollectionConstants';
 const firebaseConfig = {
     apiKey: "AIzaSyBjSPRUgzyQhITpWHb9FdzMMuLS45Zsd9s",
     authDomain: "cipla-impact.firebaseapp.com",
+    databaseURL: "https://cipla-impact-default-rtdb.firebaseio.com",
     projectId: "cipla-impact",
     storageBucket: "cipla-impact.appspot.com",
     messagingSenderId: "1009487366735",
@@ -39,7 +40,7 @@ export const getUserProfile = (uid) => {
             const doc = await firestore.collection(PROFILE_COLLECTION).doc(uid).get()
             if (doc.exists) {
                 res(doc.data())
-            }else{
+            } else {
                 res({})
             }
         } catch (error) {

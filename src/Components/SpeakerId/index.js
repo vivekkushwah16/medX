@@ -31,7 +31,7 @@ export function CardSpeaker(props) {
     }
 
     return (
-        <div key={`${profile.id}-profile`} className={`maincardBox__card-profile ${isProfileActive ? 'active' : ''}`} >
+        <div key={`${profile.id}-profile`} id={profile.id} className={`maincardBox__card-profile ${isProfileActive ? 'active' : ''}`} >
             {
                 isProfileActive &&
                 <div className="maincardBox__card-profile-popover-closeConatiner" style={{
@@ -61,18 +61,15 @@ export function CardSpeaker(props) {
                         {
                             profile.profileLine.length > 0 ?
                                 profile.profileLine.map((line, index) => (
-                                    <li key={`underline-${profile.id}-${index}`} >- {line}</li>
+                                    <li key={`underline-${profile.id}-${index}`} > {line}</li>
                                 ))
                                 :
                                 <>
-                                    <li>- Research Fellow at AIIMS</li>
-                                    <li>- Member of ESA</li>
-                                    <li>- Speaker for Past 3 IMPACT Conferences</li>
                                 </>
                         }
                     </ul>
 
-                    <div className="social-media">
+                    {/* <div className="social-media">
                         <a href={profile.social.facebook ? profile.social.facebook : FACEBOOKLink} target="_Blank">  <img src="assets/images/facebook.png" width="75" alt=""
                         //   onClick={() => openSocialLink(profile.social.facebook ? profile.social.facebook : FACEBOOKLink)} 
                         /></a>
@@ -87,7 +84,7 @@ export function CardSpeaker(props) {
                             />
                         </a>
 
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <img className="maincardBox__card-profile-pic" src={profile.photoURL} alt="" onClick={() => {
@@ -95,8 +92,10 @@ export function CardSpeaker(props) {
             }} />
             <div className="maincardBox__card-profile-text" onClick={() => {
                 setIsProfileActive(true)
-                addGAWithUserInfo(SPEAKER_PROFILE_CLICK_EVENT, { id: profile.id })
-                addCAWithUserInfo(`/${SPEAKER_PROFILE_CLICK_EVENT}/${user.uid}_${profile.id}`, false, { id: profile.id }, true)
+                if (user) {
+                    addGAWithUserInfo(SPEAKER_PROFILE_CLICK_EVENT, { id: profile.id })
+                    addCAWithUserInfo(`/${SPEAKER_PROFILE_CLICK_EVENT}/${user.uid}_${profile.id}`, false, { id: profile.id }, true)
+                }
             }}>
                 <p className="maincardBox__card-profile-title" style={{ textDecoration: 'underline' }}>{profile.name}</p>
                 <p className="maincardBox__card-profile-subtitle">{profile.designation}</p>

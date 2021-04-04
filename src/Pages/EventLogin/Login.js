@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
-import firebase, { analytics, auth } from "../../Firebase/firebase"
+import firebase from "../../Firebase/firebase"
 import { withRouter } from 'react-router-dom';
-import Agenda from "../../Components/Event/Agenda/Agenda";
+// import Agenda from "../../Components/Event/Agenda/Agenda";
 import './Login.css'
 import PhoneInput from "react-phone-number-input";
-import VideoModal from '../../Components/VideoModal/VideoModal';
+// import VideoModal from '../../Components/VideoModal/VideoModal';
 import { HOME_ROUTE } from '../../AppConstants/Routes';
 import EventManager from '../../Managers/EventManager';
 import { isMobileOnly } from 'react-device-detect';
+// import AgendaNavBar from '../../Components/Event/AgendaNavBar/AgendaNavBar';
+import { MonthName } from '../../AppConstants/Months';
+import SideAgendaNoUser from '../../Containers/SideAgendaNoUser/SideAgendaNoUser';
+import 'react-phone-number-input/style.css'
+
 
 const TABS = {
     bothTab: 2,
@@ -15,27 +20,62 @@ const TABS = {
     AgendaTab: 1,
 }
 
+const TABSName = {
+    [TABS.LoginTab]: 'Login',
+    [TABS.AgendaTab]: 'AGENDA'
+}
+
+const defaultErr = {
+    phoneNumber: "",
+    otp: ""
+}
 class Login extends Component {
 
     state = {
         isLoading: false,
-        phoneNumber: "",
+        phoneNumber: null,
         otp: "",
         showOtp: false,
         showVideo: false,
         errors: {
-            phoneNumber: "",
-            otp: ""
+            ...defaultErr
         },
         agendaData: null,
+        agendaDates: [],
+        currentDate: null,
         currentTab: !isMobileOnly ? TABS.bothTab : TABS.LoginTab
     }
 
     componentDidMount = async () => {
         const agendaData = await EventManager.getAgenda('event-kmde59n5')
-        this.setState({ agendaData })
+        this.processAgendaData(agendaData)
+        // this.setState({ agendaData })
         this.handleResize();
         window.addEventListener('resize', this.handleResize)
+    }
+
+    processAgendaData = (data) => {
+        let newData = {}
+        data.forEach((timeline) => {
+            let date = `${MonthName[new Date(timeline.startTime).getMonth()]} ${new Date(timeline.startTime).getDate()}`
+            if (newData.hasOwnProperty(date)) {
+                newData = {
+                    ...newData,
+                    [date]: [...newData[date], timeline]
+                }
+            } else {
+                newData = {
+                    ...newData,
+                    [date]: [timeline]
+                }
+            }
+        })
+        let dates = Object.keys(newData)
+        this.setState({
+            agendaDates: dates,
+            agendaData: newData,
+            currentDate: dates[0]
+        })
     }
 
     componentWillUnmount = () => {
@@ -65,7 +105,7 @@ class Login extends Component {
 
     redirectToHome = () => {
         const { history } = this.props;
-        if (history) history.push(HOME_ROUTE);
+        if (history) history.push(HOME_ROUTE+"/impact");
     }
 
 
@@ -79,7 +119,6 @@ class Login extends Component {
             this.setState({ isLoading: false })
             return;
         }
-
         firebase
             .auth()
             .signInWithEmailAndPassword(this.state.phoneNumber + "@cipla.com", this.state.phoneNumber)
@@ -143,7 +182,11 @@ class Login extends Component {
     }
 
     setValue = (number) => {
-        this.setState({ phoneNumber: number || "" });
+        // this.setState({ phoneNumber: number || "" });
+        this.setState({
+            phoneNumber: number || "",
+            errors: { ...defaultErr }
+        });
     }
 
     ToggleTab = (event, currentTab) => {
@@ -161,6 +204,13 @@ class Login extends Component {
         }
     }
 
+    handleDateChange = (date, event) => {
+        if (event) { event.preventDefault() }
+        this.setState({
+            currentDate: date
+        })
+    }
+
     render() {
         return (
             <div className="login2Box__wrapper min-height-full gradient-bg3">
@@ -168,89 +218,57 @@ class Login extends Component {
                 <div ref={this.captcha}>
                     <div id={"recaptcha-container"}></div>
                 </div>
-
-                {
-                    this.state.showVideo &&
-                    <VideoModal link={'https://player.vimeo.com/video/528854507'} close={() => { this.setState({ showVideo: false }) }}></VideoModal>
-                }
-                <header className="headerBox">
-                    <div className="d-flex align-items-center justify-content-between">
-                        <div className="headerBox__left">
-                            <a href="#" className="headerBox__logo">
-                                <img src="assets/images/cipla-logo.png" alt="" />
-                            </a>
-                        </div>
-                        <div className="headerBox__right">
-                            <a href="#" className="headerBox__logo2">
-                                <img src="assets/images/logo2.png" alt="" />
-                            </a>
-                        </div>
-                    </div>
-                </header>
-
-                <div className="login2Box__left">
-                    <div className="login2Box-text">
-                        <div className="login2Box__label">
-                            <h2 className="login2Box__label-title mg-b20" style={{ textTransform: 'uppercase' }}>2 Days of cutting edge academic feast  </h2>
-                            <p className="login2Box__label-desc">with 7 international and 14 national experts in Respiratory Medicine</p>
-                        </div>
-                        <div className="login2Box__video">
-                            {/* <a href="#" className="login2Box__video__play"><i className="icon-play" onClick={(e) => { e.preventDefault(); this.setState({ showVideo: true }) }}></i></a> */}
-                            <img src="assets/images/video-thumb.jpg" alt="" />
-                        </div>
-                    </div>
-
-                    <ul className="mobile-tabs">
-                        <li className={`${this.state.currentTab === TABS.LoginTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.LoginTab)}><span>Login</span></a></li>
-                        <li className={`${this.state.currentTab === TABS.AgendaTab ? 'active' : ''}`}><a href="#" onClick={(e) => this.ToggleTab(e, TABS.AgendaTab)}><span>AGENDA</span></a></li>
-                    </ul>
-
-
-                    {
-                        this.state.agendaData && this.state.currentTab !== TABS.LoginTab &&
-                        <Agenda data={this.state.agendaData} haveVideo={false} haveLikeButton={false}  ></Agenda>
-                    }
-                </div>
-
+                <SideAgendaNoUser
+                    agendaData={this.state.agendaData}
+                    agendaDates={this.state.agendaDates}
+                    currentDate={this.state.currentDate}
+                    handleDateChange={this.handleDateChange}
+                    tabs={TABS}
+                    currentTab={this.state.currentTab}
+                    tabsName={TABSName}
+                    ToggleTab={this.ToggleTab} />
 
                 <article className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? 'd-none' : ''}`}>
-                    <img src="assets/images/login-bg-top.png" alt="" className="login-bg-top" />
 
                     {
                         !this.state.showOtp &&
                         <>
-                            <h1 className="login2Box__title mg-b50">Log in</h1>
+                            <div class="login2Box__body pd-t80">
+                                <h1 className="login2Box__title mg-b25">Log in</h1>
 
-                            <form className="mg-b80" onSubmit={this.handleSubmit}>
-                                <div className="form-group mg-b30">
-                                    <PhoneInput
-                                        international
-                                        defaultCountry={"IN"}
-                                        className="form-control"
-                                        name="phoneNumber"
-                                        placeholder="Enter phone number"
-                                        value={this.state.phoneNumber}
-                                        onChange={(number) =>
-                                            this.setValue(number)
-                                        }
-                                    />
-                                    {this.state.errors.phoneNumber &&
-                                        <span className="input-error2">{this.state.errors.phoneNumber}</span>}
-                                    {this.state.errors.phoneNumber && <span className="input-error">{this.state.errors.phoneNumber}</span>}
-                                </div>
+                                <form onSubmit={this.handleSubmit}>
+                                    <div className="form-group mg-b30">
+                                        <p className=" mg-b10" style={{color:"#015189"}}>Please enter your Registered Mobile Number</p>
+                                        <PhoneInput
+                                            international
+                                            countryCallingCodeEditable={false}
+                                            defaultCountry={"IN"}
+                                            className="form-control"
+                                            name="phoneNumber"
+                                            placeholder="Enter your registered number."
+                                            value={this.state.phoneNumber}
+                                            onChange={(number) =>
+                                                this.setValue(number)
+                                            }
+                                        />
+                                        {this.state.errors.phoneNumber &&
+                                            <span className="input-error2">{this.state.errors.phoneNumber}</span>}
+                                        {this.state.errors.phoneNumber && <span className="input-error">{this.state.errors.phoneNumber}</span>}
+                                    </div>
 
 
-                                <div className="mg-b0 d-flex justify-content-between">
-                                    <button id={"sign-in"} type={"submit"} className="btn btn-secondary" disabled={this.state.isLoading ? true : false} >
-                                        {this.state.isLoading ? (
-                                            <>
-                                                <img src="/assets/images/loader.gif" alt="loading" />
-                                            </>
-                                        ) : ' Log in'}
-                                    </button>
-                                </div>
-                                <a className="btn btn-link" href="/register">Not Registered? Click here</a>
-                            </form>
+                                    <div className="mg-b0 d-flex justify-content-between">
+                                        <button id={"sign-in"} type={"submit"} className="btn btn-secondary" disabled={this.state.isLoading ? true : false} >
+                                            {this.state.isLoading ? (
+                                                <>
+                                                    <img src="/assets/images/loader.gif" alt="loading" />
+                                                </>
+                                            ) : ' Log in'}
+                                        </button>
+                                    </div>
+                                    <a className="btn btn-link" href="/register/impact">Not Registered? Click here</a>
+                                </form>
+                            </div>
                         </>
                     }
                     {
@@ -278,6 +296,7 @@ class Login extends Component {
                             </form>
                         </>
                     }
+                    <img src="assets/images/login-bg-top.png" alt="" className="login-bg-top" />
 
                     <img src="assets/images/login-bg-bottom.png" alt="" className="login-bg-bottom" />
 

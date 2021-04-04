@@ -37,7 +37,7 @@ export function ImageSingleButtonBanner(props) {
                     <a href="#" className="bannerBox__profile mg-b50">
                         <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={data.speakerId} />
                     </a>
-                    <a href="#" className="btn btn-secondary bannerBox__btn" onClick={() => props.watchTrailer(data.trailerUrl)}>Watch Trailer</a>
+                    {/* <a href="#" className="btn btn-secondary bannerBox__btn" onClick={() => props.watchTrailer(data.trailerUrl)}>Watch Trailer</a> */}
                 </div>
                 <div className="bannerBox__center">
                     <img src={data.mainImageUrl} alt="" />
@@ -60,7 +60,7 @@ export function UpcompingEventBanner(props) {
                     <div className="d-flex">
                         <AddToCalendar />
                         {/* <a href="#" className="btn btn-secondary bannerBox__btn mg-r20" onClick={() => props.addToCalendar(data.calendarData)}>Add to Calender</a> */}
-                        <a href="#" className="btn btn-secondary--outline bannerBox__btn mg-l20" onClick={() => props.watchTrailer(data.trailerUrl)}>WATCH TRAILER</a>
+                        {/* <a href="#" className="btn btn-secondary--outline bannerBox__btn mg-l20" onClick={() => props.watchTrailer(data.trailerUrl)}>WATCH TRAILER</a> */}
                     </div>
                 </div>
                 <div className="bannerBox__right">

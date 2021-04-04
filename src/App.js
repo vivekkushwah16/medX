@@ -1,33 +1,53 @@
 import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
-import Register from "./Pages/EventRegister/Register";
-import Login from "./Pages/EventLogin/Login";
-import Topics from "./Pages/Topics/Topics";
 import { UserContext } from './Context/Auth/UserContextProvider';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
-import PreEvent from './Pages/PreEvent/PreEvent';
 import NotLoggedInRoutes from './Components/NotLoggedInRoutes/NotLoggedInRoutes';
-import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RootRoute, TOPIC_ROUTE, EVENT_ROUTE } from './AppConstants/Routes';
-import Home from './Pages/Home/Home';
+import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RootRoute, EVENT_ROUTE } from './AppConstants/Routes';
 
 // import css
 import './assets/css/modal.css'
+
+import loadable from '@loadable/component';
+import LoadableFallback from './Components/LoadableFallback/LoadableFallback';
+const RegisterLazy = loadable(() => import(/* webpackChunkName: "Register" */ "./Pages/EventRegister/Register"), { fallback: <LoadableFallback /> })
+const LoginLazy = loadable(() => import(/* webpackChunkName: "Login" */ "./Pages/EventLogin/Login"), { fallback: <LoadableFallback /> })
+const PreEventLazy = loadable(() => import(/* webpackChunkName: "PreEventLazy" */ './Pages/PreEvent/PreEvent'), { fallback: <LoadableFallback /> })
+const MediaModalLazy = loadable(() => import(/* webpackChunkName: "MediaModal" */ './Containers/MediaModal/MediaModal'), { fallback: <LoadableFallback /> })
+// const EventLazy = loadable(() => import(/* webpackChunkName: "EventLazy" */ './Pages/Event/Event'), { fallback: <LoadableFallback /> })
+
+
 // import VideoManager from './Managers/VideoManager';
-import Event from './Pages/Event/Event';
-import MediaModal from './Containers/MediaModal/MediaModal';
-import EventManager from './Managers/EventManager';
+// import EventManager from './Managers/EventManager';
 // import EventManager from './Managers/EventManager';
 // import Trending from './Components/Event/Trending/Trending';
 // import { TRENDING_ITEM_TYPE } from './AppConstants/TrendingItemTypes';
-import { LOREM_TEXT } from './AppConstants/Lorem';
-import { PollManager } from './Managers/PollManager';
+// import { LOREM_TEXT } from './AppConstants/Lorem';
+// import { PollManager } from './Managers/PollManager';
+// import axios from 'axios';
+// import { CONFIRMATIONENDPOINT } from './AppConstants/APIEndpoints';
 // import SpeakerManager from './Managers/SpeakerManager';
+// import SpeakerManager from './Managers/SpeakerManager';
+// import Home from './Pages/Home/Home';
 
-// 
-const speakerProfileLink = 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg'
+
+const speakerProfileLink = 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg';
+
+const preload = component => {
+    component.preload && component.preload()
+}
 
 export default function App() {
-    const { initalCheck } = useContext(UserContext)
+    const { initalCheck, user } = useContext(UserContext)
+    useEffect(() => {
+        if (user) {
+            preload(PreEventLazy)
+        } else {
+            preload(RegisterLazy)
+            preload(LoginLazy)
+        }
+    }, [initalCheck, user])
+
     useEffect(() => {
         // SpeakerManager.makeSpeaker("Dr. Dave Singh","",[],speakerProfileLink,{})
         // SpeakerManager.makeSpeaker("Dr. Senthil Rajappa","",[],speakerProfileLink,{})
@@ -40,7 +60,7 @@ export default function App() {
         // SpeakerManager.makeSpeaker("Dr. Sally Singh","",["PhD, FCSP"],speakerProfileLink,{})
         // SpeakerManager.makeSpeaker("Dr. Gary Lee","",[""],speakerProfileLink,{})
         // SpeakerManager.makeSpeaker("Dr. Matteo Bassetti","",[""],speakerProfileLink,{})
-
+        // SpeakerManager.makeSpeaker("Dr. Kumar Prabhash","",[""],speakerProfileLink,{})
 
 
 
@@ -84,43 +104,62 @@ export default function App() {
         // VideoManager.getVideoWithTag(['covid']).then(data => console.log(data))
         // VideoManager.addVideo('Tuberculosis - Use of Inhaled Corticosteroids in Children', 'A potentially serious infectious bacterial disease that mainly affects the lungs.', 'https://vimeo.com/525395281/5753ae3d66',
         //     'assets/images/video-thumb.jpg', ['speaker-kmfz0vco'], ['Tuberculosis'], [{ title: 'part1', endTime: '30', startTime: '10' }])
-        
+
         // EventManager.addPartnerWithUs("event-kmde59n5","Clinical Trial Participation 1",LOREM_TEXT,"Clinical Trial Participation sub1", LOREM_TEXT, "/assets/images/doctors.jpg")
         // EventManager.addPartnerWithUs("event-kmde59n5","Clinical Trial Participation 2",LOREM_TEXT,"Clinical Trial Participation sub2", LOREM_TEXT, "/assets/images/doctors.jpg")
         // EventManager.addPartnerWithUs("event-kmde59n5","Clinical Trial Participation 3",LOREM_TEXT,"Clinical Trial Participation sub3", LOREM_TEXT, "/assets/images/doctors.jpg")
         // EventManager.addPartnerWithUs("event-kmde59n5","Clinical Trial Participation 4",LOREM_TEXT,"Clinical Trial Participation sub4", LOREM_TEXT, "/assets/images/doctors.jpg")
-    
+
         // PollManager.addPollQuestion("event-kmde59n5",1,"HOW TO DESIGN A VIRTUAL EVENT?", ["By Understanding User", "By Thinking out of box","By doing nothing","By consulting DJ Virtual Event"])
         // PollManager.addPollQuestion("event-kmde59n5",2,"HOW TO RE-DESIGN A VIRTUAL EVENT?", ["By Understanding User Again", "By Thinking inside the box","By doing nothing again","By consulting DJ Virtual Event"])
-    
+
     }, [])
     return (
         <>
-            <MediaModal />
+            <MediaModalLazy />
             <Router>
                 {
                     initalCheck &&
                     <Switch>
+                        {/* Register Route */}
+                        <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={REGISTER_ROUTE + "/:event"}>
+                            <RegisterLazy />
+                        </NotLoggedInRoutes>
                         <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={REGISTER_ROUTE}>
-                            <Register />
+                            <RegisterLazy />
+                        </NotLoggedInRoutes>
+
+                        {/* Login Route */}
+                        <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={LOGIN_ROUTE + "/:event"}>
+                            <LoginLazy />
                         </NotLoggedInRoutes>
                         <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={LOGIN_ROUTE}>
-                            <Login />
+                            <LoginLazy />
                         </NotLoggedInRoutes>
+
+                        {/* Home Route */}
+
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>
-                            <PreEvent />
+                            <PreEventLazy />
                         </ProtectedRoute>
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE + '/:id'}>
-                            {/* event-kmde59n5 */}
-                            <Event />
-                        </ProtectedRoute>
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={TOPIC_ROUTE}>
+
+                        {/* event-kmde59n5 */}
+                        {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE + '/:id'}>
+                            <EventLazy />
+                        </ProtectedRoute> */}
+
+                        {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={TOPIC_ROUTE}>
                             <Topics />
+                        </ProtectedRoute> */}
+                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={"*"}>
+                            <PreEventLazy />
+                            {/* <Home /> */}
                         </ProtectedRoute>
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={RootRoute}>
-                            {/* <PreEvent /> */}
-                            <Home />
+                            <PreEventLazy />
+                            {/* <Home /> */}
                         </ProtectedRoute>
+
                     </Switch>
                 }
             </Router>

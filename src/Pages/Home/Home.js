@@ -64,6 +64,7 @@ class Home extends Component {
 
         return (
             <section className="wrapper" id="root">
+                
                 <div className="topicsBox__wrapper">
                     <Header />
                     <Banner />

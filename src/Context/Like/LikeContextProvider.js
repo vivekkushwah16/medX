@@ -20,7 +20,6 @@ export default function LikeContextProvider(props) {
                 if (!user) { res(false) }
 
                 if (likeData.hasOwnProperty(tagetId)) {
-                    console.log(likeData[tagetId], tagetId);
                     res(likeData[tagetId])
                 } else {
                     const doc = await firestore.collection(LIKES_COLLECTION).doc(`${user.uid}+${tagetId}`).get()
@@ -45,7 +44,6 @@ export default function LikeContextProvider(props) {
                 if (!user) { res(false) }
 
                 if (RatingData.hasOwnProperty(tagetId)) {
-                    console.log(RatingData[tagetId], tagetId);
                     res(RatingData[tagetId])
                 } else {
                     const doc = await firestore.collection(RATING_COLLECTION).doc(`${user.uid}+${tagetId}`).get()

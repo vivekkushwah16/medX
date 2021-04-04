@@ -1,6 +1,10 @@
 @import url("/src/assets/css/header2.css");
 @import url("/src/assets/css/login2.css");
 @import url("/src/assets/css/fix.css");
+@import url("/src/assets/css/maincard.css");
+@import url("/src/assets/css/homepage2.css");
+
+
 #RegisterBtn{
     display: flex;
     justify-content: center;

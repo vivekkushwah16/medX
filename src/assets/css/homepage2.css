@@ -4,8 +4,12 @@
 .bannerBox__inner1::after { content: ""; width: 100%; height: 20.625rem; position: absolute; left: 0; bottom: 0; background: url(../images/home-bg.png) center center repeat-x; background-size: auto 100%; }
 .bannerBox__inner2::after { content: ""; width: 100%; height: 20.625rem; position: absolute; left: 0; bottom: 0; background: url(../images/home-bg2.png) center center repeat-x; background-size: auto 100%; }
 .bannerBox__inner3::after { content: ""; width: 100%; height: 20.625rem; position: absolute; left: 0; bottom: 0; background: url(../images/home-bg3.png) center center repeat-x; background-size: auto 100%; opacity: 0.5; }
+.bannerBox__inner4::after { content: ""; width: 100%; height: 20.625rem; position: absolute; left: 0; bottom: 0; background: url(../images/home-bg4.png) center center repeat-x; background-size: auto 100%; }
+.bannerBox__inner.bannerBox__inner--small { padding-bottom: 0; }
+.bannerBox__inner.bannerBox__inner--small::after { bottom: -2rem; height: 7.5rem; }
+.bannerBox__inner.bannerBox__inner--small .bannerBox__slide { padding: 0.5rem 0 2rem; }
 
-.bannerBox__slide { padding: 8rem 4.5rem 1rem; min-height: 0; display: flex; position: relative; z-index: 2; align-items: center; justify-content: space-between; }
+.bannerBox__slide { padding: 1rem 0 20rem; min-height: 0; display: flex; position: relative; z-index: 2; align-items: center; justify-content: space-between; }
 .bannerBox__left { width: 43%; }
 .bannerBox__right { padding: 0; width: 45%; }
 .bannerBox__center { position: absolute; left: 50%; margin-left: -225px; bottom: -320px; width: 640px; }
@@ -13,8 +17,9 @@
 .bannerBox__maintitle { font-weight: 700; font-size: 2.8125rem; display: flex; align-items: center; color: #fff; text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15); }
 .bannerBox__featired-title { font-size: 2.125rem; font-weight: 700;  color: #0B55A0;}
 .bannerBox__featired-title span { font-weight: 400; }
-.bannerBox__subtitle { font-weight: 700; font-size: 1.875rem; display: flex; align-items: center; color: #0B55A0; }
-.bannerBox__date { font-weight: 700; font-size: 1.875rem; display: flex; align-items: center; color: #0B55A0; }
+.bannerBox__subtitle { font-weight: 700; font-size: 1.8125rem; display: flex; align-items: center; color: #015189; }
+.bannerBox__desc { font-weight: 500; font-size: 1.1725rem; color: #0869A8; }
+.bannerBox__date { font-weight: 500; font-size: 1.5625rem; display: flex; align-items: center; color: #0B55A0; }
 .bannerBox__date > sup { font-size: 50%; display: inline-block; margin-top: -20px; font-weight: 900; }
 .bannerBox__status { display: flex; align-items: center; }
 .bannerBox__status-title { padding-right: 0.5rem; font-weight: 700; font-size: 1.1875rem; color: #015189; text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.15); }
@@ -95,8 +100,11 @@
 
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
+    .bannerBox__inner.bannerBox__inner--small { min-height: auto; }
     .bannerBox__center { margin-left: auto; margin-right: auto; bottom: -340px; width: 320px; max-width: 375px; left: 10%; }
     .bannerBox__slide { padding: 8rem 1rem 2rem; flex-direction: column; text-align: center; }
+    .bannerBox__slide > .container-small > .d-flex,
+    .bannerBox__slide > .container > .d-flex { flex-direction: column; text-align: center; }
     .bannerBox__date, .bannerBox__subtitle { display: block; }
     .bannerBox__left { padding-bottom: 0rem; order: 2; width: 100%; }
     .bannerBox__inner { min-height: 58rem; padding-bottom: 15rem; }
@@ -110,7 +118,8 @@
     .slick-dotted.slick-slider { margin-bottom: 0; }
     .tabBox.tabBox--new { margin-top: -12rem; }
     .maincardBox__card.maincardBox__card--large .maincardBox__card-right { padding-right: 0; }
-    .rating-block { padding: 1.5rem 0 0; margin-top: 1.5rem; position: static; width: 100%; border: none; border-top: 1px solid rgba(0, 0, 0, 0.33); }
+    /*  border-top: 1px solid rgba(0, 0, 0, 0.33); */
+    .rating-block { padding: 0 0 0; margin-top: 1.5rem; position: static; width: 100%; border: none; display: flex; justify-content: flex-end;}
     .slider-banner-desktop .bannerBox__slide { padding-top: 8rem; }
     .bannerBox__status { justify-content: center; }
     .bannerBox__profile { justify-content: center; text-align: left; }

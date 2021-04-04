@@ -8,6 +8,7 @@ import { UserContext } from '../../../Context/Auth/UserContextProvider';
 import './invite.css'
 import { AnalyticsContext } from '../../../Context/Analytics/AnalyticsContextProvider';
 import { INVITEYOURFRIEND_EVENT_EMAIL, INVITEYOURFRIEND_EVENT_FACEBOOK, INVITEYOURFRIEND_EVENT_TWITTER, INVITEYOURFRIEND_EVENT_WHATSAPP } from '../../../AppConstants/AnalyticsEventName';
+import { INVITEYOURPEER_ENDPOINT } from '../../../AppConstants/APIEndpoints';
 
 const mailUrl = 'https://cipla-impact.el.r.appspot.com/inviteFriends'
 // const mailUrl = 'http://localhost:8080/inviteFriends'
@@ -62,8 +63,8 @@ export default function InviteFriendModal(props) {
                 setError(true)
                 setLoading(false)
             }
-            const link = window.location.hostname === 'localhost' ? 'https://cipla-impact.web.app/' : window.location.href
-            axios.post(mailUrl,
+            const link = window.location.hostname === 'localhost' ? 'https://ciplamedx.com/register/impact' : window.location.href
+            axios.post(INVITEYOURPEER_ENDPOINT,
                 {
                     name: user.displayName,
                     email: email.toLowerCase(),
@@ -91,7 +92,7 @@ export default function InviteFriendModal(props) {
         <div className="modalBox modalBox--small active blackTint modalBoxAppearAnim">
             <div className="modalBox__inner modalBoxChildScaleAnim">
                 <div className="modalBox__header">
-                    <h3 className="modalBox__title">Invite your friends</h3>
+                    <h3 className="modalBox__title">Invite your peers</h3>
                     <button
                         className="modalBox__close"
                         onClick={() => {
