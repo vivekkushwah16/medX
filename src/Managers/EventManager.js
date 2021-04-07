@@ -4,6 +4,7 @@ import firebase, { firestore } from "../Firebase/firebase";
 var uniqid = require('uniqid');
 
 let trendingListenerRef = null;
+let eventListenerRef = null;
 
 const EventManager = {
     addEvent: (title, description = "", videoUrl = "") => {
@@ -18,6 +19,9 @@ const EventManager = {
                     tags: [],
                     speakers: [],
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    activeTimelineId: null,
+                    activeCertificate: true,
+                    likes: 0,
                 })
                 res(eventId);
             } catch (error) {
@@ -512,7 +516,99 @@ const EventManager = {
                 rej(error)
             }
         })
-    }
+    },
+    addEventDataListener: (eventId, callback) => {
+        try {
+            const ref = firestore.collection(EVENT_COLLECTION).doc(eventId)
+            ref.onSnapshot(doc => {
+                if (!doc.exists) {
+                    let err = {
+                        code: 'NotValidId',
+                        message: "No EventId Found"
+                    }
+                    throw (err)
+                }
+                if (callback) { callback(doc.data()) }
+            })
+        } catch (error) {
+            if (callback) { callback(null, error) }
+        }
+    },
+    removeEventDataListener: () => {
+        if (eventListenerRef) {
+            eventListenerRef();
+        }
+    },
+    addLike: (eventId, userId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const docRef = firestore.collection(EVENT_COLLECTION).doc(eventId)
+                const LikeRef = firestore.collection(LIKES_COLLECTION).doc(`${userId}+${eventId}`)
+                let id = uniqid('like-')
+                const like = await firestore.runTransaction(async transcation => {
+                    let doc = await transcation.get(docRef)
+                    let likeDoc = await transcation.get(LikeRef)
+                    if (likeDoc.exists) {
+                        let err = {
+                            code: 'AlreadyLiked',
+                            message: "This Time has ALready Been Liked"
+                        }
+                        throw (err)
+                    }
+                    if (!doc.exists) {
+                        let err = {
+                            code: 'NotValidId',
+                            message: "No EventId Found"
+                        }
+                        throw (err)
+                    }
+                    transcation.set(LikeRef, {
+                        id: id,
+                        targetId: eventId,
+                        type: LikeType.EVENT_LIKE,
+                        user: userId,
+                        timeStamp: firebase.firestore.FieldValue.serverTimestamp()
+                    })
+                    transcation.update(docRef, {
+                        likes: firebase.firestore.FieldValue.increment(1)
+                    })
+
+                    return doc.data().likes ? doc.data().likes + 1 : 1
+                })
+                res(like);
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    removeLike: (eventId, userId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const docRef = firestore.collection(EVENT_COLLECTION).doc(eventId)
+                const LikeRef = firestore.collection(LIKES_COLLECTION).doc(`${userId}+${eventId}`)
+                const count = await firestore.runTransaction(async transcation => {
+                    let likeDoc = await transcation.get(LikeRef)
+                    if (!likeDoc.exists) {
+                        let err = {
+                            code: 'NoSuchLikeFound',
+                            message: "NoSuchLikeFound"
+                        }
+                        throw (err)
+                    }
+                    let mainDoc = await transcation.get(docRef)
+                    transcation.delete(LikeRef)
+                    transcation.update(docRef, {
+                        likes: firebase.firestore.FieldValue.increment(-1)
+                    })
+                    console.log(mainDoc.data())
+                    return mainDoc.data().likes ? mainDoc.data().likes - 1 : 0
+                })
+                res(count);
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
 }
 
 export default EventManager;

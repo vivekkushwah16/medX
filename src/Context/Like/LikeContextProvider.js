@@ -101,8 +101,12 @@ export default function LikeContextProvider(props) {
                         res(true)
                         break;
                     case LikeType.VIDEO_LIKE:
-                        const count = await VideoManager.addLike(tagetId, user.uid)
+                        let count = await VideoManager.addLike(tagetId, user.uid)
                         res(count)
+                        break;
+                    case LikeType.EVENT_LIKE:
+                        let _count = await EventManager.addLike(tagetId, user.uid)
+                        res(_count)
                         break;
                     default:
                         res(false)
@@ -125,6 +129,10 @@ export default function LikeContextProvider(props) {
                     case LikeType.VIDEO_LIKE:
                         const count = await VideoManager.removeLike(tagetId, user.uid)
                         res(count)
+                        break;
+                    case LikeType.EVENT_LIKE:
+                        let _count = await EventManager.removeLike(tagetId, user.uid)
+                        res(_count)
                         break;
                     default:
                         res(false)

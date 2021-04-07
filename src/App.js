@@ -6,6 +6,8 @@ import NotLoggedInRoutes from './Components/NotLoggedInRoutes/NotLoggedInRoutes'
 import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RootRoute, EVENT_ROUTE } from './AppConstants/Routes';
 
 // import css
+// import Home from './Pages/Home/Home';
+
 import './assets/css/modal.css'
 
 import loadable from '@loadable/component';
@@ -28,7 +30,6 @@ const MediaModalLazy = loadable(() => import(/* webpackChunkName: "MediaModal" *
 // import { CONFIRMATIONENDPOINT } from './AppConstants/APIEndpoints';
 // import SpeakerManager from './Managers/SpeakerManager';
 // import SpeakerManager from './Managers/SpeakerManager';
-// import Home from './Pages/Home/Home';
 
 
 const speakerProfileLink = 'https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg';
@@ -40,6 +41,7 @@ const preload = component => {
 export default function App() {
     const { initalCheck, user } = useContext(UserContext)
     useEffect(() => {
+        console.log("App Started - DJ")
         if (user) {
             preload(PreEventLazy)
         } else {
@@ -151,15 +153,14 @@ export default function App() {
                         {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={TOPIC_ROUTE}>
                             <Topics />
                         </ProtectedRoute> */}
+                        {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={RootRoute}>
+                            <PreEventLazy />
+                            <Home />
+                        </ProtectedRoute> */}
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={"*"}>
                             <PreEventLazy />
                             {/* <Home /> */}
                         </ProtectedRoute>
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={RootRoute}>
-                            <PreEventLazy />
-                            {/* <Home /> */}
-                        </ProtectedRoute>
-
                     </Switch>
                 }
             </Router>

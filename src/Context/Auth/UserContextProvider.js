@@ -19,10 +19,10 @@ const UserContextProvider = (props) => {
                 localStorage.setItem('userAuth', JSON.stringify(user))
                 setUser(user)
                 setInitalCheck(true)
+                analytics.setUserId(user.uid)
                 addUserLoginAnalytics(user.uid)
                 const userInfo = await getUserProfile(user.uid)
                 console.log(userInfo)
-                analytics.setUserId(user.uid)
                 // setuserInfo(userInfo)
             } else {
                 localStorage.removeItem('userAuth')

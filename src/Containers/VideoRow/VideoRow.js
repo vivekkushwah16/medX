@@ -55,10 +55,13 @@ function VideoRow(props) {
             }
         ]
     };
-
+    let _lastPlayed = lastPlayed
+    if (!lastPlayed) {
+        _lastPlayed = { id: -1 }
+    }
     return (
         <>
-            <h2 className="contentBox__title" >{heading} </h2>
+            <h2 className="contentBox__title mg-b20" >{heading} </h2>
 
             {
                 videosData ?
@@ -71,10 +74,11 @@ function VideoRow(props) {
                                             videosData.map(vd => (
                                                 <>
                                                     {
-                                                        vd.id == lastPlayed.id &&
+                                                        vd &&
+                                                        // vd.id == _lastPlayed.id &&
                                                         <VideoThumbnail_Rich videoInfo={vd} videosData={videosData}
                                                             openVideoPop={openVideoPop} grid={grid}
-                                                            refresh={lastPlayed && vd.id == lastPlayed.id ? Math.random() : ""}
+                                                            refresh={_lastPlayed && vd.id == _lastPlayed.id ? Math.random() : ""}
                                                         />
                                                     }
                                                 </>
@@ -89,7 +93,7 @@ function VideoRow(props) {
                                             videosData.map(vd => (
                                                 <VideoThumbnail_Rich videoInfo={vd} videosData={videosData}
                                                     openVideoPop={openVideoPop} grid={grid}
-                                                    refresh={lastPlayed && vd.id == lastPlayed.id ? Math.random() : ""}
+                                                    refresh={_lastPlayed && vd.id == _lastPlayed.id ? Math.random() : ""}
                                                 />
                                             ))
                                         }

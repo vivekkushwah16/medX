@@ -279,7 +279,7 @@ html { scroll-behavior: smooth; }
 .bold-text { font-weight: 700; }
 
 /* Buttons Styling */
-.btn { position: relative; text-decoration: none; padding: 1rem 2rem; transition: all 0.3s; min-width: 11.25rem; text-align: center; display: inline-block; cursor: pointer; font-family: 'Roboto', sans-serif; white-space: nowrap; font-size: 0.9375rem; line-height: 1rem; font-weight: 400; backdrop-filter: blur(54px); border-radius: 0.625rem; border: medium none; border: 1px solid; }
+.btn { position: relative; text-decoration: none; padding: 1rem 2rem; transition: all 0.3s; min-width: 11.25rem; text-align: center; display: inline-block; cursor: pointer; font-family: 'Roboto', sans-serif; white-space: nowrap; font-size: 0.9375rem; color: #000000; line-height: 1rem; font-weight: 400; backdrop-filter: blur(54px); border-radius: 0.625rem; border: medium none; border: 1px solid #fff; background: #fff; }
 .btn.btn-block { display: block; width: 100%; }
 .btn.btn-lg { padding: 1.25rem 1.875rem; }
 .btn.btn-sm { padding: 0.5rem 1rem; min-width: 0; font-size: 11px; border-radius: 0.5rem; }
@@ -290,7 +290,9 @@ html { scroll-behavior: smooth; }
 .btn.btn-locked > i { display: none; position: absolute; left: 50%; top: 0; margin-left: -0.325rem; height: 100%; font-size: 1.5rem; align-items: center; color: #818181; }
 .btn.btn-locked:disabled > i { display: flex; }
 
-.btn.btn-grey { background: rgba(0, 0, 0, 0.31); color: #fff; border-color: rgba(0, 0, 0, 0.1); backdrop-filter: blur(54px); border-radius: 0.625rem; }
+.btn.btn-grey { background: rgba(0, 0, 0, 0.31); color: #fff; border-color: rgba(0, 0, 0, 0.1); backdrop-filter: blur(54px); 
+  /* border-radius: 0.625rem;  */
+}
 .btn.btn-grey:hover { background: #ffffff; color: rgba(6, 139, 236, 0.6); outline: none; }
 
 .btn.btn-primary { background: rgba(6, 139, 236, 0.6); border-color: rgba(6, 139, 236, 0.6); color: #fff; }
@@ -391,7 +393,7 @@ html { scroll-behavior: smooth; }
 .custom-checkbox3 input[type="checkbox"]:checked ~ .custom-checkbox3__icon::before,
 .custom-checkbox3 input[type="radio"]:checked ~ .custom-checkbox3__icon::before { content: "\e910" !important; }
 
-.custom-slider { padding: 0.5rem 3rem 0.5rem 0; position: relative; width: 100%; }
+.custom-slider { padding: 0.5rem 4.125rem 0.5rem 0; position: relative; width: 100%; }
 .custom-slider__mark { position: absolute; left: 100%; top: 0; height: 100%; display: flex; align-items: center; padding: 0 10px; font-size: 1.125rem; color: rgba(0, 0, 0, 0.6); }
 .custom-slider__text { padding: 0 0 1rem 0; display: block; font-size: 0.75rem; color: rgba(0, 0, 0, 0.6); }
 .custom-slider__bar { height: 5px; width: 100%; position: relative; background: rgba(166, 166, 166, 0.74); }
@@ -402,8 +404,8 @@ html { scroll-behavior: smooth; }
   .show-on-tablet { display: block !important; }
   .show-on-tablet.show-on-tablet--flex { display: block !important; }
   .hide-on-tablet { display: none !important; }
+  .col-md-50 { width: 50%; }
   
-
   /* Alignment */
   .text-md-center { text-align: center; }
   .text-md-left { text-align: left; }
@@ -546,7 +548,8 @@ html { scroll-behavior: smooth; }
 @media only screen and (max-width: 767px) {
 
   .custom-checkbox2__text { font-size: 1rem; }
-  /* .wrapper { padding-bottom: 6rem; } */
+  .wrapper { padding-bottom: 6rem; }
+  .col-sm-100 { width: 100%; }
 
   /* Alignment */
   .text-sm-center { text-align: center; }
@@ -715,10 +718,15 @@ html { scroll-behavior: smooth; }
 /* Iphone 11 above */
 @media only screen and (max-width: 1200px) {
   body, html { font-size: 14px; }
+  .container{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }
 
 /* Iphone 11 */
 @media only screen and (max-width: 991px) { 
+  .container { padding-left: 30px; padding-right: 30px; }
   body, html { font-size: 13px; }
   .slider-btn.slider-btn--prev { margin-left: 0.25rem; }
   .slider-btn.slider-btn--next { margin-right: 0.25rem; }

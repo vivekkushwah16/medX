@@ -1,3 +1,102 @@
 @import url("/src/assets/css/eventpage.css");
 @import url("/src/assets/css/communityBox.css");
 @import url("/src/assets/css/partnerBox.css");
+.eventBox__sidebar-btn {
+    top: 15rem;
+    right: -3.5rem;
+    animation: 0.75s eventBox__sidebar forwards;
+    box-shadow: 0px 0px 10px 5px rgba(128, 128, 128, 0.279);
+}
+
+@keyframes eventBox__sidebar {
+    0% {
+        right: -8rem;
+    }
+    100% {
+        right: -3.5rem;
+    }
+}
+
+.communityBox {
+    border-top-right-radius: 0rem!important;
+    border-bottom-right-radius: 0rem!important;
+}
+
+.eventBox__right {
+    padding-right: 0!important;
+    height: calc(100vh - 12rem);
+    /* height: auto!important; */
+    /* position: absolute!important; */
+}
+
+.eventBox .container {
+    transition: 0.25s;
+    /* max-width: unset; */
+}
+
+.eventBox__inner {
+    transition: 0.25s;
+}
+
+.eventBox .eventBox__inner .eventBox__video>div {
+    width: calc(100vw - 33rem)!important;
+    height: calc((100vw - 33rem) * 0.56)!important;
+}
+
+.addChildMarginBt-10>div {
+    margin-bottom: 1.15rem;
+}
+
+.liveBlock {
+    margin-left: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 0.25rem;
+    /* width: 2.5rem;
+    height: 2rem; */
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: white;
+}
+
+.liveBlock>span {
+    padding: 0.25rem;
+    border-radius: 50%;
+    background-color: red;
+    margin-right: 0.25rem;
+    animation: 1.5s liveBlock forwards;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes liveBlock{
+    0%{
+        transform: scale(0.7);
+    }
+    50%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(0.7);
+    }
+}
+
+.maincardBox__card-body > .text-block{
+    min-width: 70%;
+}
+
+/* .eventBox__video{
+    width: 100%;
+    height: 60vh;
+}
+
+
+@media only screen and (max-width: 990px) {
+    .eventBox__video{
+        width: 100%;
+        height: 100%;
+    }
+} */

@@ -4,3 +4,12 @@
 @import url("/src/assets/css/maincard.css");
 @import url("/src/assets/css/videodetail.css");
 @import url("/src/assets/css/homepage2.css");
+.eventBox__video {
+    background: black;
+}
+
+@media only screen and (max-width: 990px) {
+    .middle-In-mobile {
+        justify-content: center;
+    }
+}

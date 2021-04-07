@@ -7,7 +7,7 @@ const possibleState = {
 }
 
 export default function AskQuestion(props) {
-    const { sendQuestion, id: eventId } = props
+    const { sendQuestion, id: eventId, showCloseButton, handleCloseBtn } = props
     const [currentState, setCurrentState] = useState(possibleState.canAskQuestion)
     const [question, setQuestion] = useState("")
 
@@ -28,7 +28,13 @@ export default function AskQuestion(props) {
 
     return (
         <>
-            <h2 className="communityBox__title">Ask a question</h2>
+            <div class="d-flex justify-content-between align-items-center pd-b10">
+                <h2 className="communityBox__title">Ask a question</h2>
+                {
+                    showCloseButton &&
+                    <button class="btn btn-grey communityBox__close" onClick={handleCloseBtn}>Close</button>
+                }
+            </div>
             <div className="communityBox__send mg-b20">
                 {
                     currentState === possibleState.canAskQuestion &&
@@ -45,7 +51,7 @@ export default function AskQuestion(props) {
                     <div className="communityBox__send--submitted">
                         <h3 className="mg-b15">Thank You!</h3>
                         <p>Your question has been submitted to our Moderators</p>
-                        <a href="#" className="close" onClick={(e)=>{e.preventDefault();setCurrentState(possibleState.canAskQuestion)}}><i className="icon-close"></i></a>
+                        <a href="#" className="close" onClick={(e) => { e.preventDefault(); setCurrentState(possibleState.canAskQuestion) }}><i className="icon-close"></i></a>
                     </div>
                 }
             </div>

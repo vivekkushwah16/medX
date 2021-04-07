@@ -82,27 +82,29 @@ export default function PollContainer(props) {
         <>
             <h2 className="communityBox__title mg-b10">Polls</h2>
             <hr></hr>
-            {
-                !pollData &&
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <img src="/assets/images/loader.gif" alt="loading" style={{ maxWidth: '1.5rem' }} />
-                </div>
-            }
-            {
-                visiblePollData &&
-                visiblePollData.map((pollItem, index) => (
-                    <>
-                        {
-                            pollItem.state === POLL_STATES.showQuestion &&
-                            <PollQuestion data={pollItem} handleSubmit={submitResponse} checkIfAlreadyAnswered={pollAnswerredData[pollItem.id]} index={index} />
-                        }
-                        {
-                            pollItem.state === POLL_STATES.showResult &&
-                            <PollResult data={pollItem} index={index} />
-                        }
-                    </>
-                ))
-            }
+            <div class="communityBox__body">
+                {
+                    !pollData &&
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src="/assets/images/loader.gif" alt="loading" style={{ maxWidth: '1.5rem' }} />
+                    </div>
+                }
+                {
+                    visiblePollData &&
+                    visiblePollData.map((pollItem, index) => (
+                        <>
+                            {
+                                pollItem.state === POLL_STATES.showQuestion &&
+                                <PollQuestion data={pollItem} handleSubmit={submitResponse} checkIfAlreadyAnswered={pollAnswerredData[pollItem.id]} index={index} />
+                            }
+                            {
+                                pollItem.state === POLL_STATES.showResult &&
+                                <PollResult data={pollItem} index={index} />
+                            }
+                        </>
+                    ))
+                }
+            </div>
         </>
     )
 }

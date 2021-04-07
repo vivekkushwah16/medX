@@ -200,15 +200,20 @@ class Register extends Component {
             termsAndConditions: this.state.termsAndConditions,
         })
             .then(async res => {
+                console.log(res)
+                console.log(res.data.userId);
                 analytics.logEvent("user_registered", {
+                    userId: res.data.userId,
                     country: this.state.country,
                     state: this.state.state,
                     city: this.state.city,
                     profession: this.state.profession,
                     speciality: this.state.speciality,
+                    pincode: this.state.pincode,
                     date: new Date()
                 })
                 let _data = {
+                    userId: res.data.userId,
                     email: this.state.email,
                     phoneNumber: this.state.phoneNumber,
                     firstName: this.state.firstName,
@@ -218,6 +223,7 @@ class Register extends Component {
                     country: this.state.country,
                     state: this.state.state,
                     city: this.state.city,
+                    pincode: this.state.pincode,
                     date: new Date()
                 }
                 await database.ref(`/user_registered/${uniqid('user_registered_')}`).update(_data)
@@ -486,7 +492,7 @@ class Register extends Component {
                                 {this.state.errors.pincode &&
                                     <span className="input-error2">{this.state.errors.pincode}</span>}
                             </div>
-                            <label className="custom-checkbox mg-b30" style={{display:'flex'}}>
+                            <label className="custom-checkbox mg-b30" style={{ display: 'flex' }}>
                                 <input
                                     name="termsAndConditions"
                                     type="checkbox"

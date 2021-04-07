@@ -1,26 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 
+const bandClassNames = ['', "contentBox__item-title--pink", "contentBox__item-title--orange"]
+
+
 function VideoThumbnail_Rich(props) {
     const { videosData, videoInfo, openVideoPop, grid, refresh } = props
     const [metadata, setMetadata] = useState(null);
     const { getVideoMetaData } = useContext(UserContext);
+    const [bandClassName, setBandClassName] = useState('')
 
     useEffect(() => {
         getVideoMetaData(videoInfo.id).then((data) => {
             setMetadata(data);
-              console.log(data);
+            console.log(data);
         });
-    }, [videoInfo,refresh])
+        setBandClassName(bandClassNames[Math.round(Math.random() * 3)])
+    }, [videoInfo, refresh])
 
     return (
-        <div className={grid ? "col-25" : "col-100"}>
+        <div className={"col-25 col-md-50 col-sm-100"} style={!grid ? { width: '100%' } : {}}>
             <div className="contentBox__item" id={videoInfo.id}
-                onClick={() => openVideoPop(metadata,videoInfo, videosData)}
+                onClick={() => openVideoPop(metadata, videoInfo, videosData)}
+                style={{ backgroundImage: `url(${videoInfo.thumnailUrl})` }}
             // onClickCapture={() => {openVideoPop(videoInfo, videosData);handleOnItemClick()}}
             >
-                <img className="contentBox__item-pic" src={videoInfo.thumnailUrl} alt="" />
-                <a className="contentBox__item-title">{videoInfo.title}</a>
+                {/* <img className="contentBox__item-pic" src={videoInfo.thumnailUrl} alt="" /> */}
+                <a href="#" class="contentBox__item-play"><i class="icon-play"></i></a>
+                <a className={`contentBox__item-title ${bandClassName}`}>{videoInfo.title}</a>
                 {/* <a class="contentBox__item-plus" href="#"><i class="icon-video-plus"></i></a>  */}
 
                 <div className="maincardBox__card-menu">

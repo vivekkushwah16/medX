@@ -34,8 +34,8 @@ class Home extends Component {
         { tag: 'vaccination', header: 'Vaccination' }],
 
         activeTag: '',
-        lastPlayed:null,
-        lastVideoMetadata:null
+        lastPlayed: null,
+        lastVideoMetadata: null
     }
 
     onTagSelect = (tag) => {
@@ -47,7 +47,7 @@ class Home extends Component {
             currentVideosData: videosData,
             videopopVisible: true,
             videoPopupData: videoData,
-            lastVideoMetadata:metadata
+            lastVideoMetadata: metadata
         })
     }
 
@@ -56,7 +56,7 @@ class Home extends Component {
             currentVideosData: null,
             videopopVisible: false,
             videoPopupData: null,
-            lastPlayed:videoData,
+            lastPlayed: videoData,
         })
     }
 
@@ -64,31 +64,34 @@ class Home extends Component {
 
         return (
             <section className="wrapper" id="root">
-                
+
                 <div className="topicsBox__wrapper">
-                    <Header />
+                    <Header  hideInviteFriend={true} whiteLogo={true}/>
                     <Banner />
                     <div className="tabBox">
+                        <div class="container">
 
-                        <TagsRow tags={this.state.tags} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag} />
+                            <TagsRow tags={this.state.tags} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag} />
 
-                        <div className="contentBox">
-                            {
-                                this.state.activeTag == '' ?
-                                    this.state.rows.map(row =>
-                                        <VideoRow heading={row.header} lastPlayed={this.state.lastPlayed} tag={row.tag} openVideoPop={this.openVideoPop} grid={false} />
-                                    )
-                                    :
-                                    <VideoRow heading={`Videos on ${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed} tag={this.state.activeTag.tag} openVideoPop={this.openVideoPop} grid={true} />
-                            }
+                            <div className="contentBox">
+                                {
+                                    this.state.activeTag == '' ?
+                                        this.state.rows.map(row =>
+                                            <VideoRow heading={row.header} lastPlayed={this.state.lastPlayed} tag={row.tag} openVideoPop={this.openVideoPop} grid={false} />
+                                        )
+                                        :
+                                        <VideoRow heading={`Videos on ${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed} tag={this.state.activeTag.tag} openVideoPop={this.openVideoPop} grid={true} />
+                                }
+                            </div>
                         </div>
                     </div>
+
                     <Footer />
                 </div>
 
                 {
                     this.state.videopopVisible &&
-                    <VideoPopup metadata ={this.state.lastVideoMetadata}
+                    <VideoPopup metadata={this.state.lastVideoMetadata}
                         videoData={this.state.videoPopupData}
                         currVideosData={this.state.currentVideosData}
                         closeVideoPop={this.closeVideoPop}

@@ -12,7 +12,7 @@ import ReadMore from '../ReadMore/ReadMore';
 import StartRating from '../StartRating/StartRating';
 
 function AgendaCard(props) {
-    const { timeline, haveVideo, haveLikeButton, animate, placeIndex, forEventPage, wantHeaderFooter } = props
+    const { timeline, haveVideo, haveLikeButton, animate, placeIndex, forEventPage, wantHeaderFooter, showLive } = props
     const { getLike, addLike, removeLike, getRating, updateRating } = useContext(likeContext)
     const { userInfo, user } = useContext(UserContext)
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
@@ -22,7 +22,7 @@ function AgendaCard(props) {
 
     useEffect(() => {
         getCurrentTargetLikeStatus()
-        // getCurrentTargetRatingStatus()
+        getCurrentTargetRatingStatus()
     }, [])
 
     const getCurrentTargetLikeStatus = async () => {
@@ -66,7 +66,7 @@ function AgendaCard(props) {
         setLike(!like)
     }
 
-    if (wantHeaderFooter) {
+    const getMainRender = () => {
         return (
             <div key={`AgendaCard-${timeline.id}`} id={`AgendaCard-${timeline.id}`} className={`maincardBox__card `}>
                 {
@@ -78,22 +78,37 @@ function AgendaCard(props) {
                 }
                 <div class="maincardBox__card-body">
                     <div class="text-block">
-                        <h4 className="mg-b15 maincardBox__card-title">{timeline.title}</h4>
+                        {
+                            showLive ? (
+                                <div className="mg-b15 maincardBox__card-title d-flex">
+                                    <h4 className="maincardBox__card-title" >{timeline.title}
+                                    </h4>
+                                    <div className="liveBlock">
+                                        <span></span>
+                                        <div>Live</div>
+                                    </div>
+                                </div>
+                            ) :
+                                (<h4 className="mg-b15 maincardBox__card-title">{timeline.title}
+                                </h4>)
+                        }
+
                         <h2 class="maincardBox__card-date mg-b10"> {`${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</h2>
                         <ReadMore className="mg-b25 maincardBox__card-desc" description={timeline.description} />
 
                     </div>
                     {
-                        haveLikeButton && !forEventPage &&
+                        haveLikeButton &&
                         <div class="rating-block">
                             <button className={`mg-b40 mg-sm-b20 like-btn ${like ? 'like-btn--active' : ''} `} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
-                            {/* {
+                            {
+                                forEventPage &&
                                 rating !== null &&
                                 <>
-                                    <p class="font-14 mg-b20">Is this topic relevant to you?</p>
+                                    <p class="font-12 mg-b20">Is this topic relevant to you?</p>
                                     <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
                                 </>
-                            } */}
+                            }
                         </div>
                     }
                 </div>
@@ -107,6 +122,28 @@ function AgendaCard(props) {
                 </div>
             </div>
         )
+    }
+
+    if (wantHeaderFooter) {
+        if (forEventPage) {
+            return (
+                <>
+                    <div class="maincardBox__card-wrap">
+                        {
+                            getMainRender()
+                        }
+                    </div>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    {
+                        getMainRender()
+                    }
+                </>
+            )
+        }
     }
 
     return (

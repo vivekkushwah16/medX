@@ -6,7 +6,7 @@ export default function About(props) {
     const { data } = props
     return (
         <div id="tab1" className="eventBox__tabs-content active">
-            <h1 className="eventBox__title mg-b30">{data.title}</h1>
+            {/* <h1 className="eventBox__title mg-b30">{data.title}</h1> */}
             {/* <h4 className="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
             {
                 data.description &&
@@ -20,7 +20,7 @@ export default function About(props) {
             {data.speakers && data.speakers.length > 0 &&
                 <>
                     <h3 className="eventBox__small-title mg-b20">SPEAKERS</h3>
-                    <div className="d-flex">
+                    <div className="d-flex addChildMarginBt-10 " style={{ flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         {
                             data.speakers.map(id => (
                                 <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={id} />

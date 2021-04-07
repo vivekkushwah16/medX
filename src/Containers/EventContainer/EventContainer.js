@@ -25,17 +25,24 @@ const menuItems = [
 ]
 
 export default function EventContainer(props) {
-    const { id, data, agendaData, trendingData, partnerWithUsData, countPartnerWithUsAgree, sendQuestion } = props;
+    const { id, data, agendaData, trendingData, partnerWithUsData, countPartnerWithUsAgree, sendQuestion, likedEvent, handleEventLikeButton } = props;
     const [activeMenu, setActiveMenu] = useState(menuItems[0])
-    const like = { count: 20, status: true }
-    const toggleLike = (value) => {
-        console.log(value)
-    }
+    const [activePollPanel, setPollPanelActive] = useState(false)
+    const [likeButtonEnabled, makeLikeButtonEnabled] = useState(true)
 
     return (
         <div className="eventBox">
-            <div className="container">
-                <div className="d-flex row d-sm-block">
+
+            {
+                !activePollPanel && !isMobileOnly &&
+                <a href="#" class="eventBox__sidebar-btn active" onClick={(e) => {
+                    e.preventDefault();
+                    setPollPanelActive(true)
+                }}>Q&amp;A / Polls</a>
+            }
+
+            <div className="container" style={activePollPanel ? { maxWidth: 'unset' } : {}}>
+                <div className={`d-flex row d-sm-block  ${activePollPanel ? 'eventBox__inner' : ''}`}>
                     <div className="eventBox__left col">
                         <div className="eventBox__video">
                             <ReactPlayer
@@ -44,9 +51,29 @@ export default function EventContainer(props) {
                                 volume={0.85}
                                 controls={true}
                                 width='100%'
-                                height='50vh'
+                                height='60vh'
+                                playsinline={true}
                             ></ReactPlayer>
                             {/* <img src="assets/images/video3.jpg" alt="" /> */}
+                        </div>
+                        <div class="pd-t30 pd-b10 d-flex align-items-start justify-content-between">
+                            <div class="mx-w600">
+                                <h1 class="eventBox__title mg-b30">{data.title}</h1>
+                                {/* <h4 class="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
+                            </div>
+
+                            <a href="#" className={`like-btn eventBox__like-btn ${likedEvent ? 'like-btn--active' : ''}`}
+                                onClick={(e) => {
+                                    if(likeButtonEnabled){
+                                        makeLikeButtonEnabled(false)
+                                        handleEventLikeButton(e, ()=>{
+                                            makeLikeButtonEnabled(true)
+                                        })
+                                    }
+                                }}>
+                                <i class="icon-like"></i>{data.likes}
+                            </a>
+
                         </div>
                         <div className="eventBox__tabs-wrapper">
                             <EventMenu menuItems={menuItems} activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
@@ -62,7 +89,7 @@ export default function EventContainer(props) {
 
                             {
                                 activeMenu.id === menuItemsId.Agenda && agendaData &&
-                                <AgendaTab data={agendaData} haveVideo={false} haveLikeButton={true} />
+                                <AgendaTab data={agendaData} haveVideo={false} haveLikeButton={true} activeTimeline={data.activeTimelineId} />
                             }
                             {
                                 activeMenu.id === menuItemsId.Trending && trendingData &&
@@ -86,8 +113,8 @@ export default function EventContainer(props) {
                     </div>
                     {
                         !isMobileOnly &&
-                        <div className="eventBox__right show-on-desktop col">
-                            <CommunityBox sendQuestion={sendQuestion} id={id} />
+                        <div className={`eventBox__right  show-on-desktop col ${activePollPanel ? 'active' : ''}`}>
+                            <CommunityBox sendQuestion={sendQuestion} id={id} showCloseButton={true} handleCloseBtn={(e) => { e.preventDefault(); setPollPanelActive(false) }} />
                         </div>
                     }
                 </div>

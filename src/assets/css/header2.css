@@ -1,14 +1,15 @@
 /* ### header box ### */
 .headerBox { padding: 2.125rem 31.25rem 2.125rem 0; position: absolute; left: 0; top: 0; width: 100%; z-index: 10; }
-.headerBox.headerBox--full { padding: 2.125rem 0 2.125rem 0; }
+/* .headerBox.headerBox--full { padding: 2.125rem 0 2.125rem 0; } */
 
 .headerBox__logo { width: 8.8125rem; display: block; transition: 0.25s; transform: scale(1);}
 .headerBox__logo:hover { transform: scale(1.1);  }
 .headerBox__logo2 { width: 10.5625rem; display: block; }
 .headerBox__logo3 { width: 15.625rem; display: block; }
 .headerBox__logo4 { width: 10rem; display: block; }
+.headerBox__logo5 { width: 13rem; display: block; }
 
-
+.headerBox.headerBox--full { padding-right: 0; }
 .headerBox__left { padding-left: 0; display: flex; align-items: center; justify-content: space-between; }
 .headerBox__right {  display: flex; align-items: center; }/* padding-right: 28.5rem; */
 .headerBox__right.headerBox__right--nogap { padding-right: 0; }

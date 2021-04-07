@@ -22,7 +22,8 @@ function validateEmail(email) {
 
 export default function InviteFriendModal(props) {
     const alert = useAlert();
-    const [url, setUrl] = useState(window.location.href);
+    // const [url, setUrl] = useState(window.location.href);
+    const [url, setUrl] = useState("https://ciplamedx.com/register/impact");
     const [textArea, setTextarea] = useState({});
     const [email, setEmail] = useState("");
     const [error, setError] = useState(false);
@@ -45,7 +46,7 @@ export default function InviteFriendModal(props) {
     const shareOnce = () => {
         if (navigator.share) {
             navigator.share({
-                url: window.location.href,
+                url: "https://ciplamedx.com/register/impact"//window.location.href,
             });
         }
     };

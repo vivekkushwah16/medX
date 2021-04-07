@@ -108,6 +108,14 @@ export default function EventContextProvider(props) {
         return _data;
     }
 
+    const getEventDataListener = (eventId, callback) => {
+        EventManager.addEventDataListener(eventId, callback)
+    }
+
+    const removeEventDataListener = () => {
+        EventManager.removeEventDataListener()
+    }
+
     const countPartnerWithUsAgree = (eventId, id) => {
         return new Promise(async (res, rej) => {
             try {
@@ -164,7 +172,8 @@ export default function EventContextProvider(props) {
         <eventContext.Provider value={{
             getEvent, getTimelines, attachTimelineListener,
             removeTimelineListener, attachTrendingDataListener, removeTrendingDataListener,
-            getPartnerWithUs, countPartnerWithUsAgree, getPartnerWithUsAgreeStatus, sendQuestion
+            getPartnerWithUs, countPartnerWithUsAgree, getPartnerWithUsAgreeStatus, sendQuestion,
+            getEventDataListener, removeEventDataListener
         }}>
             {props.children}
         </eventContext.Provider>

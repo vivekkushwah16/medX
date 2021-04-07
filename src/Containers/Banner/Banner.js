@@ -39,16 +39,16 @@ const BannerData = [
         mainImageUrl: 'assets/images/logos/impact-logo.png',
 
     },
-    {
-        type: BannerType.ImageSingleButton,
-        mainTitle: 'FEATURED TALK',
-        subTitle_line1: 'Discussion on Drug',
-        subTitle_line2: 'resistant TB',
-        trailerUrl: '',
-        mainImageUrl: 'assets/images/banner-pic.png',
-        speakerId: 'speaker-kmfz0vco',
-        eventId: 'event-kmde59n5'
-    },
+    // {
+    //     type: BannerType.ImageSingleButton,
+    //     mainTitle: 'FEATURED TALK',
+    //     subTitle_line1: 'Discussion on Drug',
+    //     subTitle_line2: 'resistant TB',
+    //     trailerUrl: '',
+    //     mainImageUrl: 'assets/images/banner-pic.png',
+    //     speakerId: 'speaker-kmfz0vco',
+    //     eventId: 'event-kmde59n5'
+    // },
     {
         type: BannerType.UpcompingEvent,
         mainTitle: '50+ Eminent Speakers',
@@ -94,7 +94,7 @@ function Banner() {
     };
 
     return (
-        <div className="bannerBox">
+        <div className="bannerBox bannerBox--large">
             <Slider className="slider-banner-desktop" {...settings}>
                 {
                     BannerData.map(item => (

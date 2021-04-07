@@ -1,24 +1,24 @@
 import React, { useEffect, useContext } from 'react'
 import AddToCalendarHOC from 'react-add-to-calendar-hoc';
-import addToCalendarBtn from './addToCalendarBtn';
+import addToCalendarBtn, { addToCalendarBlueBtn } from './addToCalendarBtn';
 import AddToCalendarDropDown from './AddToCalendarDropDown';
 import moment from 'moment';
 import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider';
 import { ADDTOCALENDAR_ANALYTICS_EVENT } from '../../AppConstants/AnalyticsEventName';
 
-export default function AddToCalendar() {
+export default function AddToCalendar(props) {
     const startDatetime = moment('2021-04-16 19:00:00').utc();
     const endDatetime = startDatetime.clone().add(2.5, 'hours');
     const duration = endDatetime.diff(startDatetime, 'hours');
     const event = {
-        description: '2 days of cutting-edge academic feast with experts in Respiratory Medicine',
+        description: '',
         duration,
         endDatetime: endDatetime.format('YYYYMMDDTHHmmssZ'),
         location: 'https://ciplamedx.com/register/impact',
         startDatetime: startDatetime.format('YYYYMMDDTHHmmssZ'),
-        title: 'Cipla Impact 21 - Academic feast with experts in Respiratory Medicine',
+        title: 'Cipla Impact 21',
     }
-    const AddToCalendarComp = AddToCalendarHOC(addToCalendarBtn, AddToCalendarDropDown);
+    const AddToCalendarComp = props.blueBtn ? AddToCalendarHOC(addToCalendarBlueBtn, AddToCalendarDropDown) : AddToCalendarHOC(addToCalendarBtn, AddToCalendarDropDown);
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
 
     window.AddToCalendarAnalytic = (optionName = "") => {
