@@ -72,31 +72,62 @@
     animation-iteration-count: infinite;
 }
 
-@keyframes liveBlock{
-    0%{
+@keyframes liveBlock {
+    0% {
         transform: scale(0.7);
     }
-    50%{
+    50% {
         transform: scale(1);
     }
-    100%{
+    100% {
         transform: scale(0.7);
     }
 }
 
-.maincardBox__card-body > .text-block{
+.maincardBox__card-body>.text-block {
     min-width: 70%;
 }
-
-/* .eventBox__video{
+/* 
+.eventBox__video>div {
     width: 100%;
     height: 60vh;
 }
 
-
-@media only screen and (max-width: 990px) {
-    .eventBox__video{
+@media only screen and (orientation: landscape) and (max-width: 990px) {
+    .eventBox__video>div {
         width: 100%;
-        height: 100%;
+        height: 60vh;
+    }
+}
+
+@media only screen and (orientation: portrait) and (max-width: 990px) {
+    .eventBox__video>div {
+        width: 100%;
+        height: 30vh;
     }
 } */
+
+.eventBoxBg{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.eventBoxBg::before{
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 45%;
+    width: 100%;
+    content: "";
+    background: url(../../assets/images/bg_wave.png) center bottom no-repeat;
+    background-size: 100% auto;
+    background-size: cover;
+    background-position-y: inherit;
+}
+
+.eventBox__tabs-content .navigarion-bar  {
+    width: 90%;
+}

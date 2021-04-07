@@ -17,7 +17,7 @@ export default function Event() {
 
     let { getLike, addLike, removeLike, } = useContext(likeContext)
     const [eventData, setEventData] = useState({})
-    const [agendaData, setAgendaData] = useState({})
+    const [agendaData, setAgendaData] = useState([])
     const [trendingData, setTrendingData] = useState({})
     const [partnerWithUsData, setPartnerWithUsData] = useState({})
     const [likedEvent, setLikeEvent] = useState(false)
@@ -94,13 +94,14 @@ export default function Event() {
 
     return (
         <section className="wrapper" id="root">
+             <div className="eventBoxBg"></div>
             <div className="topicsBox__wrapper">
                 {
                     isMobileOnly ?
-                        <Header showCertificate={false} showFeedback={false} disableFeedback={false} />
+                        <Header showCertificate={false} showFeedback={false} disableFeedback={false} stickyOnScroll={true}/>
 
                         :
-                        <Header showCertificate={true} showFeedback={true} disableFeedback={eventData ? !eventData.activeCertificate : false} />
+                        <Header showCertificate={true} showFeedback={true} disableFeedback={eventData ? !eventData.activeCertificate : false} stickyOnScroll={true} />
                 }
                 {
                     eventData &&

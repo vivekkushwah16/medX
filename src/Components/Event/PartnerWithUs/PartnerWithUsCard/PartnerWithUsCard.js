@@ -37,10 +37,10 @@ export default function PartnerWithUsCard(props) {
             <div class="partnerBox__item-text">
                 <h3 class="partnerBox__item-title mg-b20">{data.title}</h3>
                 <ReadMore className="partnerBox__item-desc mg-b20" description={data.description} limit={100} />
-                <h3 class="partnerBox__item-title mg-b20">{data.subTitle}</h3>
-                <ReadMore className="partnerBox__item-desc mg-b20" description={data.subDesciption} limit={100} />
+                {/* <h3 class="partnerBox__item-title mg-b20">{data.subTitle}</h3>
+                <ReadMore className="partnerBox__item-desc mg-b20" description={data.subDesciption} limit={100} /> */}
                 <div class="partnerBox__item-action">
-                    <ButtonWithLoader className="btn btn-secondary" name={alreadyAgreed ? 'Thanks' : 'Count me in'} disabled={alreadyAgreed} handleClick={count} />
+                    <ButtonWithLoader className="btn btn-sm btn-secondary" name={alreadyAgreed ? 'Thanks' : 'Count me in'} disabled={alreadyAgreed} handleClick={count} />
                 </div>
             </div>
         </div>

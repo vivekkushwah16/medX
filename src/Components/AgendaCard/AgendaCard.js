@@ -78,22 +78,20 @@ function AgendaCard(props) {
                 }
                 <div class="maincardBox__card-body">
                     <div class="text-block">
+                        <h4 className="mg-b15 maincardBox__card-title">{timeline.title}
+                        </h4>
                         {
                             showLive ? (
                                 <div className="mg-b15 maincardBox__card-title d-flex">
-                                    <h4 className="maincardBox__card-title" >{timeline.title}
-                                    </h4>
+                                    <h2 class="maincardBox__card-date"> {`${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</h2>
                                     <div className="liveBlock">
                                         <span></span>
                                         <div>Live</div>
                                     </div>
                                 </div>
                             ) :
-                                (<h4 className="mg-b15 maincardBox__card-title">{timeline.title}
-                                </h4>)
+                                (<h2 class="maincardBox__card-date mg-b10"> {`${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</h2>)
                         }
-
-                        <h2 class="maincardBox__card-date mg-b10"> {`${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</h2>
                         <ReadMore className="mg-b25 maincardBox__card-desc" description={timeline.description} />
 
                     </div>

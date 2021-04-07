@@ -4,10 +4,10 @@
 .slick-center .partnerBox__item { opacity: 1; transform: scale(1.5); z-index: 11; position: relative; }
 .partnerBox__item-pic { width: 100%; }
 .partnerBox__item-pic > img { width: 100%;}
-.partnerBox__item-text { padding: 1rem 8.5rem 0.5rem 1rem; position: relative; }
+.partnerBox__item-text { padding: 1rem 1rem 0.5rem 1rem; position: relative; }
 .partnerBox__item-title { font-size: 0.75rem; font-weight: 700; color: #005188; }
 .partnerBox__item-desc { font-size: 0.75rem; font-weight: 400;  color: rgba(0, 0, 0, 0.6); }
-.partnerBox__item-action { padding: 1rem 0.5rem; position: absolute; right: 0; top: 0; }
+.partnerBox__item-action { padding: 1rem 0.5rem; position: relative; right: 0; top: 0; }
 .partnerBox__item-action .btn { padding-right: 1rem; padding-left: 1rem; border-radius: 1.5rem; min-width: auto; }
 
 .partnerBox .slick-list { padding-top: 100px !important; padding-bottom: 100px !important; }

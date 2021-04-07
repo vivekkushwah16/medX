@@ -1,0 +1,10 @@
+.headerBox_sticky {
+    padding: 1.125rem 9.25rem 1.125rem 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    box-shadow: 0px 0px 8px 3px #4a4a4a85;
+    background: linear-gradient( 90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.733924) 72.82%, rgba(255, 255, 255, 0) 129.25%)!important;
+}

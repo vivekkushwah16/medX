@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { isMobileOnly } from 'react-device-detect'
 import ReactPlayer from 'react-player'
+import { MediaModalType } from '../../AppConstants/ModalType'
+import { MonthName } from '../../AppConstants/Months'
+import Certificate from '../../Components/Certificate/Certificate'
 import CommunityBox from '../../Components/CommunityBox/CommunityBox'
 import About from '../../Components/Event/About/About'
 import AgendaTab from '../../Components/Event/AgendaTab/AgendaTab'
 import EventMenu from '../../Components/Event/EventMenu'
 import PartnerWithUs from '../../Components/Event/PartnerWithUs/PartnerWithUs'
 import Trending from '../../Components/Event/Trending/Trending'
+import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider'
 
 const menuItemsId = {
     About: 'About',
@@ -25,10 +29,50 @@ const menuItems = [
 ]
 
 export default function EventContainer(props) {
-    const { id, data, agendaData, trendingData, partnerWithUsData, countPartnerWithUsAgree, sendQuestion, likedEvent, handleEventLikeButton } = props;
+    const { id, data, agendaData: _initalAgendaData, trendingData, partnerWithUsData, countPartnerWithUsAgree, sendQuestion, likedEvent, handleEventLikeButton } = props;
     const [activeMenu, setActiveMenu] = useState(menuItems[0])
     const [activePollPanel, setPollPanelActive] = useState(false)
     const [likeButtonEnabled, makeLikeButtonEnabled] = useState(true)
+    const { showMediaModal } = useContext(MediaModalContext)
+
+    const [agendaData, setAgendaData] = useState(null);
+    const [agendaDates, setAgendaDates] = useState([]);
+    const [cureentAgendaDate, setCureentAgendaDate] = useState(null);
+
+    useEffect(() => {
+        if (_initalAgendaData)
+            processAgendaData(_initalAgendaData)
+    }, [_initalAgendaData])
+
+
+    const processAgendaData = (data) => {
+        console.log(data)
+        let newData = {}
+        data.forEach((timeline) => {
+            let date = `${MonthName[new Date(timeline.startTime).getMonth()]} ${new Date(timeline.startTime).getDate()}`
+            if (newData.hasOwnProperty(date)) {
+                newData = {
+                    ...newData,
+                    [date]: [...newData[date], timeline]
+                }
+            } else {
+                newData = {
+                    ...newData,
+                    [date]: [timeline]
+                }
+            }
+        })
+        let dates = Object.keys(newData)
+        console.log(newData)
+        setAgendaDates(dates)
+        setCureentAgendaDate(dates[0])
+        setAgendaData(newData)
+    }
+
+    const handleDateChange = (date, event) => {
+        if (event) { event.preventDefault() }
+        setCureentAgendaDate(date)
+    }
 
     return (
         <div className="eventBox">
@@ -51,7 +95,7 @@ export default function EventContainer(props) {
                                 volume={0.85}
                                 controls={true}
                                 width='100%'
-                                height='60vh'
+                                height={isMobileOnly ? '40vh' : '60vh'}
                                 playsinline={true}
                             ></ReactPlayer>
                             {/* <img src="assets/images/video3.jpg" alt="" /> */}
@@ -64,9 +108,9 @@ export default function EventContainer(props) {
 
                             <a href="#" className={`like-btn eventBox__like-btn ${likedEvent ? 'like-btn--active' : ''}`}
                                 onClick={(e) => {
-                                    if(likeButtonEnabled){
+                                    if (likeButtonEnabled) {
                                         makeLikeButtonEnabled(false)
-                                        handleEventLikeButton(e, ()=>{
+                                        handleEventLikeButton(e, () => {
                                             makeLikeButtonEnabled(true)
                                         })
                                     }
@@ -75,6 +119,13 @@ export default function EventContainer(props) {
                             </a>
 
                         </div>
+                        {
+                            isMobileOnly &&
+                            <div class="pd-t5 pd-b5 d-flex align-items-start justify-content-between">
+                                <button className="btn btn-secondary" onClick={() => showMediaModal(MediaModalType.Component, Certificate)} disabled={props.disableFeedback}>Get your certificate</button>
+                                <button className="btn btn-secondary">Feedback</button>
+                            </div>
+                        }
                         <div className="eventBox__tabs-wrapper">
                             <EventMenu menuItems={menuItems} activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
 
@@ -89,7 +140,14 @@ export default function EventContainer(props) {
 
                             {
                                 activeMenu.id === menuItemsId.Agenda && agendaData &&
-                                <AgendaTab data={agendaData} haveVideo={false} haveLikeButton={true} activeTimeline={data.activeTimelineId} />
+                                <AgendaTab data={agendaData} haveVideo={false}
+                                    haveLikeButton={true}
+                                    activeTimeline={data.activeTimelineId}
+                                    agendaDates={agendaDates}
+                                    cureentAgendaDate={cureentAgendaDate}
+                                    handleDateChange={handleDateChange}
+                                    allData={_initalAgendaData}
+                                />
                             }
                             {
                                 activeMenu.id === menuItemsId.Trending && trendingData &&
@@ -119,6 +177,6 @@ export default function EventContainer(props) {
                     }
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

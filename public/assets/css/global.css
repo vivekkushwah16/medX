@@ -279,7 +279,7 @@ html { scroll-behavior: smooth; }
 .bold-text { font-weight: 700; }
 
 /* Buttons Styling */
-.btn { position: relative; text-decoration: none; padding: 1rem 2rem; transition: all 0.3s; min-width: 11.25rem; text-align: center; display: inline-block; cursor: pointer; font-family: 'Roboto', sans-serif; white-space: nowrap; font-size: 0.9375rem; color: #000000; line-height: 1rem; font-weight: 400; backdrop-filter: blur(54px); border-radius: 0.625rem; border: medium none; border: 1px solid #fff; background: #fff; }
+.btn { position: relative; text-decoration: none; padding: 1rem 2rem; transition: all 0.3s; min-width: 11.25rem; text-align: center; display: inline-block; cursor: pointer; white-space: nowrap; font-size: 0.9375rem; color: #000000; line-height: 1rem; font-weight: 400; backdrop-filter: blur(54px); border-radius: 0.625rem; border: medium none; border: 1px solid #fff; background: #fff; }
 .btn.btn-block { display: block; width: 100%; }
 .btn.btn-lg { padding: 1.25rem 1.875rem; }
 .btn.btn-sm { padding: 0.5rem 1rem; min-width: 0; font-size: 11px; border-radius: 0.5rem; }
