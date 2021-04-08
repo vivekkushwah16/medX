@@ -3,6 +3,7 @@ import { UserContext } from '../../Context/Auth/UserContextProvider'
 
 const bandClassNames = ['', "contentBox__item-title--pink", "contentBox__item-title--orange"]
 
+const baseBandClass = 'contentBox__item-title--'
 
 function VideoThumbnail_Rich(props) {
     const { videosData, videoInfo, openVideoPop, grid, refresh } = props
@@ -13,9 +14,10 @@ function VideoThumbnail_Rich(props) {
     useEffect(() => {
         getVideoMetaData(videoInfo.id).then((data) => {
             setMetadata(data);
+            setBandClassName(data.band ? baseBandClass + data.band : bandClassNames[Math.round(Math.random() * 3)])
+
             // console.log(data);
         });
-        setBandClassName(bandClassNames[Math.round(Math.random() * 3)])
     }, [videoInfo, refresh])
 
     return (

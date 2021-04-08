@@ -26,12 +26,14 @@ class Home extends Component {
         rows: [{ tag: 'ciplamed', header: 'Recommended Videos' },
         { tag: 'covid', header: 'Videos on Covid19' },
         { tag: 'tuberculosis', header: 'Videos on Tuberculosis' },
-        { tag: 'vaccination', header: 'Videos on Vaccination' }],
+        { tag: 'vaccination', header: 'Videos on Vaccination' },
+        { tag: 'respiratory', header: 'Videos on respiratory' }],
 
         tags: [{ tag: 'ciplamed', header: 'Ciplamed' },
         { tag: 'covid', header: 'Covid19' },
         { tag: 'tuberculosis', header: 'Tuberculosis' },
-        { tag: 'vaccination', header: 'Vaccination' }],
+        { tag: 'vaccination', header: 'Vaccination' },
+        { tag: 'respiratory', header: 'Respiratory' }],
 
         activeTag: '',
         lastPlayed: null,

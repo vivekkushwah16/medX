@@ -5,7 +5,7 @@
 @import url("/src/assets/css/videodetail.css");
 @import url("/src/assets/css/homepage2.css");
 .eventBox__video {
-    background: #0151899c;
+    background: #000;
     border-radius: 0.5rem;
 }
 

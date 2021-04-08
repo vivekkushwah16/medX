@@ -12,6 +12,7 @@ import './assets/css/modal.css'
 
 import loadable from '@loadable/component';
 import LoadableFallback from './Components/LoadableFallback/LoadableFallback';
+import Upload from './Components/Upload/upload';
 const RegisterLazy = loadable(() => import(/* webpackChunkName: "Register" */ "./Pages/EventRegister/Register"), { fallback: <LoadableFallback /> })
 const LoginLazy = loadable(() => import(/* webpackChunkName: "Login" */ "./Pages/EventLogin/Login"), { fallback: <LoadableFallback /> })
 const PreEventLazy = loadable(() => import(/* webpackChunkName: "PreEventLazy" */ './Pages/PreEvent/PreEvent'), { fallback: <LoadableFallback /> })
@@ -148,6 +149,11 @@ export default function App() {
                         {/* event-kmde59n5 */}
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE + '/:id'}>
                             <EventLazy />
+                        </ProtectedRoute>
+
+                        {/* UPLOAD */}
+                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/upload'}>
+                            <Upload />
                         </ProtectedRoute>
 
                         {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={TOPIC_ROUTE}>

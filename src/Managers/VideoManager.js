@@ -7,7 +7,7 @@ var uniqid = require('uniqid');
 // videoTimestamp = [{time:'', title:''}]
 //speakers = ['speakersId1',]
 const VideoManager = {
-    addVideo: (title, description, videoUrl, thumnailUrl, speakers = [], tags = [], videoTimestamp = []) => {
+    addVideo: (title, description, videoUrl, thumnailUrl, speakers = [], tags = [], videoTimestamp = [], band) => {
         return new Promise(async (res, rej) => {
             try {
                 let eventId = uniqid('video-')
@@ -24,6 +24,7 @@ const VideoManager = {
                     tags: smallTag,
                     speakers: speakers,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    band: band
                 })
                 res(eventId);
             } catch (error) {
