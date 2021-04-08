@@ -90,7 +90,7 @@ export default function InviteFriendModal(props) {
     }
 
     return (
-        <div className="modalBox modalBox--small active blackTint modalBoxAppearAnim">
+        <div className="modalBox modalBox--small active blackTint modalBoxAppearAnim inviteFriendModal">
             <div className="modalBox__inner modalBoxChildScaleAnim">
                 <div className="modalBox__header">
                     <h3 className="modalBox__title">Invite your peers</h3>

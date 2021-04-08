@@ -10,6 +10,7 @@ import TimelineBoxItem from '../../Components/TimelineBoxItem/TimelineBoxItem'
 import VideoThumbnail_Compact from '../../Components/VideoThumbnail_Compact/VideoThumbnail_Compact'
 import VideoManager from '../../Managers/VideoManager'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
+import StartRating from '../../Components/StartRating/StartRating'
 
 const timeLimit = 10;
 let currenttimeWatched = 0;
@@ -18,15 +19,17 @@ function VideoPopup(props) {
     const playerRef = useRef(null);
     const { metadata, currVideosData, videoData: _vd, closeVideoPop, openVideoPop } = props
     const [videoData, setVideoData] = useState(_vd)
-    const { getLike, addLike, removeLike } = useContext(likeContext)
+    const { getLike, addLike, removeLike, updateRating, getRating } = useContext(likeContext)
     const [like, setLike] = useState(false);
     const [likeCount, setLikeCount] = useState(videoData.likes);
     const { setVideoMetaData } = useContext(UserContext);
-
+    const [minPlayed, setMinPlayed] = useState(0)
+    const [rating, setRating] = useState(null);
 
     useEffect(() => {
         setLikeCount(props.videoData.likes);
         getCurrentTargetLikeStatus();
+        getCurrentTargetRatingStatus();
         VideoManager.getVideoWithId(props.videoData.id).then(data => {
             setVideoData(data)
         })
@@ -105,6 +108,20 @@ function VideoPopup(props) {
     if (currVideosData)
         moreVideos = currVideosData.filter(currentVideoData => currentVideoData.id !== videoData.id)
 
+
+    const updatingTimelineRating = async (rating) => {
+        await updateRating(videoData.id, null, rating)
+        setRating(rating)
+    }
+
+    const getCurrentTargetRatingStatus = async () => {
+        if (videoData.id) {
+            const rat = await getRating(videoData.id)
+            setRating(rat)
+        }
+    }
+
+
     return (
 
         <div className="modalBox modalBox--large active videoModalBox"  >
@@ -149,15 +166,21 @@ function VideoPopup(props) {
                             height={"calc(0.56 * 56rem)"}
                             onPlay={startTimer}
                             style={{ "backgroundColor": "black" }}
+                            playsinline={true}
                             onPause={() => {
                                 stopTimer()
+                            }}
+                            onProgress={(event) => {
+                                if (videoData && videoData.videoTimestamp) {
+                                    setMinPlayed(event.playedSeconds)
+                                }
                             }}
                         ></ReactPlayer>
                     </div>
 
                     <div className="videodetailBox">
-                        <div className="videodetailBox__right">
-                            <div className="d-flex justify-content-between mg-b40">
+                        <div className="videodetailBox__right hide-on-mobile">
+                            <div className="likeBtnContainer mg-b40">
                                 <button className={`like-btn ${like ? 'like-btn--active' : ''}`} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{likeCount}</button>
                                 {
                                     videoData.pdf &&
@@ -167,7 +190,7 @@ function VideoPopup(props) {
                             <div className="timelineBox">
                                 {
                                     videoData.videoTimestamp.map(timeline =>
-                                        <TimelineBoxItem timelineData={timeline} timelineClick={seekTo} />
+                                        <TimelineBoxItem minPlayed={minPlayed} timelineData={timeline} timelineClick={seekTo} />
                                     )
                                 }
                             </div>
@@ -177,14 +200,36 @@ function VideoPopup(props) {
                             <h2 className="videodetailBox__title">{videoData.title}</h2>
 
                             <p className="videodetailBox__views">{videoData.views} Views - {moment(videoData.timestamp.toMillis()).format("Do MMMM YYYY")}</p>
-                            <p className="videodetailBox__desc">{videoData.description}</p>
+                            <p className="videodetailBox__desc mg-b10">{videoData.description}</p>
+
+                            {
+                                rating !== null &&
+                                <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
+                            }
+
+                            <div className="hide-on-desktop mg-t20">
+                                <div className="likeBtnContainer">
+                                    <button className={`like-btn ${like ? 'like-btn--active' : ''}`} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{likeCount}</button>
+                                    {
+                                        videoData.pdf &&
+                                        <button className="like-btn">Download PDF</button>
+                                    }
+                                </div>
+                                <div className="timelineBox mobileView_timelineBox">
+                                    {
+                                        videoData.videoTimestamp.map(timeline =>
+                                            <TimelineBoxItem minPlayed={minPlayed} timelineData={timeline} timelineClick={seekTo} />
+                                        )
+                                    }
+                                </div>
+                            </div>
 
 
                             {/* <p className="videodetailBox__desc"><a href="javascript:void(0)">Show Less</a></p> */}
                             {
                                 videoData.speakers &&
                                 <>
-                                    <h4 className="videodetailBox__subtitle">SPEAKERS</h4>
+                                    <h4 className="videodetailBox__subtitle mg-t20">SPEAKERS</h4>
 
                                     <div className="videodetailBox__profiles">
                                         {

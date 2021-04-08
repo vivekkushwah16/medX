@@ -99,6 +99,8 @@
 
   .blackTint{
       background: rgba(0, 0, 0, 0.411);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
   }
 
   .modalBoxAppearAnim{

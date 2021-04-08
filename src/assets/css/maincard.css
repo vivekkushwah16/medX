@@ -78,14 +78,15 @@
 .maincardBox__card-footer-title { position: absolute; left: 0; bottom: 100%; margin-bottom: 2px; color: #fff; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.75rem 0.25rem 1.875rem; background: #0869A8; border-radius: 0px 7px 0px 0px; }
 
 .maincardBox__card-video { position: absolute; left: 0; top: 0; padding: 0; width: 20rem; min-width: 20rem; height: 100%; cursor: pointer; margin: 0; background-position: center center; background-size: cover;  border-radius: 0.625rem 0 0 0.625rem; }
-.maincardBox__card-video__play { font-size: 0.875rem; position: absolute; left: 50%; top: 50%; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-left: -1.125rem; margin-top: -1.125rem; height: 2.25rem; width: 2.25rem; border-radius: 50%; background: rgba(0, 0, 0, 0.7); }
+.maincardBox__card-video__play { font-size: 2.5rem; position: absolute; left: 50%; top: 50%; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-left: -1.125rem; margin-top: -1.125rem; height: 2.25rem; width: 2.25rem;  opacity: 0; transition: 0.5s; transform: scale(0.3)rotate(270deg);}
 
 
 /* .maincardBox__card-video { padding: 0; height: 100%; width: 100%; min-height: 15rem; cursor: pointer; position: relative; margin: 0; background-position: center center; background-size: cover; border-top-left-radius: 0.65rem; border-bottom-left-radius: 0.65rem;  transition: 0.75s; background-size: 115% 115%;} */
 /* .maincardBox__card-video__play { font-size: 0.875rem; position: absolute; left: 50%; top: 50%; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-left: -1.125rem; margin-top: -1.125rem; height: 2.25rem; width: 2.25rem; border-radius: 50%; background: rgba(0, 0, 0, 0.7); } */
 .maincardBox__card-video .tint{display: none;}
 .maincardBox__card-video:hover .tint{display: flex;width: 100%;height: 100%;background: #0151897d;z-index: 5;position: relative;}
-
+.maincardBox__card-video_canPlay:hover .maincardBox__card-video__play { opacity: 1; transform: scale(1)rotate(0deg);}
+.maincardBox__card-video_canPlay:hover .maincardBox__card-video{ background-color: #3838388c; background-blend-mode: luminosity;}
 /* .maincardBox__card-video:hover{ background-size: 100% 100%; background-color: rgba(0, 0, 0, 0.555);} */
 
 .maincardBox__card-menu { position: absolute; right: 0.5rem; top: 0.5rem; z-index: 1; }

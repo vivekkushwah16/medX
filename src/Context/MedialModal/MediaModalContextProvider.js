@@ -8,6 +8,7 @@ export default function MediaModalContextProvider(props) {
     const [mediaModalStatus, setMediaModalStatus] = useState(false)
 
     const showMediaModal = (type, link) => {
+        console.log(type, link)
         setModalDetails({ type, link })
         setMediaModalStatus(true)
     }

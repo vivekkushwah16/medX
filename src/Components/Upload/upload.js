@@ -48,7 +48,7 @@ const ActionValues = {
 
 const PossibleActions = [ActionValues.AddVideo]
 
-const possibleVideoUrls = ['https://vimeo.com/525395281/5753ae3d66', 'https://vimeo.com/475824300/7b5d3d90a4', 'https://vimeo.com/475824300/7b5d3d90a4']
+const possibleVideoUrls = 'https://player.vimeo.com/video/534402864';// ['https://player.vimeo.com/video/534402864', 'https://vimeo.com/475824300/7b5d3d90a4', 'https://vimeo.com/475824300/7b5d3d90a4']
 
 export default function Upload() {
     const [selectedFile, selectFile] = useState(null)
@@ -63,10 +63,10 @@ export default function Upload() {
             try {
                 let tagArr = element.tags.split(',')
                 let process = tagArr.map(tt => tt.trim())
-                let url = possibleVideoUrls[Math.round(Math.random() * possibleVideoUrls.length)]
+                let url = possibleVideoUrls//possibleVideoUrls[Math.round(Math.random() * possibleVideoUrls.length)]
                 console.log(element)
                 console.log(url)
-                const id = await VideoManager.addVideo(element.title, element.description, url, element.thumnailUrl, [], process, [])
+                const id = await VideoManager.addVideo(element.title, element.description, url, element.thumnailUrl, [], process, [], element.band)
                 processArray.push(id)
             }
             catch (err) {

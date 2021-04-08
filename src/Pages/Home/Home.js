@@ -23,17 +23,37 @@ class Home extends Component {
         videopopVisible: false,
         videoPopId: null,
         currentVideosData: null,
-        rows: [{ tag: 'ciplamed', header: 'Recommended Videos' },
-        { tag: 'covid', header: 'Videos on Covid19' },
-        { tag: 'tuberculosis', header: 'Videos on Tuberculosis' },
-        { tag: 'vaccination', header: 'Videos on Vaccination' },
-        { tag: 'respiratory', header: 'Videos on respiratory' }],
-
-        tags: [{ tag: 'ciplamed', header: 'Ciplamed' },
-        { tag: 'covid', header: 'Covid19' },
-        { tag: 'tuberculosis', header: 'Tuberculosis' },
-        { tag: 'vaccination', header: 'Vaccination' },
-        { tag: 'respiratory', header: 'Respiratory' }],
+        rows: [
+            { tag: 'Recommendations', header: 'Videos on Recommendations' },
+            { tag: 'Respiratory', header: 'Videos on Respiratory' },
+            { tag: 'Pediatric asthma', header: 'Videos on Pediatric asthma' },
+            { tag: 'Expert Views', header: 'Videos on Expert Views' },
+            { tag: 'Pulmonary Hypertension', header: 'Videos on Pulmonary Hypertension' },
+            { tag: 'COPD', header: 'Videos on COPD' },
+            { tag: 'Bronchiectasis', header: 'Videos on Bronchiectasis' },
+            { tag: 'Allergic Rhinitis', header: 'Videos on Allergic Rhinitis' },
+            { tag: 'Diagnosis', header: 'Videos on Diagnosis' },
+            { tag: 'Asthma', header: 'Videos on Asthma' },
+            { tag: 'ILD/IPF', header: 'Videos on ILD/IPF' },
+            { tag: 'Telemedicine', header: 'Videos on Telemedicine' },
+            { tag: 'Inhalation Devices', header: 'Videos on Inhalation Devices' },
+        ],
+        
+        tags: [
+            // { tag: 'Recommendations', header: 'Recommendations' },
+            { tag: 'Respiratory', header: 'Respiratory' },
+            { tag: 'Pediatric asthma', header: 'Pediatric asthma' },
+            { tag: 'Expert Views', header: 'Expert Views' },
+            { tag: 'Pulmonary Hypertension', header: 'Pulmonary Hypertension' },
+            { tag: 'COPD', header: 'COPD' },
+            { tag: 'Bronchiectasis', header: 'Bronchiectasis' },
+            // { tag: 'Allergic Rhinitis', header: 'Allergic Rhinitis' },
+            // { tag: 'Diagnosis', header: 'Diagnosis' },
+            // { tag: 'Asthma', header: 'Asthma' },
+            // { tag: 'ILD/IPF', header: 'ILD/IPF' },
+            // { tag: 'Telemedicine', header: 'Telemedicine' },
+            // { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
+        ],
 
         activeTag: '',
         lastPlayed: null,
@@ -66,10 +86,10 @@ class Home extends Component {
     render() {
 
         return (
-            <section className="wrapper" id="root">
-
-                <div className="topicsBox__wrapper">
-                    <Header hideInviteFriend={true} whiteLogo={true} />
+            // <section className="wrapper" id="root" style={{background: 'black'}}>
+            <>
+                <div className="topicsBox__wrapper" id="homePageConatiner">
+                    <Header hideInviteFriend={true} whiteLogo={true} stickyOnScroll={true} />
                     <Banner />
                     <div className="tabBox" id="homeVideoContainer">
                         <div class="container">
@@ -96,7 +116,7 @@ class Home extends Component {
                         </div>
                     </div>
 
-                    {/* <Footer /> */}
+                    <Footer />
                 </div>
 
                 {
@@ -107,8 +127,8 @@ class Home extends Component {
                         closeVideoPop={this.closeVideoPop}
                         openVideoPop={this.openVideoPop} />
                 }
-
-            </section>
+            </>
+            // </section>
         );
     };
 }

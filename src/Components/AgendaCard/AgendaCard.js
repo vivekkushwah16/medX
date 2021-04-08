@@ -12,7 +12,7 @@ import ReadMore from '../ReadMore/ReadMore';
 import StartRating from '../StartRating/StartRating';
 
 function AgendaCard(props) {
-    const { timeline, haveVideo, haveLikeButton, animate, placeIndex, forEventPage, wantHeaderFooter, showLive } = props
+    const { timeline, haveVideo, haveLikeButton, animate, placeIndex, forEventPage, wantHeaderFooter, showLive, handleClick } = props
     const { getLike, addLike, removeLike, getRating, updateRating } = useContext(likeContext)
     const { userInfo, user } = useContext(UserContext)
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
@@ -68,12 +68,21 @@ function AgendaCard(props) {
 
     const getMainRender = () => {
         return (
-            <div key={`AgendaCard-${timeline.id}`} id={`AgendaCard-${timeline.id}`} className={`maincardBox__card `}>
+            <div key={`AgendaCard-${timeline.id}`} id={`AgendaCard-${timeline.id}`} className={`maincardBox__card ${timeline.videoUrl.length > 0 ? 'maincardBox__card-video_canPlay' : ''}`}>
                 {
                     haveVideo &&
-                    <div className="maincardBox__card-video"
-                        style={{ backgroundImage: `url(${timeline.thumnailUrL})` }}>
-                        {/* <a href="#" className="maincardBox__card-video__play"><i className="icon-play"></i></a> */}
+                    <div className={`maincardBox__card-video `}
+                        style={{ backgroundImage: `url(${timeline.thumnailUrL})` }}
+                        onClick={(event) => {
+                            event.preventDefault()
+                            if (timeline.videoUrl.length > 0)
+                                handleClick(timeline.videoUrl)
+                        }}
+                    >
+                        {/* <div className="tint"></div> */}
+                        <a href="#" className="maincardBox__card-video__play">
+                            <i className="icon-play"></i>
+                        </a>
                     </div>
                 }
                 <div class="maincardBox__card-body">

@@ -97,3 +97,62 @@
 .modalBox__overlay {
     backdrop-filter: blur(4px);
 }
+
+#homePageConatiner .headerBox_sticky {
+    background: linear-gradient( 90deg, #000000cc 0%, rgb(0 0 0 / 73%) 72.82%, rgb(0 0 0 / 0%) 129.25%)!important;
+}
+
+.videoModalBox .maincardBox__card-profile-popover {
+    background: #212121;
+    border: 0.1rem solid #909090;
+}
+
+.videoModalBox .maincardBox__card-profile-popover-title {
+    color: #fff!important;
+    font-weight: 700;
+}
+
+.videoModalBox .maincardBox__card-profile-popover-close {
+    background: rgba(0, 0, 0, 0.685);
+}
+
+.videoModalBox .maincardBox__card-profile-popover-desc {
+    color: rgba(255, 255, 255, 0.603);
+}
+
+.likeBtnContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* All Mobile Sizes (devices and browser) */
+
+.mobileView_timelineBox {
+    display: flex;
+}
+.mobileView_timelineBox .timelineBox-item {
+    align-items: flex-start;
+    flex-direction: column;
+    min-width: 10rem;
+    margin-right: 0.85rem;
+}
+
+.mobileView_timelineBox .timelineBox-item > .timelineBox-item-left{
+    width: 100%;
+}
+
+.mobileView_timelineBox .timelineBox-item > .timelineBox-item-right{
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.mobileView_timelineBox .timelineBox-item-right {
+    text-align: center;
+}
+
+@media only screen and (max-width: 992px) {
+    .likeBtnContainer {
+        display: flex;
+        justify-content: flex-start;
+    }
+}

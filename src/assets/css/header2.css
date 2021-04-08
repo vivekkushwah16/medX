@@ -72,7 +72,7 @@
 @media only screen and (max-width: 767px) {
     .headerBox { padding: 1rem 0; }
     .headerBox__logo3 { width: 10rem; }
-    .headerBox__right { display: none; padding-right: 1rem!important;}
+    .headerBox__right {  padding-right: 1rem!important;}
     .headerBox__left { justify-content: space-between; width: 100%; }
     .headerBox.headerBox--full .headerBox__right { display: flex; }
     .headerBox.headerBox--full { padding: 1.325rem 0; }

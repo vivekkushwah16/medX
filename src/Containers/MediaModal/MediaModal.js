@@ -17,7 +17,7 @@ export default function MediaModal() {
                             if (e) { e.preventDefault() }
                             closeMediaModal()
                         }}></div>
-                        <div className="mediaModal_container" style={modalDetails.type === MediaModalType.Component ? {width: 'auto'}:{}}>
+                        <div className="mediaModal_container" style={modalDetails.type === MediaModalType.Component ? { width: 'auto' } : {}}>
                             {
                                 modalDetails.type === MediaModalType.Image &&
                                 <img src={modalDetails.link} alt="imageLink" />
@@ -46,6 +46,11 @@ export default function MediaModal() {
                                 modalDetails.type === MediaModalType.Component &&
                                 <modalDetails.link />
                             }
+                            <div className="mediaModal_container_closeBtn" onClick={(e) => {
+                                if (e) { e.preventDefault() }
+                                closeMediaModal()
+                            }}>
+                            </div>
                             <div className="mediaModal_container_loader">
                                 <div className="lds-dual-ring"></div>
                             </div>

@@ -68,20 +68,22 @@ export default function LikeContextProvider(props) {
                 const ref = firestore.collection(RATING_COLLECTION).doc(`${user.uid}+${tagetId}`)
                 await firestore.runTransaction(async transcation => {
                     const doc = transcation.get(ref)
+                    let _input = {
+                        tagetId: tagetId,
+                        rating: rating,
+                        userId: user.uid
+                    }
+                    if (eventId) {
+                        _input = {
+                            ..._input,
+                            eventId: eventId,
+
+                        }
+                    }
                     if (!doc.exits) {
-                        transcation.set(ref, {
-                            tagetId: tagetId,
-                            eventId: eventId,
-                            rating: rating,
-                            userId: user.uid
-                        })
+                        transcation.set(ref, _input)
                     } else {
-                        transcation.update(ref, {
-                            tagetId: tagetId,
-                            eventId: eventId,
-                            rating: rating,
-                            userId: user.uid
-                        })
+                        transcation.update(ref, _input)
                     }
                 })
                 res()

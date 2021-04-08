@@ -61,8 +61,9 @@ function PreEvent() {
         setAgendaData(newData)
     }
 
-    const startVideo = () => {
-        showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/528854507')
+    const startVideo = (link) => {
+        console.log(link)
+        showMediaModal(MediaModalType.Videos, link)
         // setVideoModalVisible(true)
     }
 
@@ -108,11 +109,8 @@ function PreEvent() {
                                 </div>
                             </div>
                         </div>
-
-
                         <AgendaNavBar containerClass="container" className={"hide-on-tablet"} dates={agendaDates} currentDate={cureentAgendaDate} handleClick={handleDateChange} stickyOnScroll={true} />
                         <AgendaNavBar containerClass="container" className={"show-on-tablet show-on-tablet--flex "} dates={agendaDates} currentDate={cureentAgendaDate} handleClick={handleDateChange} forceAgendaVisibleMobile={true} stickyOnScroll={true} />
-
                         <div class="maincardBox maincardBox--large maincardBox--mobile-visible">
                             <div class="maincardBox__card-wrapper">
                                 <div class="container">

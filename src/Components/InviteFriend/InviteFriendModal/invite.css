@@ -1,3 +1,12 @@
 #btnLoader{
     max-width: 1.5rem;
 }
+.inviteFriendModal .modalBox__inner,.inviteFriendModal .modalBox__header, .inviteFriendModal .modalBox__body{
+    background-color: white;
+}
+.inviteFriendModal  .modalBox__inner{
+    max-height: 29rem;
+}
+.inviteFriendModal .modalBox__header{
+    border-bottom: 2px solid #0869A8;
+}

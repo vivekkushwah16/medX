@@ -31,6 +31,11 @@
     background: #000;
     border: 0.1rem solid #fff;
 }
+.timelineBox-item-left-unseen .timelineBox-item-left{
+    color: #fff;
+    background: #000;
+    border: 0.1rem solid #fff;
+}
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (max-width: 1199px) {
