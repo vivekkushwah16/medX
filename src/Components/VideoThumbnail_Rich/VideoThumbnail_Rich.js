@@ -13,7 +13,7 @@ function VideoThumbnail_Rich(props) {
     useEffect(() => {
         getVideoMetaData(videoInfo.id).then((data) => {
             setMetadata(data);
-            console.log(data);
+            // console.log(data);
         });
         setBandClassName(bandClassNames[Math.round(Math.random() * 3)])
     }, [videoInfo, refresh])
@@ -27,16 +27,21 @@ function VideoThumbnail_Rich(props) {
             >
                 {/* <img className="contentBox__item-pic" src={videoInfo.thumnailUrl} alt="" /> */}
                 <a href="#" class="contentBox__item-play"><i class="icon-play"></i></a>
-                <a className={`contentBox__item-title ${bandClassName}`}>{videoInfo.title}</a>
+                <a className={`contentBox__item-title ${bandClassName}`}>{videoInfo.title}
+                    <ul>
+                        {videoInfo.tags.map(tag => (<li>{tag}</li>))}
+                    </ul>
+                </a>
+
                 {/* <a class="contentBox__item-plus" href="#"><i class="icon-video-plus"></i></a>  */}
 
-                <div className="maincardBox__card-menu">
+                {/* <div className="maincardBox__card-menu">
                     <button className="maincardBox__card-menu-btn"><i className="icon-dots"></i></button>
                     <ul className="maincardBox__card-menu-dropdown">
                         <li><a href="#">Watch This Video</a></li>
                         <li><a href="#">Not Interested</a></li>
                     </ul>
-                </div>
+                </div> */}
                 <div className="custom-slider">
                     <div className="custom-slider__bar">
                         <div className="custom-slider__bar-inner" style={{ width: `${metadata ? (metadata.lastKnownTimestamp / metadata.duration) * 100 : 0}%` }}></div>

@@ -8,6 +8,20 @@ import VideoManager from '../../Managers/VideoManager';
 import { UserContext } from '../../Context/Auth/UserContextProvider';
 
 
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <button className={`slider-btn slider-btn-next ${className.includes('slick-disable') ? 'slick-disable' : props.slideCount < 3 ? 'slick-disable' : ''}`} onClick={onClick}><i className="icon-angle-right"></i></button>
+    );
+}
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <button className={`slider-btn slider-btn-prev ${className.includes('slick-disable') ? 'slick-disable' : ''}`} onClick={onClick}><i className="icon-angle-left"></i></button>
+    );
+}
+
 function VideoRow(props) {
     const { heading, tag, lastPlayed, openVideoPop, grid } = props;
     const [videosData, setData] = useState(null);
@@ -28,32 +42,36 @@ function VideoRow(props) {
         dots: false,
         infinite: false,
         speed: 300,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1.5,
-                    slidesToScroll: 1.5
-                }
-            }
-        ]
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        variableWidth: true,
+        arrows: true,
+        prevArrow: <SamplePrevArrow />,
+        nextArrow: <SampleNextArrow />,
+        className: "slider-video",
+        // responsive: [
+        //     {
+        //         breakpoint: 1024,
+        //         settings: {
+        //             slidesToShow: 3,
+        //             slidesToScroll: 3,
+        //         }
+        //     },
+        //     {
+        //         breakpoint: 600,
+        //         settings: {
+        //             slidesToShow: 2,
+        //             slidesToScroll: 2
+        //         }
+        //     },
+        //     {
+        //         breakpoint: 480,
+        //         settings: {
+        //             slidesToShow: 1.5,
+        //             slidesToScroll: 1.5
+        //         }
+        //     }
+        // ]
     };
     let _lastPlayed = lastPlayed
     if (!lastPlayed) {
@@ -61,7 +79,7 @@ function VideoRow(props) {
     }
     return (
         <>
-            <h2 className="contentBox__title mg-b20" >{heading} </h2>
+            <h2 className="contentBox__title mg-b5 " >{heading} </h2>
 
             {
                 videosData ?
@@ -103,28 +121,7 @@ function VideoRow(props) {
                     </>
                     :
                     <>
-                        <Slider {...settings}>
-                            <div className="contentBox__item">
-                                <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                                {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
-                                <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                            </div>
-                            <div className="contentBox__item">
-                                <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                                {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
-                                <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                            </div>
-                            <div className="contentBox__item">
-                                <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                                {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
-                                <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                            </div>
-                            <div className="contentBox__item">
-                                <img className="contentBox__item-pic" src="assets/images/video1.jpg" alt="" />
-                                {/* <a href="#" className="contentBox__item-title">Panel Discussion on Drug resistant TB</a> */}
-                                <a className="contentBox__item-plus" href="#"><i className="icon-video-plus"></i></a>
-                            </div>
-                        </Slider>
+
                     </>
             }
         </>

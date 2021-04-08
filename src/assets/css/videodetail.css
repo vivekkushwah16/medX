@@ -1,12 +1,13 @@
 /* ### videodetail Box ### */
 .videodetailBox { padding: 2rem 2rem 2rem 4rem; display: flex; }
 .videodetailBox__left { padding-right: 2rem; width: 100%; order: 1; }
-.videodetailBox__title { margin-bottom: 2rem; color: #005188; font-size: 1.625rem; font-weight: 700; }
-.videodetailBox__desc { margin-bottom: 2rem; color: rgba(77,77,77,0.6); font-size: 0.75rem; }
-.videodetailBox__desc > a { color: #005188; }
-.videodetailBox__subtitle { margin-bottom: 1.5rem; font-weight: 700; color: rgba(0, 0, 0, 0.6); }
+.videodetailBox__title { margin-bottom: 0.5rem; color: #fff; font-size: 1.625rem; font-weight: 700; }
+.videodetailBox__views{margin-bottom: 1.35rem; color: #fff; font-weight: 700; font-size: 0.75rem;}
+.videodetailBox__desc { margin-bottom: 2rem; color: hsla(0, 0%, 100%, 0.60); font-weight: 400; font-size: 0.75rem; }
+.videodetailBox__desc > a { color: #fff; }
+.videodetailBox__subtitle { margin-bottom: 1.5rem; font-weight: 700; color: #ffffff; }
 
-.videodetailBox__profiles { display: flex; flex-wrap: wrap; }
+.videodetailBox__profiles { display: flex; flex-wrap: wrap; margin-bottom: 1.5rem;}
 .videodetailBox .bannerBox__profile { width: 50%; color: rgba(0,0,0,0.6); }
 
 .videodetailBox .maincardBox__card.maincardBox__card--large { border-radius: 0; border: none; position: relative; }
@@ -21,9 +22,15 @@
 .videodetailBox__right .like-btn { padding-left: 1rem; padding-right: 1rem; position: static; }
 
 .timelineBox { margin-bottom: 2rem; }
-.timelineBox-item { padding-top: 1rem; padding-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
-.timelineBox-item > .timelineBox-item-left { width: 47%; text-align: center; padding: 0.5rem 0.5rem; font-size: 0.75rem; color: #fff; border-radius: 5rem; display: block; background: #005188; }
-.timelineBox-item > .timelineBox-item-right { width: 47%; font-size: 0.75rem; color: #005188; }
+.timelineBox-item { padding-top: 1rem; padding-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;  cursor: pointer; transition: 0.25s;}
+.timelineBox-item > .timelineBox-item-left { width: 47%; text-align: center; padding: 0.5rem 0.5rem; font-size: 0.75rem; color: #000; border-radius: 5rem; display: block; background: #fff; }
+.timelineBox-item > .timelineBox-item-right { width: 47%; font-size: 0.75rem; color: #fff; font-weight: 700;}
+
+.timelineBox-item-left:hover{
+    color: #fff;
+    background: #000;
+    border: 0.1rem solid #fff;
+}
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (max-width: 1199px) {

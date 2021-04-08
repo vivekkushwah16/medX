@@ -18,8 +18,8 @@ export default function Event() {
     let { getLike, addLike, removeLike, } = useContext(likeContext)
     const [eventData, setEventData] = useState({})
     const [agendaData, setAgendaData] = useState([])
-    const [trendingData, setTrendingData] = useState({})
-    const [partnerWithUsData, setPartnerWithUsData] = useState({})
+    const [trendingData, setTrendingData] = useState(null)
+    const [partnerWithUsData, setPartnerWithUsData] = useState(null)
     const [likedEvent, setLikeEvent] = useState(false)
 
     useEffect(() => {

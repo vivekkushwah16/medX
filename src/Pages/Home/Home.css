@@ -2,12 +2,98 @@
 /* @import url("/src/assets/css/global.css");
 @import url("/src/assets/css/footer.css");
 @import url("/src/assets/css/icons.css"); */
+
 /* @import url("/src/assets/css/topics.css"); */
+
 @import url("/src/assets/css/modal.css");
 @import url("/src/assets/css/maincard.css");
 @import url("/src/assets/css/videodetail.css");
 @import url("/src/assets/css/homepage2.css");
-
-.slick-track{
+.slick-track {
     margin-left: unset!important;
+}
+
+.videoElementLoader .container-loader {
+    width: 5rem;
+    height: 5rem;
+    background: #eee;
+    background: linear-gradient(110deg, #f80000 8%, #f5f5f5 18%, #ececec 33%)!important;
+    background-size: 200% 100%;
+    animation: 1.5s shine forwards infinite;
+}
+
+#homeVideoContainer .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: unset;
+}
+
+#homeVideoContainer .slider-btn {
+    color: #fff;
+}
+
+.slider-video .slider-btn {
+    padding: 2rem 0rem;
+    position: absolute;
+    left: -1rem;
+    font-size: 2rem;
+    color: #fff;
+    top: 45%;
+    margin-top: -3.5rem;
+    z-index: 1;
+    opacity: 0.75;
+    transition: 0.25s;
+}
+
+.slider-video .slider-btn:hover {
+    opacity: 1;
+}
+
+.slider-video .slider-btn.slider-btn-next {
+    left: auto;
+    right: -1rem;
+}
+
+.slider-video .slider-btn.slick-disabled {
+    opacity: 0.2;
+    cursor: auto;
+    opacity: 0;
+}
+
+.slider-video .slick-disable {
+    opacity: 0;
+}
+
+.slider-video .slick-list {
+    overflow: visible!important;
+}
+
+@keyframes shine {
+    0% {
+        background-position-x: 1000%;
+    }
+    100% {
+        background-position-x: -1000%;
+    }
+}
+
+.videoModalBox {
+    padding: 0!important;
+}
+
+/* .videodetailBox .like-btn {
+    padding: 0.75rem 1.5rem 0.75rem 1.5rem;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.75rem;
+    border: medium none;
+    text-decoration: none;
+    border: 1px solid #A6A6A6;
+    color: #A6A6A6;
+    border-radius: 0.625rem;
+    background: #000;
+} */
+
+.modalBox__overlay {
+    backdrop-filter: blur(4px);
 }

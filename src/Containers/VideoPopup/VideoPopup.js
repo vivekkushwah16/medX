@@ -33,22 +33,22 @@ function VideoPopup(props) {
     }, [props.videoData])
 
     useEffect(() => {
-        if (playerRef.current){
+        if (playerRef.current) {
             seekTo(metadata.lastKnownTimestamp);
-            currenttimeWatched=0;
+            currenttimeWatched = 0;
         }
     }, [playerRef.current])
 
     const [runningTimer, setRunningTimer] = useState(false);
     const runTimer = async () => {
-        console.log('Still being called');
+        // console.log('Still being called');
         if (currenttimeWatched >= timeLimit) { return }
         currenttimeWatched += 1
-        console.log('inc timer ', currenttimeWatched)
+        // console.log('inc timer ', currenttimeWatched)
         if (currenttimeWatched >= timeLimit) {
             stopTimer();
             let newCount = await VideoManager.addView(videoData.id);
-            console.log(newCount);
+            // console.log(newCount);
         }
     }
 
@@ -86,12 +86,12 @@ function VideoPopup(props) {
 
     const toggleLikeToTarget = async () => {
         if (like) {
-            console.log("removeLike")
+            // console.log("removeLike")
             const count = await removeLike(videoData.id, null, LikeType.VIDEO_LIKE)
             setLikeCount(count)
 
         } else {
-            console.log("addLike")
+            // console.log("addLike")
             const count = await addLike(videoData.id, null, LikeType.VIDEO_LIKE)
             setLikeCount(count)
         }
@@ -101,21 +101,22 @@ function VideoPopup(props) {
     const seekTo = (timestamp) => {
         playerRef.current.seekTo(timestamp, "seconds");
     };
-
-    const moreVideos = currVideosData.filter(currentVideoData => currentVideoData.id !== videoData.id)
+    let moreVideos = []
+    if (currVideosData)
+        moreVideos = currVideosData.filter(currentVideoData => currentVideoData.id !== videoData.id)
 
     return (
 
-        <div className="modalBox modalBox--large active"  >
+        <div className="modalBox modalBox--large active videoModalBox"  >
             <span class="modalBox__overlay" onClick={() => {
                 stopTimer();
                 if (playerRef.current) {
                     var currentTime = playerRef.current.getCurrentTime();
                     var duration = playerRef.current.getDuration();
-                    console.log(videoData.id, currentTime, duration);
+                    // console.log(videoData.id, currentTime, duration);
                     if (currentTime && duration) {
                         setVideoMetaData(videoData.id, currentTime, duration);
-                        console.log(videoData.id, currentTime, duration);
+                        // console.log(videoData.id, currentTime, duration);
                     }
                 }
                 closeVideoPop(videoData);
@@ -128,10 +129,10 @@ function VideoPopup(props) {
                         if (playerRef.current) {
                             var currentTime = playerRef.current.getCurrentTime();
                             var duration = playerRef.current.getDuration();
-                            console.log(videoData.id, currentTime, duration);
+                            // console.log(videoData.id, currentTime, duration);
                             if (currentTime && duration) {
                                 setVideoMetaData(videoData.id, currentTime, duration);
-                                console.log(videoData.id, currentTime, duration);
+                                // console.log(videoData.id, currentTime, duration);
                             }
                         }
                         closeVideoPop(videoData);
@@ -145,7 +146,7 @@ function VideoPopup(props) {
                             volume={0.85}
                             controls={true}
                             width={"auto"}
-                            height={"25rem"}
+                            height={"calc(0.56 * 56rem)"}
                             onPlay={startTimer}
                             style={{ "backgroundColor": "black" }}
                             onPause={() => {
@@ -175,8 +176,10 @@ function VideoPopup(props) {
                         <div className="videodetailBox__left">
                             <h2 className="videodetailBox__title">{videoData.title}</h2>
 
-                            <p className="videodetailBox__desc">{videoData.views} Views - {moment(videoData.timestamp.toMillis()).format("Do MMMM YYYY")}</p>
+                            <p className="videodetailBox__views">{videoData.views} Views - {moment(videoData.timestamp.toMillis()).format("Do MMMM YYYY")}</p>
                             <p className="videodetailBox__desc">{videoData.description}</p>
+
+
                             {/* <p className="videodetailBox__desc"><a href="javascript:void(0)">Show Less</a></p> */}
                             {
                                 videoData.speakers &&
@@ -186,7 +189,7 @@ function VideoPopup(props) {
                                     <div className="videodetailBox__profiles">
                                         {
                                             videoData.speakers.map(speaker =>
-                                                <SpeakerProfile type={SpeakerProfileType.BANNER_PROFILE} id={speaker} />
+                                                <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={speaker} />
                                             )
                                         }
                                     </div>
@@ -200,7 +203,7 @@ function VideoPopup(props) {
                                     <div className="videodetailBox__list">
                                         {
                                             moreVideos.map(currentVideoData =>
-                                                <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={currentVideoData} openVideoPop={openVideoPop} />
+                                                <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={currentVideoData} openVideoPop={(currentVideoData, videosData) => openVideoPop(videoData, currentVideoData, videosData)} />
                                             )
                                         }
                                     </div>

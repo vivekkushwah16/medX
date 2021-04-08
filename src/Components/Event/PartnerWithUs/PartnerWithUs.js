@@ -42,8 +42,8 @@ var settings = {
         {
             breakpoint: 600,
             settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2
+                slidesToShow: 1,
+                slidesToScroll: 1
             }
         },
         {
@@ -57,9 +57,9 @@ var settings = {
 };
 
 export default function PartnerWithUs(props) {
-    const { data, countIn } = props
+    const { data, countIn, isActive } = props
     return (
-        <div id="tab5" class="eventBox__tabs-content active">
+        <div id="tab5" class={`eventBox__tabs-content ${isActive ? 'active' : ''}`}>
             <Slider className="partnerBox slider-horizontal-3"  {...settings}>
                 {
                     data.map(e => (

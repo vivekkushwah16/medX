@@ -43,6 +43,7 @@ class Home extends Component {
     }
 
     openVideoPop = (metadata, videoData, videosData) => {
+        console.log(metadata, videoData, videosData);
         this.setState({
             currentVideosData: videosData,
             videopopVisible: true,
@@ -66,27 +67,34 @@ class Home extends Component {
             <section className="wrapper" id="root">
 
                 <div className="topicsBox__wrapper">
-                    <Header  hideInviteFriend={true} whiteLogo={true}/>
+                    <Header hideInviteFriend={true} whiteLogo={true} />
                     <Banner />
-                    <div className="tabBox">
+                    <div className="tabBox" id="homeVideoContainer">
                         <div class="container">
 
                             <TagsRow tags={this.state.tags} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag} />
 
                             <div className="contentBox">
                                 {
-                                    this.state.activeTag == '' ?
-                                        this.state.rows.map(row =>
-                                            <VideoRow heading={row.header} lastPlayed={this.state.lastPlayed} tag={row.tag} openVideoPop={this.openVideoPop} grid={false} />
-                                        )
-                                        :
-                                        <VideoRow heading={`Videos on ${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed} tag={this.state.activeTag.tag} openVideoPop={this.openVideoPop} grid={true} />
+                                    this.state.activeTag !== '' &&
+                                    <VideoRow heading={`Videos on ${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed} tag={this.state.activeTag.tag} openVideoPop={this.openVideoPop} grid={false} />
+                                }
+                                {
+                                    this.state.rows.map(row => (
+                                        <>
+                                            {
+                                                row.tag !== this.state.activeTag &&
+                                                <VideoRow heading={row.header} lastPlayed={this.state.lastPlayed} tag={row.tag} openVideoPop={this.openVideoPop} grid={false} />
+                                            }
+                                        </>
+                                    )
+                                    )
                                 }
                             </div>
                         </div>
                     </div>
 
-                    <Footer />
+                    {/* <Footer /> */}
                 </div>
 
                 {

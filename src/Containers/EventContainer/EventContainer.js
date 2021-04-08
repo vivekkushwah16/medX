@@ -46,7 +46,6 @@ export default function EventContainer(props) {
 
 
     const processAgendaData = (data) => {
-        console.log(data)
         let newData = {}
         data.forEach((timeline) => {
             let date = `${MonthName[new Date(timeline.startTime).getMonth()]} ${new Date(timeline.startTime).getDate()}`
@@ -63,7 +62,6 @@ export default function EventContainer(props) {
             }
         })
         let dates = Object.keys(newData)
-        console.log(newData)
         setAgendaDates(dates)
         setCureentAgendaDate(dates[0])
         setAgendaData(newData)
@@ -76,7 +74,6 @@ export default function EventContainer(props) {
 
     return (
         <div className="eventBox">
-
             {
                 !activePollPanel && !isMobileOnly &&
                 <a href="#" class="eventBox__sidebar-btn active" onClick={(e) => {
@@ -97,6 +94,7 @@ export default function EventContainer(props) {
                                 width='100%'
                                 height={isMobileOnly ? '40vh' : '60vh'}
                                 playsinline={true}
+
                             ></ReactPlayer>
                             {/* <img src="assets/images/video3.jpg" alt="" /> */}
                         </div>
@@ -162,8 +160,8 @@ export default function EventContainer(props) {
                             }
 
                             {
-                                activeMenu.id === menuItemsId.Partner_with_us && partnerWithUsData &&
-                                <PartnerWithUs data={partnerWithUsData} countIn={countPartnerWithUsAgree} />
+                                partnerWithUsData &&
+                                <PartnerWithUs data={partnerWithUsData} countIn={countPartnerWithUsAgree} isActive={activeMenu.id === menuItemsId.Partner_with_us} />
                             }
 
 

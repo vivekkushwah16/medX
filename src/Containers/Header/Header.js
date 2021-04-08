@@ -6,7 +6,6 @@ import CIPLAMEDXLOGO from '../../assets/images/medXlogo.png'
 import CIPLAMEDXLOGO_WHITE from '../../assets/images/ciplamed-logo2.png'
 import { RootRoute } from '../../AppConstants/Routes'
 import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider'
-import { MediaType } from '../../AppConstants/TypeConstant'
 import { MediaModalType } from '../../AppConstants/ModalType'
 import Certificate from '../../Components/Certificate/Certificate'
 import './Header.css';
@@ -63,7 +62,7 @@ export default function Header(props) {
                         }
                         {
                             props.showFeedback &&
-                            <button className="btn btn-secondary">Feedback</button>
+                            <button className="btn btn-secondary" onClick={() => showMediaModal(MediaModalType.PDF, '/feedback/index.html')}>Feedback</button>
                         }
                         {
                             !props.hideInviteFriend &&

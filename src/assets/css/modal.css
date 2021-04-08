@@ -1,24 +1,24 @@
 /* ### footer box ### */
-.modalBox { padding: 1rem; position: fixed; left: 0; bottom: 0; width: 100%; height: 100%; display: none; align-items: center; justify-content: center; z-index: 12; }
+.modalBox { padding: 1rem; position: fixed; left: 0; bottom: 0; width: 100%; height: 100%; display: none; justify-content: center; z-index: 12; }
 .modalBox__overlay { position: fixed; left: 0; top: 0; height: 100%; width: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1; cursor: pointer; }
-.modalBox__inner { position: relative; margin-top: 2rem; opacity: 0; width: 56.25rem; min-height: 31.25rem; border-radius: 0.25rem; background: #fff; max-height: 100%; z-index: 1; overflow: auto; transition: all 0.3s; z-index: 2; }
+.modalBox__inner { position: relative; margin-top: 2rem; opacity: 0; width: 56.25rem; min-height: 31.25rem; border-radius: 0.25rem; background: #000; max-height: 100%; z-index: 1; overflow: auto; transition: all 0.3s; z-index: 2; }
 .modalBox__video { border-radius: 0.25rem; }
 .modalBox__video iframe { width: 100%; height: 25rem; }
 .modalBox__video > img { width: 100%; border-radius: 0.25rem; }
-.modalBox__header { padding: 1.75rem 0.75rem 1.75rem 1.75rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.9325rem; border-radius: 0.625rem 0.625rem 0 0; border-bottom: 1px solid #0869A8; background: #fff; }
-.modalBox__body { padding: 1.75rem; background: #fff; border-radius: 0 0 0.625rem 0.625rem; }
+.modalBox__header { padding: 1.75rem 0.75rem 1.75rem 1.75rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.9325rem; border-radius: 0.625rem 0.625rem 0 0; /* border-bottom: 1px solid #0869A8;  */}
+.modalBox__body { padding: 1.75rem; background: #000; border-radius: 0 0 0.625rem 0.625rem; }
 .modalBox__title { color: #015189; font-weight: 700; }
 .modalBox .form-group { margin-bottom: 2rem;  }
 .modalBox.modalBox--small > .modalBox__inner { width: 27rem; height: auto; box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25); border-radius: 0.625rem; }
 
-.modalBox__close-link { padding: 0.5rem 2rem; cursor: pointer; text-decoration: underline; background: transparent; border: medium none; color: #9D9D9D; }
+.modalBox__close-link { padding: 0.5rem 2rem; cursor: pointer; text-decoration: underline; background: transparent; border: medium none; color: #fff; font-weight: 700; font-size: 0.95rem;}
 .modalBox__close-link:focus, 
 .modalBox__close-link:hover { text-decoration: none; outline: none; }
 .modalBox__close { transition: 0.25s; transform: rotate(0deg); padding: 1rem; font-size: 1.5rem; line-height: 1.25rem; font-weight: 700; position: absolute; right: 0.25rem; top: 0.25rem; border: medium none; color: #fff; cursor: pointer; border-radius: 50%; background: #015189; }
 .modalBox.modalBox--small .modalBox__close { position: static; padding: 0.5rem; height: 2rem; width: 2rem; line-height: 1rem; font-size: 1rem; }
 .modalBox__close:hover{  transform: rotate(90deg);}
 .modalBox.modalBox--large .modalBox__inner { height: auto; }
-.modalBox.modalBox--large .modalBox__header { padding: 1.75rem 0.75rem 1.75rem 1.75rem; }
+.modalBox.modalBox--large .modalBox__header { padding: 0.75rem 0.75rem 0.75rem 1.75rem; }
 .modalBox.modalBox--large .modalBox__body { padding: 0; }
 
 .modalBox.modalBox--small .modalBox__inner { width: 32rem; min-height: 26rem; }
@@ -34,7 +34,7 @@
 
 
 .modalBox.active { display: flex; }
-.modalBox.active .modalBox__inner { margin-top: 0; opacity: 1; }
+.modalBox.active .modalBox__inner { margin-top: 0; opacity: 1; box-shadow: 0px 0px 12px 2px rgb(255 255 255 / 43%);}
 
 .icon-link {
     cursor: pointer;

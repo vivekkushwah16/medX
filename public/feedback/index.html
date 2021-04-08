@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+        integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf"
+        crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+    <link rel="stylesheet" href="./main.css">
+    <style>
+        .d-none {
+            display: none !important;
+        }
+
+        body {
+            background-color: #eee
+        }
+
+        label.radio {
+            cursor: pointer
+        }
+
+        label.radio input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            visibility: hidden;
+            pointer-events: none
+        }
+
+        label.radio span {
+            padding: 4px 0px;
+            border: 1px solid red;
+            display: inline-block;
+            color: red;
+            width: 100px;
+            text-align: center;
+            border-radius: 3px;
+            margin-top: 7px;
+            text-transform: uppercase
+        }
+
+        label.radio input:checked+span {
+            border-color: red;
+            background-color: red;
+            color: #fff
+        }
+
+        .ans {
+            margin-left: 36px !important
+        }
+
+        .btn:focus {
+            outline: 0 !important;
+            box-shadow: none !important
+        }
+
+        .btn:active {
+            outline: 0 !important;
+            box-shadow: none !important
+        }
+
+
+        .starrating>input {
+            display: none;
+        }
+
+        /* Remove radio buttons */
+
+        .starrating>label:before {
+            content: "\f005";
+            /* Star */
+            margin: 2px;
+            font-size: 8em;
+            font-family: FontAwesome;
+            display: inline-block;
+        }
+
+        .starrating>label {
+            color: #222222;
+            /* Start color when not clicked */
+        }
+
+        .starrating>input:checked~label {
+            color: #ffca08;
+        }
+
+        /* Set yellow color when star checked */
+
+        .starrating>input:hover~label {
+            color: #ffca08;
+        }
+
+        .custom-control-input {
+            position: unset;
+            margin-left: 20px;
+            left: unset;
+        }
+
+        .input-space {
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            margin: 10px 0px 10px;
+            padding: 10px;
+        }
+
+        .starFont {
+            font-size: 0.4rem;
+        }
+
+        .mt-2 {
+            margin-top: 2rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5 ">
+        <div class="d-flex justify-content-center row" id="surveyContainer">
+            <div class="col-md-10 col-lg-10" >
+                <div class="border">
+                    <div class="question bg-white p-3 border-bottom" style="background:linear-gradient(to right bottom, #11b68d, #0d96d4);">
+                        <div class="d-flex flex-row justify-content-between align-items-center mcq">
+                            <h4 style="color: white ;">
+                                Feedback 
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div id="loader" style="display: block;">
+                        <img src="./LoaderV.gif" alt="loader">
+                    </div>
+
+                    <div id="finalMessage" class="question bg-white p-3 border-bottom" style="display: none;">
+                        <div class="">
+                            <h6 class="mb-2">
+                                Thanks for your valuable feedback.
+                                <!-- <div class="d-flex flex-row justify-content-center align-items-center mt-2">
+                                    <button id="retake"
+                                        class="btn btn-primary border-success align-items-center btn-success"
+                                        type="submit">Download Certificate<i class="fa fa-angle-right ml-2"></i></button>
+                                </div> -->
+                            </h6>
+                        </div>
+                    </div>
+
+
+                    <form id="mainForm" style="display: none;">
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="">
+                                <h6 class="mb-2">
+                                    Dear Member,<br>
+                                    Your feedback is valuable for us. Please provide your feedback to the questions
+                                    below:
+                                </h6>
+                            </div>
+                        </div>
+
+                    
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <h3 class="text-danger">Q</h3>
+                                <h5 class="mt-1 ml-2">1. How would you rate the
+                                    overall content of the
+                                    convention?</h5>
+                            </div>
+                            <div class="rate">
+                                <div class="emoji emoji1">🙂</div>
+                                <div class="review">
+                                    Average
+                                </div>
+                                <input class="emojislider1" type="range" min="0" max="4" step="1"  required>
+                            </div>
+                        </div>
+                        <div class="question bg-white p-3 border-bottom">
+                           
+                            <div class="question bg-white p-3 border-bottom">
+                                <div class="d-flex flex-row align-items-center question-title">
+                                    <h3 class="text-danger">Q</h3>
+                                    <h5 class="mt-1 ml-2">2. Which segment/s in the entire
+                                        convention do you think was
+                                        the most interesting?</h5>
+                                </div>
+                                <div class="ans ml-2">
+                                    <input type="text" class="form-control" id="session" name="question1" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <h3 class="text-danger">Q</h3>
+                                <h5 class="mt-1 ml-2">3. Which segment/s in the entire
+                                    convention do you think was
+                                    the least interesting?
+                                    
+                                    Any particular reason for that
+                                    (speaker / content / any other
+                                    reason)</h5>
+                            </div>
+                            <div class="ans ml-2">
+                                <input type="text" class="form-control" id="session3" name="question1" required>
+                            </div>
+                        </div>
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <h3 class="text-danger">Q</h3>
+                                <h5 class="mt-1 ml-2">4. How would you rate the
+                                    virtual streaming quality of
+                                    the event ?</h5>
+                            </div>
+                            <div class="rate">
+                                <div class="emoji emoji2">🙂</div>
+                                <div class="review2">
+                                    Average
+                                </div>
+                                <input class="emojislider2" type="range" min="0" max="4" step="1"  required>
+                            </div>
+                        </div>
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <h3 class="text-danger">Q</h3>
+                                <h5 class="mt-1 ml-2">5. Do you have any suggestions
+                                    for future such meets?
+                                    
+                                    Please let us know, so that we
+                                    can improvise and have better
+                                    events for our entire team.</h5>
+                            </div>
+                            <div class="ans ml-2">
+                                <input type="text" class="form-control" id="session2" name="question1" required>
+                            </div>
+                        </div>
+                      
+                        <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
+                            <!-- <button class="btn btn-primary d-flex align-items-center btn-danger" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button> -->
+                            <button id="submitwhatNext"
+                                class="mybtn"
+                                type="submit">Submit<i class="fa fa-angle-right ml-2"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5" id="tnk" style="display: none;">
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-10 col-lg-10">
+                <div class="border">
+                    <div class="question bg-white p-3 border-bottom">
+                        <div class="d-flex flex-row align-items-center mcq"
+                            style="text-align: center; justify-content: center;">
+                            <h4> Thank you for submission</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/library/jquery.min.js"></script>
+    <!-- <script src="./assets/js/library/jquery.mobile-1.5.0-alpha.1.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+    <script src="./assets/js/config.js"></script>
+    <script src="./index.js"></script>
+
+</body>
+
+</html>

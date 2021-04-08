@@ -87,6 +87,7 @@
 .maincardBox__card-body>.text-block {
     min-width: 70%;
 }
+
 /* 
 .eventBox__video>div {
     width: 100%;
@@ -107,14 +108,15 @@
     }
 } */
 
-.eventBoxBg{
+.eventBoxBg {
     width: 100vw;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
 }
-.eventBoxBg::before{
+
+.eventBoxBg::before {
     z-index: -1;
     position: absolute;
     left: 0;
@@ -128,6 +130,40 @@
     background-position-y: inherit;
 }
 
-.eventBox__tabs-content .navigarion-bar  {
+.eventBox__tabs-content .navigarion-bar {
     width: 90%;
+}
+#tab3 .maincardBox.maincardBox--large .maincardBox__card
+{
+    padding-left: 15rem;
+}
+
+#tab3 .maincardBox.maincardBox--large .maincardBox__card-video
+{
+    width: 15rem;
+    min-width: 15rem;
+}
+
+
+@media only screen and (max-width: 1023px) {
+    #tab3 .maincardBox {
+        padding: 0rem;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .eventBox .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    #tab3 .rating-block{
+        margin-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    #tab3 .maincardBox.maincardBox--large .maincardBox__card-video {
+        min-width: unset;
+        background-position: center;
+    }
 }
