@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import './Login.css'
 import PhoneInput from "react-phone-number-input";
 // import VideoModal from '../../Components/VideoModal/VideoModal';
-import { HOME_ROUTE } from '../../AppConstants/Routes';
+import { HOME_ROUTE, REGISTER_ROUTE } from '../../AppConstants/Routes';
 import EventManager from '../../Managers/EventManager';
 import { isMobileOnly } from 'react-device-detect';
 // import AgendaNavBar from '../../Components/Event/AgendaNavBar/AgendaNavBar';
@@ -105,7 +105,7 @@ class Login extends Component {
 
     redirectToHome = () => {
         const { history } = this.props;
-        if (history) history.push(HOME_ROUTE+"/impact");
+        if (history) history.push(HOME_ROUTE + "/impact");
     }
 
 
@@ -211,6 +211,11 @@ class Login extends Component {
         })
     }
 
+    redirectToRegister = () => {
+        const { history } = this.props;
+        if (history) history.push(REGISTER_ROUTE + "/impact");
+    }
+
     render() {
         return (
             <div className="login2Box__wrapper min-height-full gradient-bg3">
@@ -233,12 +238,19 @@ class Login extends Component {
                     {
                         !this.state.showOtp &&
                         <>
+                            <div class="login2Box__header ">
+                                <h3 class="login2Box__header-title mg-r10">
+                                    Not Registered for the Event?
+                                        </h3>
+                                <button class="btn btn-secondary" onClick={this.redirectToRegister}>Register</button>
+                            </div>
                             <div class="login2Box__body pd-t80">
                                 <h1 className="login2Box__title mg-b25">Log in</h1>
 
                                 <form onSubmit={this.handleSubmit}>
+
                                     <div className="form-group mg-b30">
-                                        <p className=" mg-b10" style={{color:"#015189"}}>Please enter your Registered Mobile Number</p>
+                                        <p className=" mg-b10" style={{ color: "#015189" }}>Please enter your Registered Mobile Number</p>
                                         <PhoneInput
                                             international
                                             countryCallingCodeEditable={false}
@@ -266,7 +278,7 @@ class Login extends Component {
                                             ) : ' Log in'}
                                         </button>
                                     </div>
-                                    <a className="btn btn-link" href="/register/impact">Not Registered? Click here</a>
+                                    {/* <a className="btn btn-link" href="/register/impact">Not Registered? Click here</a> */}
                                 </form>
                             </div>
                         </>

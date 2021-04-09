@@ -48,3 +48,40 @@ export const getUserProfile = (uid) => {
         }
     })
 }
+
+export const copyFromRealtoFirestore = () => {
+    try {
+        //1. read from db first
+        const path = '/user_registered'
+        database.ref(path).once('value', (async snapShot => {
+            if (snapShot.exists()) {
+                const val = snapShot.val()
+                const regIds = Object.keys(val)
+                for (let i = 0; i < regIds.length; i++) {
+                    let regId = regIds[i]
+                    let value = val[regId]
+                    //2. check if entry have a valid movile number
+                    if (value.hasOwnProperty('phoneNumber')) {
+                        //3. QUERY FIRESTORE    
+                        const _docRef = firestore.collection(PROFILE_COLLECTION).where("phoneNumber", "==", value['phoneNumber'])
+                        //4.prepare date
+                        const dateTimestamp = new Date(value.date).getTime()
+                        //5. update date
+                        const query = await _docRef.get()
+                        if (!query.empty) {
+                            let _doc_id = query.docs[0].id
+                            await firestore.collection(PROFILE_COLLECTION).doc(_doc_id).update({
+                                date: dateTimestamp
+                            })
+                        }
+                        console.log(dateTimestamp, value.phoneNumber, "Updated")
+                    }
+                }
+            }
+        }), (err) => {
+
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}

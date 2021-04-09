@@ -119,14 +119,26 @@ function AgendaCard(props) {
                         </div>
                     }
                 </div>
-                <div class="maincardBox__card-footer">
-                    <h4 class="maincardBox__card-footer-title">Speakers</h4>
-                    {
-                        timeline.speakers.map(id => (
-                            <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={id} />
-                        ))
-                    }
-                </div>
+
+                {
+                    timeline.speakers && timeline.speakers.length > 0 &&
+                    <>
+                        <div class="maincardBox__card-footer">
+                            {
+                                timeline.speakers.length === 1 ?
+                                    <h4 class="maincardBox__card-footer-title">Speaker</h4>
+                                    :
+                                    <h4 class="maincardBox__card-footer-title">Speakers</h4>
+
+                            }
+                            {
+                                timeline.speakers.map(id => (
+                                    <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={id} />
+                                ))
+                            }
+                        </div>
+                    </>
+                }
             </div>
         )
     }
@@ -188,14 +200,28 @@ function AgendaCard(props) {
                     haveVideo &&
                     <p className="mg-b25 maincardBox__card-time " style={{ fontWeight: 'bold' }}>{`${MonthName[new Date(timeline.startTime).getMonth()]} ${new Date(timeline.startTime).getDate()}, ${new Date(timeline.startTime).getFullYear()} | ${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</p>
                 }
-                <h4 className="mg-b20 maincardBox__card-title">SPEAKERS</h4>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {
-                        timeline.speakers.map(id => (
-                            <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={id} />
-                        ))
-                    }
-                </div>
+                {
+                    timeline.speakers && timeline.speakers.length > 0 &&
+                    <>
+                        {
+                            timeline.speakers.length === 1 ?
+                                (
+                                    <h4 className="mg-b20 maincardBox__card-title">SPEAKER</h4>
+                                ) : (
+                                    <h4 className="mg-b20 maincardBox__card-title">SPEAKERS</h4>
+                                )
+                        }
+
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                            {
+                                timeline.speakers.map(id => (
+                                    <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={id} />
+                                ))
+                            }
+                        </div>
+                    </>
+                }
+
 
                 {
                     haveLikeButton && !forEventPage &&

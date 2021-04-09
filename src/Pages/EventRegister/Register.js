@@ -198,6 +198,7 @@ class Register extends Component {
             city: this.state.city,
             pincode: this.state.pincode,
             termsAndConditions: this.state.termsAndConditions,
+            date: new Date().getTime()
         })
             .then(async res => {
                 console.log(res)

@@ -93,7 +93,12 @@ function PreEvent() {
                                                 <p class="bannerBox__subtitle mg-b40">Tune in for a State-of-the-Art Academic Feast with the Leaders in Respiratory Medicine.</p>
                                                 <p class="bannerBox__date mg-b30">16-17th April 2021</p>
                                                 <div class="d-flex middle-In-mobile">
-                                                    <AddToCalendar blueBtn={true}/>
+                                                    <AddToCalendar blueBtn={true} />
+
+                                                    <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20"
+                                                        onClick={(e) => showMediaModal(MediaModalType.PDF, '/assets/pdf/KNOW_YOUR_SPEAKERS.pdf')}>
+                                                        Know Your Speakers
+                                                    </a>
                                                     {/* <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20" onClick={() => {
                                                         startVideo()
                                                         addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: 'event-kmde59n5' })
