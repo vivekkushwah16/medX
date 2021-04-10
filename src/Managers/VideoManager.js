@@ -32,6 +32,39 @@ const VideoManager = {
             }
         })
     },
+
+    completelyUpdateVideo: (videoId, title = null, description = null, videoUrl = null, thumnailUrl = null,speakers = [], tags = [], videoTimestamp = [], band = null) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const docRef = firestore.collection(VIDEO_COLLECTION).doc(videoId)
+                await firestore.runTransaction(async transcation => {
+                    let doc = await transcation.get(docRef)
+                    if (!doc.exists) {
+                        let err = {
+                            code: 'NotValidId',
+                            message: "No videoID Found"
+                        }
+                        throw (err)
+                    }
+                    let oldData = doc.data()
+                    transcation.update(docRef, {
+                        title: title ? title : oldData.title,
+                        description: description ? description : oldData.description,
+                        videoUrl: videoUrl ? videoUrl : oldData.videoUrl,
+                        speakers: speakers ? speakers : oldData.speakers,
+                        tags: tags ? tags : oldData.tags,
+                        thumnailUrl: thumnailUrl ? thumnailUrl : oldData.thumnailUrl,
+                        band: band ? band : oldData.band,
+                        videoTimestamp: videoTimestamp ? videoTimestamp : oldData.videoTimestamp,
+                    })
+                })
+                res();
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+
     updateVideo: (videoId, title = null, description = null, videoUrl = null) => {
         return new Promise(async (res, rej) => {
             try {
@@ -350,9 +383,9 @@ const VideoManager = {
                         userId: userId,
                         type: MediaType.VIDEO_MEDIA,
                         lastKnownTimestamp: lastKnownTimestamp,
-                        duration:duration
+                        duration: duration
                     }
-                    
+
                     if (!doc.exists) {
                         transcation.set(ref, _data)
                     } else {
