@@ -88,7 +88,7 @@ export default function EventContainer(props) {
                         <div className="eventBox__video">
                             <ReactPlayer
                                 playing={true}
-                                url={'https://vimeo.com/290674467'}
+                                url={data.videoUrl}
                                 volume={0.85}
                                 controls={true}
                                 width='100%'

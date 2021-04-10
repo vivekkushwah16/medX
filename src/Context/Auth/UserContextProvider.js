@@ -15,14 +15,14 @@ const UserContextProvider = (props) => {
     useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                console.log(user.email)
+                // console.log(user.email)
                 localStorage.setItem('userAuth', JSON.stringify(user))
                 setUser(user)
                 setInitalCheck(true)
                 analytics.setUserId(user.uid)
                 addUserLoginAnalytics(user.uid)
                 const userInfo = await getUserProfile(user.uid)
-                console.log(userInfo)
+                // console.log(userInfo)
                 // setuserInfo(userInfo)
             } else {
                 localStorage.removeItem('userAuth')

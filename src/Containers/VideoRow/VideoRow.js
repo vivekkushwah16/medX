@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import VideoThumbnail_Rich from '../../Components/VideoThumbnail_Rich/VideoThumbnail_Rich';
 import VideoManager from '../../Managers/VideoManager';
 import { UserContext } from '../../Context/Auth/UserContextProvider';
+import TagsRow from '../TagsRow/TagsRow';
 
 
 function SampleNextArrow(props) {
@@ -23,17 +24,31 @@ function SamplePrevArrow(props) {
 }
 
 function VideoRow(props) {
-    const { heading, tag, lastPlayed, openVideoPop, grid } = props;
+    const { heading, tag, lastPlayed, openVideoPop, grid, multipleTags } = props;
     const [videosData, setData] = useState(null);
     const { mediaMetaData } = useContext(UserContext);
 
     useEffect(() => {
-        getVideos()
+        if (multipleTags) {
+            getVideosFromMultipleTags()
+        } else {
+            getVideos()
+        }
     }, [tag])
 
+    const getVideosFromMultipleTags = async () => {
+        let arr = [];
+        for (let i = 0; i < tag.length; i++) {
+            let a = await VideoManager.getVideoWithTag([tag[i]]);
+            arr = [...arr, ...a]
+        }
+        setData(arr);
+    }
+
     const getVideos = async () => {
+        // console.log([tag])
         const arr = await VideoManager.getVideoWithTag([tag]);
-        console.log(arr);
+        // console.log(arr);
         setData(arr);
     }
 
@@ -79,11 +94,12 @@ function VideoRow(props) {
     }
     return (
         <>
-            <h2 className="contentBox__title mg-b5 " >{heading} </h2>
+
 
             {
                 videosData ?
                     <>
+                        <h2 className="contentBox__title mg-b5 " >{heading} </h2>
                         {
                             grid ?
                                 <>
@@ -97,6 +113,7 @@ function VideoRow(props) {
                                                         <VideoThumbnail_Rich videoInfo={vd} videosData={videosData}
                                                             openVideoPop={openVideoPop} grid={grid}
                                                             refresh={_lastPlayed && vd.id == _lastPlayed.id ? Math.random() : ""}
+                                                            tag={tag}
                                                         />
                                                     }
                                                 </>
@@ -112,6 +129,7 @@ function VideoRow(props) {
                                                 <VideoThumbnail_Rich videoInfo={vd} videosData={videosData}
                                                     openVideoPop={openVideoPop} grid={grid}
                                                     refresh={_lastPlayed && vd.id == _lastPlayed.id ? Math.random() : ""}
+                                                    tag={tag}
                                                 />
                                             ))
                                         }

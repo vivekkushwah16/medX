@@ -132,9 +132,13 @@
     }
 }
 @media only screen and (max-width: 991px) and (orientation: portrait) {
+    
     .mediaModal_container {
         position: relative;
         width: 96vw;
         height: calc(96vw * 0.6);
+    }
+    .pdf-full{
+        height: 90vh;
     }
 }

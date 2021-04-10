@@ -734,7 +734,7 @@ html { scroll-behavior: smooth; }
 
 /* Iphone 11 */
 @media only screen and (max-width: 991px) { 
-  .container { padding-left: 30px; padding-right: 30px; }
+  .container { padding-left: 15px; padding-right: 15px; }
   body, html { font-size: 13px; }
   .slider-btn.slider-btn--prev { margin-left: 0.25rem; }
   .slider-btn.slider-btn--next { margin-right: 0.25rem; }

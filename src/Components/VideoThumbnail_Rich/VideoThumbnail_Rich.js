@@ -1,38 +1,71 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { VIDEO_CLICK } from '../../AppConstants/AnalyticsEventName'
+import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 
 const bandClassNames = ['', "contentBox__item-title--pink", "contentBox__item-title--orange"]
 
 const baseBandClass = 'contentBox__item-title--'
+const bandColor = {
+    Respiratory: '',
+    COPD: "contentBox__item-title--pink",
+    Asthma: '',
+    ['ILD/IPF']: 'contentBox__item-title--orange',
+    ['Telemedicine']: 'contentBox__item-title--pink',
+    ['Allergic Rhinitis']: 'contentBox__item-title--orange'
+}
+
 
 function VideoThumbnail_Rich(props) {
-    const { videosData, videoInfo, openVideoPop, grid, refresh } = props
+    const { videosData, videoInfo, openVideoPop, grid, refresh, tag } = props
     const [metadata, setMetadata] = useState(null);
-    const { getVideoMetaData } = useContext(UserContext);
-    const [bandClassName, setBandClassName] = useState('')
+    const { user ,getVideoMetaData } = useContext(UserContext);
+    const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
+    const [bandClassName, setBandClassName] = useState(bandColor[tag])
 
     useEffect(() => {
         getVideoMetaData(videoInfo.id).then((data) => {
             setMetadata(data);
-            setBandClassName(data.band ? baseBandClass + data.band : bandClassNames[Math.round(Math.random() * 3)])
+            // setBandClassName(data.band ? baseBandClass + data.band : bandClassNames[Math.round(Math.random() * 3)])
 
             // console.log(data);
         });
     }, [videoInfo, refresh])
 
+    const getTagList = () => {
+        let val = ''
+        videoInfo.tags.map((tag, index) => {
+            val += `${index > 0 ? ', ' : ''}${tag}`
+        })
+        return val
+    }
+
+    const addAnalytics = () => {
+        addGAWithUserInfo(VIDEO_CLICK, { tag: tag, videoId: videoInfo.id })
+        addCAWithUserInfo(`/${VIDEO_CLICK}/${user.uid}_${videoInfo.id}`, false, { tag: tag, videoId: videoInfo.id }, true)
+    }
+
     return (
         <div className={"col-25 col-md-50 col-sm-100"} style={!grid ? { width: '100%' } : {}}>
             <div className="contentBox__item" id={videoInfo.id}
-                onClick={() => openVideoPop(metadata, videoInfo, videosData)}
+                onClick={() => {
+                    addAnalytics();
+                    openVideoPop(metadata, videoInfo, videosData, tag);
+                }}
                 style={{ backgroundImage: `url(${videoInfo.thumnailUrl})` }}
             // onClickCapture={() => {openVideoPop(videoInfo, videosData);handleOnItemClick()}}
             >
                 {/* <img className="contentBox__item-pic" src={videoInfo.thumnailUrl} alt="" /> */}
                 <a href="#" class="contentBox__item-play"><i class="icon-play"></i></a>
-                <a className={`contentBox__item-title ${bandClassName}`}>{videoInfo.title}
-                    <ul>
+                <a className={`contentBox__item-title ${bandClassName}`}>
+                    {videoInfo.title}
+                    <br></br>
+                    <span className="contentBox_tag">
+                        {getTagList()}
+                    </span>
+                    {/* <ul>
                         {videoInfo.tags.map(tag => (<li>{tag}</li>))}
-                    </ul>
+                    </ul> */}
                 </a>
 
                 {/* <a class="contentBox__item-plus" href="#"><i class="icon-video-plus"></i></a>  */}

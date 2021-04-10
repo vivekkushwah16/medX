@@ -11,6 +11,8 @@ import VideoThumbnail_Compact from '../../Components/VideoThumbnail_Compact/Vide
 import VideoManager from '../../Managers/VideoManager'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 import StartRating from '../../Components/StartRating/StartRating'
+import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider'
+import { VIDEO_CLICK, VIDEO_KEYFRAME_CLICK } from '../../AppConstants/AnalyticsEventName'
 
 const timeLimit = 10;
 let currenttimeWatched = 0;
@@ -25,6 +27,8 @@ function VideoPopup(props) {
     const { setVideoMetaData } = useContext(UserContext);
     const [minPlayed, setMinPlayed] = useState(0)
     const [rating, setRating] = useState(null);
+    const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
+    const { user } = useContext(UserContext)
 
     useEffect(() => {
         setLikeCount(props.videoData.likes);
@@ -121,9 +125,17 @@ function VideoPopup(props) {
         }
     }
 
+    const addVideoClickAnalytics = (videoData) => {
+        addGAWithUserInfo(VIDEO_CLICK, { tag: _vd.tagSelectedFrom, videoId: videoData.id })
+        addCAWithUserInfo(`/${VIDEO_CLICK}/${user.uid}_${videoData.id}`, false, { tag: _vd.tagSelectedFrom, videoId: videoData.id }, true)
+    }
+
+    const addAnalyticsKeyFrameClick = (keyframe) => {
+        addGAWithUserInfo(VIDEO_KEYFRAME_CLICK, { tag: _vd.tagSelectedFrom, videoId: _vd.id, title: keyframe.title })
+        addCAWithUserInfo(`/${VIDEO_KEYFRAME_CLICK}/${user.uid}_${videoData.id}`, false, { tag: _vd.tagSelectedFrom, videoId: _vd.id, title: keyframe.title }, true)
+    }
 
     return (
-
         <div className="modalBox modalBox--large active videoModalBox"  >
             <span class="modalBox__overlay" onClick={() => {
                 stopTimer();
@@ -190,7 +202,10 @@ function VideoPopup(props) {
                             <div className="timelineBox">
                                 {
                                     videoData.videoTimestamp.map(timeline =>
-                                        <TimelineBoxItem minPlayed={minPlayed} timelineData={timeline} timelineClick={seekTo} />
+                                        <TimelineBoxItem minPlayed={minPlayed} timelineData={timeline} timelineClick={(time) => {
+                                            addAnalyticsKeyFrameClick(timeline)
+                                            seekTo(time)
+                                        }} />
                                     )
                                 }
                             </div>
@@ -248,7 +263,11 @@ function VideoPopup(props) {
                                     <div className="videodetailBox__list">
                                         {
                                             moreVideos.map(currentVideoData =>
-                                                <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={currentVideoData} openVideoPop={(currentVideoData, videosData) => openVideoPop(videoData, currentVideoData, videosData)} />
+                                                <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={currentVideoData} openVideoPop={(currentVideoData, videosData) => {
+
+                                                    addVideoClickAnalytics(currentVideoData)
+                                                    openVideoPop(videoData, currentVideoData, videosData)
+                                                }} />
                                             )
                                         }
                                     </div>

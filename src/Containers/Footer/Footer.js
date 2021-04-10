@@ -11,7 +11,8 @@ export default function Footer() {
                 </div>
             </div> */}
             <div className="copyright">
-                © Copyright 2021 -- All rights reserved
+                <img src="/assets/images/logo.png" alt="" />
+                <span>© Copyright 2021 -- All rights reserved</span>
             </div>
             {/* <ul>
                 <li class="active"><a href="#">

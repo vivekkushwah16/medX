@@ -83,7 +83,7 @@
 /* ### content Box ### */
 .contentBox { padding: 0; }
 .contentBox .splide__track { overflow: visible; }
-.contentBox__title { padding: 0.5rem 0 0.75rem; font-size: 1.125rem; font-weight: 700; color: #fff; }
+.contentBox__title { padding: 1.15rem 0 0.75rem; font-size: 1.125rem; font-weight: 700; color: #fff; }
 .contentBox__list-wrapper { margin-bottom: 1rem; overflow: auto; }
 .contentBox__list { white-space: nowrap; }
 .contentBox__item-wrapper { display: flex; }

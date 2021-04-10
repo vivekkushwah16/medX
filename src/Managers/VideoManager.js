@@ -166,7 +166,7 @@ const VideoManager = {
                     transcation.update(docRef, {
                         likes: firebase.firestore.FieldValue.increment(-1)
                     })
-                    console.log(mainDoc.data())
+                    // console.log(mainDoc.data())
                     return mainDoc.data().likes ? mainDoc.data().likes - 1 : 0
                 })
                 res(count);
@@ -279,7 +279,7 @@ const VideoManager = {
                     //.orderBy('tags');
                 } else {
 
-                    console.log(filter)
+                    // console.log(filter)
                     switch (filter) {
                         case videoSortFilter.date:
                             docRef = docRef.orderBy('timeStamp');
@@ -302,7 +302,7 @@ const VideoManager = {
 
                 docRef = docRef.limit(limit)
                 const query = await docRef.get()
-                console.log(query)
+                // console.log(query)
 
                 if (query.empty) {
                     res([]);

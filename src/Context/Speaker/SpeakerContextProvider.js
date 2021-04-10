@@ -10,6 +10,7 @@ function getSpeakerDataFromCookies() {
     if (value === "") {
         return {}
     }
+    console.log(value)
     return JSON.parse(value)
 }
 
@@ -18,7 +19,7 @@ function setSpeakerDataInCookies(data) {
 }
 
 export default function SpeakerContextProvider(props) {
-    const [speakersData, setSpeakersData] = useState(getSpeakerDataFromCookies())
+    const [speakersData, setSpeakersData] = useState({})
 
     const getSpeaker = async (speakerId, forcerRead) => {
         const speakerIds = Object.keys(speakersData)
@@ -27,7 +28,7 @@ export default function SpeakerContextProvider(props) {
                 const data = await SpeakerManager.getSpeaker(speakerId)
                 let newData = { ...speakersData, [speakerId]: data }
                 setSpeakersData(newData)
-                setSpeakerDataInCookies(newData)
+                // setSpeakerDataInCookies(newData)
                 return data;
             }
             //found in old data
@@ -37,7 +38,7 @@ export default function SpeakerContextProvider(props) {
             // console.log(data)
             let newData = { ...speakersData, [speakerId]: data }
             setSpeakersData(newData)
-            setSpeakerDataInCookies(newData)
+            // setSpeakerDataInCookies(newData)
             return data;
         }
     }

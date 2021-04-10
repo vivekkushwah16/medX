@@ -25,7 +25,7 @@ export default function Header(props) {
             if (navBar.current) {
                 // yOffset = navBar.current.offsetTop
                 setyOffset(navBar.current.offsetTop)
-                console.log(navBar.current.offsetTop)
+                // console.log(navBar.current.offsetTop)
                 window.addEventListener('scroll', handleScroll);
                 return () => {
                     window.removeEventListener('scroll', handleScroll);

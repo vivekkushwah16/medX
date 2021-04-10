@@ -73,7 +73,7 @@
 .maincardBox__card:hover .maincardBox__card-right,.maincardBox__card:hover  .maincardBox__card-profile ,.maincardBox__card:hover .maincardBox__card-time,.maincardBox__card:hover .maincardBox__card-date{ color: #fff!important; }
 .maincardBox__card:hover .like-btn--active{border-color: #fff;} */
 
-.maincardBox__card-body { padding: 1.25rem 1.875rem; display: flex; justify-content: space-between; position: relative; width: 100%; color: rgba(0, 0, 0, 0.6); }
+.maincardBox__card-body { padding: 1.25rem 1.875rem; display: flex; justify-content: space-between; position: relative; width: 100%; color: rgba(0, 0, 0, 0.6); cursor: pointer;}
 .maincardBox__card-footer { padding: 0.5rem 1.875rem; position: relative; border-top: 2px solid rgba(8, 105, 168, 0.7); background: linear-gradient(177.29deg, #BAE5FA -45.48%, rgba(186, 229, 250, 0) 97.74%); }
 .maincardBox__card-footer-title { position: absolute; left: 0; bottom: 100%; margin-bottom: 2px; color: #fff; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.75rem 0.25rem 1.875rem; background: #0869A8; border-radius: 0px 7px 0px 0px; }
 

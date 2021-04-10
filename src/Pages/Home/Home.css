@@ -98,6 +98,15 @@
     backdrop-filter: blur(4px);
 }
 
+#homePageConatiner{
+    background: black;
+}
+#homePageConatiner .headerBox--full .container{
+    max-width: unset;
+    padding: 0rem 5rem;
+    /* background: black; */
+}
+
 #homePageConatiner .headerBox_sticky {
     background: linear-gradient( 90deg, #000000cc 0%, rgb(0 0 0 / 73%) 72.82%, rgb(0 0 0 / 0%) 129.25%)!important;
 }
@@ -149,6 +158,19 @@
 .mobileView_timelineBox .timelineBox-item-right {
     text-align: center;
 }
+
+.contentBox__item-title > ul{
+    text-transform: uppercase;
+}
+.contentBox_tag{
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 1px;
+    display: none;
+}
+.contentBox__item:hover .contentBox_tag { display: initial; }
+
 
 @media only screen and (max-width: 992px) {
     .likeBtnContainer {

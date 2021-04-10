@@ -6,7 +6,7 @@ import NotLoggedInRoutes from './Components/NotLoggedInRoutes/NotLoggedInRoutes'
 import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RootRoute, EVENT_ROUTE } from './AppConstants/Routes';
 
 // import css
-// import Home from './Pages/Home/Home';
+import Home from './Pages/Home/Home';
 
 import './assets/css/modal.css'
 
@@ -18,7 +18,7 @@ const RegisterLazy = loadable(() => import(/* webpackChunkName: "Register" */ ".
 const LoginLazy = loadable(() => import(/* webpackChunkName: "Login" */ "./Pages/EventLogin/Login"), { fallback: <LoadableFallback /> })
 const PreEventLazy = loadable(() => import(/* webpackChunkName: "PreEventLazy" */ './Pages/PreEvent/PreEvent'), { fallback: <LoadableFallback /> })
 const MediaModalLazy = loadable(() => import(/* webpackChunkName: "MediaModal" */ './Containers/MediaModal/MediaModal'), { fallback: <LoadableFallback /> })
-// const EventLazy = loadable(() => import(/* webpackChunkName: "EventLazy" */ './Pages/Event/Event'), { fallback: <LoadableFallback /> })
+const EventLazy = loadable(() => import(/* webpackChunkName: "EventLazy" */ './Pages/Event/Event'), { fallback: <LoadableFallback /> })
 
 
 // import VideoManager from './Managers/VideoManager';
@@ -43,8 +43,8 @@ const preload = component => {
 export default function App() {
     const { initalCheck, user } = useContext(UserContext)
     useEffect(() => {
-        console.log("App Started - DJ")
         if (user) {
+            console.log("App Started - DJ")
             preload(PreEventLazy)
         } else {
             preload(RegisterLazy)
@@ -149,9 +149,9 @@ export default function App() {
                         </ProtectedRoute>
 
                         {/* event-kmde59n5 */}
-                        {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE + '/:id'}>
+                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE + '/:id'}>
                             <EventLazy />
-                        </ProtectedRoute> */}
+                        </ProtectedRoute>
 
                         {/* UPLOAD */}
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/upload'}>
@@ -166,8 +166,8 @@ export default function App() {
                             <Home />
                         </ProtectedRoute> */}
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={"*"}>
-                            <PreEventLazy />
-                            {/* <Home /> */}
+                            {/* <PreEventLazy /> */}
+                            <Home />
                         </ProtectedRoute>
                     </Switch>
                 }

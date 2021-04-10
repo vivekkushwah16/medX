@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { INVITEYOURFRIEND_EVENT_WHATSAPP, TIMELINE_LIKE_EVENT, TIMELINE_RATING_EVENT } from '../../AppConstants/AnalyticsEventName';
+import { INVITEYOURFRIEND_EVENT_WHATSAPP, TEASER_EVENT, TIMELINE_LIKE_EVENT, TIMELINE_RATING_EVENT } from '../../AppConstants/AnalyticsEventName';
 import { MonthName } from '../../AppConstants/Months';
 import { SpeakerProfileType } from '../../AppConstants/SpeakerProfileType';
 import { LikeType } from '../../AppConstants/TypeConstant';
@@ -75,8 +75,11 @@ function AgendaCard(props) {
                         style={{ backgroundImage: `url(${timeline.thumnailUrL})` }}
                         onClick={(event) => {
                             event.preventDefault()
-                            if (timeline.videoUrl.length > 0)
-                                handleClick(timeline.videoUrl)
+                            if (timeline.videoUrl.length > 0) {
+                                addGAWithUserInfo(TEASER_EVENT, { timelineId: timeline.id, eventId: timeline.eventId })
+                                addCAWithUserInfo(`/${TEASER_EVENT}/${user.uid}_${timeline.id}`, false, { timeline: timeline.id, eventId: timeline.eventId }, true)
+                                handleClick(timeline)
+                            }
                         }}
                     >
                         {/* <div className="tint"></div> */}
@@ -142,6 +145,7 @@ function AgendaCard(props) {
             </div>
         )
     }
+
 
     if (wantHeaderFooter) {
         if (forEventPage) {

@@ -24,34 +24,41 @@ class Home extends Component {
         videoPopId: null,
         currentVideosData: null,
         rows: [
-            { tag: 'Recommendations', header: 'Videos on Recommendations' },
             { tag: 'Respiratory', header: 'Videos on Respiratory' },
-            { tag: 'Pediatric asthma', header: 'Videos on Pediatric asthma' },
-            { tag: 'Expert Views', header: 'Videos on Expert Views' },
-            { tag: 'Pulmonary Hypertension', header: 'Videos on Pulmonary Hypertension' },
             { tag: 'COPD', header: 'Videos on COPD' },
-            { tag: 'Bronchiectasis', header: 'Videos on Bronchiectasis' },
-            { tag: 'Allergic Rhinitis', header: 'Videos on Allergic Rhinitis' },
-            { tag: 'Diagnosis', header: 'Videos on Diagnosis' },
             { tag: 'Asthma', header: 'Videos on Asthma' },
             { tag: 'ILD/IPF', header: 'Videos on ILD/IPF' },
             { tag: 'Telemedicine', header: 'Videos on Telemedicine' },
-            { tag: 'Inhalation Devices', header: 'Videos on Inhalation Devices' },
+            { tag: 'Allergic_Rhinitis', header: 'Videos on Allergic Rhinitis' },
+
+            // { tag: 'Recommendations', header: 'Videos on Recommendations' },
+            // { tag: 'Pediatric asthma', header: 'Videos on Pediatric asthma' },
+            // { tag: 'Expert Views', header: 'Videos on Expert Views' },
+            // { tag: 'Pulmonary Hypertension', header: 'Videos on Pulmonary Hypertension' },
+
+            // { tag: 'Bronchiectasis', header: 'Videos on Bronchiectasis' },
+            // { tag: 'Diagnosis', header: 'Videos on Diagnosis' },
+
+            // { tag: 'Inhalation Devices', header: 'Videos on Inhalation Devices' },
         ],
-        
+
         tags: [
-            // { tag: 'Recommendations', header: 'Recommendations' },
             { tag: 'Respiratory', header: 'Respiratory' },
-            { tag: 'Pediatric asthma', header: 'Pediatric asthma' },
-            { tag: 'Expert Views', header: 'Expert Views' },
-            { tag: 'Pulmonary Hypertension', header: 'Pulmonary Hypertension' },
             { tag: 'COPD', header: 'COPD' },
-            { tag: 'Bronchiectasis', header: 'Bronchiectasis' },
-            // { tag: 'Allergic Rhinitis', header: 'Allergic Rhinitis' },
+            { tag: 'Asthma', header: 'Asthma' },
+            { tag: 'ILD/IPF', header: 'ILD/IPF' },
+            { tag: 'Telemedicine', header: 'Telemedicine' },
+            { tag: 'Allergic Rhinitis', header: 'Allergic Rhinitis' },
+            { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
+
+
+            // { tag: 'Recommendations', header: 'Recommendations' },
+            // { tag: 'Pediatric asthma', header: 'Pediatric asthma' },
+            // { tag: 'Expert Views', header: 'Expert Views' },
+            // { tag: 'Pulmonary Hypertension', header: 'Pulmonary Hypertension' },
+
+            // { tag: 'Bronchiectasis', header: 'Bronchiectasis' },
             // { tag: 'Diagnosis', header: 'Diagnosis' },
-            // { tag: 'Asthma', header: 'Asthma' },
-            // { tag: 'ILD/IPF', header: 'ILD/IPF' },
-            // { tag: 'Telemedicine', header: 'Telemedicine' },
             // { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
         ],
 
@@ -64,12 +71,11 @@ class Home extends Component {
         this.state.activeTag.tag == tag.tag ? this.setState({ activeTag: '' }) : this.setState({ activeTag: tag })
     }
 
-    openVideoPop = (metadata, videoData, videosData) => {
-        console.log(metadata, videoData, videosData);
+    openVideoPop = (metadata, videoData, videosData, tagSelectedFrom) => {
         this.setState({
             currentVideosData: videosData,
             videopopVisible: true,
-            videoPopupData: videoData,
+            videoPopupData: { ...videoData, tagSelectedFrom },
             lastVideoMetadata: metadata
         })
     }
@@ -99,13 +105,17 @@ class Home extends Component {
                             <div className="contentBox">
                                 {
                                     this.state.activeTag !== '' &&
-                                    <VideoRow heading={`Videos on ${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed} tag={this.state.activeTag.tag} openVideoPop={this.openVideoPop} grid={false} />
+                                    <VideoRow heading={`Videos on ${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed}
+                                        tag={this.state.activeTag.tag}
+                                        openVideoPop={this.openVideoPop} grid={false}
+                                        multipleTags={this.state.activeTag.multipleTags}
+                                    />
                                 }
                                 {
                                     this.state.rows.map(row => (
                                         <>
                                             {
-                                                row.tag !== this.state.activeTag &&
+                                                row.tag !== this.state.activeTag.tag &&
                                                 <VideoRow heading={row.header} lastPlayed={this.state.lastPlayed} tag={row.tag} openVideoPop={this.openVideoPop} grid={false} />
                                             }
                                         </>

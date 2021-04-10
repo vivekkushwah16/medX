@@ -1,17 +1,16 @@
 import React, { useContext, useState, useEffect } from 'react'
-import VideoModal from '../../Components/VideoModal/VideoModal'
 import { eventContext } from '../../Context/Event/EventContextProvider';
-import Agenda from '../../Components/Event/Agenda/Agenda';
 import Header from '../../Containers/Header/Header';
 import AddToCalendar from '../../Components/AddToCalendar/AddToCalendar';
 import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider';
 import { MediaModalType } from '../../AppConstants/ModalType';
 import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider';
-import { WATCHTRAILER_ANALYTICS_EVENT } from '../../AppConstants/AnalyticsEventName';
 import { MonthName } from '../../AppConstants/Months';
 import AgendaNavBar from '../../Components/Event/AgendaNavBar/AgendaNavBar';
 import AgendaCard from '../../Components/AgendaCard/AgendaCard';
 import './PreEvent.css'
+import { isMobileOnly } from 'react-device-detect';
+import { KNOW_YOUR_SPEAKER_CLICK_EVENT } from '../../AppConstants/AnalyticsEventName';
 
 function PreEvent() {
     const { showMediaModal } = useContext(MediaModalContext)
@@ -61,9 +60,8 @@ function PreEvent() {
         setAgendaData(newData)
     }
 
-    const startVideo = (link) => {
-        console.log(link)
-        showMediaModal(MediaModalType.Videos, link)
+    const startVideo = (timeline) => {
+        showMediaModal(MediaModalType.Videos, timeline.videoUrl)
         // setVideoModalVisible(true)
     }
 
@@ -96,8 +94,15 @@ function PreEvent() {
                                                     <AddToCalendar blueBtn={true} />
 
                                                     <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20"
-                                                        onClick={(e) => showMediaModal(MediaModalType.PDF, '/assets/pdf/KNOW_YOUR_SPEAKERS.pdf')}>
-                                                        Know Your Speakers
+                                                        onClick={(e) => {
+                                                            showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fpdf%2FKNOW_YOUR_SPEAKERS.pdf')
+                                                            addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
+                                                            addCAWithUserInfo(`/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`, true, { eventId: 'event-kmde59n5' }, true)
+                                                        }}>
+
+                                                        {
+                                                            isMobileOnly ? 'Speakers' : 'Know Your Speakers'
+                                                        }
                                                     </a>
                                                     {/* <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20" onClick={() => {
                                                         startVideo()

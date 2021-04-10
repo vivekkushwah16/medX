@@ -17,7 +17,7 @@ export default function MediaModal() {
                             if (e) { e.preventDefault() }
                             closeMediaModal()
                         }}></div>
-                        <div className="mediaModal_container" style={modalDetails.type === MediaModalType.Component ? { width: 'auto' } : {}}>
+                        <div className={`mediaModal_container ${ modalDetails.type === MediaModalType.PDF ? 'pdf-full':''}`} style={modalDetails.type === MediaModalType.Component ? { width: 'auto' } : {}}>
                             {
                                 modalDetails.type === MediaModalType.Image &&
                                 <img src={modalDetails.link} alt="imageLink" />
