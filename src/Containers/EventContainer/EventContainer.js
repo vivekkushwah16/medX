@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import { isMobileOnly } from 'react-device-detect'
 import ReactPlayer from 'react-player'
-import { CERTIFICATE_CLICK, DOWNLOAD_CERTIFICATE, FEEDBACK_CLICK, POLL_INTERACTION, QNA_INTERATCION } from '../../AppConstants/AnalyticsEventName'
+import { CERTIFICATE_CLICK, DOWNLOAD_CERTIFICATE, FEEDBACK_CLICK, POLL_INTERACTION, QNA_INTERATCION, SESSION_ATTENDED } from '../../AppConstants/AnalyticsEventName'
 import { MediaModalType } from '../../AppConstants/ModalType'
 import { MonthName } from '../../AppConstants/Months'
 import Certificate from '../../Components/Certificate/Certificate'
@@ -31,6 +31,16 @@ const menuItems = [
     { id: menuItemsId.Partner_with_us, name: 'Partner with us', className: '' },
 ]
 
+// custom hook for getting previous value 
+export function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+        ref.current = value;
+    });
+    return ref.current;
+}
+
+
 export default function EventContainer(props) {
     const { id, data, agendaData: _initalAgendaData, trendingData, partnerWithUsData, countPartnerWithUsAgree, sendQuestion, likedEvent, handleEventLikeButton } = props;
     const [activeMenu, setActiveMenu] = useState(menuItems[0])
@@ -42,9 +52,8 @@ export default function EventContainer(props) {
     const [agendaDates, setAgendaDates] = useState([]);
     const [cureentAgendaDate, setCureentAgendaDate] = useState(null);
 
-    const { user } = useContext(UserContext)
+    const { user, userInfo } = useContext(UserContext)
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
-
 
     const addClickAnalytics = (eventName) => {
         addGAWithUserInfo(eventName, { eventId: id })
@@ -75,6 +84,26 @@ export default function EventContainer(props) {
             addCAWithUserInfo(`/${POLL_INTERACTION}/${user.uid}_${pollId}`, false, { eventId: id, pollId, optionId }, true)
         }
     }
+
+    const sendSessionAnalytics = (initalTimelineValue) => {
+        console.log(userInfo)
+        addGAWithUserInfo(SESSION_ATTENDED, { eventId: id, timelineId: initalTimelineValue })
+        addCAWithUserInfo(`/${SESSION_ATTENDED}/${user.uid}_${initalTimelineValue}`, false, { eventId: id, timelineId: initalTimelineValue }, true)
+    }
+
+    const initalTimelineValue = usePrevious(data.activeTimelineId)
+
+    useEffect(() => {
+        console.log(initalTimelineValue)
+        let activeTimelineId = data.activeTimelineId
+        if (initalTimelineValue) {
+            if (initalTimelineValue !== activeTimelineId) {
+                sendSessionAnalytics(activeTimelineId)
+            }
+        } else {
+            sendSessionAnalytics(activeTimelineId)
+        }
+    }, [data])
 
     useEffect(() => {
         if (_initalAgendaData)

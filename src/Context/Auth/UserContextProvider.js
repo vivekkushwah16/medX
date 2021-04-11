@@ -21,7 +21,7 @@ const UserContextProvider = (props) => {
                 setInitalCheck(true)
                 analytics.setUserId(user.uid)
                 addUserLoginAnalytics(user.uid)
-                const userInfo = await getUserProfile(user.uid)
+                // const userInfo = await getUserProfile(user.uid)
                 // console.log(userInfo)
                 // setuserInfo(userInfo)
             } else {
@@ -34,6 +34,8 @@ const UserContextProvider = (props) => {
 
     const addUserLoginAnalytics = async (uid) => {
         const userInfo = await getUserProfile(uid)
+        setuserInfo(userInfo)
+        console.log(userInfo);
         let _data = {
             userId: uid,
             profession: userInfo.profession,
@@ -53,7 +55,6 @@ const UserContextProvider = (props) => {
             lastName: userInfo.lastName,
             loginTimestamp: firebase.database.ServerValue.TIMESTAMP
         })
-        setuserInfo(userInfo)
     }
 
     const getVideoMetaData = async (mediaId) => {

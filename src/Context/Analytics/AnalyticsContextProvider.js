@@ -6,9 +6,11 @@ export const AnalyticsContext = createContext()
 
 export default function AnalyticsContextProvider(props) {
     const { user, userInfo } = useContext(UserContext);
-    const addGAWithUserInfo = async (eventName, data = {}) => {
+    console.log("Analytics context update ", userInfo)
+
+    async function addGAWithUserInfo(eventName, data = {}) {
         try {
-            // console.log(eventName, data);
+            console.log(eventName, data, userInfo);
             if (!userInfo) {
                 console.error("No UsrInfo Found")
                 return
@@ -23,6 +25,7 @@ export default function AnalyticsContextProvider(props) {
                 date: new Date(),
                 dateTimeStamp: new Date().getTime()
             }
+            console.log(baseData)
             analytics.logEvent(eventName, { ...baseData, ...data })
         } catch (error) {
             console.log(error)

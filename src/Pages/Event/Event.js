@@ -20,13 +20,12 @@ export default function Event() {
         sendQuestion, getEventDataListener, removeEventDataListener } = useContext(eventContext)
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
     let { getLike, addLike, removeLike, } = useContext(likeContext)
-    const {user} = useContext(UserContext)
+    const { user, userInfo } = useContext(UserContext)
     const [eventData, setEventData] = useState({})
     const [agendaData, setAgendaData] = useState([])
     const [trendingData, setTrendingData] = useState(null)
     const [partnerWithUsData, setPartnerWithUsData] = useState(null)
     const [likedEvent, setLikeEvent] = useState(false)
-
 
     useEffect(() => {
         getEventInfo();
@@ -44,20 +43,9 @@ export default function Event() {
         try {
             // const data = await getEvent(param.id, true)
             // setEventData(data)
-            let initalTimelineValue = null
             getEventDataListener(param.id, (data) => {
-                if (initalTimelineValue) {
-                    if (initalTimelineValue !== data.activeTimelineId) {
-                        initalTimelineValue = data.activeTimelineId
-                        sendSessionAnalytics(initalTimelineValue)
-                    }
-                } else {
-                    initalTimelineValue = data.activeTimelineId
-                    sendSessionAnalytics(initalTimelineValue)
-                }
                 setEventData(data)
             })
-
             getLike(param.id).then(status => setLikeEvent(status))
 
         } catch (error) {
@@ -109,16 +97,10 @@ export default function Event() {
 
 
     const addClickAnalytics = (eventName) => {
+        console.log(userInfo)
         addGAWithUserInfo(eventName, { eventId: param.id })
         addCAWithUserInfo(`/${eventName}`, true, { eventId: param.id }, true)
     }
-
-
-    const sendSessionAnalytics = (initalTimelineValue) => {
-        addGAWithUserInfo(SESSION_ATTENDED, { eventId: param.id, sessionId: initalTimelineValue })
-        addCAWithUserInfo(`/${SESSION_ATTENDED}/${user.uid}_${initalTimelineValue}`, false, { eventId: param.id, sessionId: initalTimelineValue }, true)
-    }
-
     return (
         <section className="wrapper" id="root">
             <div className="eventBoxBg"></div>
