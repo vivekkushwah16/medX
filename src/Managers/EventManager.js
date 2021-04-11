@@ -192,7 +192,8 @@ const EventManager = {
                         type: LikeType.TIMELINE_LIKE,
                         user: userId,
                         eventId: eventId,
-                        timeStamp: firebase.firestore.FieldValue.serverTimestamp()
+                        timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        date: new Date().getTime(),
                     })
                     transcation.update(timelineRef, {
                         likes: firebase.firestore.FieldValue.increment(1)
@@ -487,7 +488,8 @@ const EventManager = {
                         targetId: id,
                         user: userId,
                         eventId: eventId,
-                        timeStamp: firebase.firestore.FieldValue.serverTimestamp()
+                        timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        date: new Date().getTime(),
                     })
                     transcation.update(partnerDocRef, {
                         agreedCount: firebase.firestore.FieldValue.increment(1)
@@ -567,7 +569,8 @@ const EventManager = {
                         targetId: eventId,
                         type: LikeType.EVENT_LIKE,
                         user: userId,
-                        timeStamp: firebase.firestore.FieldValue.serverTimestamp()
+                        timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        date: new Date().getTime(),
                     })
                     transcation.update(docRef, {
                         likes: firebase.firestore.FieldValue.increment(1)

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { isMobileOnly } from 'react-device-detect'
 import ReactPlayer from 'react-player'
+import { CERTIFICATE_CLICK, DOWNLOAD_CERTIFICATE, FEEDBACK_CLICK, POLL_INTERACTION, QNA_INTERATCION } from '../../AppConstants/AnalyticsEventName'
 import { MediaModalType } from '../../AppConstants/ModalType'
 import { MonthName } from '../../AppConstants/Months'
 import Certificate from '../../Components/Certificate/Certificate'
@@ -10,6 +11,8 @@ import AgendaTab from '../../Components/Event/AgendaTab/AgendaTab'
 import EventMenu from '../../Components/Event/EventMenu'
 import PartnerWithUs from '../../Components/Event/PartnerWithUs/PartnerWithUs'
 import Trending from '../../Components/Event/Trending/Trending'
+import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider'
+import { UserContext } from '../../Context/Auth/UserContextProvider'
 import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider'
 
 const menuItemsId = {
@@ -17,7 +20,7 @@ const menuItemsId = {
     Agenda: 'Agenda',
     Trending: 'Trending',
     Polls: 'Polls',
-    Partner_with_us: 'Partner with us'
+    Partner_with_us: 'Partner_with_us'
 }
 
 const menuItems = [
@@ -38,6 +41,40 @@ export default function EventContainer(props) {
     const [agendaData, setAgendaData] = useState(null);
     const [agendaDates, setAgendaDates] = useState([]);
     const [cureentAgendaDate, setCureentAgendaDate] = useState(null);
+
+    const { user } = useContext(UserContext)
+    const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
+
+
+    const addClickAnalytics = (eventName) => {
+        addGAWithUserInfo(eventName, { eventId: id })
+        addCAWithUserInfo(`/${eventName}`, true, { eventId: id }, true)
+    }
+
+    const addItemClickAnalytics = (eventName, id, itemId, title, type) => {
+        addGAWithUserInfo(eventName, { eventId: id, itemId, title, type })
+        addCAWithUserInfo(`/${eventName}/${user.uid}_${itemId}`, false, { eventId: id, itemId, title, type }, true)
+    }
+
+    const QNASendAnalytics = () => {
+        if (data.activeTimelineId) {
+            addGAWithUserInfo(QNA_INTERATCION, { eventId: id, timelineId: data.activeTimelineId })
+            addCAWithUserInfo(`/${QNA_INTERATCION}/${user.uid}_${data.activeTimelineId}`, false, { eventId: id, timelineId: data.activeTimelineId }, true)
+        } else {
+            addGAWithUserInfo(QNA_INTERATCION, { eventId: id })
+            addCAWithUserInfo(`/${QNA_INTERATCION}/${user.uid}_${id}`, false, { eventId: id }, true)
+        }
+    }
+
+    const PollInteractionAnalytics = (pollId, optionId) => {
+        if (data.activeTimelineId) {
+            addGAWithUserInfo(POLL_INTERACTION, { eventId: id, timelineId: data.activeTimelineId, pollId, optionId })
+            addCAWithUserInfo(`/${POLL_INTERACTION}/${user.uid}_${pollId}`, false, { eventId: id, timelineId: data.activeTimelineId, pollId, optionId }, true)
+        } else {
+            addGAWithUserInfo(POLL_INTERACTION, { eventId: id, pollId, optionId })
+            addCAWithUserInfo(`/${POLL_INTERACTION}/${user.uid}_${pollId}`, false, { eventId: id, pollId, optionId }, true)
+        }
+    }
 
     useEffect(() => {
         if (_initalAgendaData)
@@ -78,6 +115,7 @@ export default function EventContainer(props) {
                 !activePollPanel && !isMobileOnly &&
                 <a href="#" class="eventBox__sidebar-btn active" onClick={(e) => {
                     e.preventDefault();
+                    addClickAnalytics(`${menuItemsId.Polls}_click`)
                     setPollPanelActive(true)
                 }}>Q&amp;A / Polls</a>
             }
@@ -120,12 +158,21 @@ export default function EventContainer(props) {
                         {
                             isMobileOnly &&
                             <div class="pd-t5 pd-b5 d-flex align-items-start justify-content-between">
-                                <button className="btn btn-secondary" onClick={() => showMediaModal(MediaModalType.Component, Certificate)} disabled={props.disableFeedback}>Get your certificate</button>
-                                <button className="btn btn-secondary">Feedback</button>
+                                <button className="btn btn-secondary" onClick={() => {
+                                    showMediaModal(MediaModalType.Component, { component: Certificate, data: { addClickAnalytics: () => { addClickAnalytics(DOWNLOAD_CERTIFICATE) } } })
+                                    addClickAnalytics(CERTIFICATE_CLICK)
+                                }} disabled={props.disableFeedback}>Get your certificate</button>
+                                <button className="btn btn-secondary" onClick={() => {
+                                    addClickAnalytics(FEEDBACK_CLICK);
+                                    showMediaModal(MediaModalType.PDF, '/feedback/index.html')
+                                }}>Feedback</button>
                             </div>
                         }
                         <div className="eventBox__tabs-wrapper">
-                            <EventMenu menuItems={menuItems} activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
+                            <EventMenu menuItems={menuItems} activeMenu={activeMenu} setActiveMenu={(item) => {
+                                addClickAnalytics(`${item.id}_click`)
+                                setActiveMenu(item)
+                            }} />
 
                             {/* <div className="text-right pd-t20 pd-b20 hide-on-desktop">
                                 <a href="#" className={`like-btn ${like.status ? 'like-btn--active' : ''}`} onClick={toggleLike}><i className="icon-like"></i>{like.count}</a>
@@ -149,13 +196,21 @@ export default function EventContainer(props) {
                             }
                             {
                                 activeMenu.id === menuItemsId.Trending && trendingData &&
-                                <Trending data={trendingData} />
+                                <Trending data={trendingData} addAnalytics={addItemClickAnalytics} />
                             }
 
                             {
                                 activeMenu.id === menuItemsId.Polls &&
                                 <div id="tab4" class="eventBox__tabs-content active">
-                                    <CommunityBox sendQuestion={sendQuestion} id={id} />
+                                    <CommunityBox
+                                        sendQuestion={(eventId, ques) => {
+                                            QNASendAnalytics();
+                                            sendQuestion(eventId, ques)
+                                        }}
+                                        id={id}
+                                        pollAnalytics={(pollId, optionId) => {
+                                            PollInteractionAnalytics(pollId, optionId);
+                                        }} />
                                 </div>
                             }
 
@@ -170,7 +225,17 @@ export default function EventContainer(props) {
                     {
                         !isMobileOnly &&
                         <div className={`eventBox__right  show-on-desktop col ${activePollPanel ? 'active' : ''}`}>
-                            <CommunityBox sendQuestion={sendQuestion} id={id} showCloseButton={true} handleCloseBtn={(e) => { e.preventDefault(); setPollPanelActive(false) }} />
+                            <CommunityBox
+                                sendQuestion={(eventId, ques) => {
+                                    QNASendAnalytics();
+                                    sendQuestion(eventId, ques)
+                                }}
+                                id={id} showCloseButton={true}
+                                pollAnalytics={(pollId, optionId) => {
+                                    PollInteractionAnalytics(pollId, optionId);
+                                }}
+                                handleCloseBtn={(e) => { e.preventDefault(); setPollPanelActive(false) }}
+                            />
                         </div>
                     }
                 </div>

@@ -12,7 +12,7 @@ import VideoManager from '../../Managers/VideoManager'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 import StartRating from '../../Components/StartRating/StartRating'
 import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider'
-import { VIDEO_CLICK, VIDEO_KEYFRAME_CLICK } from '../../AppConstants/AnalyticsEventName'
+import { VIDEO_CLICK, VIDEO_KEYFRAME_CLICK, VIDEO_TIMESPENT } from '../../AppConstants/AnalyticsEventName'
 
 const timeLimit = 10;
 let currenttimeWatched = 0;
@@ -37,6 +37,10 @@ function VideoPopup(props) {
         VideoManager.getVideoWithId(props.videoData.id).then(data => {
             setVideoData(data)
         })
+        window.videoTimeSpent = 0
+        window.videoStartTimestamp = null
+        window.videoEndTimestmap = null
+        window.isOnHold = false
     }, [props.videoData])
 
     useEffect(() => {
@@ -76,11 +80,24 @@ function VideoPopup(props) {
         [runningTimer]
     );
 
+    const calculateTimeSpent = () => {
+        window.isOnHold = false
+        window.videoEndTimestmap = new Date().getTime()
+        window.videoTimeSpent += (window.videoEndTimestmap - window.videoStartTimestamp)
+    }
+
     function startTimer() {
+        if (window.isOnHold && window.videoStartTimestamp) {
+            calculateTimeSpent()
+        }
+        window.videoStartTimestamp = new Date().getTime()
         setRunningTimer(true);
     }
 
     function stopTimer() {
+        if (window.videoStartTimestamp) {
+            calculateTimeSpent()
+        }
         setRunningTimer(false);
     }
 
@@ -108,6 +125,7 @@ function VideoPopup(props) {
     const seekTo = (timestamp) => {
         playerRef.current.seekTo(timestamp, "seconds");
     };
+
     let moreVideos = []
     if (currVideosData)
         moreVideos = currVideosData.filter(currentVideoData => currentVideoData.id !== videoData.id)
@@ -135,36 +153,41 @@ function VideoPopup(props) {
         addCAWithUserInfo(`/${VIDEO_KEYFRAME_CLICK}/${user.uid}_${videoData.id}`, false, { tag: _vd.tagSelectedFrom, videoId: _vd.id, title: keyframe.title }, true)
     }
 
+    const addTimeSpentAnalytics = () => {
+        if (playerRef.current) {
+            if (playerRef.current.player.isPlaying) {
+                calculateTimeSpent()
+            }
+            addGAWithUserInfo(VIDEO_TIMESPENT, { tag: _vd.tagSelectedFrom, videoId: videoData.id, timespent: window.videoTimeSpent, duration: playerRef.current.getDuration(), lastTimestamp: playerRef.current.getCurrentTime() })
+            addCAWithUserInfo(`/${VIDEO_TIMESPENT}/${user.uid}_${videoData.id}`, false, { tag: _vd.tagSelectedFrom, videoId: videoData.id, duration: playerRef.current.getDuration(), lastTimestamp: playerRef.current.getCurrentTime() }, false, { name: 'timespent', value: window.videoTimeSpent })
+        }
+    }
+
+    const __closeVideoPop = () => {
+        stopTimer();
+        if (playerRef.current) {
+            var currentTime = playerRef.current.getCurrentTime();
+            var duration = playerRef.current.getDuration();
+            // console.log(videoData.id, currentTime, duration);
+            if (currentTime && duration) {
+                setVideoMetaData(videoData.id, currentTime, duration);
+                // console.log(videoData.id, currentTime, duration);
+            }
+        }
+        addTimeSpentAnalytics();
+        closeVideoPop(videoData);
+    }
+
     return (
         <div className="modalBox modalBox--large active videoModalBox"  >
             <span class="modalBox__overlay" onClick={() => {
-                stopTimer();
-                if (playerRef.current) {
-                    var currentTime = playerRef.current.getCurrentTime();
-                    var duration = playerRef.current.getDuration();
-                    // console.log(videoData.id, currentTime, duration);
-                    if (currentTime && duration) {
-                        setVideoMetaData(videoData.id, currentTime, duration);
-                        // console.log(videoData.id, currentTime, duration);
-                    }
-                }
-                closeVideoPop(videoData);
+                __closeVideoPop()
             }}></span>
             <div className="modalBox__inner">
                 <div className="modalBox__header">
                     <h3 className="modalBox__title"></h3>
                     <button className="modalBox__close-link" onClick={() => {
-                        stopTimer();
-                        if (playerRef.current) {
-                            var currentTime = playerRef.current.getCurrentTime();
-                            var duration = playerRef.current.getDuration();
-                            // console.log(videoData.id, currentTime, duration);
-                            if (currentTime && duration) {
-                                setVideoMetaData(videoData.id, currentTime, duration);
-                                // console.log(videoData.id, currentTime, duration);
-                            }
-                        }
-                        closeVideoPop(videoData);
+                        __closeVideoPop()
                     }}>CLOSE</button>
                 </div>
                 <div className="modalBox__body">
@@ -179,6 +202,14 @@ function VideoPopup(props) {
                             onPlay={startTimer}
                             style={{ "backgroundColor": "black" }}
                             playsinline={true}
+                            onBuffer={() => {
+                                console.log('isBuffereing');
+                                window.isOnHold = true;
+                            }}
+                            onSeek={() => {
+                                console.log("seekingg!!")
+                                window.isOnHold = true
+                            }}
                             onPause={() => {
                                 stopTimer()
                             }}
@@ -242,7 +273,7 @@ function VideoPopup(props) {
 
                             {/* <p className="videodetailBox__desc"><a href="javascript:void(0)">Show Less</a></p> */}
                             {
-                                videoData.speakers &&
+                                videoData.speakers && videoData.speakers.length > 0 &&
                                 <>
                                     <h4 className="videodetailBox__subtitle mg-t20">SPEAKERS</h4>
 
@@ -278,7 +309,7 @@ function VideoPopup(props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
 
     )
 }

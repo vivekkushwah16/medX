@@ -105,6 +105,7 @@ export const PollManager = {
                         user: userId,
                         eventId: eventId,
                         timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        date: new Date().getTime(),
                         option: _option
                     })
 

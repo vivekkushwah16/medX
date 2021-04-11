@@ -44,7 +44,7 @@ export default function MediaModal() {
                             }
                             {
                                 modalDetails.type === MediaModalType.Component &&
-                                <modalDetails.link />
+                                <modalDetails.link.component data={modalDetails.link.data}/>
                             }
                             <div className="mediaModal_container_closeBtn" onClick={(e) => {
                                 if (e) { e.preventDefault() }

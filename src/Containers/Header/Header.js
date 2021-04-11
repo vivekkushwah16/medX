@@ -9,12 +9,14 @@ import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextPr
 import { MediaModalType } from '../../AppConstants/ModalType'
 import Certificate from '../../Components/Certificate/Certificate'
 import './Header.css';
+import { CERTIFICATE_CLICK, DOWNLOAD_CERTIFICATE, FEEDBACK_CLICK } from '../../AppConstants/AnalyticsEventName'
 
 //showCertificate, showFeedback 
 export default function Header(props) {
-    const { stickyOnScroll } = props
+    const { stickyOnScroll, addClickAnalytics } = props
     const [showInviteFriendModal, toggleInviteFriendModal] = useState(false)
     const { showMediaModal } = useContext(MediaModalContext)
+
 
     const navBar = useRef(null)
     const [sticky, setSticky] = useState(false)
@@ -58,11 +60,17 @@ export default function Header(props) {
                     <div className="headerBox__right headerBox__right--nogap">
                         {
                             props.showCertificate &&
-                            <button className="btn btn-secondary" onClick={() => showMediaModal(MediaModalType.Component, Certificate)} disabled={props.disableFeedback}>Get your certificate</button>
+                            <button className="btn btn-secondary" onClick={() => {
+                                addClickAnalytics(CERTIFICATE_CLICK);
+                                showMediaModal(MediaModalType.Component, {component: Certificate, data: {addClickAnalytics: ()=>{addClickAnalytics(DOWNLOAD_CERTIFICATE)}}})
+                            }} disabled={props.disableFeedback}>Get your certificate</button>
                         }
                         {
                             props.showFeedback &&
-                            <button className="btn btn-secondary" onClick={() => showMediaModal(MediaModalType.PDF, '/feedback/index.html')}>Feedback</button>
+                            <button className="btn btn-secondary" onClick={() => {
+                                addClickAnalytics(FEEDBACK_CLICK);
+                                showMediaModal(MediaModalType.PDF, '/feedback/index.html')
+                            }}>Feedback</button>
                         }
                         {
                             !props.hideInviteFriend &&

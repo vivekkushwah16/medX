@@ -29,7 +29,8 @@ export default function AnalyticsContextProvider(props) {
         }
     }
 
-    const addCAWithUserInfo = async (path, addUid, data = {}, countInc = false) => {
+    //customIncDetails = {name, value}
+    const addCAWithUserInfo = async (path, addUid, data = {}, countInc = false, customIncDetails) => {
         if (!userInfo) {
             console.error("No UsrInfo Found")
             return
@@ -54,6 +55,13 @@ export default function AnalyticsContextProvider(props) {
             baseData = {
                 ...baseData,
                 count: firebase.database.ServerValue.increment(1)
+            }
+        }
+
+        if (customIncDetails) {
+            baseData = {
+                ...baseData,
+                [customIncDetails.name]: firebase.database.ServerValue.increment(customIncDetails.value)
             }
         }
 

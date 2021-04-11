@@ -71,7 +71,8 @@ export default function LikeContextProvider(props) {
                     let _input = {
                         tagetId: tagetId,
                         rating: rating,
-                        userId: user.uid
+                        userId: user.uid,
+                        date: new Date().getTime(),
                     }
                     if (eventId) {
                         _input = {

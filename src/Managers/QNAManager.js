@@ -11,6 +11,7 @@ const QNAManager = {
                     userId,
                     eventId,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    date: new Date().getTime(),
                     question: question,
                 })
                 res()

@@ -5,7 +5,8 @@ import './Certificate.css'
 import html2canvas from 'html2canvas'
 import canvasToImage from 'canvas-to-image'
 
-export default function Certificate() {
+export default function Certificate(props) {
+    const { addClickAnalytics } = props.data
     const { user } = useContext(UserContext);
     const certificatBody = createRef(null)
 
@@ -17,6 +18,7 @@ export default function Certificate() {
                 type: 'jpg',
                 quality: 0.7
             });
+            addClickAnalytics()
         }
     }
 

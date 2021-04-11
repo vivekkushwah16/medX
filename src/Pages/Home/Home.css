@@ -129,6 +129,10 @@
     color: rgba(255, 255, 255, 0.603);
 }
 
+.videoModalBox .star-ratings{
+    margin-bottom: 1rem;
+}
+
 .likeBtnContainer {
     display: flex;
     justify-content: flex-end;
@@ -171,6 +175,20 @@
 }
 .contentBox__item:hover .contentBox_tag { display: initial; }
 
+.tabBox__list_sticky{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+    padding: 0.85rem;
+    margin: 0;
+    margin-top: 5.5rem;
+    background: black;
+    background: linear-gradient( 
+90deg
+, #000000cc 0%, rgb(0 0 0 / 73%) 72.82%, rgb(0 0 0 / 0%) 129.25%)!important;
+}
 
 @media only screen and (max-width: 992px) {
     .likeBtnContainer {

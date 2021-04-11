@@ -26,10 +26,12 @@ class Home extends Component {
         rows: [
             { tag: 'Respiratory', header: 'Videos on Respiratory' },
             { tag: 'COPD', header: 'Videos on COPD' },
-            { tag: 'Asthma', header: 'Videos on Asthma' },
-            { tag: 'ILD/IPF', header: 'Videos on ILD/IPF' },
+            // { tag: 'Asthma', header: 'Videos on Asthma' },
+            // { tag: 'ILD/IPF', header: 'Videos on ILD/IPF' },
             { tag: 'Telemedicine', header: 'Videos on Telemedicine' },
-            { tag: 'Allergic_Rhinitis', header: 'Videos on Allergic Rhinitis' },
+            { tag: 'Allergic Rhinitis', header: 'Videos on Allergic Rhinitis' },
+            { tag: ['Asthma', 'ILD/IPF'], header: 'Other Videos', multipleTags: true },
+
 
             // { tag: 'Recommendations', header: 'Videos on Recommendations' },
             // { tag: 'Pediatric asthma', header: 'Videos on Pediatric asthma' },
@@ -49,9 +51,8 @@ class Home extends Component {
             { tag: 'ILD/IPF', header: 'ILD/IPF' },
             { tag: 'Telemedicine', header: 'Telemedicine' },
             { tag: 'Allergic Rhinitis', header: 'Allergic Rhinitis' },
-            { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
 
-
+            // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
             // { tag: 'Recommendations', header: 'Recommendations' },
             // { tag: 'Pediatric asthma', header: 'Pediatric asthma' },
             // { tag: 'Expert Views', header: 'Expert Views' },
@@ -62,13 +63,24 @@ class Home extends Component {
             // { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
         ],
 
-        activeTag: '',
+        activeTag: { tag: 'Respiratory', header: 'Respiratory' },
         lastPlayed: null,
         lastVideoMetadata: null
     }
 
     onTagSelect = (tag) => {
-        this.state.activeTag.tag == tag.tag ? this.setState({ activeTag: '' }) : this.setState({ activeTag: tag })
+        let _tag = this.state.rows.filter(r => !r.multipleTags ? r.tag === tag.tag : r.tag.indexOf(tag.tag) !== -1)[0]
+        if (_tag.multipleTags) {
+            this.setState({ activeTag: { ..._tag, currentTag: tag.tag } })
+        } else {
+            this.setState({ activeTag: _tag })
+        }
+        return
+        this.setState({ activeTag: tag })
+        return
+        this.state.activeTag.tag == tag.tag ?
+            this.setState({ activeTag: '' }) :
+            this.setState({ activeTag: tag })
     }
 
     openVideoPop = (metadata, videoData, videosData, tagSelectedFrom) => {
@@ -100,12 +112,12 @@ class Home extends Component {
                     <div className="tabBox" id="homeVideoContainer">
                         <div class="container">
 
-                            <TagsRow tags={this.state.tags} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag} />
+                            <TagsRow tags={this.state.tags} stickyOnScroll={false} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag} />
 
                             <div className="contentBox">
                                 {
                                     this.state.activeTag !== '' &&
-                                    <VideoRow heading={`Videos on ${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed}
+                                    <VideoRow heading={`${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed}
                                         tag={this.state.activeTag.tag}
                                         openVideoPop={this.openVideoPop} grid={false}
                                         multipleTags={this.state.activeTag.multipleTags}
@@ -116,7 +128,11 @@ class Home extends Component {
                                         <>
                                             {
                                                 row.tag !== this.state.activeTag.tag &&
-                                                <VideoRow heading={row.header} lastPlayed={this.state.lastPlayed} tag={row.tag} openVideoPop={this.openVideoPop} grid={false} />
+                                                <VideoRow heading={row.header} lastPlayed={this.state.lastPlayed} tag={row.tag}
+                                                    openVideoPop={this.openVideoPop}
+                                                    grid={false}
+                                                    multipleTags={row.multipleTags}
+                                                />
                                             }
                                         </>
                                     )

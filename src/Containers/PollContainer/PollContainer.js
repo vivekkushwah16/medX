@@ -5,7 +5,7 @@ import { UserContext } from '../../Context/Auth/UserContextProvider'
 import { PollManager } from '../../Managers/PollManager'
 
 export default function PollContainer(props) {
-    const { id: eventId } = props
+    const { id: eventId, pollAnalytics } = props
     const { user } = useContext(UserContext)
     const [pollAnswerredData, setPollAnswerredData] = useState({})
     const [pollData, setPollData] = useState(null)
@@ -29,6 +29,7 @@ export default function PollContainer(props) {
         return new Promise(async (res, rej) => {
             try {
                 await PollManager.addResponse(eventId, pollId, user.uid, option)
+                pollAnalytics(pollId, option.id)
                 setPollAnswerredData({ ...pollAnswerredData, [pollId]: option })
                 res()
             } catch (error) {

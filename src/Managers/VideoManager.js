@@ -165,7 +165,8 @@ const VideoManager = {
                         targetId: videoId,
                         type: LikeType.VIDEO_LIKE,
                         user: userId,
-                        timeStamp: firebase.firestore.FieldValue.serverTimestamp()
+                        timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        date: new Date().getTime(),
                     })
                     transcation.update(docRef, {
                         likes: firebase.firestore.FieldValue.increment(1)
