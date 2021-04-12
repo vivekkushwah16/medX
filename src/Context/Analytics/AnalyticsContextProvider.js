@@ -1,12 +1,28 @@
-import React, { createContext, useContext } from 'react'
-import firebase, { analytics, database } from '../../Firebase/firebase';
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { UPDATE_USER_STAUS } from '../../AppConstants/CloudFunctionName';
+import { MonthName } from '../../AppConstants/Months';
+import firebase, { analytics, cloudFunction, database } from '../../Firebase/firebase';
 import { UserContext } from '../Auth/UserContextProvider'
+var uniqid = require('uniqid');
 
 export const AnalyticsContext = createContext()
 
+function getSessonId(uid) {
+    return uniqid(`${uid}-`)
+}
+
 export default function AnalyticsContextProvider(props) {
     const { user, userInfo } = useContext(UserContext);
-    console.log("Analytics context update ", userInfo)
+    const [sessionId, setSessionId] = useState(null)
+
+    useEffect(() => {
+        if (user) {
+            setSessionId(getSessonId(user.uid))
+        } else {
+            setSessionId(null)
+        }
+
+    }, [user])
 
     async function addGAWithUserInfo(eventName, data = {}) {
         try {
@@ -75,8 +91,109 @@ export default function AnalyticsContextProvider(props) {
         })
     }
 
+    //Add Cloud Function based Analytics
+    //sessionId , timestamps, date
+    const updateUserStatus = async (eventId, timelineId, timespent) => {
+        try {
+            console.log(user)
+
+            if (!sessionId) {
+                console.error("SessionId is null")
+                return
+            }
+            if (!user) {
+                console.error("userNotLogged")
+                return
+            }
+            if (!userInfo) {
+                console.error("No info about user Found")
+                return
+            }
+
+            var currentDate = new Date();
+            let dateString = `${currentDate.getDate()} ${MonthName[currentDate.getMonth()]} ${currentDate.getFullYear()} 00:00:00`
+            console.log(dateString)
+            var dateTimeStamp = new Date(dateString).getTime()
+            let _sessionId = sessionId
+            if (!_sessionId) {
+                _sessionId = getSessonId(user.uid)
+                setSessionId(_sessionId)
+            }
+
+            let _data = {
+                userId: user.uid,
+                // basic info
+                firstName: userInfo.firstName,
+                lastName: userInfo.lastName,
+                email: userInfo.email,
+                phoneNumber: userInfo.phoneNumber,
+                profession: userInfo.profession,
+                speciality: userInfo.speciality,
+                country: userInfo.country,
+                state: userInfo.state,
+                city: userInfo.city,
+                //event based info
+                eventId, timelineId, timespent,
+                timestamp: currentDate.getTime(),
+                date: dateTimeStamp,
+                sessionId: _sessionId,
+            }
+            console.log(_data)
+            // dummyFunction(_data, user.uid)
+            const cloudRef = cloudFunction.httpsCallable(UPDATE_USER_STAUS)
+            cloudRef(JSON.stringify(_data)).then((res) => {
+                console.log(res)
+            }).catch(err => {
+                console.log(err);
+            })
+            // const res = await cloudRef(JSON.stringify(_data))
+            // console.log(res)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const dummyFunction = (data, uid) => {
+        const { firstName, lastName, email, phoneNumber, profession,
+            speciality, country, state, city, eventId,
+            timelineId, timespent, date, sessionId, timestamp } = data;
+
+        let date_obj = new Date(date);
+        console.log('xxxxxxxxxxxxxxxxxxxx')
+        let dateString = `${date_obj.getDate()}-${date_obj.getMonth() + 1}-${date_obj.getFullYear()}`
+        console.log(date_obj)
+        console.log(dateString)
+
+        const userStatusPath = `userStatus/${dateString}/${sessionId}/`;
+        const userStatusRef = firebase.database().ref(userStatusPath);
+        const userStatusData = {
+            firstName, lastName, email, phoneNumber, profession,
+            speciality, country, state, city,
+            eventId,
+            timelineId,
+            timestamp,
+            date,
+        };
+        console.log(userStatusPath)
+        console.log(userStatusData)
+        userStatusRef.update(userStatusData);
+        const userSessionPath = `userSession/${dateString}/${eventId}/${uid}/`;
+        const userSessionRef = firebase.database().ref(userSessionPath);
+        const userSessionData = {
+            firstName, lastName, email, phoneNumber, profession,
+            speciality, country, state, city,
+            eventId,
+            [timelineId]: firebase.database.ServerValue.increment(timespent),
+            date,
+        };
+        console.log(userSessionData)
+        console.log('xxxxxxxxxxxxxxxxxxxx')
+        userSessionRef.update(userSessionData);
+        return { status: "done" };
+    }
+
     return (
-        <AnalyticsContext.Provider value={{ addGAWithUserInfo, addCAWithUserInfo }}>
+        <AnalyticsContext.Provider value={{ addGAWithUserInfo, addCAWithUserInfo, updateUserStatus }}>
             {props.children}
         </AnalyticsContext.Provider>
     )

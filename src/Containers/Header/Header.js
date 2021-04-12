@@ -10,6 +10,7 @@ import { MediaModalType } from '../../AppConstants/ModalType'
 import Certificate from '../../Components/Certificate/Certificate'
 import './Header.css';
 import { CERTIFICATE_CLICK, DOWNLOAD_CERTIFICATE, FEEDBACK_CLICK } from '../../AppConstants/AnalyticsEventName'
+import { Link } from 'react-router-dom'
 
 //showCertificate, showFeedback 
 export default function Header(props) {
@@ -53,16 +54,19 @@ export default function Header(props) {
             <div className="container">
                 <div className="d-flex align-items-center justify-content-between">
                     <div className="headerBox__left">
-                        <a href={RootRoute} className="headerBox__logo5">
+                        <Link to={RootRoute} className="headerBox__logo5">
                             <img src={props.whiteLogo ? CIPLAMEDXLOGO_WHITE : CIPLAMEDXLOGO} alt="CIPLAMEDXLOGO" />
-                        </a>
+                        </Link>
+                        {/* <a href={RootRoute} className="headerBox__logo5">
+                            <img src={props.whiteLogo ? CIPLAMEDXLOGO_WHITE : CIPLAMEDXLOGO} alt="CIPLAMEDXLOGO" />
+                        </a> */}
                     </div>
                     <div className="headerBox__right headerBox__right--nogap">
                         {
                             props.showCertificate &&
                             <button className="btn btn-secondary" onClick={() => {
                                 addClickAnalytics(CERTIFICATE_CLICK);
-                                showMediaModal(MediaModalType.Component, {component: Certificate, data: {addClickAnalytics: ()=>{addClickAnalytics(DOWNLOAD_CERTIFICATE)}}})
+                                showMediaModal(MediaModalType.Component, { component: Certificate, data: { addClickAnalytics: () => { addClickAnalytics(DOWNLOAD_CERTIFICATE) } } })
                             }} disabled={props.disableFeedback}>Get your certificate</button>
                         }
                         {

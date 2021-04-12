@@ -40,8 +40,10 @@ export function usePrevious(value) {
     return ref.current;
 }
 
+const TIME_BETWEEN_CLOUDFUNCTION_HIT = 0.5 * 60 * 1000;
 
 export default function EventContainer(props) {
+    //#region  decalaration
     const { id, data, agendaData: _initalAgendaData, trendingData, partnerWithUsData, countPartnerWithUsAgree, sendQuestion, likedEvent, handleEventLikeButton } = props;
     const [activeMenu, setActiveMenu] = useState(menuItems[0])
     const [activePollPanel, setPollPanelActive] = useState(false)
@@ -53,7 +55,8 @@ export default function EventContainer(props) {
     const [cureentAgendaDate, setCureentAgendaDate] = useState(null);
 
     const { user, userInfo } = useContext(UserContext)
-    const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
+    const { addGAWithUserInfo, addCAWithUserInfo, updateUserStatus } = useContext(AnalyticsContext)
+    //#endregion
 
     const addClickAnalytics = (eventName) => {
         addGAWithUserInfo(eventName, { eventId: id })
@@ -86,24 +89,75 @@ export default function EventContainer(props) {
     }
 
     const sendSessionAnalytics = (initalTimelineValue) => {
-        console.log(userInfo)
         addGAWithUserInfo(SESSION_ATTENDED, { eventId: id, timelineId: initalTimelineValue })
         addCAWithUserInfo(`/${SESSION_ATTENDED}/${user.uid}_${initalTimelineValue}`, false, { eventId: id, timelineId: initalTimelineValue }, true)
     }
 
     const initalTimelineValue = usePrevious(data.activeTimelineId)
 
+    //#region maintain timespent 
+    const calcaulateLastTimespent = () => {
+        return Math.round((new Date().getTime() - window.session_CurrentHit_StartTimestamp) / 1000)
+    }
+
+    const startTimespentCalculation = () => {
+        updateUserStatus(id, data.activeTimelineId, 0)
+        window.session_CurrentHit_StartTimestamp = new Date().getTime()
+        window.sessionTimerRef = setInterval(() => {
+            // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+            let currentHitTimespent = calcaulateLastTimespent()
+            // console.log('updateUserStatus()', id, data.activeTimelineId, currentHitTimespent)
+            updateUserStatus(id, data.activeTimelineId, currentHitTimespent)
+            // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+            window.session_CurrentHit_StartTimestamp = new Date().getTime()
+            window.session_CurrentHit_timelineId = data.activeTimelineId
+        }, TIME_BETWEEN_CLOUDFUNCTION_HIT);
+    }
+
+    const stopTimespentCalculation = (startNew = false, previousId) => {
+        if (window.sessionTimerRef) {
+            clearInterval(window.sessionTimerRef)
+            // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+            let currentHitTimespent = calcaulateLastTimespent()
+            if (!startNew) {
+                // console.log(props)
+                // console.log('Close-updateUserStatus(1)', id, window.session_CurrentHit_timelineId, currentHitTimespent)
+                updateUserStatus(id, window.session_CurrentHit_timelineId, currentHitTimespent)
+                window.session_CurrentHit_StartTimestamp = null
+            } else {
+                // console.log('Close-updateUserStatus(2)', id, previousId, currentHitTimespent)
+                updateUserStatus(id, previousId, currentHitTimespent)
+
+                startTimespentCalculation();
+            }
+            // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        }
+    }
+    //#endregion
+
     useEffect(() => {
-        console.log(initalTimelineValue)
-        let activeTimelineId = data.activeTimelineId
-        if (initalTimelineValue) {
-            if (initalTimelineValue !== activeTimelineId) {
+        console.log(initalTimelineValue, data)
+        if (data && data.activeTimelineId) {
+            let activeTimelineId = data.activeTimelineId
+            if (initalTimelineValue) {
+                if (initalTimelineValue !== activeTimelineId) {
+                    sendSessionAnalytics(activeTimelineId)
+                    stopTimespentCalculation(true, initalTimelineValue)
+                }
+            } else {
                 sendSessionAnalytics(activeTimelineId)
+                startTimespentCalculation();
             }
         } else {
-            sendSessionAnalytics(activeTimelineId)
+            console.log("No Active timeline");
         }
     }, [data])
+
+    useEffect(() => {
+        return (() => {
+            stopTimespentCalculation();
+        })
+    }, [])
 
     useEffect(() => {
         if (_initalAgendaData)

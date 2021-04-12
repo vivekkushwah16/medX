@@ -3,6 +3,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/database';
 import 'firebase/analytics';
+import 'firebase/functions';
 import { PROFILE_COLLECTION } from '../AppConstants/CollectionConstants';
 
 const firebaseConfig = {
@@ -24,6 +25,8 @@ export const firestore = firebase.firestore();
 export const database = firebase.database();
 export const analytics = firebase.analytics();
 export const auth = firebase.auth();
+export const cloudFunction = firebase.app().functions('asia-south1')
+// export const cloudFunction = firebase.functions().useEmulator("localhost", 4000);
 
 export const logout = () => {
     firebase.auth().signOut()
