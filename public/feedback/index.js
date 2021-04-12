@@ -1,7 +1,11 @@
 var emojis = ["😠", "😦", "🙂", "😀", "😍"];
-var reviews = ["Very Bad", "Bad", "Average", "Good", "Very Good"];
-let response1 = 0;
-let response2 = 0;
+var reviews3 = ["Extremely", "Very", "Somewhat", "Not so", "Not at all"];
+var reviews4 = ["Much too long", "Too long", "About right", "Too short", "Much much short"];
+var reviews6 = ["Topics", "Keynotes and panel discussion", "Phygital experience", "Speaker profiles", "Attendee profiles","Conference setup","others"];
+// var reviews = ["Very Bad", "Bad", "Average", "Good", "Very Good"];
+let response3 = 0;
+let response4 = 0;
+let response6 = 0;
 // $(".emoji1").html("hello");
 // $(".emojislider1").mousemove(function () {
 //   var i = $(this).val();
@@ -15,23 +19,15 @@ let response2 = 0;
 //   .addEventListener("click", () => {
 //     console.log("hello");
 //   });
-document
-  .getElementsByClassName("emojislider1")[0]
+
+  document
+  .getElementsByClassName("emojislider6")[0]
   .addEventListener("input", () => {
-    document.getElementsByClassName("review")[0].innerHTML =
-      reviews[document.getElementsByClassName("emojislider1")[0].value];
-    var i = document.getElementsByClassName("emojislider1")[0].value;
-    document.getElementsByClassName("emoji1")[0].innerHTML = emojis[i];
-    response1 = i;
-  });
-document
-  .getElementsByClassName("emojislider2")[0]
-  .addEventListener("input", () => {
-    document.getElementsByClassName("review2")[0].innerHTML =
-      reviews[document.getElementsByClassName("emojislider2")[0].value];
-    var i = document.getElementsByClassName("emojislider2")[0].value;
-    document.getElementsByClassName("emoji2")[0].innerHTML = emojis[i];
-    response2 = i;
+    document.getElementsByClassName("review6")[0].innerHTML =
+      reviews6[document.getElementsByClassName("emojislider6")[0].value];
+    var i = document.getElementsByClassName("emojislider6")[0].value;
+    document.getElementsByClassName("emoji6")[0].innerHTML = emojis[i];
+    response6 = i;
   });
 // $(".emojislider2").mousemove(function () {
 //   var i = $(this).val();
@@ -152,11 +148,19 @@ $(document).ready(function () {
 
     showError(false);
     const survey = {
-      question1: parseInt(document.querySelector(".emojislider1").value) + 1,
-      question2: document.querySelector("#session").value,
-      question3: document.querySelector("#session3").value,
-      question4: parseInt(document.querySelector(".emojislider2").value) + 1,
-      question5: document.querySelector("#session2").value,
+      question1: document.querySelector("#session").value,
+      question2: document.querySelector("#session2").value,
+      question2: parseInt(document.querySelector(".emojislider3").value) + 1,
+      question1: parseInt(document.querySelector(".emojislider4").value) + 1,
+      question5: document.querySelector("#session5").value,
+      question6: parseInt(document.querySelector(".emojislider6").value) + 1,
+      question7: parseInt(document.querySelector(".emojislider7").value) + 1,
+      question8: parseInt(document.querySelector(".emojislider8").value) + 1,
+      question9: parseInt(document.querySelector(".emojislider9").value) + 1,
+      question10: parseInt(document.querySelector(".emojislider10").value) + 1,
+      question11: parseInt(document.querySelector(".emojislider11").value) + 1,
+      question12: document.querySelector("#session12").value,
+      question13: document.querySelector("#session13").value,
     };
     console.log(currentUser.displayName);
 

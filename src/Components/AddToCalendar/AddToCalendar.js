@@ -33,7 +33,7 @@ export default function AddToCalendar(props) {
 
     return (
         <AddToCalendarComp
-            className='addToCalendar'
+            className='addToCalendar mg-b30'
             linkProps={{
                 className: 'linkStyles',
             }}

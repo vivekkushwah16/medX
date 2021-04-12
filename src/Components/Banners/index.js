@@ -61,9 +61,9 @@ export function UpcompingEventBanner(props) {
                 <div class="container" >
                     <div class="d-flex">
                         <div className="bannerBox__left">
-                            <h1 className="bannerBox__maintitle mg-b40">{data.mainTitle}</h1>
-                            <p className="bannerBox__subtitle mg-b50">{data.subTitle_line1}<br></br>{data.subTitle_line2}</p>
-                            <p className="bannerBox__date mg-b40">{data.dateString}</p>
+                            <h1 className="bannerBox__maintitle mg-b30">{data.mainTitle}</h1>
+                            <p className="bannerBox__subtitle mg-b30">{data.subTitle_line1}<br></br>{data.subTitle_line2}</p>
+                            <p className="bannerBox__date mg-b30">{data.dateString}</p>
                             <div className="d-flex">
                                 <AddToCalendar />
                                 {/* <a href="#" className="btn btn-secondary bannerBox__btn mg-r20" onClick={() => props.addToCalendar(data.calendarData)}>Add to Calender</a> */}

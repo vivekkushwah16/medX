@@ -126,7 +126,9 @@
 
         .mb-2 {
             margin-bottom: 2rem;
-        }
+        }.text-danger {
+    color: #0d98d0!important;
+}
     </style>
 </head>
 
@@ -172,33 +174,30 @@
                             </div>
                         </div>
 
-                    
-                        <div class="question bg-white p-3 border-bottom">
-                            <div class="d-flex flex-row align-items-center question-title">
-                                <h3 class="text-danger">Q</h3>
-                                <h5 class="mt-1 ml-2">1. How would you rate the
-                                    overall content of the
-                                    convention?</h5>
-                            </div>
-                            <div class="rate">
-                                <div class="emoji emoji1">🙂</div>
-                                <div class="review">
-                                    Average
-                                </div>
-                                <input class="emojislider1" type="range" min="0" max="4" step="1"  required>
-                            </div>
-                        </div>
+                   
+
                         <div class="question bg-white p-3 border-bottom">
                            
                             <div class="question bg-white p-3 border-bottom">
                                 <div class="d-flex flex-row align-items-center question-title">
                                     <h3 class="text-danger">Q</h3>
-                                    <h5 class="mt-1 ml-2">2. Which segment/s in the entire
-                                        convention do you think was
-                                        the most interesting?</h5>
+                                    <h5 class="mt-1 ml-2">1. What did you like about the event?</h5>
                                 </div>
                                 <div class="ans ml-2">
-                                    <input type="text" class="form-control" id="session" name="question1" required>
+                                    <input type="text" class="form-control" id="session1" name="question1" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question bg-white p-3 border-bottom">
+                           
+                            <div class="question bg-white p-3 border-bottom">
+                                <div class="d-flex flex-row align-items-center question-title">
+                                    <h3 class="text-danger">Q</h3>
+                                    <h5 class="mt-1 ml-2">2. What did you dislike about the event?</h5>
+                                </div>
+                                <div class="ans ml-2">
+                                    <input type="text" class="form-control" id="session2" name="question2" required>
                                 </div>
                             </div>
                         </div>
@@ -206,47 +205,265 @@
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row align-items-center question-title">
                                 <h3 class="text-danger">Q</h3>
-                                <h5 class="mt-1 ml-2">3. Which segment/s in the entire
-                                    convention do you think was
-                                    the least interesting?
-                                    
-                                    Any particular reason for that
-                                    (speaker / content / any other
-                                    reason)</h5>
+                                <h5 class="mt-1 ml-2">
+                                    3. How would you rate the overall digital experience of the IMPACT'21?</h5>
                             </div>
                             <div class="ans ml-2">
-                                <input type="text" class="form-control" id="session3" name="question1" required>
+
+                                <div class="container">
+                                    <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
+                                        <input type="radio" id="star5" name="questions4_recommend" value="5" /><label
+                                            class="starFont" for="star5" title="5 star"> </label>
+                                        <input type="radio" id="star4" name="questions4_recommend" value="4" /><label
+                                            class="starFont" for="star4" title="4 star"> </label>
+                                        <input type="radio" id="star3" name="questions4_recommend" value="3" /><label
+                                            class="starFont" for="star3" title="3 star"> </label>
+                                        <input type="radio" id="star2" name="questions4_recommend" value="2" /><label
+                                            class="starFont" for="star2" title="2 star"> </label>
+                                        <input type="radio" id="star1" name="questions4_recommend" value="1" /><label
+                                            class="starFont" for="star1" title="1 star"> </label>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
+
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row align-items-center question-title">
                                 <h3 class="text-danger">Q</h3>
-                                <h5 class="mt-1 ml-2">4. How would you rate the
-                                    virtual streaming quality of
-                                    the event ?</h5>
+                                <h5 class="mt-1 ml-2">
+                                    4. Was the event length too long too short or about right</h5>
+                            </div>
+                            <div class="ans ml-2">
+
+                                <div class="container">
+                                    <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
+                                        <input type="radio" id="star5" name="questions4_recommend" value="5" /><label
+                                            class="starFont" for="star5" title="5 star"> </label>
+                                        <input type="radio" id="star4" name="questions4_recommend" value="4" /><label
+                                            class="starFont" for="star4" title="4 star"> </label>
+                                        <input type="radio" id="star3" name="questions4_recommend" value="3" /><label
+                                            class="starFont" for="star3" title="3 star"> </label>
+                                        <input type="radio" id="star2" name="questions4_recommend" value="2" /><label
+                                            class="starFont" for="star2" title="2 star"> </label>
+                                        <input type="radio" id="star1" name="questions4_recommend" value="1" /><label
+                                            class="starFont" for="star1" title="1 star"> </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="question bg-white p-3 border-bottom">
+                           
+                            <div class="question bg-white p-3 border-bottom">
+                                <div class="d-flex flex-row align-items-center question-title">
+                                    <h3 class="text-danger">Q</h3>
+                                    <h5 class="mt-1 ml-2">5. Which respiratory topics would you want us to cover in upcoming IMPACT program ?</h5>
+                                </div>
+                                <div class="ans ml-2">
+                                    <input type="text" class="form-control" id="session5" name="question5" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <h3 class="text-danger">Q</h3>
+                                <h5 class="mt-1 ml-2">
+                                    6. Pick key reasons to attend this conference</h5>
+                            </div>
+                            <div class="container">
+                                <div class="ans ml-2" style="display: flex;flex-direction: column;">
+
+                                    <div class="custom-control custom-radio custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-1" name="questions3-1"
+                                            class="custom-control-input questions3"
+                                            value="Discuss new information with other professionals">
+                                        <label class="custom-control-label" for="questions3-1"
+                                            style="width: 100%;">Topics</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-2" name="questions3-2"
+                                            class="custom-control-input questions3"
+                                            value="Consult the literature & ask for more from us">
+                                        <label class="custom-control-label" for="questions3-2"
+                                            style="width: 100%;">Keynotes and panel discussion</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-3" name="questions3-3"
+                                            class="custom-control-input questions3"
+                                            value="Participate in more such educational activity ">
+                                        <label class="custom-control-label" for="questions3-3"
+                                            style="width: 100%;">Phygital experience </label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-4" name="questions3-4"
+                                            class="custom-control-input questions3" value="Other">
+                                        <label class="custom-control-label" for="questions3-4"
+                                            style="width: 100%;">Speaker profiles
+                                            <input type="text" style="display: none;" name="questions3-4-other"
+                                                class="form-control" id="questions3-4-input"> </label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-5" name="questions3-5"
+                                            class="custom-control-input questions3" value="Other">
+                                        <label class="custom-control-label" for="questions3-5"
+                                            style="width: 100%;">Other
+                                            <input type="text" style="display: none;" name="questions3-5-other"
+                                                class="form-control" id="questions3-5-input"> </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="question bg-white p-3 border-bottom">
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <h3 class="text-danger">Q</h3>
+                                <h5 class="mt-1 ml-2">6. Pick key reasons to attend this conference</h5>
                             </div>
                             <div class="rate">
-                                <div class="emoji emoji2">🙂</div>
-                                <div class="review2">
+                                <div class="emoji emoji6">🙂</div>
+                                <div class="review review6">
                                     Average
                                 </div>
-                                <input class="emojislider2" type="range" min="0" max="4" step="1"  required>
+                                <input class="emojislider6" type="range" min="0" max="4" step="1"  required>
                             </div>
                         </div>
+                        
                         <div class="question bg-white p-3 border-bottom">
                             <div class="d-flex flex-row align-items-center question-title">
                                 <h3 class="text-danger">Q</h3>
-                                <h5 class="mt-1 ml-2">5. Do you have any suggestions
-                                    for future such meets?
-                                    
-                                    Please let us know, so that we
-                                    can improvise and have better
-                                    events for our entire team.</h5>
+                                <h5 class="mt-1 ml-2">7. Please tick your option for each question:</h5>
                             </div>
-                            <div class="ans ml-2">
-                                <input type="text" class="form-control" id="session2" name="question1" required>
+                            <div class="d-flex flex-row align-items-center question-title">
+                                <table>
+                                    <tr>
+                                        <th>Please indicate your overall satisfaction with the following aspects of the conference:</th>
+
+                                        <th>Strongly agree</th>
+                                        <th>Somewhat Satisfied</th>
+                                        <th>Neutral</th>
+                                        <th>Somewhat Dissatisfied</th>
+                                        <th>Strongly disagree</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Ease of registration</td>
+
+                                        <td> <input type="radio" id="questions2_1" name="questions2_1"
+                                                value="Strongly agree" required></td>
+                                        <td> <input type="radio" id="questions2_1" name="questions2_1" value="Somewhat Satisfied"
+                                                required>
+                                        </td>
+                                        <td> <input type="radio" id="questions2_1" name="questions2_1"
+                                                value="Neutral" required></td>
+                                        <td> <input type="radio" id="questions2_1" name="questions2_1" value="Somewhat Dissatisfied"
+                                                required>
+                                        </td>
+                                        <td> <input type="radio" id="questions2_1" name="questions2_1"
+                                                value="Strongly disagree" required></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Conference content / subjects</td>
+                                        <td> <input type="radio" id="questions2_2" name="questions2_2"
+                                                value="Strongly agree" required></td>
+                                        <td> <input type="radio" id="questions2_2" name="questions2_2" value="Somewhat Satisfied"
+                                                required>
+                                        </td>
+                                        <td> <input type="radio" id="questions2_2" name="questions2_2"
+                                                value="Neutral" required></td>
+                                        <td> <input type="radio" id="questions2_2" name="questions2_2" value="Somewhat Dissatisfied"
+                                                required>
+                                        </td>
+                                        <td> <input type="radio" id="questions2_2" name="questions2_2"
+                                                value="Strongly disagree" required></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Speakers
+                                        </td>
+
+                                        <td> <input type="radio" id="questions2_3" name="questions2_3"
+                                                value="Strongly agree" required></td>
+                                        <td> <input type="radio" id="questions2_3" name="questions2_3" value="Somewhat Satisfied"
+                                                required>
+                                        </td>
+                                        <td> <input type="radio" id="questions2_3" name="questions2_3"
+                                                value="Neutral" required></td>
+                                        <td> <input type="radio" id="questions2_3" name="questions2_3" value="Somewhat Dissatisfied"
+                                                required>
+                                        </td>
+                                        <td> <input type="radio" id="questions2_3" name="questions2_3"
+                                                value="Strongly disagree" required></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Time allocated for discussions</td>
+
+                                        <td> <input type="radio" id="questions2_4" name="questions2_4"
+                                                value="Strongly agree" required></td>
+                                        <td> <input type="radio" id="questions2_4" name="questions2_4" value="Somewhat Satisfied"
+                                                required>
+                                        </td>
+                                        <td> <input type="radio" id="questions2_4" name="questions2_4"
+                                                value="Neutral" required></td>
+                                        <td> <input type="radio" id="questions2_4" name="questions2_4" value="Somewhat Dissatisfied"
+                                                required>
+                                        </td>
+                                        <td> <input type="radio" id="questions2_4" name="questions2_4"
+                                                value="Strongly disagree" required></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Overall conference experience</td>
+                                        <td> <input type="radio" id="questions2_5" name="questions2_5"
+                                                value="Strongly agree" required></td>
+                                        <td> <input type="radio" id="questions2_5" name="questions2_5" value="Somewhat Satisfied"
+                                                required>
+                                        </td>
+                                        <td> <input type="radio" id="questions2_5" name="questions2_5"
+                                                value="Neutral" required></td>
+                                        <td> <input type="radio" id="questions2_5" name="questions2_5" value="Somewhat Dissatisfied"
+                                                required>
+                                        </td>
+                                        <td> <input type="radio" id="questions2_5" name="questions2_5"
+                                                value="Strongly disagree" required></td>
+                                    </tr>
+
+
+                                </table>
                             </div>
                         </div>
+
+
+                        <div class="question bg-white p-3 border-bottom">
+                           
+                            <div class="question bg-white p-3 border-bottom">
+                                <div class="d-flex flex-row align-items-center question-title">
+                                    <h3 class="text-danger">Q</h3>
+                                    <h5 class="mt-1 ml-2">8. Favourite Speaker</h5>
+                                </div>
+                                <div class="ans ml-2">
+                                    <input type="text" class="form-control" id="session8" name="question8" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question bg-white p-3 border-bottom">
+                           
+                            <div class="question bg-white p-3 border-bottom">
+                                <div class="d-flex flex-row align-items-center question-title">
+                                    <h3 class="text-danger">Q</h3>
+                                    <h5 class="mt-1 ml-2">9. Favourite Topic</h5>
+                                </div>
+                                <div class="ans ml-2">
+                                    <input type="text" class="form-control" id="session9" name="question9" required>
+                                </div>
+                            </div>
+                        </div>
+
                       
                         <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
                             <!-- <button class="btn btn-primary d-flex align-items-center btn-danger" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button> -->

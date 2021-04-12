@@ -10,13 +10,13 @@ export default function Profile() {
     return (
         <div className="headerBox__profile">
             <a className="profile__user" href="#">
-                {`${userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ''} ${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ''} `}
+                {`${userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ''}${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ''} `}
                 {/* <img src={defaultImageUrl} alt="" /> */}
             </a>
             <ul className="profile__dropdown">
                 <a href="#" className="profile__dropdown-profile">
                     <div className="profile__dropdown-profile-pic">
-                        {`${userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ''} ${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ''} `}
+                        {`${userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ''}${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ''} `}
                         {/* <img src={defaultImageUrl} alt="" /> */}
                         {/* <i className="icon-crown"></i> */}
                     </div>
