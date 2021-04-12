@@ -211,7 +211,7 @@ class Register extends Component {
                     profession: this.state.profession,
                     speciality: this.state.speciality,
                     pincode: this.state.pincode,
-                    date: new Date()
+                    date: new Date().getTime()
                 })
                 let _data = {
                     userId: res.data.userId,
@@ -225,7 +225,7 @@ class Register extends Component {
                     state: this.state.state,
                     city: this.state.city,
                     pincode: this.state.pincode,
-                    date: new Date()
+                    date: new Date().getTime()
                 }
                 await database.ref(`/user_registered/${uniqid('user_registered_')}`).update(_data)
                 const confirmationMailResponse = await axios({
