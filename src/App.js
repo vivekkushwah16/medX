@@ -15,6 +15,7 @@ import LoadableFallback from './Components/LoadableFallback/LoadableFallback';
 import Upload from './Components/Upload/upload';
 import { copyFromRealtoFirestore } from './Firebase/firebase';
 import LiveCount from './Pages/LiveCount/liveCount';
+import QnaPage from './Pages/QnaPage/QnaPage';
 const RegisterLazy = loadable(() => import(/* webpackChunkName: "Register" */ "./Pages/EventRegister/Register"), { fallback: <LoadableFallback /> })
 const LoginLazy = loadable(() => import(/* webpackChunkName: "Login" */ "./Pages/EventLogin/Login"), { fallback: <LoadableFallback /> })
 const PreEventLazy = loadable(() => import(/* webpackChunkName: "PreEventLazy" */ './Pages/PreEvent/PreEvent'), { fallback: <LoadableFallback /> })
@@ -160,6 +161,9 @@ export default function App() {
                         </ProtectedRoute>
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/liveCount'}>
                             <LiveCount />
+                        </ProtectedRoute>
+                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/qna'}>
+                            <QnaPage />
                         </ProtectedRoute>
 
 

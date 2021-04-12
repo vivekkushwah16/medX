@@ -132,6 +132,7 @@ export default function AnalyticsContextProvider(props) {
                 country: userInfo.country,
                 state: userInfo.state,
                 city: userInfo.city,
+                dateString: `${currentDate.getDate()}-${currentDate.getMonth()+1}-${currentDate.getFullYear()}`,
                 //event based info
                 eventId, timelineId, timespent,
                 timestamp: currentDate.getTime(),
