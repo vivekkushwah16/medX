@@ -3,6 +3,7 @@ import ReactPlayer from 'react-player'
 import SpeakerProfile from '../SpeakerProfile.js/SpeakerProfile'
 import { SpeakerProfileType } from '../../AppConstants/SpeakerProfileType'
 import './VideoPopup.css'
+import * as Scroll from 'react-scroll';
 import { likeContext } from '../../Context/Like/LikeContextProvider'
 import { LikeType } from '../../AppConstants/TypeConstant'
 import moment from 'moment'
@@ -17,6 +18,7 @@ import { VIDEO_CLICK, VIDEO_KEYFRAME_CLICK, VIDEO_TIMESPENT } from '../../AppCon
 const timeLimit = 10;
 let currenttimeWatched = 0;
 
+let scroll    = Scroll.animateScroll;
 function VideoPopup(props) {
     const playerRef = useRef(null);
     const { metadata, currVideosData, videoData: _vd, closeVideoPop, openVideoPop } = props
@@ -31,6 +33,9 @@ function VideoPopup(props) {
     const { user } = useContext(UserContext)
 
     useEffect(() => {
+        //scroll.scrollTo(0);
+        // videoPopupDiv
+        document.getElementById("videoPopupDiv").scrollTop=0;
         setLikeCount(props.videoData.likes);
         getCurrentTargetLikeStatus();
         getCurrentTargetRatingStatus();
@@ -49,6 +54,7 @@ function VideoPopup(props) {
             currenttimeWatched = 0;
         }
     }, [playerRef.current])
+
 
     const [runningTimer, setRunningTimer] = useState(false);
     const runTimer = async () => {
@@ -110,12 +116,12 @@ function VideoPopup(props) {
 
     const toggleLikeToTarget = async () => {
         if (like) {
-            // console.log("removeLike")
+            console.log("removeLike")
             const count = await removeLike(videoData.id, null, LikeType.VIDEO_LIKE)
             setLikeCount(count)
 
         } else {
-            // console.log("addLike")
+            console.log("addLike")
             const count = await addLike(videoData.id, null, LikeType.VIDEO_LIKE)
             setLikeCount(count)
         }
@@ -174,12 +180,12 @@ function VideoPopup(props) {
                 // console.log(videoData.id, currentTime, duration);
             }
         }
-        addTimeSpentAnalytics();
+        // addTimeSpentAnalytics();
         closeVideoPop(videoData);
     }
 
     return (
-        <div className="modalBox modalBox--large active videoModalBox"  >
+        <div className="modalBox modalBox--large active videoModalBox" id="videoPopupDiv" >
             <span class="modalBox__overlay" onClick={() => {
                 __closeVideoPop()
             }}></span>
@@ -245,14 +251,24 @@ function VideoPopup(props) {
                         <div className="videodetailBox__left">
                             <h2 className="videodetailBox__title">{videoData.title}</h2>
 
-                            <p className="videodetailBox__views">{videoData.views} Views - {moment(videoData.timestamp.toMillis()).format("Do MMMM YYYY")}</p>
+                            <p className="videodetailBox__views">
+                                {/* {videoData.views} Views  */}
+                                {    playerRef.current && playerRef.current.getDuration()>0 &&
+                                    <>
+                                    {   
+                                    
+                                        moment("2015-01-01").startOf('day').seconds(''+playerRef.current.getDuration()).format(playerRef.current.getDuration()>3600?'H:mm:ss':'mm:ss')
+                                    } min - 
+                                    </>
+                                }
+                                {moment(videoData.timestamp.toMillis()).format("MMMM YYYY")}
+                            </p>
                             <p className="videodetailBox__desc mg-b10">{videoData.description}</p>
-
+                           
                             {
                                 rating !== null &&
                                 <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
                             }
-
                             <div className="hide-on-desktop mg-t20">
                                 <div className="likeBtnContainer">
                                     <button className={`like-btn ${like ? 'like-btn--active' : ''}`} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{likeCount}</button>
@@ -260,6 +276,8 @@ function VideoPopup(props) {
                                         videoData.pdf &&
                                         <button className="like-btn">Download PDF</button>
                                     }
+
+                            
                                 </div>
                                 <div className="timelineBox mobileView_timelineBox">
                                     {
@@ -290,13 +308,13 @@ function VideoPopup(props) {
                             {
                                 moreVideos.length > 0 &&
                                 <>
-                                    <h4 className="videodetailBox__subtitle">More Videos</h4>
+                                    <h4 className="videodetailBox__subtitle mg-t20">More Videos</h4>
                                     <div className="videodetailBox__list">
                                         {
                                             moreVideos.map(currentVideoData =>
                                                 <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={currentVideoData} openVideoPop={(currentVideoData, videosData) => {
 
-                                                    addVideoClickAnalytics(currentVideoData)
+                                                    // addVideoClickAnalytics(currentVideoData)
                                                     openVideoPop(videoData, currentVideoData, videosData)
                                                 }} />
                                             )

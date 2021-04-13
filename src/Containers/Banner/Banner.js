@@ -1,14 +1,15 @@
 import React, { useContext } from 'react'
-import { UpcompingEventBanner, LiveEventBanner, ImageSingleButtonBanner } from '../../Components/Banners'
-
+import { UpcompingEventBanner, LiveEventBanner, ImageSingleButtonBanner,PromoVideoBanner,Custom1 } from '../../Components/Banners'
+import * as Scroll from 'react-scroll';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useHistory } from 'react-router-dom';
-import { EVENT_ROUTE } from '../../AppConstants/Routes';
+import { EVENT_ROUTE,RootRoute } from '../../AppConstants/Routes';
 import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider';
 import { MediaModalType } from '../../AppConstants/ModalType';
 
+let scroll    = Scroll.animateScroll;
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -28,48 +29,77 @@ const BannerType = {
     LiveEvent: 'liveEvent',
     ImageSingleButton: 'imageSingleButton',
     UpcompingEvent: 'upcompingEvent',
+    PromoVideoBanner:'promoVideoBanner',
+    Custom1:'Custom1'
 }
 
 const BannerData = [
     {
         type: BannerType.LiveEvent,
-        mainTitle: 'Diagnosis & Monitoring of airway diseases in the Era of Social Distancing',
-        subTitle: 'Symposium',
+        mainTitle: 'Tune in to leading minds in respiratory medicine',
+        subTitle: '',
         eventId: '',
         mainImageUrl: 'assets/images/logos/impact-logo.png',
-
+    },
+    {
+        type: BannerType.PromoVideoBanner,
+        subTitle_line1: 'Concepts of ',
+        mainTitle: 'Respiratory Sounds',
+        // subTitle_line2: 'resistant TB',
+        videoUrl: 'https://player.vimeo.com/video/535903284',
+        buttonText:'Watch Now',
+        mainImageUrl: 'assets/images/AdobeStock_205914003.jpeg',
+        // speakerId: 'speaker-kmfz0vco',
+        // eventId: 'event-kmde59n5'
+    },
+    {
+        type: BannerType.Custom1,
+        mainTitle: 'EXPERT VIEWS',
+        subTitle_line1: 'Watch Anywhere,',
+        subTitle_line2: 'Watch Anytime',
+        // trailerUrl: '',
+        buttonText:'Start Watching',
+        mainImageUrl: 'assets/images/AdobeStock_369176443.jpeg',
+        // speakerId: 'speaker-kmfz0vco',
+        route: 'ottContent'
     },
     // {
-    //     type: BannerType.ImageSingleButton,
-    //     mainTitle: 'FEATURED TALK',
-    //     subTitle_line1: 'Discussion on Drug',
-    //     subTitle_line2: 'resistant TB',
+    //     type: BannerType.UpcompingEvent,
+    //     mainTitle: '50+ Eminent Speakers',
+    //     subTitle_line1: 'Two days of engaging',
+    //     subTitle_line2: 'sessions',
     //     trailerUrl: '',
-    //     mainImageUrl: 'assets/images/banner-pic.png',
-    //     speakerId: 'speaker-kmfz0vco',
-    //     eventId: 'event-kmde59n5'
-    // },
-    {
-        type: BannerType.UpcompingEvent,
-        mainTitle: '50+ Eminent Speakers',
-        subTitle_line1: 'Two days of engaging',
-        subTitle_line2: 'sessions',
-        trailerUrl: '',
-        calendarData: {},
-        dateString: '9th & 10th April, 2021',
-        mainImageUrl: 'assets/images/logos/impact-logo.png',
-    }
+    //     calendarData: {},
+    //     dateString: '9th & 10th April, 2021',
+    //     mainImageUrl: 'assets/images/logos/impact-logo.png',
+    // }
 ]
 
 function Banner() {
     let history = useHistory();
     const { showMediaModal } = useContext(MediaModalContext)
 
+    const goToRoute = async(id) => {
+        console.log(id);
+        
+        var thing=document.getElementById("bannerParentDiv");
+        window.scrollTo(0, thing.scrollHeight-200)
+        // let a =Scroll.Link;
 
+        // console.log(thing.scrollHeight);
+        // console.log(document.body.clientHeight);
+        //thing.scrollTop = 0;//document.body.scrollHeight*2; //- document.body.clientHeight;
+        // .scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+        // window.open('/#ottContent', '_self');
+        // history.push(`/#homeVideoContainer`);
+    }
     const enterEvent = (eventId) => {
         history.push(`${EVENT_ROUTE}/event-kmde59n5`);
     }
-
+    const watchVideo = (videoUrl) => {
+        //open video
+        showMediaModal(MediaModalType.Videos, videoUrl)
+    }
     const watchTrailer = (videoUrl) => {
         //open video
         showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/528854507')
@@ -87,14 +117,14 @@ function Banner() {
             {
                 breakpoint: 1200,
                 settings: {
-                    arrows: false,
+                  //  arrows: false,
                 }
             }
         ]
     };
 
     return (
-        <div className="bannerBox bannerBox--large">
+        <div className="bannerBox bannerBox--large" id="bannerParentDiv">
             <Slider className="slider-banner-desktop" {...settings}>
                 {
                     BannerData.map(item => (
@@ -108,8 +138,17 @@ function Banner() {
                                 <ImageSingleButtonBanner data={item} watchTrailer={watchTrailer} />
                             }
                             {
+                                item.type === BannerType.PromoVideoBanner &&
+                                <PromoVideoBanner data={item} watchVideo={watchVideo}/>
+                            }
+                            {
                                 item.type === BannerType.UpcompingEvent &&
                                 <UpcompingEventBanner data={item} watchTrailer={watchTrailer} />
+                            }
+                            {
+                                item.type === BannerType.Custom1 &&
+                                <Custom1 data={item} goToRoute={goToRoute} />
+                                
                             }
                         </>
                     ))

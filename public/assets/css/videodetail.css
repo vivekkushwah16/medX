@@ -2,7 +2,7 @@
 .videodetailBox { padding: 2rem 2rem 2rem 4rem; display: flex; }
 .videodetailBox__left { padding-right: 2rem; width: 100%; order: 1; }
 .videodetailBox__title { margin-bottom: 2rem; color: #005188; font-size: 1.625rem; font-weight: 700; }
-.videodetailBox__desc { margin-bottom: 2rem; color: rgba(77,77,77,0.6); font-size: 0.75rem; }
+.videodetailBox__desc { margin-bottom: 2rem; color: rgba(77,77,77,0.6); font-size: 0.85rem; }
 .videodetailBox__desc > a { color: #005188; }
 .videodetailBox__subtitle { margin-bottom: 1.5rem; font-weight: 700; color: rgba(0, 0, 0, 0.6); }
 
@@ -12,8 +12,8 @@
 .videodetailBox .maincardBox__card.maincardBox__card--large { border-radius: 0; border: none; position: relative; }
 .videodetailBox .maincardBox__card.maincardBox__card--large .maincardBox__card-right { padding-right: 3rem; }
 .videodetailBox .maincardBox__card.maincardBox__card--large .maincardBox__card-left { min-width: 12.5rem; }
-.videodetailBox .maincardBox__card-title { font-size: 0.875rem; color: #000; text-transform: none; cursor: pointer; }
-.videodetailBox .maincardBox__card-desc { font-size: 0.75rem; color: rgba(0, 0, 0, 0.6); }
+.videodetailBox .maincardBox__card-title { font-size: 1rem; color: #000; text-transform: none; cursor: pointer; }
+.videodetailBox .maincardBox__card-desc { font-size: 0.85rem; color: rgba(0, 0, 0, 0.6); }
 .videodetailBox .maincardBox__card-video { min-height: 7.5rem; border-radius: 0; }
 .videodetailBox .maincardBox__card-right { padding: 0.5rem 0rem 0 1.5rem; position: relative; }
 

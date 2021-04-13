@@ -1,6 +1,8 @@
 import React from 'react'
+import ReadMore from '../ReadMore/ReadMore';
 import './VideoThumbnailCompact.css'
 
+let characterLimit=85;
 function VideoThumbnail_Compact(props) {
     const { videosData, currentVideoData, openVideoPop } = props
 
@@ -15,7 +17,8 @@ function VideoThumbnail_Compact(props) {
                 </div>
                 <div>
                     <h4 className="mg-b15 maincardBox__card-title">{currentVideoData.title}</h4>
-                    <p className="mg-b25 maincardBox__card-desc">{currentVideoData.description} </p>
+                    {/* <ReadMore className="mg-b25 maincardBox__card-desc" description={currentVideoData.description}  limit={85}/> */}
+                    <p className="mg-b25 maincardBox__card-desc">{currentVideoData.description.substr(0, characterLimit)}...&nbsp; </p>
                 </div>
             </div>
         </>

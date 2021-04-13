@@ -84,12 +84,17 @@ class Home extends Component {
     }
 
     openVideoPop = (metadata, videoData, videosData, tagSelectedFrom) => {
-        this.setState({
-            currentVideosData: videosData,
-            videopopVisible: true,
-            videoPopupData: { ...videoData, tagSelectedFrom },
-            lastVideoMetadata: metadata
-        })
+        console.log(metadata,videoData,videosData,tagSelectedFrom);
+        this.closeVideoPop(metadata);
+        setTimeout(()=>{
+            this.setState({
+                currentVideosData: videosData,
+                videopopVisible: true,
+                videoPopupData: { ...videoData, tagSelectedFrom },
+                lastVideoMetadata: metadata
+            })
+        },100);
+        
     }
 
     closeVideoPop = (videoData) => {
@@ -110,11 +115,11 @@ class Home extends Component {
                     <Header hideInviteFriend={true} whiteLogo={true} stickyOnScroll={true} />
                     <Banner />
                     <div className="tabBox" id="homeVideoContainer">
-                        <div class="container">
+                        <div class="container" id="ottContent">
 
                             <TagsRow tags={this.state.tags} stickyOnScroll={false} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag} />
 
-                            <div className="contentBox">
+                            <div className="contentBox" >
                                 {
                                     this.state.activeTag !== '' &&
                                     <VideoRow heading={`${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed}
