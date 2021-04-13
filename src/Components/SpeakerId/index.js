@@ -98,7 +98,9 @@ export function CardSpeaker(props) {
                 }
             }}>
                 <p className="maincardBox__card-profile-title" style={{ textDecoration: 'none' }}>{profile.name}</p>
-                <p className="maincardBox__card-profile-subtitle" style={{color:'#ffffff96'}}>{profile.designation}</p>
+                <p className="maincardBox__card-profile-subtitle" 
+                // style={{color:'#ffffff96'}}
+                >{profile.designation}</p>
             </div>
         </div>
     )

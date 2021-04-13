@@ -33,7 +33,8 @@
 .maincardBox__card-profile-title { margin-bottom: 0.35rem; font-size: 0.95rem; font-weight: bold; cursor: pointer; }
 .maincardBox__card-profile-subtitle { font-size: 0.75rem; font-weight: 400; }
 
-.videodetailBox__profiles .maincardBox__card-profile{color: #fff;}
+.videodetailBox__profiles .maincardBox__card-profile{color: #ffffff96;}
+.videodetailBox__profiles  .maincardBox__card-profile-title{color: white;}
 
 .maincardBox__card-profile-popover { margin-bottom: 1rem; display: none; padding:0.625rem; border-radius: 0.75rem; position: absolute; left: 0; bottom: 100%; width: 26.5625rem; box-shadow: 0px 4.58361px 27.5017px rgba(0, 0, 0, 0.25); background: #fff; transform-origin: bottom left; animation:  0.5s profile-popoverIntro forwards;}
 .maincardBox__card-profile-popover-pic { border-radius: 50%; height: auto; width: 6.8125rem; min-width: 6.8125rem; }
