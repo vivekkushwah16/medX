@@ -97,8 +97,8 @@ export function CardSpeaker(props) {
                     addCAWithUserInfo(`/${SPEAKER_PROFILE_CLICK_EVENT}/${user.uid}_${profile.id}`, false, { id: profile.id }, true)
                 }
             }}>
-                <p className="maincardBox__card-profile-title" style={{ textDecoration: 'underline' }}>{profile.name}</p>
-                <p className="maincardBox__card-profile-subtitle">{profile.designation}</p>
+                <p className="maincardBox__card-profile-title" style={{ textDecoration: 'none' }}>{profile.name}</p>
+                <p className="maincardBox__card-profile-subtitle" style={{color:'#ffffff96'}}>{profile.designation}</p>
             </div>
         </div>
     )

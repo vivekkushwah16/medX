@@ -24,13 +24,12 @@ class Home extends Component {
         videoPopId: null,
         currentVideosData: null,
         rows: [
-            { tag: 'Respiratory', header: 'Videos on Respiratory' },
             { tag: 'COPD', header: 'Videos on COPD' },
             // { tag: 'Asthma', header: 'Videos on Asthma' },
-            // { tag: 'ILD/IPF', header: 'Videos on ILD/IPF' },
+            { tag: 'ILD/IPF', header: 'Videos on ILD/IPF' },
             { tag: 'Telemedicine', header: 'Videos on Telemedicine' },
-            { tag: 'Allergic Rhinitis', header: 'Videos on Allergic Rhinitis' },
-            { tag: ['Asthma', 'ILD/IPF'], header: 'Other Videos', multipleTags: true },
+            { tag: 'Asthma', header: 'Videos on Asthma' },
+            { tag: ['Inhalation Devices', 'Diagnosis','Pulmonary Hypertension','Pediatric asthma','Bronchiectasis','Allergic Rhinitis'], header: 'Other Videos', multipleTags: true },
 
 
             // { tag: 'Recommendations', header: 'Videos on Recommendations' },
@@ -45,12 +44,16 @@ class Home extends Component {
         ],
 
         tags: [
-            { tag: 'Respiratory', header: 'Respiratory' },
             { tag: 'COPD', header: 'COPD' },
-            { tag: 'Asthma', header: 'Asthma' },
+            { tag: 'Pediatric asthma', header: 'Pediatric Asthma' },
+            { tag: 'Pulmonary Hypertension', header: 'Pulmonary Hypertension' },
+            { tag: 'Bronchiectasis', header: 'Bronchiectasis' },
+            { tag: 'Allergic Rhinitis', header: 'Allergic Rhinitis' },
+            { tag: 'Diagnosis', header: 'Diagnosis' },
             { tag: 'ILD/IPF', header: 'ILD/IPF' },
             { tag: 'Telemedicine', header: 'Telemedicine' },
-            { tag: 'Allergic Rhinitis', header: 'Allergic Rhinitis' },
+            { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
+            { tag: 'Asthma', header: 'Asthma' },
 
             // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
             // { tag: 'Recommendations', header: 'Recommendations' },
@@ -63,7 +66,7 @@ class Home extends Component {
             // { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
         ],
 
-        activeTag: { tag: 'Respiratory', header: 'Respiratory' },
+        activeTag: { tag: 'COPD', header: 'Videos on COPD' },
         lastPlayed: null,
         lastVideoMetadata: null
     }
@@ -116,7 +119,8 @@ class Home extends Component {
                     <Banner />
                     <div className="tabBox" id="homeVideoContainer">
                         <div class="container" id="ottContent">
-
+                                <div style={{zIndex:'1',position:'absolute',right:'0',top:'0',width:'7%',height:'100%',backgroundImage:'linear-gradient(to right, transparent , black)'}}></div>
+   
                             <TagsRow tags={this.state.tags} stickyOnScroll={false} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag} />
 
                             <div className="contentBox" >

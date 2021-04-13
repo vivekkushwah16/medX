@@ -1,13 +1,13 @@
 /* ### videodetail Box ### */
 .videodetailBox { padding: 2rem 2rem 2rem 4rem; display: flex; }
 .videodetailBox__left { padding-right: 2rem; width: 100%; order: 1; }
-.videodetailBox__title { margin-bottom: 0.5rem; color: #fff; font-size: 1.625rem; font-weight: 700; }
-.videodetailBox__views{margin-bottom: 1.35rem; color: #fff; font-weight: 700; font-size: 0.85rem;}
+.videodetailBox__title { margin-bottom: 0.5rem; color: #fff; font-size: 1.525rem; font-weight: 500; }
+.videodetailBox__views{    margin-top: 1rem;margin-bottom: 1.3rem; color: #ffffff96; font-weight: 100; font-size: 0.85rem;}
 .videodetailBox__desc { margin-bottom: 2rem; color: hsla(0, 0%, 100%, 0.60); font-weight: 400; font-size: 0.85rem; }
 .videodetailBox__desc > a { color: #fff; }
 .videodetailBox__subtitle { margin-bottom: 1.5rem; font-weight: 700; color: #ffffff; }
 
-.videodetailBox__profiles { display: flex; flex-wrap: wrap; margin-bottom: 1.5rem;}
+.videodetailBox__profiles { display: flex; flex-wrap: wrap; margin-bottom: 1.2rem;}
 .videodetailBox .bannerBox__profile { width: 50%; color: rgba(0,0,0,0.6); }
 
 .videodetailBox .maincardBox__card.maincardBox__card--large { border-radius: 0; border: none; position: relative; }

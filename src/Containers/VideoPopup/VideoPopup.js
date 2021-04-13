@@ -3,7 +3,6 @@ import ReactPlayer from 'react-player'
 import SpeakerProfile from '../SpeakerProfile.js/SpeakerProfile'
 import { SpeakerProfileType } from '../../AppConstants/SpeakerProfileType'
 import './VideoPopup.css'
-import * as Scroll from 'react-scroll';
 import { likeContext } from '../../Context/Like/LikeContextProvider'
 import { LikeType } from '../../AppConstants/TypeConstant'
 import moment from 'moment'
@@ -17,8 +16,8 @@ import { VIDEO_CLICK, VIDEO_KEYFRAME_CLICK, VIDEO_TIMESPENT } from '../../AppCon
 
 const timeLimit = 10;
 let currenttimeWatched = 0;
+let randomNextVideo=-1;
 
-let scroll    = Scroll.animateScroll;
 function VideoPopup(props) {
     const playerRef = useRef(null);
     const { metadata, currVideosData, videoData: _vd, closeVideoPop, openVideoPop } = props
@@ -29,13 +28,12 @@ function VideoPopup(props) {
     const { setVideoMetaData } = useContext(UserContext);
     const [minPlayed, setMinPlayed] = useState(0)
     const [rating, setRating] = useState(null);
+    const [isPlaying, playingStatus] = useState(null);
+    const [isEnded, endedStatus] = useState(null);
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
     const { user } = useContext(UserContext)
 
     useEffect(() => {
-        //scroll.scrollTo(0);
-        // videoPopupDiv
-        document.getElementById("videoPopupDiv").scrollTop=0;
         setLikeCount(props.videoData.likes);
         getCurrentTargetLikeStatus();
         getCurrentTargetRatingStatus();
@@ -133,8 +131,13 @@ function VideoPopup(props) {
     };
 
     let moreVideos = []
-    if (currVideosData)
+    if (currVideosData){
         moreVideos = currVideosData.filter(currentVideoData => currentVideoData.id !== videoData.id)
+        if(randomNextVideo==-1){
+            randomNextVideo= Math.floor(Math.random()*moreVideos.length);
+            console.log(randomNextVideo);
+        }
+    }
 
 
     const updatingTimelineRating = async (rating) => {
@@ -180,7 +183,7 @@ function VideoPopup(props) {
                 // console.log(videoData.id, currentTime, duration);
             }
         }
-        // addTimeSpentAnalytics();
+        addTimeSpentAnalytics();
         closeVideoPop(videoData);
     }
 
@@ -197,7 +200,33 @@ function VideoPopup(props) {
                     }}>CLOSE</button>
                 </div>
                 <div className="modalBox__body">
-                    <div className="modalBox__video">
+                    {
+                        playerRef.current&& isPlaying==false &&isPlaying!=null&&!isEnded&&
+                    <>
+                        <div style={{pointerEvents:'none', position:'absolute', zIndex:'1','width':'100%','height':"calc(0.56 * 56rem)",'backgroundImage':'linear-gradient(black , transparent)'}}></div>
+                        <div style={{pointerEvents:'none', position:'absolute',display:'flex',justifyContent:'center',alignItems:'center', zIndex:'1','width':'100%','height':"calc(0.56 * 56rem)",'backgroundImage':'linear-gradient(transparent , black)'}}>
+                            <i className='icon-play' style={{ fontSize: "2rem",color: 'white',borderRadius: '1rem',background: "#30c1ff",padding: "0.9rem 1.3rem 1rem 1.9rem"}}></i>
+                        </div>
+                    </>
+                    }
+                    {
+                        playerRef.current&& isEnded &&
+                    <>
+                        <div style={{pointerEvents:'none', position:'absolute', zIndex:'1','width':'100%','height':"calc(0.56 * 56rem)",'backgroundImage':'linear-gradient(black , transparent)'}}></div>
+                        <div style={{position:'absolute',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center', zIndex:'1','width':'100%','height':"calc(0.56 * 56rem)",'backgroundImage':'linear-gradient(transparent , black)'}}>
+                            <span style={{width: "60%",fontSize: "1.5rem",fontWeight: "500",color: "#00adef",marginBottom: "0.4rem"}}>Watch More..</span>
+                            <div style={{"width": "60%","background": "#0869a8","height": "0.08rem","margin-bottom": "1rem"}}></div>
+                            <div style={{width: "60%"}}>
+                            <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={moreVideos[randomNextVideo]} openVideoPop={(currentVideoData, videosData) => {
+                                addVideoClickAnalytics(currentVideoData)
+                                __closeVideoPop()
+                                openVideoPop(videoData, currentVideoData, videosData)}} />
+                                </div>
+                            {/* <i className='icon-play' style={{ fontSize: "2rem",color: 'white',borderRadius: '1rem',background: "#30c1ff",padding: "0.9rem 1.3rem 1rem 1.9rem"}}></i> */}
+                        </div>
+                    </>
+                    }
+                    <div className="modalBox__video" style={{cursor:'pointer'}}>
                         <ReactPlayer ref={playerRef}
                             playing={true}
                             url={videoData.videoUrl}
@@ -208,6 +237,11 @@ function VideoPopup(props) {
                             onPlay={startTimer}
                             style={{ "backgroundColor": "black" }}
                             playsinline={true}
+                            onPlay={()=>{
+                                console.log("playing!!")
+                                playingStatus(true);
+                                endedStatus(false);
+                            }}
                             onBuffer={() => {
                                 console.log('isBuffereing');
                                 window.isOnHold = true;
@@ -217,24 +251,46 @@ function VideoPopup(props) {
                                 window.isOnHold = true
                             }}
                             onPause={() => {
+                                console.log("paused!!")
+                                playingStatus(false);
                                 stopTimer()
+                            }}
+                            onEnded={()=>{
+                                console.log("ended!!")
+                                endedStatus(true);
                             }}
                             onProgress={(event) => {
                                 if (videoData && videoData.videoTimestamp) {
                                     setMinPlayed(event.playedSeconds)
                                 }
                             }}
-                        ></ReactPlayer>
-                    </div>
+                        >
 
+                        </ReactPlayer>
+                        
+                    </div>
+                    {/* <div className="modalBox__video"> */}
+                    
+                        {/* </div> */}
                     <div className="videodetailBox">
                         <div className="videodetailBox__right hide-on-mobile">
                             <div className="likeBtnContainer mg-b40">
+                            {
+                                rating !== null &&
+                                <>
+                                <div className="starParent">
+                                <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
+                                </div>
+                                </>
+                            }
                                 <button className={`like-btn ${like ? 'like-btn--active' : ''}`} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{likeCount}</button>
+                                
                                 {
                                     videoData.pdf &&
                                     <button className="like-btn">Download PDF</button>
                                 }
+
+                 
                             </div>
                             <div className="timelineBox">
                                 {
@@ -258,17 +314,31 @@ function VideoPopup(props) {
                                     {   
                                     
                                         moment("2015-01-01").startOf('day').seconds(''+playerRef.current.getDuration()).format(playerRef.current.getDuration()>3600?'H:mm:ss':'mm:ss')
-                                    } min - 
+                                    } mins - 
                                     </>
                                 }
-                                {moment(videoData.timestamp.toMillis()).format("MMMM YYYY")}
+                                {" "+moment(videoData.timestamp.toMillis()).format("MMMM YYYY")}
                             </p>
-                            <p className="videodetailBox__desc mg-b10">{videoData.description}</p>
-                           
+                            <div style={{"width": "100%","background": "rgb(255 255 255 / 18%)","height": "0.01rem","margin-bottom": "1rem"}}></div>
                             {
-                                rating !== null &&
-                                <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
+                                videoData.speakers && videoData.speakers.length > 0 &&
+                                <>
+                                    <h4 className="videodetailBox__subtitle mg-t10">
+                                        {/* SPEAKERS */}
+                                        </h4>
+
+                                    <div className="videodetailBox__profiles">
+                                        {
+                                            videoData.speakers.map(speaker =>
+                                                <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={speaker} />
+                                            )
+                                        }
+                                    </div>
+                                </>
                             }
+                            <p className="videodetailBox__desc mg-b40">{videoData.description}</p>
+                           
+                           
                             <div className="hide-on-desktop mg-t20">
                                 <div className="likeBtnContainer">
                                     <button className={`like-btn ${like ? 'like-btn--active' : ''}`} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{likeCount}</button>
@@ -290,20 +360,7 @@ function VideoPopup(props) {
 
 
                             {/* <p className="videodetailBox__desc"><a href="javascript:void(0)">Show Less</a></p> */}
-                            {
-                                videoData.speakers && videoData.speakers.length > 0 &&
-                                <>
-                                    <h4 className="videodetailBox__subtitle mg-t20">SPEAKERS</h4>
-
-                                    <div className="videodetailBox__profiles">
-                                        {
-                                            videoData.speakers.map(speaker =>
-                                                <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={speaker} />
-                                            )
-                                        }
-                                    </div>
-                                </>
-                            }
+                            
 
                             {
                                 moreVideos.length > 0 &&
@@ -313,8 +370,8 @@ function VideoPopup(props) {
                                         {
                                             moreVideos.map(currentVideoData =>
                                                 <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={currentVideoData} openVideoPop={(currentVideoData, videosData) => {
-
-                                                    // addVideoClickAnalytics(currentVideoData)
+                                                    __closeVideoPop()
+                                                    addVideoClickAnalytics(currentVideoData)
                                                     openVideoPop(videoData, currentVideoData, videosData)
                                                 }} />
                                             )

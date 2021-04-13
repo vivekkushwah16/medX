@@ -9,8 +9,8 @@
 .maincardBox__card-desc { font-size: 0.75rem; font-weight: 400; }
 
 .maincardBox__card-profile { margin-bottom: 0.5rem; position: relative; display: flex; align-items: center; text-decoration: none; color: rgba(0, 0, 0, 0.6); line-height: 1rem; }
-.maincardBox__card-profile-pic { margin-right: 1rem; display: block; width: 2.125rem; height: 2.125rem; border-radius: 50%; box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25); }
-.maincardBox__card-profile-title { margin-bottom: 0.25rem; font-size: 0.75rem; font-weight: 400; }
+.maincardBox__card-profile-pic { cursor: pointer; margin-right: 1.4rem; display: block; width: 2.125rem; height: 2.125rem; border-radius: 50%; box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25); }
+.maincardBox__card-profile-title { margin-bottom: 0.35rem; font-size: 0.75rem; font-weight: 400; }
 .maincardBox__card-profile-subtitle { font-size: 0.75rem; font-weight: 400; }
 
 .maincardBox__card-profile-popover { margin-bottom: 1rem; display: none; padding:0.625rem; border-radius: 0.75rem; position: absolute; left: 0; bottom: 100%; width: 26.5625rem; box-shadow: 0px 4.58361px 27.5017px rgba(0, 0, 0, 0.25); background: #fff; }

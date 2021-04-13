@@ -8,7 +8,7 @@ function VideoThumbnail_Compact(props) {
 
     return (
         <>
-            <div className="videoThumbnailContainer mg-b10" onClick={() => {
+            <div className="videoThumbnailContainer mg-b20" onClick={() => {
                 console.log("working?");
                 openVideoPop(currentVideoData, videosData)
             }}>

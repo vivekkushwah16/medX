@@ -130,12 +130,14 @@
 }
 
 .videoModalBox .star-ratings{
-    margin-bottom: 1rem;
+    
+    margin-bottom: 0rem;
 }
 
 .likeBtnContainer {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
 }
 
 /* All Mobile Sizes (devices and browser) */

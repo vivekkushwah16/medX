@@ -1,7 +1,7 @@
 /* ### videodetail Box ### */
-.videodetailBox { padding: 2rem 2rem 2rem 4rem; display: flex; }
+.videodetailBox { padding: 2rem 1.5rem 2rem 4rem; display: flex; }
 .videodetailBox__left { padding-right: 2rem; width: 100%; order: 1; }
-.videodetailBox__title { margin-bottom: 2rem; color: #005188; font-size: 1.625rem; font-weight: 700; }
+.videodetailBox__title { margin-bottom: 2rem; color: #005188; font-size: 1.525rem; font-weight: 500; }
 .videodetailBox__desc { margin-bottom: 2rem; color: rgba(77,77,77,0.6); font-size: 0.85rem; }
 .videodetailBox__desc > a { color: #005188; }
 .videodetailBox__subtitle { margin-bottom: 1.5rem; font-weight: 700; color: rgba(0, 0, 0, 0.6); }
