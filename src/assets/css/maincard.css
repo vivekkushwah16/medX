@@ -99,7 +99,9 @@
 .maincardBox__card-menu-dropdown > li > a:hover { background: rgba(0, 0, 0, 0.1); }
 .maincardBox__card-menu:hover .maincardBox__card-menu-dropdown { display: block; }
 
-.rating-block {padding-left: 2rem; min-width: 15rem;  }
+.rating-block {padding-left: 2rem; 
+    /* min-width: 15rem;   */
+}
 /* .rating-block { padding: 1rem; height: 80%; border-left: 1px solid #D0D0D0; position: absolute; right: 0; top: 10%; width: 15rem; } */
 .rating-block__stars { margin-bottom: 1rem; list-style-type: none; }
 .rating-block__stars > li { display: inline; color: #C4C4C4; }

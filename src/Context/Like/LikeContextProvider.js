@@ -86,6 +86,7 @@ export default function LikeContextProvider(props) {
                     } else {
                         transcation.update(ref, _input)
                     }
+                    setRatingData({ ...RatingData, [tagetId]: rating })
                 })
                 res()
             } catch (error) {
@@ -98,6 +99,7 @@ export default function LikeContextProvider(props) {
         return new Promise(async (res, rej) => {
             try {
                 if (!user) { return false }
+                setLikeData({ ...likeData, [tagetId]: true })
                 switch (likeType) {
                     case LikeType.TIMELINE_LIKE:
                         await EventManager.addTimelineLike(tagetId, user.uid, eventId)
@@ -124,6 +126,7 @@ export default function LikeContextProvider(props) {
         return new Promise(async (res, rej) => {
             try {
                 if (!user) { return false }
+                setLikeData({ ...likeData, [tagetId]: false })
                 switch (likeType) {
                     case LikeType.TIMELINE_LIKE:
                         await EventManager.removeTimelineLike(tagetId, user.uid)

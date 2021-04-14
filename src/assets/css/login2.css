@@ -36,7 +36,7 @@
 .mobile-tabs li a { padding: 0 1.5rem; display: block; text-align: center; font-weight: 700; color: #B7B7B7; text-decoration: none; background: #fff; }
 .mobile-tabs li a span { padding: 1.5rem 0 1.25rem; display: inline-block; border-bottom: 0.25rem solid transparent; }
 
-.navigarion-bar { position: relative; z-index: 1; white-space: nowrap; overflow: auto; display: flex; align-items: center; min-height: 3.875rem; background: linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0.733924) 72.82%, rgba(255, 255, 255, 0) 129.25%); }
+.navigarion-bar { position: relative; z-index: 1; white-space: nowrap; overflow: auto; display: flex; align-items: center; min-height: 3.875rem; background: linear-gradient(45deg, white, transparent) }
 .navigarion-bar__title { font-size: 1.25rem; color: #01518A; font-weight: 500; }
 .navigarion-bar__menu { display: flex; align-items: center; list-style-type: none; justify-content: center;}
 .navigarion-bar__menu > li { padding: 0 0.5rem; }

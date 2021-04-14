@@ -61,7 +61,7 @@ export default function TagsRow(props) {
             {
                 tags.map(currTag =>
                     // <li><a className={activeTag.tag==currTag.tag?"tagDiv tagDivactive":"tagDiv"} onClick={()=>onTagSelect(currTag)}>{currTag.header}</a></li>
-                    <li><a className={checkForActiveTag(currTag.tag) ? "active" : " "} onClick={() => {
+                    <li><a className={checkForActiveTag(currTag.tag) ? "active mg-b20" : "mg-b20"} onClick={() => {
                         addGAWithUserInfo(TAG_CLICKED, { tag: currTag.tag })
                         addCAWithUserInfo(`/${TAG_CLICKED}/${user.uid}_${currTag.tag}`, false, { tag: currTag.tag }, true)
                         onTagSelect(currTag)

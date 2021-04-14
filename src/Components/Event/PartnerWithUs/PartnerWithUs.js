@@ -29,44 +29,44 @@ var settings = {
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
 
-    responsive: [
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                infinite: true,
-                dots: true
-            }
-        },
-        {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-        },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-        }
-    ]
+    // responsive: [
+    //     {
+    //         breakpoint: 1024,
+    //         settings: {
+    //             slidesToShow: 3,
+    //             slidesToScroll: 3,
+    //             infinite: true,
+    //             dots: true
+    //         }
+    //     },
+    //     {
+    //         breakpoint: 600,
+    //         settings: {
+    //             slidesToShow: 1,
+    //             slidesToScroll: 1
+    //         }
+    //     },
+    //     {
+    //         breakpoint: 480,
+    //         settings: {
+    //             slidesToShow: 1,
+    //             slidesToScroll: 1
+    //         }
+    //     }
+    // ]
 };
 
 export default function PartnerWithUs(props) {
     const { data, countIn, isActive } = props
     return (
         <div id="tab5" class={`eventBox__tabs-content ${isActive ? 'active' : ''}`}>
-            <Slider className="partnerBox slider-horizontal-3"  {...settings}>
+            {/* <Slider className="partnerBox slider-horizontal-3"  {...settings}> */}
                 {
                     data.map(e => (
                         <PartnerWithUsCard data={e} countIn={countIn} />
                     ))
                 }
-            </Slider>
+            {/* </Slider> */}
         </div>
     )
 }

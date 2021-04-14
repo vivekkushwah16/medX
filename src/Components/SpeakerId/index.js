@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { SPEAKER_PROFILE_CLICK_EVENT } from '../../AppConstants/AnalyticsEventName'
 import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
@@ -30,8 +30,19 @@ export function CardSpeaker(props) {
         window.open(link, "_Blank")
     }
 
+    useEffect(()=>{
+        var elems = document.querySelectorAll(".maincardBox__card-profile");
+            [].forEach.call(elems, function(el) {
+            el.classList.remove("active");
+            });
+        if(isProfileActive){
+            document.getElementById(profile.id).classList.add('active');
+        }
+    },[isProfileActive])
+  
     return (
-        <div key={`${profile.id}-profile`} id={profile.id} className={`maincardBox__card-profile ${isProfileActive ? 'active' : ''}`} >
+        <div key={`${profile.id}-profile`} id={profile.id} className={`maincardBox__card-profile`}>
+        {/* ${isProfileActive ? 'active' : ''}`} > */}
             {
                 isProfileActive &&
                 <div className="maincardBox__card-profile-popover-closeConatiner" style={{

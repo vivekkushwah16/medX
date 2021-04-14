@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useHistory } from 'react-router-dom';
-import { EVENT_ROUTE,RootRoute } from '../../AppConstants/Routes';
+import { EVENT_ROUTE, RootRoute } from '../../AppConstants/Routes';
 import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider';
 import { MediaModalType } from '../../AppConstants/ModalType';
 
@@ -35,24 +35,6 @@ const BannerType = {
 
 const BannerData = [
     {
-        type: BannerType.LiveEvent,
-        mainTitle: 'Tune in to leading minds in respiratory medicine',
-        subTitle: '',
-        eventId: '',
-        mainImageUrl: 'assets/images/logos/impact-logo.png',
-    },
-    {
-        type: BannerType.PromoVideoBanner,
-        subTitle_line1: 'Concepts of ',
-        mainTitle: 'Respiratory Sounds',
-        // subTitle_line2: 'resistant TB',
-        videoUrl: 'https://player.vimeo.com/video/535903284',
-        buttonText:'Watch Now',
-        mainImageUrl: 'assets/images/AdobeStock_205914003.jpeg',
-        // speakerId: 'speaker-kmfz0vco',
-        // eventId: 'event-kmde59n5'
-    },
-    {
         type: BannerType.Custom1,
         mainTitle: 'EXPERT VIEWS',
         subTitle_line1: 'Watch Anywhere,',
@@ -62,6 +44,24 @@ const BannerData = [
         mainImageUrl: 'assets/images/AdobeStock_369176443.jpeg',
         // speakerId: 'speaker-kmfz0vco',
         route: 'ottContent'
+    },
+    {
+        type: BannerType.PromoVideoBanner,
+        subTitle_line1: 'Concepts of ',
+        mainTitle: 'Respiratory Sounds',
+        // subTitle_line2: 'resistant TB',
+        videoUrl: 'https://player.vimeo.com/video/536652520',
+        buttonText:'Watch Now',
+        mainImageUrl: 'assets/images/AdobeStock_205914003.jpeg',
+        // speakerId: 'speaker-kmfz0vco',
+        // eventId: 'event-kmde59n5'
+    },
+    {
+        type: BannerType.LiveEvent,
+        mainTitle: 'Tune in to leading minds in respiratory medicine',
+        subTitle: '',
+        eventId: '',
+        mainImageUrl: 'assets/images/logos/impact-logo.png',
     },
     // {
     //     type: BannerType.UpcompingEvent,
@@ -113,11 +113,13 @@ function Banner() {
         slidesToShow: 1,
         prevArrow: <SamplePrevArrow />,
         nextArrow: <SampleNextArrow />,
+        autoplay: true,
+        autoplaySpeed: 10000,
         responsive: [
             {
-                breakpoint: 1200,
+                breakpoint: 600,
                 settings: {
-                  //  arrows: false,
+                    arrows: false,
                 }
             }
         ]

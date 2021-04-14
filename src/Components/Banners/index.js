@@ -2,9 +2,7 @@ import React from 'react'
 import { SpeakerProfileType } from '../../AppConstants/SpeakerProfileType'
 import SpeakerProfile from '../../Containers/SpeakerProfile.js/SpeakerProfile'
 import AddToCalendar from '../AddToCalendar/AddToCalendar'
-
-
-
+import './bannerIndex.css'
 
 //props -  mainTitle, subTitle_line1, subTitle_line2, route, mainImageUrl, gotoRoute(),buttonText
 export function Custom1(props) {

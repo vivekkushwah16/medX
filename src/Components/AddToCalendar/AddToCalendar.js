@@ -11,7 +11,7 @@ export default function AddToCalendar(props) {
     const endDatetime = startDatetime.clone().add(2.5, 'hours');
     const duration = endDatetime.diff(startDatetime, 'hours');
     const event = {
-        description: '',
+        description: 'Impact 21 - International Meet on Changing Paradigms in Chest Medicine',
         duration,
         endDatetime: endDatetime.format('YYYYMMDDTHHmmssZ'),
         location: 'https://ciplamedx.com/register/impact',

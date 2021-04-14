@@ -89,11 +89,11 @@ function PreEvent() {
                                                 {/* <h1 class="bannerBox__maintitle"> </h1> */}
                                                 {/* <p class="bannerBox__subtitle mg-b40">Do tune in on 16th April 2021 for 2 days of cutting-edge academic feast with experts in Respiratory Medicine</p> */}
                                                 <p class="bannerBox__subtitle mg-b40">Tune in for a State-of-the-Art Academic Feast with the Leaders in Respiratory Medicine.</p>
-                                                <p class="bannerBox__date mg-b30">16-17th April 2021</p>
+                                                <p class="bannerBox__date mg-b30">16<sup>th</sup> - 17<sup>th</sup> April 2021</p>
                                                 <div class="d-flex middle-In-mobile">
                                                     <AddToCalendar blueBtn={true} />
 
-                                                    <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20"
+                                                    <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
                                                         onClick={(e) => {
                                                             showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fpdf%2FKNOW_YOUR_SPEAKERS.pdf')
                                                             addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
@@ -101,9 +101,21 @@ function PreEvent() {
                                                         }}>
 
                                                         {
-                                                            isMobileOnly ? 'Speakers' : 'Know Your Speakers'
+                                                            isMobileOnly ? 'Faculty' : 'Know Your Faculty'
                                                         }
                                                     </a>
+                                                    
+                                                    {/* <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
+                                                        onClick={(e) => {
+                                                            showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/536876068')
+                                                            // addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
+                                                            // addCAWithUserInfo(`/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`, true, { eventId: 'event-kmde59n5' }, true)
+                                                        }}>
+
+                                                        {
+                                                            isMobileOnly ? 'Trailer' : 'Watch Trailer'
+                                                        }
+                                                    </a> */}
                                                     {/* <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20" onClick={() => {
                                                         startVideo()
                                                         addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: 'event-kmde59n5' })

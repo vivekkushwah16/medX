@@ -15,7 +15,7 @@ export default function SideAgendaNoUser(props) {
                     <div className="d-flex align-items-center justify-content-between">
                         <div className="headerBox__left">
                             <a href="#" className="headerBox__logo4">
-                                <img src="/assets/images/cipla-logo.png" alt="" />
+                                <img src="/assets/images/logos/ciplamed-logo.png" alt="" />
                             </a>
                         </div>
 
@@ -33,7 +33,7 @@ export default function SideAgendaNoUser(props) {
                                         <h1 className="bannerBox__subtitle mg-b10">A State-of-the-Art Academic Feast</h1>
                                         <p className="bannerBox__desc mg-b35">with the Leaders in Respiratory Medicine</p>
                                         <div className="d-flex d-sm-block justify-content-between">
-                                            <a href="#" className="btn btn-secondary bannerBox__btn mg-r20 d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fpdf%2FKNOW_YOUR_SPEAKERS.pdf')}>Know Your Speakers </a>
+                                            <a href="#" className="btn btn-secondary bannerBox__btn mg-r20 d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fpdf%2FKNOW_YOUR_SPEAKERS.pdf')}>Know Your Faculty </a>
                                             {/* <a href="#" className="btn btn-secondary bannerBox__btn mg-r20 d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/528854507')}>Watch Trailer <i className="icon-play mg-l10"></i></a> */}
                                         </div>
                                     </div>

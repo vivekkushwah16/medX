@@ -41,7 +41,7 @@ export default function AgendaNavBar(props) {
         <nav className={`navigarion-bar ${sticky ? 'navigarion-bar_sticky' : ''} ${className ? className : ""}`} style={forceAgendaVisibleMobile ? { borderBottom: '1px solid #005188' } : {}} ref={navBar}>
             <div className={`${containerClass ? containerClass : "container-small"}`}>
                 <div className="d-flex align-items-center">
-                    <h2 className="navigarion-bar__title" style={forceAgendaVisibleMobile ? { display: 'initial' } : {}}>AGENDA |</h2>
+                    <h2 className="navigarion-bar__title" style={forceAgendaVisibleMobile ? { display: 'initial',"margin-left": "2rem" } : {"margin-left": "2rem"}}>AGENDA  | </h2>
                     <ul className="navigarion-bar__menu" style={forceAgendaVisibleMobile ? { borderBottom: '0', justifyContent: 'unset' } : {}}>
                         {
                             dates &&

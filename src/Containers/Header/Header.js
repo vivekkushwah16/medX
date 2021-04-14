@@ -4,6 +4,7 @@ import Notification from '../../Components/Notification/Notification'
 import Profile from '../../Components/Profile/Profile'
 import CIPLAMEDXLOGO from '../../assets/images/medXlogo.png'
 import CIPLAMEDXLOGO_WHITE from '../../assets/images/ciplamed-logo2.png'
+import ciplamedximpact from '../../assets/images/logos/ciplamedximpact.png'
 import { RootRoute } from '../../AppConstants/Routes'
 import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider'
 import { MediaModalType } from '../../AppConstants/ModalType'
@@ -54,8 +55,8 @@ export default function Header(props) {
             <div className="container">
                 <div className="d-flex align-items-center justify-content-between">
                     <div className="headerBox__left">
-                        <Link to={RootRoute} className="headerBox__logo5">
-                            <img src={props.whiteLogo ? CIPLAMEDXLOGO_WHITE : CIPLAMEDXLOGO} alt="CIPLAMEDXLOGO" />
+                        <Link to={RootRoute} className={props.eventPage?"headerBox__logo6":"headerBox__logo5"}>
+                            <img src={props.whiteLogo ? CIPLAMEDXLOGO_WHITE : props.eventPage?ciplamedximpact:CIPLAMEDXLOGO} alt="CIPLAMEDXLOGO" />
                         </Link>
                         {/* <a href={RootRoute} className="headerBox__logo5">
                             <img src={props.whiteLogo ? CIPLAMEDXLOGO_WHITE : CIPLAMEDXLOGO} alt="CIPLAMEDXLOGO" />

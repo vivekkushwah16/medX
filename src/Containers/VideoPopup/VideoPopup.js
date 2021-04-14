@@ -205,7 +205,7 @@ function VideoPopup(props) {
                     <>
                         <div style={{pointerEvents:'none', position:'absolute', zIndex:'1','width':'100%','height':"calc(0.56 * 56rem)",'backgroundImage':'linear-gradient(black , transparent)'}}></div>
                         <div style={{pointerEvents:'none', position:'absolute',display:'flex',justifyContent:'center',alignItems:'center', zIndex:'1','width':'100%','height':"calc(0.56 * 56rem)",'backgroundImage':'linear-gradient(transparent , black)'}}>
-                            <i className='icon-play' style={{ fontSize: "2rem",color: 'white',borderRadius: '1rem',background: "#30c1ff",padding: "0.9rem 1.3rem 1rem 1.9rem"}}></i>
+                            <i className='icon-play' style={{ fontSize: "1.5rem",color: 'white',borderRadius: '0.5rem',background: "#30c1ff",padding: "0.9rem 1.3rem 1rem 1.9rem"}}></i>
                         </div>
                     </>
                     }
@@ -220,7 +220,7 @@ function VideoPopup(props) {
                             <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={moreVideos[randomNextVideo]} openVideoPop={(currentVideoData, videosData) => {
                                 addVideoClickAnalytics(currentVideoData)
                                 __closeVideoPop()
-                                openVideoPop(videoData, currentVideoData, videosData)}} />
+                                openVideoPop(videoData, currentVideoData, videosData,currentVideoData.tagSelectedFrom)}} />
                                 </div>
                             {/* <i className='icon-play' style={{ fontSize: "2rem",color: 'white',borderRadius: '1rem',background: "#30c1ff",padding: "0.9rem 1.3rem 1rem 1.9rem"}}></i> */}
                         </div>
@@ -309,15 +309,16 @@ function VideoPopup(props) {
 
                             <p className="videodetailBox__views">
                                 {/* {videoData.views} Views  */}
+                                {moment(videoData.timestamp.toMillis()).format("MMMM YYYY")+" "}
                                 {    playerRef.current && playerRef.current.getDuration()>0 &&
                                     <>
                                     {   
                                     
-                                        moment("2015-01-01").startOf('day').seconds(''+playerRef.current.getDuration()).format(playerRef.current.getDuration()>3600?'H:mm:ss':'mm:ss')
-                                    } mins - 
+                                        "-"+moment("2015-01-01").startOf('day').seconds(''+playerRef.current.getDuration()).format(playerRef.current.getDuration()>3600?'H:mm:ss':'mm:ss')
+                                    } mins
                                     </>
                                 }
-                                {" "+moment(videoData.timestamp.toMillis()).format("MMMM YYYY")}
+                                
                             </p>
                             <div style={{"width": "100%","background": "rgb(255 255 255 / 18%)","height": "0.01rem","margin-bottom": "1rem"}}></div>
                             {
@@ -341,6 +342,14 @@ function VideoPopup(props) {
                            
                             <div className="hide-on-desktop mg-t20">
                                 <div className="likeBtnContainer">
+                                {
+                                rating !== null &&
+                                <>
+                                <div className="starParent">
+                                <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
+                                </div>
+                                </>
+                            }
                                     <button className={`like-btn ${like ? 'like-btn--active' : ''}`} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{likeCount}</button>
                                     {
                                         videoData.pdf &&
@@ -372,7 +381,7 @@ function VideoPopup(props) {
                                                 <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={currentVideoData} openVideoPop={(currentVideoData, videosData) => {
                                                     __closeVideoPop()
                                                     addVideoClickAnalytics(currentVideoData)
-                                                    openVideoPop(videoData, currentVideoData, videosData)
+                                                    openVideoPop(videoData, currentVideoData, videosData, currentVideoData.tagSelectedFrom)
                                                 }} />
                                             )
                                         }

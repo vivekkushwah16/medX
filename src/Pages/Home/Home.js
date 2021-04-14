@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import VideoPopup from '../../Containers/VideoPopup/VideoPopup';
 // import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import './Home.css'
-
 import Banner from '../../Containers/Banner/Banner';
-
 // import Slider from "react-slick";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
@@ -14,7 +12,6 @@ import VideoRow from '../../Containers/VideoRow/VideoRow';
 import Header from '../../Containers/Header/Header';
 import TagsRow from '../../Containers/TagsRow/TagsRow';
 import Footer from '../../Containers/Footer/Footer';
-
 
 class Home extends Component {
 
@@ -26,10 +23,11 @@ class Home extends Component {
         rows: [
             { tag: 'COPD', header: 'Videos on COPD' },
             // { tag: 'Asthma', header: 'Videos on Asthma' },
+            { tag: 'Asthma', header: 'Videos on Asthma' },
+            { tag: ['Inhalation Devices', 'Diagnosis','Pulmonary Hypertension','Pediatric asthma','Bronchiectasis','Allergic Rhinitis'], header: 'Videos on Other Respiratory Diseases', multipleTags: true },
             { tag: 'ILD/IPF', header: 'Videos on ILD/IPF' },
             { tag: 'Telemedicine', header: 'Videos on Telemedicine' },
-            { tag: 'Asthma', header: 'Videos on Asthma' },
-            { tag: ['Inhalation Devices', 'Diagnosis','Pulmonary Hypertension','Pediatric asthma','Bronchiectasis','Allergic Rhinitis'], header: 'Other Videos', multipleTags: true },
+            
 
 
             // { tag: 'Recommendations', header: 'Videos on Recommendations' },
@@ -45,15 +43,15 @@ class Home extends Component {
 
         tags: [
             { tag: 'COPD', header: 'COPD' },
+            { tag: 'Asthma', header: 'Asthma' },
             { tag: 'Pediatric asthma', header: 'Pediatric Asthma' },
             { tag: 'Pulmonary Hypertension', header: 'Pulmonary Hypertension' },
             { tag: 'Bronchiectasis', header: 'Bronchiectasis' },
             { tag: 'Allergic Rhinitis', header: 'Allergic Rhinitis' },
             { tag: 'Diagnosis', header: 'Diagnosis' },
+            { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
             { tag: 'ILD/IPF', header: 'ILD/IPF' },
             { tag: 'Telemedicine', header: 'Telemedicine' },
-            { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
-            { tag: 'Asthma', header: 'Asthma' },
 
             // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
             // { tag: 'Recommendations', header: 'Recommendations' },

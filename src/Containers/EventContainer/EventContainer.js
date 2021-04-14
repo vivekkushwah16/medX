@@ -24,7 +24,7 @@ const menuItemsId = {
 }
 
 const menuItems = [
-    { id: menuItemsId.About, name: 'About', className: '' },
+    { id: menuItemsId.About, name: 'Faculty', className: '' },
     { id: menuItemsId.Agenda, name: 'Agenda', className: '' },
     { id: menuItemsId.Trending, name: 'Trending', className: '' },
     { id: menuItemsId.Polls, name: 'Polls', className: 'hide-on-desktop' },
@@ -221,7 +221,9 @@ export default function EventContainer(props) {
                         </div>
                         <div class="pd-t30 pd-b10 d-flex align-items-start justify-content-between">
                             <div class="mx-w600">
-                                <h1 class="eventBox__title mg-b30">{data.title}</h1>
+                                <h1 class="eventBox__title mg-b30">
+                                    {data.title}
+                                    </h1>
                                 {/* <h4 class="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
                             </div>
 

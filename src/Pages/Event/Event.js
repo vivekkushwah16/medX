@@ -110,7 +110,7 @@ export default function Event() {
                         <Header showCertificate={false} showFeedback={false} disableFeedback={false} stickyOnScroll={true} />
 
                         :
-                        <Header addClickAnalytics={addClickAnalytics} showCertificate={true} showFeedback={true} disableFeedback={eventData ? !eventData.activeCertificate : false} stickyOnScroll={true} />
+                        <Header eventPage={true} addClickAnalytics={addClickAnalytics} showCertificate={true} showFeedback={true} disableFeedback={eventData ? !eventData.activeCertificate : false} stickyOnScroll={true} />
                 }
                 {
                     eventData &&

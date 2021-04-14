@@ -24,6 +24,7 @@ export default function InviteFriendModal(props) {
     const alert = useAlert();
     // const [url, setUrl] = useState(window.location.href);
     const [url, setUrl] = useState("https://ciplamedx.com/register/impact");
+    const [urlShare, setUrlShare] = useState('I+invite+you+to+register+for+IMPACT+%2721+on+the+CiplaMedX+Platform.%0D%0A%0D%0AIMPACT+%2721+is+a+2+Day+Cutting-Edge+academic+feast+with+Experts+in+Respiratory+Medicine+being+organized+on+16-17th+April+2021.%0D%0A%0D%0Ahttps%3A%2F%2Fciplamedx.com%2Fregister%2Fimpact');
     const [textArea, setTextarea] = useState({});
     const [email, setEmail] = useState("");
     const [error, setError] = useState(false);
@@ -46,6 +47,7 @@ export default function InviteFriendModal(props) {
     const shareOnce = () => {
         if (navigator.share) {
             navigator.share({
+                text: 'I invite you to register for IMPACT \'21 on the CiplaMedX Platform.\n\nIMPACT \'21 is a 2 Day Cutting-Edge academic feast with Experts in Respiratory Medicine being organised on 16-17th April 2021.\n',
                 url: "https://ciplamedx.com/register/impact"//window.location.href,
             });
         }
@@ -138,7 +140,7 @@ export default function InviteFriendModal(props) {
                                     <img src={fb} alt="" />
                                 </a>
                                 <a
-                                    href={`https://twitter.com/intent/tweet?url=${url}`}
+                                    href={`https://twitter.com/intent/tweet?url=${urlShare}`}
                                     target="_blank"
                                     onClick={() => {
                                         addAnalytics(INVITEYOURFRIEND_EVENT_TWITTER)
@@ -146,7 +148,7 @@ export default function InviteFriendModal(props) {
                                 >
                                     <img src={twitter} alt="" />
                                 </a>
-                                <a href={`https://wa.me/?text=${url}`} target="_blank"
+                                <a href={`https://wa.me/?text=${urlShare}`} target="_blank"
                                     onClick={() => {
                                         addAnalytics(INVITEYOURFRIEND_EVENT_WHATSAPP)
                                     }}>

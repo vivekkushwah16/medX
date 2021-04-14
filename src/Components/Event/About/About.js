@@ -19,7 +19,7 @@ export default function About(props) {
 
             {data.speakers && data.speakers.length > 0 &&
                 <>
-                    <h3 className="eventBox__small-title mg-b20">SPEAKERS</h3>
+                    <h3 className="eventBox__small-title mg-b20">Know Your Faculty</h3>
                     <div className="d-flex addChildMarginBt-10 " style={{ flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         {
                             data.speakers.map(id => (

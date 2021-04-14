@@ -170,10 +170,10 @@ export default function App() {
                         {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={TOPIC_ROUTE}>
                             <Topics />
                         </ProtectedRoute> */}
-                        {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={RootRoute}>
-                            <PreEventLazy />
+                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={RootRoute}>
+                            {/* <PreEventLazy /> */}
                             <Home />
-                        </ProtectedRoute> */}
+                        </ProtectedRoute>
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={"*"}>
                             {/* <PreEventLazy /> */}
                             <Home />

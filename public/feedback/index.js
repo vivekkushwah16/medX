@@ -20,15 +20,15 @@ let response6 = 0;
 //     console.log("hello");
 //   });
 
-  document
-  .getElementsByClassName("emojislider6")[0]
-  .addEventListener("input", () => {
-    document.getElementsByClassName("review6")[0].innerHTML =
-      reviews6[document.getElementsByClassName("emojislider6")[0].value];
-    var i = document.getElementsByClassName("emojislider6")[0].value;
-    document.getElementsByClassName("emoji6")[0].innerHTML = emojis[i];
-    response6 = i;
-  });
+  // document
+  // .getElementsByClassName("emojislider6")[0]
+  // .addEventListener("input", () => {
+  //   document.getElementsByClassName("review6")[0].innerHTML =
+  //     reviews6[document.getElementsByClassName("emojislider6")[0].value];
+  //   var i = document.getElementsByClassName("emojislider6")[0].value;
+  //   document.getElementsByClassName("emoji6")[0].innerHTML = emojis[i];
+  //   response6 = i;
+  // });
 // $(".emojislider2").mousemove(function () {
 //   var i = $(this).val();
 //   $(".emoji2").html(emojis[i]);
@@ -114,7 +114,7 @@ $(document).ready(function () {
       });
     });
   }
-  // LimitMultipleAnswers('q5', 2);
+  // LimitMultipleAnswers('questions5_1', 2);
   // LimitMultipleAnswers('q7', 2);
 
   const showError = (
@@ -145,23 +145,42 @@ $(document).ready(function () {
   $("#mainForm").on("submit", async function (event) {
     console.log(event);
     event.preventDefault();
+    const survey1 = {
+    };
+    let formData = new FormData(document.querySelector('form'))
+    for (var pair of formData.entries()) {
+        // console.log(pair[0] + ': ' + pair[1]);
+        if (!survey1[`${pair[0]}`]) {
+            survey1[`${pair[0]}`] = pair[1];
+        } else {
+            survey1[`${pair[0]}`] += `| ${pair[1]}`
+            // if (typeof (survey[`${pair[0]}`]) === 'object') {
+            //     survey[`${pair[0]}`].push(pair[1])
+            // } else {
+            //     survey[`${pair[0]}`] = [survey[`${pair[0]}`]]
+            //     survey[`${pair[0]}`].push(pair[1])
+            // }
+        }
+    }
+
+    console.log(survey1);
 
     showError(false);
-    const survey = {
-      question1: document.querySelector("#session").value,
-      question2: document.querySelector("#session2").value,
-      question2: parseInt(document.querySelector(".emojislider3").value) + 1,
-      question1: parseInt(document.querySelector(".emojislider4").value) + 1,
-      question5: document.querySelector("#session5").value,
-      question6: parseInt(document.querySelector(".emojislider6").value) + 1,
-      question7: parseInt(document.querySelector(".emojislider7").value) + 1,
-      question8: parseInt(document.querySelector(".emojislider8").value) + 1,
-      question9: parseInt(document.querySelector(".emojislider9").value) + 1,
-      question10: parseInt(document.querySelector(".emojislider10").value) + 1,
-      question11: parseInt(document.querySelector(".emojislider11").value) + 1,
-      question12: document.querySelector("#session12").value,
-      question13: document.querySelector("#session13").value,
-    };
+    // const survey = {
+    //   question1: document.querySelector("#session").value,
+    //   question2: document.querySelector("#session2").value,
+    //   question3: parseInt(document.querySelector(".emojislider3").value) + 1,
+    //   question1: parseInt(document.querySelector(".emojislider4").value) + 1,
+    //   question5: document.querySelector("#session5").value,
+    //   question6: parseInt(document.querySelector(".emojislider6").value) + 1,
+    //   question7: parseInt(document.querySelector(".emojislider7").value) + 1,
+    //   question8: parseInt(document.querySelector(".emojislider8").value) + 1,
+    //   question9: parseInt(document.querySelector(".emojislider9").value) + 1,
+    //   question10: parseInt(document.querySelector(".emojislider10").value) + 1,
+    //   question11: parseInt(document.querySelector(".emojislider11").value) + 1,
+    //   question8: document.querySelector("#session8").value,
+    //   question9: document.querySelector("#session9").value,
+    // };
     console.log(currentUser.displayName);
 
     ///
@@ -170,13 +189,13 @@ $(document).ready(function () {
     //   showError(true, "Please answer the 3rd question also.");
     //   return;
     // }
-    console.log(survey);
+    // console.log(survey);
     firebase
       .firestore()
       .collection("userFeedback")
       .doc(currentUser.uid)
       .set({
-        ...survey,
+        ...survey1,
         name: currentUser.displayName,
         email: currentUser.email,
       })
