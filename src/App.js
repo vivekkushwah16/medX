@@ -14,6 +14,7 @@ import loadable from '@loadable/component';
 import LoadableFallback from './Components/LoadableFallback/LoadableFallback';
 import Upload from './Components/Upload/upload';
 import { copyFromRealtoFirestore } from './Firebase/firebase';
+import EventManager from './Managers/EventManager';
 // import LiveCount from './Pages/LiveCount/liveCount';
 // import QnaPage from './Pages/QnaPage/QnaPage';
 const RegisterLazy = loadable(() => import(/* webpackChunkName: "Register" */ "./Pages/EventRegister/Register"), { fallback: <LoadableFallback /> })
@@ -107,8 +108,8 @@ export default function App() {
         // VideoManager.addVideo('Tuberculosis - Use of Inhaled Corticosteroids in Children', 'A potentially serious infectious bacterial disease that mainly affects the lungs.', 'https://vimeo.com/525395281/5753ae3d66',
         //     'assets/images/video-thumb.jpg', ['speaker-kmfz0vco'], ['Tuberculosis'], [{ title: 'part1', endTime: '30', startTime: '10' }])
 
-        // EventManager.addPartnerWithUs("event-kmde59n5","Clinical Trial Participation 1",LOREM_TEXT,"Clinical Trial Participation sub1", LOREM_TEXT, "/assets/images/doctors.jpg")
-        // EventManager.addPartnerWithUs("event-kmde59n5","Clinical Trial Participation 2",LOREM_TEXT,"Clinical Trial Participation sub2", LOREM_TEXT, "/assets/images/doctors.jpg")
+        // EventManager.addPartnerWithUs("event-kmde59n5","Clinical Trial Participation 1","LOREM_TEXT","Clinical Trial Participation sub1", "LOREM_TEXT", "/assets/images/doctors.jpg")
+        // EventManager.addPartnerWithUs("event-kmde59n5","Clinical Trial Participation 2","LOREM_TEXT","Clinical Trial Participation sub2", "LOREM_TEXT", "/assets/images/doctors.jpg")
         // EventManager.addPartnerWithUs("event-kmde59n5","Clinical Trial Participation 3",LOREM_TEXT,"Clinical Trial Participation sub3", LOREM_TEXT, "/assets/images/doctors.jpg")
         // EventManager.addPartnerWithUs("event-kmde59n5","Clinical Trial Participation 4",LOREM_TEXT,"Clinical Trial Participation sub4", LOREM_TEXT, "/assets/images/doctors.jpg")
 
