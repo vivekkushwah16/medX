@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Slider from 'react-slick'
+import { PARTNERWITHUSAGREE_COLLECTION } from '../../../AppConstants/CollectionConstants';
+import { UserContext } from '../../../Context/Auth/UserContextProvider';
 import { eventContext } from '../../../Context/Event/EventContextProvider';
+import { firestore } from '../../../Firebase/firebase';
 import PartnerWithUsCard from './PartnerWithUsCard/PartnerWithUsCard'
 
 
@@ -60,32 +63,71 @@ var settings = {
     ]
 };
 
+let partnerWithUsRef = null
+
 export default function PartnerWithUs(props) {
-    const { data, countIn, isActive } = props
-    const [isUpdated, setUpdate] = useState(false);
+    const { data, countIn, isActive, eventId: id } = props
+
+    const [agreedData, setAgreedData] = useState(false);
+    const { user } = useContext(UserContext)
+
+    useEffect(() => {
+        partnerWithUsListener(id)
+        return () => {
+            removePartnerWithUsListener()
+        }
+    }, [])
+
+
+    const partnerWithUsListener = (eventId, callback) => {
+        const ref = firestore.collection(PARTNERWITHUSAGREE_COLLECTION).where('user', '==', user.uid)//.where('eventId', "==", eventId);
+        partnerWithUsRef = ref.onSnapshot(query => {
+            if (query.empty) {
+                let err = { code: "404", message: 'NO File Found' }
+                if (callback) {
+                    callback(null, err)
+                }
+            }
+            let dataObj = {}
+            query.docs.forEach((doc) => {
+                dataObj[doc.data().targetId] = true
+            })
+            console.log('xxxxxxxxxxxxxxx=========================')
+            setAgreedData(dataObj)
+            console.log('xxxxxxxxxxxxxxx=========================')
+
+        })
+    }
+
+    const removePartnerWithUsListener = () => {
+        if (partnerWithUsRef) {
+            partnerWithUsRef()
+        }
+    }
 
     const _callCountIn = (eventId, targetId) => {
         return new Promise(async (res, rej) => {
             try {
                 await countIn(eventId, targetId)
-                setUpdate(true)
+                console.log("count me in")
+                res()
             } catch (error) {
                 console.log(error)
             }
         })
     }
-    
+
     return (
         <div id="tab5" className={`eventBox__tabs-content ${isActive ? 'active' : ''}`}>
             <Slider className="partnerBox slider-horizontal-3"  {...settings}>
                 {
                     data.map(e => (
-                        <PartnerWithUsCard data={e} countIn={_callCountIn} />
+                        <PartnerWithUsCard agreedData={agreedData} data={e} countIn={_callCountIn} />
                     ))
                 }
                 {
                     data.map(e => (
-                        <PartnerWithUsCard data={e} countIn={_callCountIn} />
+                        <PartnerWithUsCard agreedData={agreedData} data={e} countIn={_callCountIn} />
                     ))
                 }
             </Slider>

@@ -308,7 +308,7 @@ export default function EventContainer(props) {
 
                             {
                                 partnerWithUsData &&
-                                <PartnerWithUs data={partnerWithUsData} countIn={countPartnerWithUsAgree} isActive={activeMenu.id === menuItemsId.Partner_with_us} />
+                                <PartnerWithUs eventId={id} data={partnerWithUsData} countIn={countPartnerWithUsAgree} isActive={activeMenu.id === menuItemsId.Partner_with_us} />
                             }
 
 

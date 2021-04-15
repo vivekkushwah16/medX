@@ -21,7 +21,6 @@ function setDataInCookies(name, data) {
     saveCookies(name, data, 2);
 }
 
-const partnerWithUsRef = null
 export default function EventContextProvider(props) {
     const { user } = useContext(UserContext);
     const [eventData, setEventData] = useState(getCookiesFromData(EVENTDATA_COOKIES))
@@ -109,29 +108,6 @@ export default function EventContextProvider(props) {
         return _data;
     }
 
-    const partnerWithUsListener = (eventId, callback) => {
-        const ref = firestore.collection(PARTNERWITHUSAGREE_COLLECTION).where('userId', '==', user.uid).where('eventId', "==", eventId);
-        partnerWithUsRef = ref.onSnapshot(query => {
-            if (query.empty) {
-                let err = { code: "404", message: 'NO File Found' }
-                if (callback) {
-                    callback(null, err)
-                }
-            }
-            let dataObj = {}
-            query.docs.forEach((doc) => {
-                console.log(doc, doc.data())
-                dataObj[doc.targetId] = true
-            })
-            console.log(dataObj)
-        })
-    }
-
-    const removePartnerWithUsListener = () => {
-        if (partnerWithUsRef) {
-            partnerWithUsRef()
-        }
-    }
 
     const getEventDataListener = (eventId, callback) => {
         EventManager.addEventDataListener(eventId, callback)

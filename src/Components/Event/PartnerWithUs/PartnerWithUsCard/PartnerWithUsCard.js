@@ -4,24 +4,36 @@ import ButtonWithLoader from '../../../ButtonWithLoader/ButtonWithLoader'
 import ReadMore from '../../../ReadMore/ReadMore'
 
 export default function PartnerWithUsCard(props) {
-    const { data, countIn } = props
+    const { data, countIn, agreedData } = props
     const { getPartnerWithUsAgreeStatus } = useContext(eventContext)
     // const [alreadyAgreed, setAlreadyAgreed] = useState(false)
     const [buttonState, setButtonState] = useState(false);
 
     useEffect(() => {
-        try {
-            readCountData()
-        } catch (error) {
-            console.log(error)
+        if (agreedData) {
+            // console.log(agreedData, data.id, agreedData.hasOwnProperty(data.id))
+            if (agreedData.hasOwnProperty(data.id)) {
+                updateCountIn(agreedData[data.id])
+            } else {
+                updateCountIn(false)
+            }
         }
-        return (() => {
-            console.log("Unmounting --", data.id)
-        })
-    }, [])
+    }, [agreedData])
+
+
+    // useEffect(() => {
+    //     try {
+    //         readCountData()
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    //     return (() => {
+    //         console.log("Unmounting --", data.id)
+    //     })
+    // }, [])
 
     const updateCountIn = (val) => {
-        console.log(data.id + " " + val);
+        // console.log(data.id + " " + val);
         setButtonState(val)
     }
 
@@ -59,7 +71,12 @@ export default function PartnerWithUsCard(props) {
                 {/* <h3 className="partnerBox__item-title mg-b20">{data.subTitle}</h3>
                 <ReadMore className="partnerBox__item-desc mg-b20" description={data.subDesciption} limit={100} /> */}
                 <div className="partnerBox__item-action">
-                    <ButtonWithLoader className="btn btn-sm btn-secondary" name={buttonState ? 'Thanks' : 'Count me in'} disabled={buttonState} handleClick={()=>countIn(data.eventId, data.id)} />
+                    <ButtonWithLoader className="btn btn-sm btn-secondary" name={buttonState ? 'Thanks' : 'Count me in'} disabled={buttonState} handleClick={() => {
+                        return new Promise(async (res, rej) => {
+                            await countIn(data.eventId, data.id)
+                            res()
+                        })
+                    }} />
                 </div>
             </div>
         </div>
