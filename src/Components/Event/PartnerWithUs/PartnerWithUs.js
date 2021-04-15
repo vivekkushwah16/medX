@@ -61,6 +61,7 @@ var settings = {
 
 export default function PartnerWithUs(props) {
     const { data, countIn, isActive } = props
+
     return (
         <div id="tab5" class={`eventBox__tabs-content ${isActive ? 'active' : ''}`}>
             <Slider className="partnerBox slider-horizontal-3"  {...settings}>

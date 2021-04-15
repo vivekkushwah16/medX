@@ -46,7 +46,7 @@ export default function EventContainer(props) {
     //#region  decalaration
     const { id, data, agendaData: _initalAgendaData, trendingData, partnerWithUsData, countPartnerWithUsAgree, sendQuestion, likedEvent, handleEventLikeButton } = props;
     const [activeMenu, setActiveMenu] = useState(menuItems[0])
-    const [activePollPanel, setPollPanelActive] = useState(false)
+    const [activePollPanel, setPollPanelActive] = useState(true)
     const [likeButtonEnabled, makeLikeButtonEnabled] = useState(true)
     const { showMediaModal } = useContext(MediaModalContext)
 
@@ -315,7 +315,7 @@ export default function EventContainer(props) {
                                     QNASendAnalytics();
                                     sendQuestion(eventId, ques, data.activeTimelineId)
                                 }}
-                                id={id} showCloseButton={true}
+                                id={id} showCloseButton={false}
                                 pollAnalytics={(pollId, optionId) => {
                                     PollInteractionAnalytics(pollId, optionId);
                                 }}

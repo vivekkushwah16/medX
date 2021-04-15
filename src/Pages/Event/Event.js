@@ -104,7 +104,7 @@ export default function Event() {
     return (
         <section className="wrapper" id="root">
             <div className="eventBoxBg"></div>
-            <div className="topicsBox__wrapper">
+            <div className="topicsBox__wrapper" id="eventPage">
                 {
                     isMobileOnly ?
                         <Header showCertificate={false} showFeedback={false} disableFeedback={false} stickyOnScroll={true} />

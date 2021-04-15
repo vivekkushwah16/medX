@@ -15,17 +15,16 @@ export default function TrendingItem(props) {
 
     return (
         <div key={`AgendaCard-${data.id}`} id={`AgendaCard-${data.id}`} className={`maincardBox__card `} style={{ border: '0.12rem solid rgb(174 165 165 / 39%)' }}>
-            {
-                data.type === TRENDING_ITEM_TYPE.PDF &&
+            {/* {
+                data.type === TRENDING_ITEM_TYPE.PDF && !data.thumbnailUrl &&
                 <div className="maincardBox__card-video"
                     style={{
                         backgroundImage: `url(/assets/images/pdf.jpg)`,
                     }}>
                     <div className="tint"></div>
                 </div>
-            }
+            } */}
             {
-                data.type !== TRENDING_ITEM_TYPE.PDF &&
                 <div className="maincardBox__card-video"
                     style={{
                         backgroundImage: `url(${data.thumbnailUrl})`,
@@ -52,6 +51,10 @@ export default function TrendingItem(props) {
                     {
                         data.type === TRENDING_ITEM_TYPE.PDF &&
                         <button className="btn btn-outline btn-locked mg-t10 " disabled={data.disabled} onClick={() => { handleClickAnalytic(); showMediaModal(MediaModalType.PDF, data.link) }}>Open <i className="icon-lock"></i></button>
+                    }
+                    {
+                        data.type === TRENDING_ITEM_TYPE.URL &&
+                        <button className="btn btn-outline btn-locked mg-t10 " disabled={data.disabled} onClick={() => { handleClickAnalytic(); window.open(data.link, '_blank'); }}>Open <i className="icon-lock"></i></button>
                     }
                     {/* <button className={`mg-b40 mg-sm-b20 like-btn ${like ? 'like-btn--active' : ''} `} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button> */}
 

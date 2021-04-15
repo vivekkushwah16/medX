@@ -29,7 +29,7 @@ function VideoRow(props) {
     const { mediaMetaData } = useContext(UserContext);
 
     useEffect(() => {
-        console.log(multipleTags, tag)
+        // console.log(multipleTags, tag)
         if (multipleTags) {
             getVideosFromMultipleTags()
         } else {

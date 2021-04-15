@@ -133,17 +133,36 @@
 .eventBox__tabs-content .navigarion-bar {
     width: 90%;
 }
-#tab3 .maincardBox.maincardBox--large .maincardBox__card
-{
+
+#tab3 .maincardBox.maincardBox--large .maincardBox__card {
     padding-left: 15rem;
 }
 
-#tab3 .maincardBox.maincardBox--large .maincardBox__card-video
-{
+#tab3 .maincardBox.maincardBox--large .maincardBox__card-video {
     width: 15rem;
     min-width: 15rem;
 }
 
+#eventPage .headerBox--full .container {
+    max-width: unset;
+    padding: 0rem 2.5rem;
+    /* background: black; */
+}
+
+#eventPage .headerBox{
+    padding-top: 1.125rem!important;
+}
+#eventPage .eventBox{
+    padding: 6.875rem ​0rem;
+}
+
+#eventPage .eventBox__video iframe{
+    border-radius: 0.75rem;
+}
+
+#eventPage  .eventBox__video{
+    background: transparent;
+}
 
 @media only screen and (max-width: 1023px) {
     #tab3 .maincardBox {
@@ -156,7 +175,7 @@
         padding-left: 15px;
         padding-right: 15px;
     }
-    #tab3 .rating-block{
+    #tab3 .rating-block {
         margin-bottom: 0;
     }
 }
