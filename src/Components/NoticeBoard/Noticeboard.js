@@ -9,7 +9,7 @@ export default function Noticeboard(props) {
     return (
         <>
             <div className="communityBox__noticeboard mg-b20">
-                <h2 className="communityBox__title mg-b10">Noticeboard</h2>
+                <h2 className="communityBox__title mg-b10">Notice Board</h2>
                 <hr></hr>
                 <div className="communityBox__noticeboard_body mg-t5" onClick={(event) => {
                     event.preventDefault();

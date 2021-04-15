@@ -696,6 +696,8 @@ html { scroll-behavior: smooth; }
 @media only screen and (max-width: 1439px) {
   .slider-btn.slider-btn--prev { margin-left: 2%; }
   .slider-btn.slider-btn--next { margin-right: 2%; }
+  body, html { font-size: 12px; }
+
 }
 
 /* Iphone 11 above */
