@@ -11,6 +11,7 @@ export default function PartnerWithUsCard(props) {
 
     useEffect(() => {
         getPartnerWithUsAgreeStatus(data.id).then((status) => {
+            console.log("asdasdads "+status);
             setAlreadyAgreed(status)
         }).catch(err => console.log(err))
     }, [])

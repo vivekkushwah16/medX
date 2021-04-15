@@ -23,7 +23,7 @@ var settings = {
     speed: 300,
     arrows: true,
     slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
     centerMode: true,
     // className:".partnerBox__item.slick-center",  
     prevArrow: <SamplePrevArrow />,
@@ -34,8 +34,9 @@ var settings = {
             breakpoint: 1024,
             settings: {
                 slidesToShow: 3,
-                slidesToScroll: 3,
+                slidesToScroll: 1,
                 infinite: true,
+                arrows: true,
                 dots: true
             }
         },
@@ -43,14 +44,16 @@ var settings = {
             breakpoint: 600,
             settings: {
                 slidesToShow: 1,
-                slidesToScroll: 1
+                slidesToScroll: 1,
+                arrows: true,
             }
         },
         {
             breakpoint: 480,
             settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
+                slidesToShow:1,
+                slidesToScroll: 1,
+                arrows: true,
             }
         }
     ]
