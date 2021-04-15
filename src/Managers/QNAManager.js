@@ -2,7 +2,7 @@ import { QNA_COLLECTION } from "../AppConstants/CollectionConstants";
 import firebase, { firestore } from "../Firebase/firebase";
 var uniqid = require('uniqid');
 const QNAManager = {
-    sendQnAQuestion: (userId, eventId, question) => {
+    sendQnAQuestion: (userId, eventId, question, activeTimelineId) => {
         return new Promise(async (res, rej) => {
             try {
                 let id = uniqid('qna-')
@@ -13,6 +13,7 @@ const QNAManager = {
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     date: new Date().getTime(),
                     question: question,
+                    timelineId: activeTimelineId
                 })
                 res()
             } catch (error) {

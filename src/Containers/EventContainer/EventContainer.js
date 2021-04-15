@@ -290,7 +290,7 @@ export default function EventContainer(props) {
                                     <CommunityBox
                                         sendQuestion={(eventId, ques) => {
                                             QNASendAnalytics();
-                                            sendQuestion(eventId, ques)
+                                            sendQuestion(eventId, ques, data.activeTimelineId)
                                         }}
                                         id={id}
                                         pollAnalytics={(pollId, optionId) => {
@@ -313,7 +313,7 @@ export default function EventContainer(props) {
                             <CommunityBox
                                 sendQuestion={(eventId, ques) => {
                                     QNASendAnalytics();
-                                    sendQuestion(eventId, ques)
+                                    sendQuestion(eventId, ques, data.activeTimelineId)
                                 }}
                                 id={id} showCloseButton={true}
                                 pollAnalytics={(pollId, optionId) => {

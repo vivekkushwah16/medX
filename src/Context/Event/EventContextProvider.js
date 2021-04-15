@@ -156,11 +156,11 @@ export default function EventContextProvider(props) {
         })
     }
 
-    const sendQuestion = (eventId, question) => {
+    const sendQuestion = (eventId, question, activeTimelineId) => {
         return new Promise(async (res, rej) => {
             try {
                 if (!user) { console.log("No user Logged"); return }
-                await QNAManager.sendQnAQuestion(user.uid, eventId, question)
+                await QNAManager.sendQnAQuestion(user.uid, eventId, question, activeTimelineId)
                 res()
             } catch (error) {
                 rej(error)

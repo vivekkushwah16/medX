@@ -17,6 +17,9 @@ import { copyFromRealtoFirestore } from './Firebase/firebase';
 import EventManager from './Managers/EventManager';
 // import LiveCount from './Pages/LiveCount/liveCount';
 // import QnaPage from './Pages/QnaPage/QnaPage';
+import LiveCount from './Pages/LiveCount/liveCount';
+import QnaPage from './Pages/QnaPage/QnaPage';
+import { TRENDING_ITEM_TYPE } from './AppConstants/TrendingItemTypes';
 const RegisterLazy = loadable(() => import(/* webpackChunkName: "Register" */ "./Pages/EventRegister/Register"), { fallback: <LoadableFallback /> })
 const LoginLazy = loadable(() => import(/* webpackChunkName: "Login" */ "./Pages/EventLogin/Login"), { fallback: <LoadableFallback /> })
 const PreEventLazy = loadable(() => import(/* webpackChunkName: "PreEventLazy" */ './Pages/PreEvent/PreEvent'), { fallback: <LoadableFallback /> })
@@ -102,7 +105,7 @@ export default function App() {
         // "1618674000000",
         // "30")
 
-        // EventManager.addTrendingItem("event-kmde59n5", TRENDING_ITEM_TYPE.VIDEO, "Presentation for Session 2", LOREM_TEXT, "https://vimeo.com/290674467","assets/images/video-thumb.jpg")
+        // EventManager.addTrendingItem("event-kmde59n5", TRENDING_ITEM_TYPE.URL, "Presentation for Session 2", LOREM_TEXT, "https://vimeo.com/290674467","assets/images/video-thumb.jpg")
 
         // VideoManager.getVideoWithTag(['covid']).then(data => console.log(data))
         // VideoManager.addVideo('Tuberculosis - Use of Inhaled Corticosteroids in Children', 'A potentially serious infectious bacterial disease that mainly affects the lungs.', 'https://vimeo.com/525395281/5753ae3d66',
@@ -155,12 +158,12 @@ export default function App() {
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/upload'}>
                             <Upload />
                         </ProtectedRoute>
-                        {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/liveCount'}>
+                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/liveCount'}>
                             <LiveCount />
                         </ProtectedRoute>
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/qna'}>
                             <QnaPage />
-                        </ProtectedRoute> */}
+                        </ProtectedRoute>
 
 
                         {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={TOPIC_ROUTE}>
