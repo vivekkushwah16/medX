@@ -8,7 +8,9 @@ import { useHistory } from 'react-router-dom';
 import { EVENT_ROUTE, RootRoute } from '../../AppConstants/Routes';
 import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider';
 import { MediaModalType } from '../../AppConstants/ModalType';
-
+import { isMobileOnly } from 'react-device-detect';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 let scroll    = Scroll.animateScroll;
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -35,17 +37,12 @@ const BannerType = {
 
 const BannerData = [
     {
-        type: BannerType.Custom1,
-        mainTitle: 'EXPERT VIEWS',
-        subTitle_line1: 'Watch Anywhere,',
-        subTitle_line2: 'Watch Anytime',
-        // trailerUrl: '',
-        buttonText:'Start Watching',
-        mainImageUrl: 'assets/images/AdobeStock_369176443.jpeg',
-        // speakerId: 'speaker-kmfz0vco',
-        route: 'ottContent'
-    },
-    {
+        type: BannerType.LiveEvent,
+        mainTitle: 'Tune in to leading minds in respiratory medicine',
+        subTitle: '',
+        eventId: '',
+        mainImageUrl: 'assets/images/logos/impact-logo.png',
+    },{
         type: BannerType.PromoVideoBanner,
         subTitle_line1: 'Concepts of ',
         mainTitle: 'Respiratory Sounds',
@@ -57,12 +54,17 @@ const BannerData = [
         // eventId: 'event-kmde59n5'
     },
     {
-        type: BannerType.LiveEvent,
-        mainTitle: 'Tune in to leading minds in respiratory medicine',
-        subTitle: '',
-        eventId: '',
-        mainImageUrl: 'assets/images/logos/impact-logo.png',
+        type: BannerType.Custom1,
+        mainTitle: 'EXPERT VIEWS',
+        subTitle_line1: 'Watch Anywhere,',
+        subTitle_line2: 'Watch Anytime',
+        // trailerUrl: '',
+        buttonText:'Start Watching',
+        mainImageUrl: 'assets/images/AdobeStock_369176443.jpeg',
+        // speakerId: 'speaker-kmfz0vco',
+        route: 'ottContent'
     },
+    
     // {
     //     type: BannerType.UpcompingEvent,
     //     mainTitle: '50+ Eminent Speakers',
@@ -126,7 +128,7 @@ function Banner() {
     };
 
     return (
-        <div className="bannerBox bannerBox--large" id="bannerParentDiv">
+        <div className="bannerBox bannerBox--large" id="bannerParentDiv" style={{position:'relative'}}>
             <Slider className="slider-banner-desktop" {...settings}>
                 {
                     BannerData.map(item => (
@@ -156,6 +158,14 @@ function Banner() {
                     ))
                 }
             </Slider>
+            {
+                             isMobileOnly &&
+                            <div class="arrow bounce">
+                                {/* <i className="icon-play whiteColor"></i> */}
+                                <FontAwesomeIcon icon={faAngleDown} className="whiteColor" onClick={goToRoute}></FontAwesomeIcon>
+                                {/* <a class="fa fa-arrow-down fa-2x" onClick={goToRoute} href="#"></a> */}
+                                </div>
+                        }
         </div>
     )
 }

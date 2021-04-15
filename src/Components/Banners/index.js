@@ -3,7 +3,7 @@ import { SpeakerProfileType } from '../../AppConstants/SpeakerProfileType'
 import SpeakerProfile from '../../Containers/SpeakerProfile.js/SpeakerProfile'
 import AddToCalendar from '../AddToCalendar/AddToCalendar'
 import './bannerIndex.css'
-
+import { isMobileOnly } from 'react-device-detect'
 //props -  mainTitle, subTitle_line1, subTitle_line2, route, mainImageUrl, gotoRoute(),buttonText
 export function Custom1(props) {
     const { data } = props
@@ -11,7 +11,10 @@ export function Custom1(props) {
         <div className="bannerBox__inner gradient-bg2">
             <div className="bannerBox__slide"  style={{ backgroundImage: `url(${data.mainImageUrl})` }}>
                 <div class="container" >
-                    <div className="bannerBox__left" >
+                    <div className={isMobileOnly?"bannerBox__left flexBoxC":"bannerBox__left"} >
+                    {isMobileOnly &&
+                        <img style={{height:"2.8rem"}} className="mg-b30" src="assets/images/logos/ciplamed-logo2.png"></img>
+                    }
                         <h1 className="bannerBox__featired-title mg-b50" style={{ color: '#fff' }}>{data.mainTitle}<br></br><span>{data.subTitle_line1}<br></br>{data.subTitle_line2}</span></h1>
                         {/* <a href="#" className="bannerBox__profile mg-b50">
                             <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={data.speakerId} />

@@ -12,6 +12,8 @@ import VideoRow from '../../Containers/VideoRow/VideoRow';
 import Header from '../../Containers/Header/Header';
 import TagsRow from '../../Containers/TagsRow/TagsRow';
 import Footer from '../../Containers/Footer/Footer';
+import { isMobileOnly } from 'react-device-detect';
+// import { color } from 'html2canvas/dist/types/css/types/color';
 
 class Home extends Component {
 
@@ -24,10 +26,10 @@ class Home extends Component {
             { tag: 'COPD', header: 'Videos on COPD' },
             // { tag: 'Asthma', header: 'Videos on Asthma' },
             { tag: 'Asthma', header: 'Videos on Asthma' },
-            { tag: ['Inhalation Devices', 'Diagnosis','Pulmonary Hypertension','Pediatric asthma','Bronchiectasis','Allergic Rhinitis'], header: 'Videos on Other Respiratory Diseases', multipleTags: true },
             { tag: 'ILD/IPF', header: 'Videos on ILD/IPF' },
             { tag: 'Telemedicine', header: 'Videos on Telemedicine' },
-            
+            { tag: ['Inhalation Devices', 'Diagnosis','Pulmonary Hypertension','Pediatric asthma','Bronchiectasis','Allergic Rhinitis'], header: 'Videos on Other Respiratory Diseases', multipleTags: true },
+           
 
 
             // { tag: 'Recommendations', header: 'Videos on Recommendations' },
@@ -114,11 +116,12 @@ class Home extends Component {
             <>
                 <div className="topicsBox__wrapper" id="homePageConatiner">
                     <Header hideInviteFriend={true} whiteLogo={true} stickyOnScroll={true} />
-                    <Banner />
+                    <Banner/>
+                
                     <div className="tabBox" id="homeVideoContainer">
                         <div class="container" id="ottContent">
                                 <div style={{zIndex:'1',position:'absolute',right:'0',top:'0',width:'7%',height:'100%',backgroundImage:'linear-gradient(to right, transparent , black)'}}></div>
-   
+                       
                             <TagsRow tags={this.state.tags} stickyOnScroll={false} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag} />
 
                             <div className="contentBox" >

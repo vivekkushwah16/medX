@@ -58,6 +58,7 @@ function VideoRow(props) {
         dots: false,
         infinite: false,
         speed: 300,
+        rows:1,
         slidesToShow: 1,
         slidesToScroll: 1,
         variableWidth: true,
