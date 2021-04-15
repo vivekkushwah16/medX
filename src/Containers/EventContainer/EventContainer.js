@@ -14,6 +14,7 @@ import Trending from '../../Components/Event/Trending/Trending'
 import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider'
+import swal from 'sweetalert';
 
 const menuItemsId = {
     About: 'About',
@@ -230,6 +231,13 @@ export default function EventContainer(props) {
                                 <h1 className="eventBox__title mg-b30">
                                     {data.title}
                                 </h1>
+                                {
+                                    data.description &&
+                                    <p className="eventBox__desc">
+                                        {data.description}
+                                        <br></br>
+                                    </p>
+                                }
                                 {/* <h4 className="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
                             </div>
 
@@ -250,9 +258,13 @@ export default function EventContainer(props) {
                             isMobileOnly &&
                             <div className="pd-t5 pd-b5 d-flex align-items-start justify-content-between">
                                 <button className="btn btn-secondary" onClick={() => {
-                                    showMediaModal(MediaModalType.Component, { component: Certificate, data: { addClickAnalytics: () => { addClickAnalytics(DOWNLOAD_CERTIFICATE) } } })
-                                    addClickAnalytics(CERTIFICATE_CLICK)
-                                }} disabled={props.disableFeedback}>Get your certificate</button>
+                                    if(props.disableFeedback)
+                                        swal("Event in progress", "Please collect your certificate at the end of the event on 17th April!");
+                                    else{
+                                        showMediaModal(MediaModalType.Component, { component: Certificate, data: { addClickAnalytics: () => { addClickAnalytics(DOWNLOAD_CERTIFICATE) } } })
+                                        addClickAnalytics(CERTIFICATE_CLICK)
+                                    }
+                                }}>Get your certificate</button>
                                 <button className="btn btn-secondary" onClick={() => {
                                     addClickAnalytics(FEEDBACK_CLICK);
                                     showMediaModal(MediaModalType.PDF, '/feedback/index.html')

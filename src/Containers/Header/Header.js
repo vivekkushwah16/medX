@@ -12,6 +12,7 @@ import Certificate from '../../Components/Certificate/Certificate'
 import './Header.css';
 import { CERTIFICATE_CLICK, DOWNLOAD_CERTIFICATE, FEEDBACK_CLICK } from '../../AppConstants/AnalyticsEventName'
 import { Link } from 'react-router-dom'
+import swal from 'sweetalert';
 
 //showCertificate, showFeedback 
 export default function Header(props) {
@@ -66,9 +67,13 @@ export default function Header(props) {
                         {
                             props.showCertificate &&
                             <button className="btn btn-secondary" onClick={() => {
+                                if(props.disableFeedback)
+                                swal("Event still in progress", "Please collect your certificate at the end of the event on 17th April!");
+                            else{
                                 addClickAnalytics(CERTIFICATE_CLICK);
                                 showMediaModal(MediaModalType.Component, { component: Certificate, data: { addClickAnalytics: () => { addClickAnalytics(DOWNLOAD_CERTIFICATE) } } })
-                            }} disabled={props.disableFeedback}>Get your certificate</button>
+                            }
+                            }}>Get your certificate</button>
                         }
                         {
                             props.showFeedback &&

@@ -28,6 +28,5 @@ export default function Certificate(props) {
             <span class="your_name" id="your_name">{user.displayName}</span>
             <ButtonWithLoader className="btn btn-secondary certDownload" name={'Download'} handleClick={downloadCert} />
         </div>
-
     )
 }
