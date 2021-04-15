@@ -24,7 +24,7 @@ export default function Certificate(props) {
 
     return (
         <div className="certificateContainer" ref={certificatBody}>
-            <img src="/assets/images/certi.jpg" width="100%" height="auto" className="certificate" />
+            <img src="/assets/images/certiIMPACT.png" width="100%" height="auto" className="certificate" />
             <span class="your_name" id="your_name">{user.displayName}</span>
             <ButtonWithLoader className="btn btn-secondary certDownload" name={'Download'} handleClick={downloadCert} />
         </div>

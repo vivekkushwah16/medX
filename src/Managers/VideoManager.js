@@ -302,7 +302,7 @@ const VideoManager = {
             }
         })
     },
-    getVideoWithTag: (tag = [], limit = 10, docRefToStartFrom = null, filter = videoSortFilter.date) => {
+    getVideoWithTag: (tag = [], limit = 20, docRefToStartFrom = null, filter = videoSortFilter.date) => {
         return new Promise(async (res, rej) => {
             try {
                 let docRef = firestore

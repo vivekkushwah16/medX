@@ -71,12 +71,7 @@ export default function App() {
 
 
 
-        // EventManager.addEventTimeLine("event-kmde59n5",
-        // "HP-Securing a Diagnosis", 
-        // "Until now, there has been little consensus in terms of disease definition, diagnostic criteria and diagnostic approach for Hypersensitivity Pneumonitis (HP). More than 30 years after the last guidance, the American Thoracic Society has developed new guidelines that addresses challenges in diagnosing HP. In this talk the diagnostic approach suggested will be critically analysed. "
-        // ,["speaker-kmfz0vco"],
-        // "1618666200000",
-        // "35")
+        // EventManager.addEventTimeLine("event-kmde59n5","HP-Securing a Diagnosis", "Until now, there has been little consensus in terms of disease definition, diagnostic criteria and diagnostic approach for Hypersensitivity Pneumonitis (HP). More than 30 years after the last guidance, the American Thoracic Society has developed new guidelines that addresses challenges in diagnosing HP. In this talk the diagnostic approach suggested will be critically analysed. ",["speaker-kmfz0vco"],"1618666200000","35")
 
         // EventManager.addEventTimeLine("event-kmde59n5",
         // "Post TB Lung Disease-An Unexplored Entitty", 

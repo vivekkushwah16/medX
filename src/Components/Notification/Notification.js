@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Notification(props) {
-    const { data } = props
+    const { data,handleClick } = props
     return (
         <div className="notification">
             <a className="notification__btn" href="#"><i className="icon-bell"></i></a>
@@ -9,7 +9,7 @@ export default function Notification(props) {
                 {
                     data.map((notification, index) => (
                         <li>
-                            <a key={index} href="#">{notification}</a>
+                            <a key={index} onClick={handleClick} href="#">{notification}</a>
                         </li>
                     ))
                 }

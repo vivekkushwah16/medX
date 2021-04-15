@@ -32,8 +32,21 @@ export default function SideAgendaNoUser(props) {
                                     <div className="bannerBox__left">
                                         <h1 className="bannerBox__subtitle mg-b10">A State-of-the-Art Academic Feast</h1>
                                         <p className="bannerBox__desc mg-b35">with the Leaders in Respiratory Medicine</p>
+                                        <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-b20" style={{fontSize: "1.1rem"}}
+                                                        onClick={(e) => {
+                                                            showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/536876068')
+                                                            // addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
+                                                            // addCAWithUserInfo(`/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`, true, { eventId: 'event-kmde59n5' }, true)
+                                                        }}>
+
+                                                        {
+                                                            // isMobileOnly ? 'Trailer' : 
+                                                             <>Watch Trailer&nbsp;<i className="icon-play" style={{fontSize: "1rem"}}></i></>
+                                                        }
+                                                    </a>
                                         <div className="d-flex d-sm-block justify-content-between">
-                                            <a href="#" className="btn btn-secondary bannerBox__btn mg-r20 d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fpdf%2FKNOW_YOUR_SPEAKERS.pdf')}>Know Your Faculty </a>
+                              
+                                            <a href="#" className="btn btn-secondary bannerBox__btn d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fpdf%2FKNOW_YOUR_SPEAKERS.pdf')}>Know Your Faculty </a>
                                             {/* <a href="#" className="btn btn-secondary bannerBox__btn mg-r20 d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/528854507')}>Watch Trailer <i className="icon-play mg-l10"></i></a> */}
                                         </div>
                                     </div>

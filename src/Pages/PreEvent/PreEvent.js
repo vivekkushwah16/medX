@@ -90,6 +90,18 @@ function PreEvent() {
                                                 {/* <p class="bannerBox__subtitle mg-b40">Do tune in on 16th April 2021 for 2 days of cutting-edge academic feast with experts in Respiratory Medicine</p> */}
                                                 <p class="bannerBox__subtitle mg-b40">Tune in for a State-of-the-Art Academic Feast with the Leaders in Respiratory Medicine.</p>
                                                 <p class="bannerBox__date mg-b30">16<sup>th</sup> - 17<sup>th</sup> April 2021</p>
+                                                <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-b20" style={{fontSize: "1.1rem"}}
+                                                        onClick={(e) => {
+                                                            showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/536876068')
+                                                            // addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
+                                                            // addCAWithUserInfo(`/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`, true, { eventId: 'event-kmde59n5' }, true)
+                                                        }}>
+
+                                                        {
+                                                            // isMobileOnly ? 'Trailer' : 
+                                                             <>Watch Trailer&nbsp;<i className="icon-play" style={{fontSize: "1rem"}}></i></>
+                                                        }
+                                                    </a>
                                                 <div class="d-flex middle-In-mobile">
                                                     <AddToCalendar blueBtn={true} />
 
@@ -105,23 +117,14 @@ function PreEvent() {
                                                         }
                                                     </a>
                                                     
-                                                    {/* <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
-                                                        onClick={(e) => {
-                                                            showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/536876068')
-                                                            // addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
-                                                            // addCAWithUserInfo(`/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`, true, { eventId: 'event-kmde59n5' }, true)
-                                                        }}>
-
-                                                        {
-                                                            isMobileOnly ? 'Trailer' : 'Watch Trailer'
-                                                        }
-                                                    </a> */}
+                                      
                                                     {/* <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-l20" onClick={() => {
                                                         startVideo()
                                                         addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: 'event-kmde59n5' })
                                                         addCAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, true, { eventId: 'event-kmde59n5' }, true)
                                                     }}>WATCH TRAILER</a> */}
                                                 </div>
+                       
                                             </div>
                                             <div class="bannerBox__right">
                                                 <img class="bannerBox__pic" src="assets/images/logos/impact-logo3.png" alt="" />

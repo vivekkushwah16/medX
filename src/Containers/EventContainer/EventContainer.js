@@ -27,7 +27,7 @@ const menuItems = [
     { id: menuItemsId.About, name: 'Faculty', className: '' },
     { id: menuItemsId.Agenda, name: 'Agenda', className: '' },
     { id: menuItemsId.Trending, name: 'Trending', className: '' },
-    { id: menuItemsId.Polls, name: 'Polls', className: 'hide-on-desktop' },
+    { id: menuItemsId.Polls, name: 'Q&A', className: 'hide-on-desktop' },
     { id: menuItemsId.Partner_with_us, name: 'Partner with us', className: '' },
 ]
 

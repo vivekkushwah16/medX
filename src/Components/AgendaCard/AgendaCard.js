@@ -115,7 +115,7 @@ function AgendaCard(props) {
                                 forEventPage &&
                                 rating !== null &&
                                 <>
-                                    <p class="font-12 mg-b20">Is this topic relevant to you?</p>
+                                    <p class="font-12 mg-b20">Please Rate this Session?</p>
                                     <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
                                 </>
                             }
@@ -234,7 +234,7 @@ function AgendaCard(props) {
                         {
                             rating !== null &&
                             <>
-                                <p class="font-14 mg-b20">Is this topic relevant to you?</p>
+                                <p class="font-14 mg-b20">Please Rate this Session?</p>
                                 <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
                             </>
                         }
@@ -248,7 +248,7 @@ function AgendaCard(props) {
                     {
                         rating !== null &&
                         <>
-                            <p class="font-14 mg-b20">Is this topic relevant to you?</p>
+                            <p class="font-14 mg-b20">Please Rate this Session?</p>
                             <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
                         </>
                     }
