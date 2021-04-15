@@ -13,7 +13,7 @@ import './assets/css/modal.css'
 import loadable from '@loadable/component';
 import LoadableFallback from './Components/LoadableFallback/LoadableFallback';
 import Upload from './Components/Upload/upload';
-import { copyFromRealtoFirestore } from './Firebase/firebase';
+// import { copyFromRealtoFirestore } from './Firebase/firebase';
 // import LiveCount from './Pages/LiveCount/liveCount';
 // import QnaPage from './Pages/QnaPage/QnaPage';
 import LiveCount from './Pages/LiveCount/liveCount';

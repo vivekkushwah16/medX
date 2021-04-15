@@ -79,6 +79,7 @@ export default function PollContainer(props) {
     if (pollData) {
         visiblePollData = pollData.filter(item => item.state !== POLL_STATES.hide) //pass index also
     }
+
     return (
         <>
             <h2 className="communityBox__title mg-b10">Polls</h2>
@@ -89,6 +90,16 @@ export default function PollContainer(props) {
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <img src="/assets/images/loader.gif" alt="loading" style={{ maxWidth: '1.5rem' }} />
                     </div>
+                }
+                {
+                    visiblePollData &&
+                    visiblePollData.length === 0 &&
+                    <>
+                        <div className="noVisiblePoll">
+                            <h2>Answer polls and quizes</h2>
+                            <p>As soon as a poll is posted you will be able to express your opinion or answer tghe quiz.</p>
+                        </div>
+                    </>
                 }
                 {
                     visiblePollData &&

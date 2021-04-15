@@ -223,7 +223,7 @@ export default function EventContainer(props) {
                             <div class="mx-w600">
                                 <h1 class="eventBox__title mg-b30">
                                     {data.title}
-                                    </h1>
+                                </h1>
                                 {/* <h4 class="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
                             </div>
 
@@ -292,6 +292,7 @@ export default function EventContainer(props) {
                                             QNASendAnalytics();
                                             sendQuestion(eventId, ques, data.activeTimelineId)
                                         }}
+                                        noticeboard={data.noticeboard}
                                         id={id}
                                         pollAnalytics={(pollId, optionId) => {
                                             PollInteractionAnalytics(pollId, optionId);
@@ -315,6 +316,7 @@ export default function EventContainer(props) {
                                     QNASendAnalytics();
                                     sendQuestion(eventId, ques, data.activeTimelineId)
                                 }}
+                                noticeboard={data.noticeboard}
                                 id={id} showCloseButton={false}
                                 pollAnalytics={(pollId, optionId) => {
                                     PollInteractionAnalytics(pollId, optionId);

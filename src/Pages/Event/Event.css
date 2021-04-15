@@ -149,19 +149,43 @@
     /* background: black; */
 }
 
-#eventPage .headerBox{
+#eventPage .headerBox {
     padding-top: 1.125rem!important;
 }
-#eventPage .eventBox{
+
+#eventPage .eventBox {
     padding: 6.875rem ​0rem;
 }
 
-#eventPage .eventBox__video iframe{
+#eventPage .eventBox__video iframe {
     border-radius: 0.75rem;
 }
 
-#eventPage  .eventBox__video{
+#eventPage .eventBox__video {
     background: transparent;
+}
+
+.noVisiblePoll {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 0.75rem;
+}
+
+.noVisiblePoll>h2 {
+    color: #015189;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.noVisiblePoll>p {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.9rem;
 }
 
 @media only screen and (max-width: 1023px) {
