@@ -66,11 +66,12 @@ export default function QnaPage(props) {
                     let _userData = doc.data()
                     let _userRecord = await getUserData(_userData.userId);
                     if (userRecord) {
-                        newData.push({ ..._userData, ..._userRecord })
+                        newData.push({ ..._userData, firstName: _userRecord.firstName, lastName: _userRecord.lastName, state: _userRecord.state })
                     } else {
                         newData.push(_userData)
                     }
                 }
+
                 setData(newData)
             })
 
@@ -112,7 +113,7 @@ export default function QnaPage(props) {
                         <tr key={`Quesstion-header`}>
                             <th key={`Quesstion-name`}>Name</th>
                             <th key={`Quesstion-state`}>State</th>
-                            <th key={`Quesstion-state`}>Timeline Id</th>
+                            {/* <th key={`Quesstion-state`}>Timeline Id</th> */}
                             <th key={`Quesstion-quesiton`}>Question</th>
                             <th key={`Quesstion-time`}>Time</th>
                         </tr>
@@ -123,7 +124,7 @@ export default function QnaPage(props) {
                                     <tr key={`question-${d.userId}`}>
                                         <td key={`question-${d.userId}-name`} >{d.firstName}{d.lastName ? ' ' + d.lastName : ''}</td>
                                         <td key={`question-${d.userId}-state`}>{d.state}</td>
-                                        <td key={`question-${d.userId}-question`}>{d.timelineId}</td>
+                                        {/* <td key={`question-${d.userId}-question`}>{d.timelineId}</td> */}
                                         <td key={`question-${d.userId}-question`}>{d.question}</td>
                                         <td key={`question-${d.userId}-time`}>{new Date(d.date).toLocaleString()}</td>
                                     </tr>

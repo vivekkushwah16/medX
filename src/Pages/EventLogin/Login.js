@@ -45,6 +45,7 @@ class Login extends Component {
         currentDate: null,
         currentTab: !isMobileOnly ? TABS.bothTab : TABS.LoginTab
     }
+    firstTime = true;
 
     componentDidMount = async () => {
         const agendaData = await EventManager.getAgenda('event-kmde59n5')
@@ -53,9 +54,9 @@ class Login extends Component {
         this.handleResize();
         window.addEventListener('resize', this.handleResize)
     }
-
     processAgendaData = (data) => {
         let newData = {}
+        data.sort(function(a, b){return a.startTime - b.startTime});
         data.forEach((timeline) => {
             let date = `${MonthName[new Date(timeline.startTime).getMonth()]} ${new Date(timeline.startTime).getDate()}`
             if (newData.hasOwnProperty(date)) {
@@ -71,10 +72,15 @@ class Login extends Component {
             }
         })
         let dates = Object.keys(newData)
+        if (this.firstTime) {
+            this.setState({
+                currentDate: dates[0]
+            })
+            this.firstTime = false
+        }
         this.setState({
             agendaDates: dates,
             agendaData: newData,
-            currentDate: dates[0]
         })
     }
 

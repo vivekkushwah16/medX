@@ -95,7 +95,7 @@ export default function AnalyticsContextProvider(props) {
     //sessionId , timestamps, date
     const updateUserStatus = async (eventId, timelineId, timespent) => {
         try {
-            console.log(user)
+            // console.log(user)
 
             if (!sessionId) {
                 console.error("SessionId is null")
@@ -112,7 +112,7 @@ export default function AnalyticsContextProvider(props) {
 
             var currentDate = new Date();
             let dateString = `${currentDate.getDate()} ${MonthName[currentDate.getMonth()]} ${currentDate.getFullYear()} 00:00:00`
-            console.log(dateString)
+            // console.log(dateString)
             var dateTimeStamp = new Date(dateString).getTime()
             let _sessionId = sessionId
             if (!_sessionId) {
@@ -139,11 +139,11 @@ export default function AnalyticsContextProvider(props) {
                 date: dateTimeStamp,
                 sessionId: _sessionId,
             }
-            console.log(_data)
+            // console.log(_data)
             // dummyFunction(_data, user.uid)
             const cloudRef = cloudFunction.httpsCallable(UPDATE_USER_STAUS)
             cloudRef(JSON.stringify(_data)).then((res) => {
-                console.log(res)
+                // console.log(res)
             }).catch(err => {
                 console.log(err);
             })
@@ -152,45 +152,6 @@ export default function AnalyticsContextProvider(props) {
         } catch (error) {
             console.log(error);
         }
-    }
-
-    const dummyFunction = (data, uid) => {
-        const { firstName, lastName, email, phoneNumber, profession,
-            speciality, country, state, city, eventId,
-            timelineId, timespent, date, sessionId, timestamp } = data;
-
-        let date_obj = new Date(date);
-        console.log('xxxxxxxxxxxxxxxxxxxx')
-        let dateString = `${date_obj.getDate()}-${date_obj.getMonth() + 1}-${date_obj.getFullYear()}`
-        console.log(date_obj)
-        console.log(dateString)
-
-        const userStatusPath = `userStatus/${dateString}/${sessionId}/`;
-        const userStatusRef = firebase.database().ref(userStatusPath);
-        const userStatusData = {
-            firstName, lastName, email, phoneNumber, profession,
-            speciality, country, state, city,
-            eventId,
-            timelineId,
-            timestamp,
-            date,
-        };
-        console.log(userStatusPath)
-        console.log(userStatusData)
-        userStatusRef.update(userStatusData);
-        const userSessionPath = `userSession/${dateString}/${eventId}/${uid}/`;
-        const userSessionRef = firebase.database().ref(userSessionPath);
-        const userSessionData = {
-            firstName, lastName, email, phoneNumber, profession,
-            speciality, country, state, city,
-            eventId,
-            [timelineId]: firebase.database.ServerValue.increment(timespent),
-            date,
-        };
-        console.log(userSessionData)
-        console.log('xxxxxxxxxxxxxxxxxxxx')
-        userSessionRef.update(userSessionData);
-        return { status: "done" };
     }
 
     return (

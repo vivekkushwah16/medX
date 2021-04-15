@@ -154,7 +154,8 @@
 }
 
 #eventPage .eventBox {
-    padding: 6.875rem ​0rem;
+    /* padding: 6.875rem ​0rem!important; */
+    padding: 6.875rem 0;
 }
 
 #eventPage .eventBox__video iframe {
@@ -176,6 +177,17 @@
     padding: 0.75rem;
 }
 
+.text_underline{
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-underline-position: under;
+    text-decoration-color: rgb(1 81 137 / 42%);
+    transition: 0.15s;
+}
+.text_underline:hover{
+    text-decoration-color: rgb(1 81 137 / 100%);
+}
+
 .noVisiblePoll>h2 {
     color: #015189;
     font-weight: 700;
@@ -186,6 +198,17 @@
 .noVisiblePoll>p {
     color: rgba(0, 0, 0, 0.6);
     font-size: 0.9rem;
+}
+
+.partnerWithUs-lessThan2{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    overflow-x: auto;
+}
+.partnerWithUs-lessThan2 .partnerBox__item{
+    opacity: 1;
+    /* min-height: 26rem; */
 }
 
 @media only screen and (max-width: 1023px) {

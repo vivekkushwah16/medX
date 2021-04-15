@@ -508,7 +508,7 @@ const EventManager = {
                 await firestore.runTransaction(async transcation => {
                     const doc = await transcation.get(LikeRef)
                     if (doc.exists) {
-                        res(doc.data)
+                        res(doc.data())
                     }
                     else {
                         res(null)

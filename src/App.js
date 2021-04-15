@@ -92,6 +92,13 @@ export default function App() {
         // "35")
 
         // EventManager.addEventTimeLine("event-kmde59n5",
+        // "Panel Discussion on Inhaled Steroids for Early COVID-19: Can it prevent hospitalisation?", 
+        // "Late Breaker Session",
+        // ["speaker-kniqdd35","speaker-knft2h6b","speaker-knhskepm","speaker-knhskho6"],
+        // "1618664700000",
+        // "25")
+
+        // EventManager.addEventTimeLine("event-kmde59n5",
         // "The Rise and Fall of Medical Thoracoscopy", 
         // "",
         // ["speaker-kmfz0vco"],

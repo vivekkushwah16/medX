@@ -96,8 +96,8 @@ export default function PollContainer(props) {
                     visiblePollData.length === 0 &&
                     <>
                         <div className="noVisiblePoll">
-                            <h2>Answer polls and quizes</h2>
-                            <p>As soon as a poll is posted you will be able to express your opinion or answer tghe quiz.</p>
+                            {/* <h2>Answer polls and quizes</h2> */}
+                            <p>As soon as a poll is posted <br></br>you will be able to express your opinion.</p>
                         </div>
                     </>
                 }

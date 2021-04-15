@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react'
+import React, { useContext, useEffect, useState, useRef, useMemo } from 'react'
 import { isMobileOnly } from 'react-device-detect'
 import ReactPlayer from 'react-player'
 import { CERTIFICATE_CLICK, DOWNLOAD_CERTIFICATE, FEEDBACK_CLICK, POLL_INTERACTION, QNA_INTERATCION, SESSION_ATTENDED } from '../../AppConstants/AnalyticsEventName'
@@ -56,6 +56,8 @@ export default function EventContainer(props) {
 
     const { user, userInfo } = useContext(UserContext)
     const { addGAWithUserInfo, addCAWithUserInfo, updateUserStatus } = useContext(AnalyticsContext)
+    let firstTime = useMemo(() => true, []);
+
     //#endregion
 
     const addClickAnalytics = (eventName) => {
@@ -167,6 +169,7 @@ export default function EventContainer(props) {
 
     const processAgendaData = (data) => {
         let newData = {}
+        data.sort(function (a, b) { return a.startTime - b.startTime });
         data.forEach((timeline) => {
             let date = `${MonthName[new Date(timeline.startTime).getMonth()]} ${new Date(timeline.startTime).getDate()}`
             if (newData.hasOwnProperty(date)) {
@@ -182,8 +185,11 @@ export default function EventContainer(props) {
             }
         })
         let dates = Object.keys(newData)
+        if (firstTime) {
+            setCureentAgendaDate(dates[0])
+            firstTime = false
+        }
         setAgendaDates(dates)
-        setCureentAgendaDate(dates[0])
         setAgendaData(newData)
     }
 
@@ -196,7 +202,7 @@ export default function EventContainer(props) {
         <div className="eventBox">
             {
                 !activePollPanel && !isMobileOnly &&
-                <a href="#" class="eventBox__sidebar-btn active" onClick={(e) => {
+                <a href="#" className="eventBox__sidebar-btn active" onClick={(e) => {
                     e.preventDefault();
                     addClickAnalytics(`${menuItemsId.Polls}_click`)
                     setPollPanelActive(true)
@@ -204,7 +210,7 @@ export default function EventContainer(props) {
             }
 
             <div className="container" style={activePollPanel && !isMobileOnly ? { maxWidth: 'unset' } : {}}>
-                <div className={`d-flex row d-sm-block  ${activePollPanel && !isMobileOnly  ? 'eventBox__inner' : ''}`}>
+                <div className={`d-flex row d-sm-block  ${activePollPanel && !isMobileOnly ? 'eventBox__inner' : ''}`}>
                     <div className="eventBox__left col">
                         <div className="eventBox__video">
                             <ReactPlayer
@@ -219,12 +225,12 @@ export default function EventContainer(props) {
                             ></ReactPlayer>
                             {/* <img src="assets/images/video3.jpg" alt="" /> */}
                         </div>
-                        <div class="pd-t30 pd-b10 d-flex align-items-start justify-content-between">
-                            <div class="mx-w600">
-                                <h1 class="eventBox__title mg-b30">
+                        <div className="pd-t30 pd-b10 d-flex align-items-start justify-content-between">
+                            <div className="mx-w600">
+                                <h1 className="eventBox__title mg-b30">
                                     {data.title}
                                 </h1>
-                                {/* <h4 class="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
+                                {/* <h4 className="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
                             </div>
 
                             <a href="#" className={`like-btn eventBox__like-btn ${likedEvent ? 'like-btn--active' : ''}`}
@@ -236,13 +242,13 @@ export default function EventContainer(props) {
                                         })
                                     }
                                 }}>
-                                <i class="icon-like"></i>{data.likes}
+                                <i className="icon-like"></i>{data.likes}
                             </a>
 
                         </div>
                         {
                             isMobileOnly &&
-                            <div class="pd-t5 pd-b5 d-flex align-items-start justify-content-between">
+                            <div className="pd-t5 pd-b5 d-flex align-items-start justify-content-between">
                                 <button className="btn btn-secondary" onClick={() => {
                                     showMediaModal(MediaModalType.Component, { component: Certificate, data: { addClickAnalytics: () => { addClickAnalytics(DOWNLOAD_CERTIFICATE) } } })
                                     addClickAnalytics(CERTIFICATE_CLICK)
@@ -286,7 +292,7 @@ export default function EventContainer(props) {
 
                             {
                                 activeMenu.id === menuItemsId.Polls &&
-                                <div id="tab4" class="eventBox__tabs-content active">
+                                <div id="tab4" className="eventBox__tabs-content active">
                                     <CommunityBox
                                         sendQuestion={(eventId, ques) => {
                                             QNASendAnalytics();

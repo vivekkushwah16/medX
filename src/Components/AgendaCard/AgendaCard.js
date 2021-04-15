@@ -88,34 +88,34 @@ function AgendaCard(props) {
                         </a>
                     </div>
                 }
-                <div class="maincardBox__card-body">
-                    <div class="text-block">
+                <div className="maincardBox__card-body">
+                    <div className="text-block">
                         <h4 className="mg-b15 maincardBox__card-title">{timeline.title}
                         </h4>
                         {
                             showLive ? (
                                 <div className="mg-b15 maincardBox__card-title d-flex">
-                                    <h2 class="maincardBox__card-date"> {`${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</h2>
+                                    <h2 className="maincardBox__card-date"> {`${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</h2>
                                     <div className="liveBlock">
                                         <span></span>
                                         <div>Live</div>
                                     </div>
                                 </div>
                             ) :
-                                (<h2 class="maincardBox__card-date mg-b10"> {`${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</h2>)
+                                (<h2 className="maincardBox__card-date mg-b10"> {`${new Date(timeline.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${new Date(timeline.startTime + (timeline.duration * 60 * 1000)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</h2>)
                         }
                         <ReadMore className="mg-b25 maincardBox__card-desc" description={timeline.description} />
 
                     </div>
                     {
                         haveLikeButton &&
-                        <div class="rating-block">
+                        <div className="rating-block">
                             <button className={`mg-b40 mg-sm-b20 like-btn ${like ? 'like-btn--active' : ''} `} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
                             {
                                 forEventPage &&
                                 rating !== null &&
                                 <>
-                                    <p class="font-12 mg-b20">Please Rate this Session?</p>
+                                    <p className="font-12 mg-b20">Please Rate this Session?</p>
                                     <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
                                 </>
                             }
@@ -126,18 +126,28 @@ function AgendaCard(props) {
                 {
                     timeline.speakers && timeline.speakers.length > 0 &&
                     <>
-                        <div class="maincardBox__card-footer">
+                        <div className="maincardBox__card-footer">
                             {
                                 timeline.speakers.length === 1 ?
-                                    <h4 class="maincardBox__card-footer-title">Speaker</h4>
+                                    <>
+                                        <h4 className="maincardBox__card-footer-title">Speaker</h4>
+                                        {
+                                            timeline.speakers.map(id => (
+                                                <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={id} />
+                                            ))
+                                        }
+                                    </>
                                     :
-                                    <h4 class="maincardBox__card-footer-title">Speakers</h4>
-
-                            }
-                            {
-                                timeline.speakers.map(id => (
-                                    <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={id} />
-                                ))
+                                    <>
+                                        <h4 className="maincardBox__card-footer-title">Speakers</h4>
+                                        <div className="wrap-speakers" style={{display: "flex", flexWrap: 'wrap'}}>
+                                            {
+                                                timeline.speakers.map(id => (
+                                                    <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={id} />
+                                                ))
+                                            }
+                                        </div>
+                                    </>
                             }
                         </div>
                     </>
@@ -151,7 +161,7 @@ function AgendaCard(props) {
         if (forEventPage) {
             return (
                 <>
-                    <div class="maincardBox__card-wrap">
+                    <div className="maincardBox__card-wrap">
                         {
                             getMainRender()
                         }
@@ -229,12 +239,12 @@ function AgendaCard(props) {
 
                 {
                     haveLikeButton && !forEventPage &&
-                    <div class="rating-block">
+                    <div className="rating-block">
                         <button className={` mg-b40 mg-sm - b20 like-btn ${like ? 'like-btn--active' : ''} `} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
                         {
                             rating !== null &&
                             <>
-                                <p class="font-14 mg-b20">Please Rate this Session?</p>
+                                <p className="font-14 mg-b20">Please Rate this Session?</p>
                                 <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
                             </>
                         }
@@ -243,12 +253,12 @@ function AgendaCard(props) {
             </div>
             {
                 forEventPage &&
-                <div class="rating-block">
+                <div className="rating-block">
                     <button className={` mg-b40 mg-sm - b20 like-btn ${like ? 'like-btn--active' : ''} `} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
                     {
                         rating !== null &&
                         <>
-                            <p class="font-14 mg-b20">Please Rate this Session?</p>
+                            <p className="font-14 mg-b20">Please Rate this Session?</p>
                             <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
                         </>
                     }

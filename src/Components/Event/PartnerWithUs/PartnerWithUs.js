@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Slider from 'react-slick'
+import { eventContext } from '../../../Context/Event/EventContextProvider';
 import PartnerWithUsCard from './PartnerWithUsCard/PartnerWithUsCard'
 
 
@@ -51,7 +52,7 @@ var settings = {
         {
             breakpoint: 480,
             settings: {
-                slidesToShow:1,
+                slidesToShow: 1,
                 slidesToScroll: 1,
                 arrows: true,
             }
@@ -61,18 +62,30 @@ var settings = {
 
 export default function PartnerWithUs(props) {
     const { data, countIn, isActive } = props
+    const [isUpdated, setUpdate] = useState(false);
 
+    const _callCountIn = (eventId, targetId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                await countIn(eventId, targetId)
+                setUpdate(true)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }
+    
     return (
-        <div id="tab5" class={`eventBox__tabs-content ${isActive ? 'active' : ''}`}>
+        <div id="tab5" className={`eventBox__tabs-content ${isActive ? 'active' : ''}`}>
             <Slider className="partnerBox slider-horizontal-3"  {...settings}>
                 {
                     data.map(e => (
-                        <PartnerWithUsCard data={e} countIn={countIn} />
+                        <PartnerWithUsCard data={e} countIn={_callCountIn} />
                     ))
                 }
                 {
                     data.map(e => (
-                        <PartnerWithUsCard data={e} countIn={countIn} />
+                        <PartnerWithUsCard data={e} countIn={_callCountIn} />
                     ))
                 }
             </Slider>

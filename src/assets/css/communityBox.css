@@ -1,12 +1,14 @@
 /* ### community Box ### */
 .communityBox { padding: 0.75rem 1.25rem; height: 100%; border-radius: 1.25rem; box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25); background: #fff; }
 .communityBox__header { border-bottom: 1px solid rgba(0, 0, 0, 0.15); }
-.communityBox__body { overflow: auto; height: calc(100% - 10rem); }
+.communityBox__body { overflow: auto; height: calc(100% - 17.5rem); }
 .communityBox__close { padding: 0.75rem 1.5rem; font-weight: 300; border-radius: 40px; min-width: 0; }
 
 .communityBox hr { border-top-color: rgba(0, 0, 0, 0.15); }
 .communityBox__title { margin-bottom: 0.5rem; font-size: 0.9375rem; color: #005188; font-weight: 700; }
 
+.communityBox__noticeboard { padding: 1rem 0; box-sizing: border-box;}
+.communityBox__noticeboard_body { cursor: pointer;}
 .communityBox__send { padding: 1rem; border: 1px solid #A6A6A6; box-sizing: border-box; border-radius: 9px; display: flex; align-items: center; }
 .communityBox__send-pic { height: 2.375rem; width: 2.375rem; border-radius: 50%; }
 .communityBox__send .form-control { padding: 0.5rem; border-radius: 0; border: none; border-bottom: 1px solid #A6A6A6; }
