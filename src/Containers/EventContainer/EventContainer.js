@@ -203,8 +203,8 @@ export default function EventContainer(props) {
                 }}>Q&amp;A / Polls</a>
             }
 
-            <div className="container" style={activePollPanel ? { maxWidth: 'unset' } : {}}>
-                <div className={`d-flex row d-sm-block  ${activePollPanel ? 'eventBox__inner' : ''}`}>
+            <div className="container" style={activePollPanel && !isMobileOnly ? { maxWidth: 'unset' } : {}}>
+                <div className={`d-flex row d-sm-block  ${activePollPanel && !isMobileOnly  ? 'eventBox__inner' : ''}`}>
                     <div className="eventBox__left col">
                         <div className="eventBox__video">
                             <ReactPlayer
