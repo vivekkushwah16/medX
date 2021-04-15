@@ -211,6 +211,10 @@
     /* min-height: 26rem; */
 }
 
+#eventPage .eventBox_btn_box .btn{
+    font-size: 1.45rem!important;
+}
+
 @media only screen and (max-width: 1023px) {
     #tab3 .maincardBox {
         padding: 0rem;

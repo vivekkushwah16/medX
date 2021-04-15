@@ -15,6 +15,8 @@ import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvid
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider'
 import swal from 'sweetalert'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAward, faTasks } from '@fortawesome/free-solid-svg-icons'
 
 const menuItemsId = {
     About: 'About',
@@ -196,7 +198,7 @@ export default function EventContainer(props) {
 
     const handleDateChange = (date, event) => {
         if (event) { event.preventDefault() }
-        setCureentAgendaDate(date)
+        setCureentAgendaDate(date);
     }
 
     return (
@@ -242,7 +244,7 @@ export default function EventContainer(props) {
                                 {/* <h4 className="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
                             </div>
 
-                            <div style={{display: "flex", flexDirection: 'column'}}>
+                            <div className="eventBox_btn_box" style={{ display: "flex", flexDirection: 'column' }}>
                                 <a href="#" className={`like-btn eventBox__like-btn ${likedEvent ? 'like-btn--active' : ''}`}
                                     onClick={(e) => {
                                         if (likeButtonEnabled) {
@@ -257,18 +259,22 @@ export default function EventContainer(props) {
                                 {
                                     isMobileOnly &&
                                     <>
-                                        <button className="btn btn-secondary btn-sm mg-b10 mg-t10" onClick={() => {
-                                            if (props.disableFeedback)
+                                        <button className="btn btn-secondary btn-sm mg-b10 mg-t10 font-18 " onClick={() => {
+                                            if (!data.activeCertificate)
                                                 swal("Event in progress", "Please collect your certificate at the end of the event on 17th April!");
                                             else {
                                                 showMediaModal(MediaModalType.Component, { component: Certificate, data: { addClickAnalytics: () => { addClickAnalytics(DOWNLOAD_CERTIFICATE) } } })
                                                 addClickAnalytics(CERTIFICATE_CLICK)
                                             }
-                                        }}>cert.</button>
-                                        <button className="btn btn-secondary btn-sm mg-b10" onClick={() => {
+                                        }}><FontAwesomeIcon icon={faAward}/></button>
+                                        <button className="btn btn-secondary btn-sm mg-b10 font-18 " onClick={() => {
                                             addClickAnalytics(FEEDBACK_CLICK);
                                             showMediaModal(MediaModalType.PDF, '/feedback/index.html')
-                                        }}>Feed.</button>
+                                        }}>
+                                            <FontAwesomeIcon icon={faTasks}/>
+                                        </button>
+
+
                                     </>
                                 }
 

@@ -92,9 +92,9 @@ export default function PartnerWithUs(props) {
             query.docs.forEach((doc) => {
                 dataObj[doc.data().targetId] = true
             })
-            console.log('xxxxxxxxxxxxxxx=========================')
+            // console.log('xxxxxxxxxxxxxxx=========================')
             setAgreedData(dataObj)
-            console.log('xxxxxxxxxxxxxxx=========================')
+            // console.log('xxxxxxxxxxxxxxx=========================')
 
         })
     }
@@ -109,7 +109,7 @@ export default function PartnerWithUs(props) {
         return new Promise(async (res, rej) => {
             try {
                 await countIn(eventId, targetId)
-                console.log("count me in")
+                // console.log("count me in")
                 res()
             } catch (error) {
                 console.log(error)
