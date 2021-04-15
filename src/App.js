@@ -14,7 +14,6 @@ import loadable from '@loadable/component';
 import LoadableFallback from './Components/LoadableFallback/LoadableFallback';
 import Upload from './Components/Upload/upload';
 import { copyFromRealtoFirestore } from './Firebase/firebase';
-import EventManager from './Managers/EventManager';
 // import LiveCount from './Pages/LiveCount/liveCount';
 // import QnaPage from './Pages/QnaPage/QnaPage';
 import LiveCount from './Pages/LiveCount/liveCount';
