@@ -1,0 +1,64 @@
+.LiveCountContainer{
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.LiveCountContainer_header{
+    padding-top: 8.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+.LiveCountContainer_header span{
+    color: #015189;
+}
+.LiveCountContainer_header h2{
+    font-weight: bold;
+}
+
+.eventBoxBg {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.eventBoxBg::before {
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 45%;
+    width: 100%;
+    content: "";
+    background: url(../../assets/images/bg_wave.png) center bottom no-repeat;
+    background-size: 100% auto;
+    background-size: cover;
+    background-position-y: inherit;
+}
+
+#customers {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #015189;
+    color: white;
+  }
+
+  .LiveCountContainer_body{
+      margin-top: 2rem;
+  }

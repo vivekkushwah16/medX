@@ -1,0 +1,30 @@
+.SamplePageContainer{
+    min-width: 100vw;
+    min-height: 100vh;
+}
+.SamplePageContainer_body{
+    padding-top: 8rem;
+}
+
+
+#customers {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #015189;
+    color: white;
+  }
