@@ -1,10 +1,12 @@
 import React from 'react'
 
 export default function Notification(props) {
-    const { data,handleClick } = props
+    const { data, handleClick } = props
     return (
         <div className="notification">
-            <a className="notification__btn" href="#"><i className="icon-bell"></i></a>
+            <a className="notification__btn" href="#"><i className="icon-bell"></i>
+                <div className="notification_indicator"></div>
+            </a>
             <ul className="notification__dropdown">
                 {
                     data.map((notification, index) => (

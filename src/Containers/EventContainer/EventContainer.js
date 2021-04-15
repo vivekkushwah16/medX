@@ -241,6 +241,7 @@ export default function EventContainer(props) {
                                 {/* <h4 className="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
                             </div>
 
+
                             <a href="#" className={`like-btn eventBox__like-btn ${likedEvent ? 'like-btn--active' : ''}`}
                                 onClick={(e) => {
                                     if (likeButtonEnabled) {
@@ -254,6 +255,13 @@ export default function EventContainer(props) {
                             </a>
 
                         </div>
+                        {
+                            data.description &&
+                            <p className="eventBox__desc mg-b40">
+                                {data.description}
+                                <br></br>
+                            </p>
+                        }
                         {
                             isMobileOnly &&
                             <div className="pd-t5 pd-b5 d-flex align-items-start justify-content-between">

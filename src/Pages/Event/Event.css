@@ -225,6 +225,9 @@
     #tab3 .rating-block {
         margin-bottom: 0;
     }
+    #eventPage .eventBox__video {
+        background: black;
+    }
 }
 
 @media only screen and (max-width: 767px) {

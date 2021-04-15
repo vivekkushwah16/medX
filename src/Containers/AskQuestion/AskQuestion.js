@@ -29,7 +29,7 @@ export default function AskQuestion(props) {
     return (
         <>
             <div class="d-flex justify-content-between align-items-center pd-b10">
-                <h2 className="communityBox__title">Ask a question</h2>
+                <h2 className="communityBox__title">Ask The Experts</h2>
                 {
                     showCloseButton &&
                     <button class="btn btn-grey communityBox__close" onClick={handleCloseBtn}>Close</button>
