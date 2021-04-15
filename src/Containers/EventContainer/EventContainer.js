@@ -14,7 +14,7 @@ import Trending from '../../Components/Event/Trending/Trending'
 import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextProvider'
-import swal from 'sweetalert';
+import swal from 'sweetalert'
 
 const menuItemsId = {
     About: 'About',
@@ -227,7 +227,8 @@ export default function EventContainer(props) {
                             {/* <img src="assets/images/video3.jpg" alt="" /> */}
                         </div>
                         <div className="pd-t30 pd-b10 d-flex align-items-start justify-content-between">
-                            <div className="mx-w600">
+                            {/* mx-w600 */}
+                            <div className="eventBox_video_titleBox ">
                                 <h1 className="eventBox__title mg-b30">
                                     {data.title}
                                 </h1>
@@ -241,34 +242,53 @@ export default function EventContainer(props) {
                                 {/* <h4 className="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
                             </div>
 
+                            <div style={{display: "flex", flexDirection: 'column'}}>
+                                <a href="#" className={`like-btn eventBox__like-btn ${likedEvent ? 'like-btn--active' : ''}`}
+                                    onClick={(e) => {
+                                        if (likeButtonEnabled) {
+                                            makeLikeButtonEnabled(false)
+                                            handleEventLikeButton(e, () => {
+                                                makeLikeButtonEnabled(true)
+                                            })
+                                        }
+                                    }}>
+                                    <i className="icon-like"></i>{data.likes}
+                                </a>
+                                {
+                                    isMobileOnly &&
+                                    <>
+                                        <button className="btn btn-secondary btn-sm mg-b10 mg-t10" onClick={() => {
+                                            if (props.disableFeedback)
+                                                swal("Event in progress", "Please collect your certificate at the end of the event on 17th April!");
+                                            else {
+                                                showMediaModal(MediaModalType.Component, { component: Certificate, data: { addClickAnalytics: () => { addClickAnalytics(DOWNLOAD_CERTIFICATE) } } })
+                                                addClickAnalytics(CERTIFICATE_CLICK)
+                                            }
+                                        }}>cert.</button>
+                                        <button className="btn btn-secondary btn-sm mg-b10" onClick={() => {
+                                            addClickAnalytics(FEEDBACK_CLICK);
+                                            showMediaModal(MediaModalType.PDF, '/feedback/index.html')
+                                        }}>Feed.</button>
+                                    </>
+                                }
 
-                            <a href="#" className={`like-btn eventBox__like-btn ${likedEvent ? 'like-btn--active' : ''}`}
-                                onClick={(e) => {
-                                    if (likeButtonEnabled) {
-                                        makeLikeButtonEnabled(false)
-                                        handleEventLikeButton(e, () => {
-                                            makeLikeButtonEnabled(true)
-                                        })
-                                    }
-                                }}>
-                                <i className="icon-like"></i>{data.likes}
-                            </a>
+                            </div>
 
                         </div>
-                        {
+                        {/* {
                             data.description &&
                             <p className="eventBox__desc mg-b40">
                                 {data.description}
                                 <br></br>
                             </p>
-                        }
-                        {
+                        } */}
+                        {/* {
                             isMobileOnly &&
                             <div className="pd-t5 pd-b5 d-flex align-items-start justify-content-between">
                                 <button className="btn btn-secondary" onClick={() => {
-                                    if(props.disableFeedback)
+                                    if (props.disableFeedback)
                                         swal("Event in progress", "Please collect your certificate at the end of the event on 17th April!");
-                                    else{
+                                    else {
                                         showMediaModal(MediaModalType.Component, { component: Certificate, data: { addClickAnalytics: () => { addClickAnalytics(DOWNLOAD_CERTIFICATE) } } })
                                         addClickAnalytics(CERTIFICATE_CLICK)
                                     }
@@ -278,7 +298,7 @@ export default function EventContainer(props) {
                                     showMediaModal(MediaModalType.PDF, '/feedback/index.html')
                                 }}>Feedback</button>
                             </div>
-                        }
+                        } */}
                         <div className="eventBox__tabs-wrapper">
                             <EventMenu menuItems={menuItems} activeMenu={activeMenu} setActiveMenu={(item) => {
                                 addClickAnalytics(`${item.id}_click`)

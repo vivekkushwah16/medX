@@ -115,7 +115,7 @@ function AgendaCard(props) {
                                 forEventPage &&
                                 rating !== null &&
                                 <>
-                                    <p className="font-12 mg-b20">Please Rate this Session?</p>
+                                    <p className="font-12 mg-b20">Please Rate this Session</p>
                                     <StartRating initalRating={rating} updateRating={updatingTimelineRating} />
                                 </>
                             }
