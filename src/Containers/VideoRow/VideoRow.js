@@ -7,6 +7,7 @@ import VideoThumbnail_Rich from '../../Components/VideoThumbnail_Rich/VideoThumb
 import VideoManager from '../../Managers/VideoManager';
 import { UserContext } from '../../Context/Auth/UserContextProvider';
 import TagsRow from '../TagsRow/TagsRow';
+import { isMobileOnly } from 'react-device-detect';
 
 
 function SampleNextArrow(props) {

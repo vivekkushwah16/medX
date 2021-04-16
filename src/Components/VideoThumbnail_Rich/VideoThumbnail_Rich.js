@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { isMobileOnly } from 'react-device-detect'
 import { VIDEO_CLICK } from '../../AppConstants/AnalyticsEventName'
 import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
@@ -47,7 +48,7 @@ function VideoThumbnail_Rich(props) {
 
     return (
         <div className={"col-25 col-md-50 col-sm-100"} style={!grid ? { width: '100%' } : {}}>
-            <div className="contentBox__item" id={videoInfo.id}
+            <div className={isMobileOnly?"contentBox__item w-20":"contentBox__item w-25"} id={videoInfo.id}
                 onClick={() => {
                     addAnalytics();
                     openVideoPop(metadata, videoInfo, videosData, tag);

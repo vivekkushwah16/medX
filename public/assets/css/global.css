@@ -61,6 +61,8 @@ html { scroll-behavior: smooth; }
 .mg-r80 { margin-right: 5rem !important; }
 .mg-x-auto { margin-left: auto !important; margin-right: auto !important; }
 
+.w-25{width: 25rem !important;}
+.w-20{width: 20rem !important;}
 /* paddings */
 .pd-t0 { padding-top: 0 !important; }
 .pd-t5 { padding-top: 0.3125rem !important; }
