@@ -30,7 +30,7 @@ function AgendaCard(props) {
         getCurrentTargetLikeStatus()
         getCurrentTargetRatingStatus()
         setLikeAmount(timeline.likes);
-    }, [timeline])
+    }, [timeline, haveLikeButton])
 
     const getCurrentTargetLikeStatus = async () => {
         if (haveLikeButton) {
