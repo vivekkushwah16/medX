@@ -186,6 +186,7 @@ export default function EventContainer(props) {
             }
         })
         let dates = Object.keys(newData)
+        console.log(firstTime,';;;x;x;x');
         if (firstTime) {
             setCureentAgendaDate(dates[0])
             firstTime = false

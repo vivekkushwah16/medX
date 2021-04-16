@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
 import { UserContext } from './Context/Auth/UserContextProvider';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 import NotLoggedInRoutes from './Components/NotLoggedInRoutes/NotLoggedInRoutes';
@@ -176,7 +176,8 @@ export default function App() {
                         {/* Home Route */}
 
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>
-                            <PreEventLazy />
+                            {/* <PreEventLazy /> */}
+                            <Redirect to={"/event/event-kmde59n5"}></Redirect>
                         </ProtectedRoute>
 
                         {/* event-kmde59n5 */}
@@ -195,14 +196,6 @@ export default function App() {
                             <QnaPage />
                         </ProtectedRoute>
 
-
-                        {/* <ProtectedRoute redirectTo={LOGIN_ROUTE} path={TOPIC_ROUTE}>
-                            <Topics />
-                        </ProtectedRoute> */}
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={RootRoute}>
-                            {/* <PreEventLazy /> */}
-                            <Home />
-                        </ProtectedRoute>
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={"*"}>
                             {/* <PreEventLazy /> */}
                             <Home />

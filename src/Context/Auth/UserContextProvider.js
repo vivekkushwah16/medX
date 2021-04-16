@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { MEDIAMETADATA_COLLECTION } from '../../AppConstants/CollectionConstants';
+import { BACKSTAGE_COLLECTION, MEDIAMETADATA_COLLECTION, NOTICEBOARD_COLLECTION, PLATFORM_BACKSTAGE_DOC } from '../../AppConstants/CollectionConstants';
 import { MediaType } from '../../AppConstants/TypeConstant';
 import firebase, { analytics, auth, database, getUserProfile, firestore } from '../../Firebase/firebase';
 import VideoManager from '../../Managers/VideoManager';
@@ -13,6 +13,15 @@ const UserContextProvider = (props) => {
     const [mediaMetaData, setMediaMetaData] = useState({})
 
     useEffect(() => {
+        // firestore.collection(BACKSTAGE_COLLECTION).doc(PLATFORM_BACKSTAGE_DOC).onSnapshot((doc) => {
+        //     if (!doc.exists) {
+        //         console.log("backstagePlatform doc not exists")
+        //     }
+        //     const data = doc.data()
+        //     localStorage.setItem('platformData', JSON.stringify(data))
+        //     setPlatformData(data)
+        // })
+
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 // console.log(user.email)

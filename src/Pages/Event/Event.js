@@ -17,7 +17,7 @@ export default function Event() {
     let param = useParams()
     let { getTimelines, attachTrendingDataListener, removeTrendingDataListener,
         getPartnerWithUs, countPartnerWithUsAgree,
-        sendQuestion, getEventDataListener, removeEventDataListener } = useContext(eventContext)
+        sendQuestion, getEventDataListener, removeEventDataListener, attachTimelineListener, removeTimelineListener } = useContext(eventContext)
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
     let { getLike, addLike, removeLike, } = useContext(likeContext)
     const { user, userInfo } = useContext(UserContext)
@@ -36,6 +36,7 @@ export default function Event() {
         return () => {
             removeTrendingDataListener()
             removeEventDataListener()
+            removeTimelineListener()
         }
     }, [])
 
@@ -54,8 +55,16 @@ export default function Event() {
     }
     const getAgendaInfo = async () => {
         try {
-            const data = await getTimelines(param.id)
-            setAgendaData(data)
+            attachTimelineListener(param.id, (data, err) => {
+                if (err) {
+                    console.log(err)
+                    return
+                }
+                setAgendaData(data)
+                // setAgendaData(data)
+            })
+            // const data = await getTimelines(param.id)
+            // setAgendaData(data)
         } catch (error) {
             console.log(error)
         }

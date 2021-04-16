@@ -13,6 +13,11 @@ import Header from '../../Containers/Header/Header';
 import TagsRow from '../../Containers/TagsRow/TagsRow';
 import Footer from '../../Containers/Footer/Footer';
 import { isMobileOnly } from 'react-device-detect';
+import { UserContext } from '../../Context/Auth/UserContextProvider';
+import { firestore } from '../../Firebase/firebase';
+import { BACKSTAGE_COLLECTION, PLATFORM_BACKSTAGE_DOC } from '../../AppConstants/CollectionConstants';
+import swal from 'sweetalert';
+import { withRouter } from 'react-router-dom';
 // import { color } from 'html2canvas/dist/types/css/types/color';
 
 class Home extends Component {
@@ -28,8 +33,8 @@ class Home extends Component {
             { tag: 'Asthma', header: 'Videos on Asthma' },
             { tag: 'ILD/IPF', header: 'Videos on ILD/IPF' },
             { tag: 'Telemedicine', header: 'Videos on Telemedicine' },
-            { tag: ['Inhalation Devices', 'Diagnosis','Pulmonary Hypertension','Pediatric asthma','Bronchiectasis','Allergic Rhinitis'], header: 'Videos on Other Respiratory Diseases', multipleTags: true },
-           
+            { tag: ['Inhalation Devices', 'Diagnosis', 'Pulmonary Hypertension', 'Pediatric asthma', 'Bronchiectasis', 'Allergic Rhinitis'], header: 'Videos on Other Respiratory Diseases', multipleTags: true },
+
 
 
             // { tag: 'Recommendations', header: 'Videos on Recommendations' },
@@ -68,7 +73,8 @@ class Home extends Component {
 
         activeTag: { tag: 'COPD', header: 'Videos on COPD' },
         lastPlayed: null,
-        lastVideoMetadata: null
+        lastVideoMetadata: null,
+        platformData: JSON.parse(localStorage.getItem('platformData'))
     }
 
     onTagSelect = (tag) => {
@@ -87,17 +93,17 @@ class Home extends Component {
     }
 
     openVideoPop = (metadata, videoData, videosData, tagSelectedFrom) => {
-        console.log(metadata,videoData,videosData,tagSelectedFrom);
+        console.log(metadata, videoData, videosData, tagSelectedFrom);
         this.closeVideoPop(metadata);
-        setTimeout(()=>{
+        setTimeout(() => {
             this.setState({
                 currentVideosData: videosData,
                 videopopVisible: true,
                 videoPopupData: { ...videoData, tagSelectedFrom },
                 lastVideoMetadata: metadata
             })
-        },100);
-        
+        }, 100);
+
     }
 
     closeVideoPop = (videoData) => {
@@ -109,6 +115,32 @@ class Home extends Component {
         })
     }
 
+    componentDidMount() {
+        firestore.collection(BACKSTAGE_COLLECTION).doc(PLATFORM_BACKSTAGE_DOC).onSnapshot((doc) => {
+            if (!doc.exists) {
+                console.log("backstagePlatform doc not exists")
+            }
+            const data = doc.data()
+            localStorage.setItem('platformData', JSON.stringify(data))
+            this.setState({
+                platformData: data
+            })
+            if (data.liveEventCTA) {
+                if (data.liveEventCTA.active) {
+                    swal({
+                        title: data.liveEventCTA.title,
+                        text: data.liveEventCTA.message,
+                        icon: "info",
+                        button: data.liveEventCTA.buttonText
+                    }).then(() => {
+                        const { history } = this.props;
+                        if (history) history.push(data.liveEventCTA.redirectTo);
+                    })
+                }
+            }
+        })
+    }
+
     render() {
 
         return (
@@ -116,12 +148,12 @@ class Home extends Component {
             <>
                 <div className="topicsBox__wrapper" id="homePageConatiner">
                     <Header hideInviteFriend={true} whiteLogo={true} stickyOnScroll={true} />
-                    <Banner/>
-                
+                    <Banner />
+
                     <div className="tabBox" id="homeVideoContainer">
                         <div class="container" id="ottContent">
-                                <div style={{zIndex:'1',position:'absolute',right:'0',top:'0',width:'7%',height:'100%',backgroundImage:'linear-gradient(to right, transparent , black)'}}></div>
-                       
+                            <div style={{ zIndex: '1', position: 'absolute', right: '0', top: '0', width: '7%', height: '100%', backgroundImage: 'linear-gradient(to right, transparent , black)' }}></div>
+
                             <TagsRow tags={this.state.tags} stickyOnScroll={false} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag} />
 
                             <div className="contentBox" >
@@ -170,4 +202,5 @@ class Home extends Component {
 }
 
 
-export default Home;
+export default withRouter(Home);
+Home.contextType = UserContext
