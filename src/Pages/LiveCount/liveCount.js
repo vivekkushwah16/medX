@@ -3,7 +3,7 @@ import Header from '../../Containers/Header/Header';
 import { database } from '../../Firebase/firebase'
 import './LiveCount.css'
 
-const timeOffset = 1;
+const timeOffset = 1.5;
 
 export default function LiveCount() {
     const [data, setData] = useState(null)

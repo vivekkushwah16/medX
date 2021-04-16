@@ -27,11 +27,11 @@ export default function ReadMore(props) {
             }
             {
                 moreState === possibleStates.showMore &&
-                <p className={className}>{description.substr(0, characterLimit)}...&nbsp; <a href="#" onClick={(e) => { e.preventDefault(); setMoreState(possibleStates.showLess) }}>Show more</a></p>
+                <p className={className}>{description.substr(0, characterLimit)}...&nbsp; <a href="#" style={{color:'#015189'}} onClick={(e) => { e.preventDefault(); setMoreState(possibleStates.showLess) }}>Show more</a></p>
             }
             {
                 moreState === possibleStates.showLess &&
-                <p className={className}>{description} 	&nbsp; <a href="#" onClick={(e) => { e.preventDefault(); setMoreState(possibleStates.showMore) }}>Show less</a></p>
+                <p className={className}>{description} 	&nbsp; <a href="#" style={{color:'#015189'}} onClick={(e) => { e.preventDefault(); setMoreState(possibleStates.showMore) }}>Show less</a></p>
             }
         </>
     )
