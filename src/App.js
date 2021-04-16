@@ -6,25 +6,25 @@ import NotLoggedInRoutes from './Components/NotLoggedInRoutes/NotLoggedInRoutes'
 import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, RootRoute, EVENT_ROUTE } from './AppConstants/Routes';
 
 // import css
-import Home from './Pages/Home/Home';
+// import Home from './Pages/Home/Home';
 
 import './assets/css/modal.css'
 
 import loadable from '@loadable/component';
 import LoadableFallback from './Components/LoadableFallback/LoadableFallback';
-import Upload from './Components/Upload/upload';
-// import { copyFromRealtoFirestore } from './Firebase/firebase';
+// import Upload from './Components/Upload/upload';
 // import LiveCount from './Pages/LiveCount/liveCount';
 // import QnaPage from './Pages/QnaPage/QnaPage';
-import LiveCount from './Pages/LiveCount/liveCount';
-import QnaPage from './Pages/QnaPage/QnaPage';
-import { TRENDING_ITEM_TYPE } from './AppConstants/TrendingItemTypes';
-import EventManager from './Managers/EventManager';
 const RegisterLazy = loadable(() => import(/* webpackChunkName: "Register" */ "./Pages/EventRegister/Register"), { fallback: <LoadableFallback /> })
 const LoginLazy = loadable(() => import(/* webpackChunkName: "Login" */ "./Pages/EventLogin/Login"), { fallback: <LoadableFallback /> })
 const PreEventLazy = loadable(() => import(/* webpackChunkName: "PreEventLazy" */ './Pages/PreEvent/PreEvent'), { fallback: <LoadableFallback /> })
 const MediaModalLazy = loadable(() => import(/* webpackChunkName: "MediaModal" */ './Containers/MediaModal/MediaModal'), { fallback: <LoadableFallback /> })
 const EventLazy = loadable(() => import(/* webpackChunkName: "EventLazy" */ './Pages/Event/Event'), { fallback: <LoadableFallback /> })
+const HomeLazy = loadable(() => import(/* webpackChunkName: "HomeLazy" */ './Pages/Home/Home'), { fallback: <LoadableFallback /> })
+const LiveCountLazy = loadable(() => import(/* webpackChunkName: "LiveCountLazy" */ './Pages/LiveCount/liveCount'), { fallback: <LoadableFallback /> })
+const QnaPageLazy = loadable(() => import(/* webpackChunkName: "QnaPageLazy" */ './Pages/QnaPage/QnaPage'), { fallback: <LoadableFallback /> })
+const UploadLazy = loadable(() => import(/* webpackChunkName: "UploadLazy" */ './Components/Upload/upload'), { fallback: <LoadableFallback /> })
+
 
 
 // import VideoManager from './Managers/VideoManager';
@@ -51,7 +51,8 @@ export default function App() {
     useEffect(() => {
         if (user) {
             console.log("App Started - DJ")
-            preload(PreEventLazy)
+            preload(EventLazy)
+            preload(HomeLazy)
         } else {
             preload(RegisterLazy)
             preload(LoginLazy)
@@ -187,18 +188,18 @@ export default function App() {
 
                         {/* UPLOAD */}
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/upload'}>
-                            <Upload />
+                            <UploadLazy />
                         </ProtectedRoute>
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/liveCount'}>
-                            <LiveCount />
+                            <LiveCountLazy />
                         </ProtectedRoute>
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/qna'}>
-                            <QnaPage />
+                            <QnaPageLazy />
                         </ProtectedRoute>
 
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={"*"}>
                             {/* <PreEventLazy /> */}
-                            <Home />
+                            <HomeLazy />
                         </ProtectedRoute>
                     </Switch>
                 }

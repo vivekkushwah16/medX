@@ -21,6 +21,12 @@
 .partnerBox .slider-btn.slider-btn-next { left: auto; right: 1rem; }
 .partnerBox .slider-btn.slick-disabled { opacity: 0.2; cursor: auto; opacity: 0; }
 
+.partnerBox__item 
+.btn:disabled{
+    color: #005188a1!important;
+    border-color: #005188a1!important;
+}
+
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (max-width: 1200px) {
 }
