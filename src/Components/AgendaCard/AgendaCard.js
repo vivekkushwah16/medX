@@ -18,12 +18,19 @@ function AgendaCard(props) {
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
 
     const [like, setLike] = useState(false);
+    const [likeAmount, setLikeAmount] = useState(0);
     const [rating, setRating] = useState(null);
 
     useEffect(() => {
         getCurrentTargetLikeStatus()
         getCurrentTargetRatingStatus()
     }, [])
+
+    useEffect(() => {
+        getCurrentTargetLikeStatus()
+        getCurrentTargetRatingStatus()
+        setLikeAmount(timeline.likes);
+    }, [timeline])
 
     const getCurrentTargetLikeStatus = async () => {
         if (haveLikeButton) {
@@ -57,11 +64,12 @@ function AgendaCard(props) {
             await removeLike(timeline.id, timeline.eventId, LikeType.TIMELINE_LIKE)
             addGAWithUserInfo(TIMELINE_LIKE_EVENT, { timeline: timeline.id, status: false })
             await database.ref(`/${TIMELINE_LIKE_EVENT}/${user.uid}_${timeline.id}`).remove()
-
+            setLikeAmount(likeAmount-1)
         } else {
             await addLike(timeline.id, timeline.eventId, LikeType.TIMELINE_LIKE)
             addGAWithUserInfo(TIMELINE_LIKE_EVENT, { timeline: timeline.id, status: true })
             addCAWithUserInfo(`/${TIMELINE_LIKE_EVENT}/${user.uid}_${timeline.id}`, false, { timeline: timeline.id })
+            setLikeAmount(likeAmount+1)
         }
         setLike(!like)
     }
@@ -110,7 +118,7 @@ function AgendaCard(props) {
                     {
                         haveLikeButton &&
                         <div className="rating-block">
-                            <button className={`mg-b40 mg-sm-b20 like-btn ${like ? 'like-btn--active' : ''} `} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{timeline.likes}</button>
+                            <button className={`mg-b40 mg-sm-b20 like-btn ${like ? 'like-btn--active' : ''} `} onClick={() => toggleLikeToTarget()}><i className="icon-like"></i>{likeAmount}</button>
                             {
                                 forEventPage &&
                                 rating !== null &&

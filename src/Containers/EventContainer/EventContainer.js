@@ -52,7 +52,6 @@ export default function EventContainer(props) {
     const [activePollPanel, setPollPanelActive] = useState(true)
     const [likeButtonEnabled, makeLikeButtonEnabled] = useState(true)
     const { showMediaModal } = useContext(MediaModalContext)
-
     const [agendaData, setAgendaData] = useState(null);
     const [agendaDates, setAgendaDates] = useState([]);
     const [cureentAgendaDate, setCureentAgendaDate] = useState(null);
@@ -168,7 +167,6 @@ export default function EventContainer(props) {
         if (_initalAgendaData)
             processAgendaData(_initalAgendaData)
     }, [_initalAgendaData])
-
 
     const processAgendaData = (data) => {
         let newData = {}
