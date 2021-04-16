@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
+import { isIOS } from 'react-device-detect';
 import { EVENT_COLLECTION, PARTNERWITHUSAGREE_COLLECTION } from '../../AppConstants/CollectionConstants';
 import { EVENTDATA_COOKIES, PARTNERWITHUSAGREE_COOKIES, PARTNERWITHUS_COOKIES, TIMELINEDATA_COOKIES, TRENDINGDATA_COOKIES } from '../../AppConstants/CookiesNames';
 import { database, firestore } from '../../Firebase/firebase';
@@ -10,6 +11,7 @@ import { UserContext } from '../Auth/UserContextProvider';
 export const eventContext = createContext([]);
 
 function getCookiesFromData(name) {
+    if (isIOS) { return {} }
     const value = getCookies(name)
     if (value === "") {
         return {}
@@ -20,13 +22,20 @@ function getCookiesFromData(name) {
 function setDataInCookies(name, data) {
     saveCookies(name, data, 2);
 }
+/*
 
-export default function EventContextProvider(props) {
-    const { user } = useContext(UserContext);
     const [eventData, setEventData] = useState(getCookiesFromData(EVENTDATA_COOKIES))
     const [timelineData, setTimelineData] = useState(getCookiesFromData(TIMELINEDATA_COOKIES))
     const [trendingData, setTrendingData] = useState(getCookiesFromData(TIMELINEDATA_COOKIES))
     const [partnerWithUsData, setPartnerWithUsData] = useState(getCookiesFromData(PARTNERWITHUS_COOKIES))
+*/
+export default function EventContextProvider(props) {
+    const { user } = useContext(UserContext);
+
+    const [eventData, setEventData] = useState({})
+    const [timelineData, setTimelineData] = useState({})
+    const [trendingData, setTrendingData] = useState({})
+    const [partnerWithUsData, setPartnerWithUsData] = useState({})
     const [partnerWithUsAgreeData, setPartnerWithUsAgreeData] = useState({})
 
     const getEvent = (eventId, forceNewValue = false) => {

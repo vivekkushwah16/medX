@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import AgendaCard from '../../AgendaCard/AgendaCard';
 import AgendaNavBar from '../AgendaNavBar/AgendaNavBar';
 
 
 export default function AgendaTab(props) {
     const { data, haveVideo, haveLikeButton, startVideo, activeTimeline, agendaDates, cureentAgendaDate, handleDateChange, allData } = props
-    let activeAgendaStartTime = null
-    if (activeTimeline) {
-        activeAgendaStartTime = allData.filter(d => d.id === activeTimeline)[0].startTime
-    }
+    let activeAgendaStartTime = useMemo(() => {
+        if (allData && activeTimeline) { return allData.filter(d => d.id === activeTimeline)[0].startTime }
+        else { return null }
+    }, [allData, activeTimeline])
+    // if (activeTimeline) {
+    //     activeAgendaStartTime = allData.filter(d => d.id === activeTimeline)[0].startTime
+    // }
     return (
 
         <div id="tab2" class="eventBox__tabs-content active">

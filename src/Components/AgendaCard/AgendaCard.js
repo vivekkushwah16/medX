@@ -88,7 +88,7 @@ function AgendaCard(props) {
                         </a>
                     </div>
                 }
-                <div className="maincardBox__card-body">
+                <div key={`AgendaCard-${timeline.id}-body`}  className="maincardBox__card-body">
                     <div className="text-block">
                         <h4 className="mg-b15 maincardBox__card-title">{timeline.title}
                         </h4>

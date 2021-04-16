@@ -139,6 +139,11 @@
         height: calc(96vw * 0.6);
     }
     .pdf-full{
-        height: 90vh;
+        height: 75vh;
+    }
+    .mediaModal_container_closeBtn{
+        position: absolute;
+        top: 0;
+        right: calc(50% - 1.5rem);
     }
 }
