@@ -93,6 +93,7 @@ export default function EventContainer(props) {
     }
 
     const sendSessionAnalytics = (initalTimelineValue) => {
+        console.log({ timelineId: initalTimelineValue })
         addGAWithUserInfo(SESSION_ATTENDED, { eventId: id, timelineId: initalTimelineValue })
         addCAWithUserInfo(`/${SESSION_ATTENDED}/${user.uid}_${initalTimelineValue}`, false, { eventId: id, timelineId: initalTimelineValue }, true)
     }
@@ -186,7 +187,7 @@ export default function EventContainer(props) {
             }
         })
         let dates = Object.keys(newData)
-        console.log(firstTime,';;;x;x;x');
+        console.log(firstTime, ';;;x;x;x');
         if (firstTime) {
             setCureentAgendaDate(dates[0])
             firstTime = false
@@ -265,12 +266,12 @@ export default function EventContainer(props) {
                                                 showMediaModal(MediaModalType.Component, { component: Certificate, data: { addClickAnalytics: () => { addClickAnalytics(DOWNLOAD_CERTIFICATE) } } })
                                                 addClickAnalytics(CERTIFICATE_CLICK)
                                             }
-                                        }}><FontAwesomeIcon icon={faAward}/></button>
+                                        }}><FontAwesomeIcon icon={faAward} /></button>
                                         <button className="btn btn-secondary btn-sm mg-b10 font-18 " onClick={() => {
                                             addClickAnalytics(FEEDBACK_CLICK);
                                             showMediaModal(MediaModalType.PDF, '/feedback/index.html')
                                         }}>
-                                            <FontAwesomeIcon icon={faTasks}/>
+                                            <FontAwesomeIcon icon={faTasks} />
                                         </button>
 
 

@@ -78,6 +78,10 @@
     animation-iteration-count: infinite;
 }
 
+.partnerBox__item-desc a{
+    color: #015189;
+}
+
 @keyframes liveBlock {
     0% {
         transform: scale(0.7);

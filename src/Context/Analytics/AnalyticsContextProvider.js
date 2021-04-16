@@ -41,8 +41,9 @@ export default function AnalyticsContextProvider(props) {
                 date: new Date(),
                 dateTimeStamp: new Date().getTime()
             }
-            console.log(baseData)
-            analytics.logEvent(eventName, { ...baseData, ...data })
+            let wholeData = { ...baseData, ...data }
+            console.log(wholeData)
+            analytics.logEvent(eventName, wholeData)
         } catch (error) {
             console.log(error)
         }
