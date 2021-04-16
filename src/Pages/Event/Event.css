@@ -1,6 +1,12 @@
 @import url("/src/assets/css/eventpage.css");
 @import url("/src/assets/css/communityBox.css");
 @import url("/src/assets/css/partnerBox.css");
+@import url("/src/assets/css/header2.css");
+@import url("/src/assets/css/modal.css");
+@import url("/src/assets/css/maincard.css");
+@import url("/src/assets/css/login2.css");
+
+
 .eventBox__sidebar-btn {
     top: 15rem;
     right: -3.5rem;
