@@ -4,6 +4,7 @@ import 'firebase/firestore';
 import 'firebase/database';
 import 'firebase/analytics';
 import 'firebase/functions';
+
 import { PROFILE_COLLECTION } from '../AppConstants/CollectionConstants';
 
 const firebaseConfig = {

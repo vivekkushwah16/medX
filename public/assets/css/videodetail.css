@@ -21,7 +21,7 @@
 .videodetailBox__right .like-btn { padding-left: 1rem; padding-right: 1rem; position: static; }
 
 .timelineBox { margin-bottom: 2rem; }
-.timelineBox-item { padding-top: 1rem; padding-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
+.timelineBox-item { padding-top: 1rem; padding-bottom: 0rem; display: flex; align-items: center; justify-content: space-between; }
 .timelineBox-item > .timelineBox-item-left { width: 47%; text-align: center; padding: 0.5rem 0.5rem; font-size: 0.75rem; color: #fff; border-radius: 5rem; display: block; background: #005188; }
 .timelineBox-item > .timelineBox-item-right { width: 47%; font-size: 0.75rem; color: #005188; }
 

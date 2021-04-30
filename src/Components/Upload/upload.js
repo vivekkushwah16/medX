@@ -51,9 +51,10 @@ const ActionValues = {
     UpdateVideo: 'UpdateVideo',
     AddSpeaker: 'AddSpeaker',
     UpdateSpeaker: 'UpdateSpeaker',
+    UpdateTimeline: 'UpdateTimeline',
 }
 
-const PossibleActions = [ActionValues.AddVideo, ActionValues.UpdateVideo, ActionValues.AddSpeaker, ActionValues.UpdateSpeaker]
+const PossibleActions = [ActionValues.AddVideo, ActionValues.UpdateVideo, ActionValues.AddSpeaker, ActionValues.UpdateSpeaker,ActionValues.UpdateTimeline]
 
 const possibleVideoUrls = 'https://player.vimeo.com/video/534402864';// ['https://player.vimeo.com/video/534402864', 'https://vimeo.com/475824300/7b5d3d90a4', 'https://vimeo.com/475824300/7b5d3d90a4']
 
@@ -191,6 +192,28 @@ export default function Upload() {
         if (callback) { callback("The videos have been updated in the database.") }
     }
 
+    const processUpdateVideosTimeline = async (object, callback) => {
+        let processArray = []
+        await asyncForEach(object, async (element) => {
+            try {
+                var map = {
+                    startTime: element.startTime,
+                    endTime: element.endTime,
+                    title: element.title,
+                }
+                const id = await VideoManager.updateVideoTimeline(element.id, map)
+                processArray.push(id)
+            }
+            catch (err) {
+                console.log(err)
+                processArray.push(err)
+            }
+        });
+        console.log(processArray);
+        await exportVideosXLSX();
+        if (callback) { callback("The videos have been updated in the database.") }
+    }
+
     const processAddSpeakers = async (object, callback) => {
         let processArray = []
         await asyncForEach(object, async (element) => {
@@ -244,6 +267,9 @@ export default function Upload() {
                 break;
             case 3:
                 processUpdateSpeakers(data, handleCallback);
+                break;
+            case 4:
+                processUpdateVideosTimeline(data, handleCallback);
                 break;
         }
 

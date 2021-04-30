@@ -32,7 +32,36 @@ const VideoManager = {
             }
         })
     },
-
+    updateVideoTimeline: (videoId, videoTimestamp = {}) => {
+        return new Promise(async (res, rej) => {
+            try {
+                const docRef = firestore.collection(VIDEO_COLLECTION).doc(videoId)
+                await firestore.runTransaction(async transcation => {
+                    let doc = await transcation.get(docRef)
+                    if (!doc.exists) {
+                        let err = {
+                            code: 'NotValidId',
+                            message: "No videoID Found"
+                        }
+                        throw (err)
+                    }
+                    let oldData = doc.data()
+                    console.log(oldData.videoTimestamp)
+                    var arrayz=[];
+                    if(oldData.videoTimestamp)
+                        arrayz=oldData.videoTimestamp;
+                    
+                    arrayz.push(videoTimestamp);
+                    transcation.update(docRef, {
+                        videoTimestamp: videoTimestamp ? arrayz: oldData.videoTimestamp,
+                    })
+                })
+                res();
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
     completelyUpdateVideo: (videoId, title = null, description = null, videoUrl = null, thumnailUrl = null,speakers = [], tags = [], videoTimestamp = [], band = null) => {
         return new Promise(async (res, rej) => {
             try {
