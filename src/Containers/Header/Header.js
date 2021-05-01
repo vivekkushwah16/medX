@@ -86,7 +86,9 @@ export default function Header(props) {
                             !props.hideInviteFriend &&
                             <InviteFriend toggleInviteFriendModal={toggleInviteFriendModal} showInviteFriendModal={showInviteFriendModal} />
                         }
-                        <Notification handleClick={()=>{showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fimages%2Fnewflyer.pdf')}} data={['💡 Late Breaker Session!']} />
+                        <Notification handleClick={()=>{
+                            // showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fimages%2Fnewflyer.pdf')
+                            }} data={['💡 Successfully registered!!']} />
                         <Profile />
                     </div>
                 </div>

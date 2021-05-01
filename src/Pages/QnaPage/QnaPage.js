@@ -9,7 +9,7 @@ import './QnaPage.css'
 function SamplePageLayout(props) {
     return (
         < div className="SamplePageContainer" >
-            <div className="eventBoxBg"></div>
+            {/* <div className="eventBoxBg"></div> */}
             <Header />
             <div className="container SamplePageContainer_body">
                 {props.children}

@@ -18,11 +18,32 @@
 .login2Box__video { padding: 0; width: 50%; position: relative; margin: 0; }
 .login2Box__video > img { width: 100%; }
 .login2Box__video__play { font-size: 2.325rem; position: absolute; left: 50%; top: 50%; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-left: -3rem; margin-top: -3rem; height: 6rem; width: 6rem; border-radius: 50%; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(24px); }
-.login2Box__left { 
-    /* overflow: auto; */
-     padding-top: 6.25rem; position: relative; width: 100%; background: linear-gradient(180deg, #FFFFFF -1.17%, #F0FAFC 32.74%, #4CC2D7 144.51%); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); z-index: 0; }
+.login2Box__left { /* overflow: auto; */padding-top: 6.25rem; position: relative; width: 100%; background: linear-gradient(180deg, #FFFFFF -1.17%, #F0FAFC 32.74%, #4CC2D7 144.51%); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); z-index: 0; }
 .login2Box__left:after { z-index: -1; position: absolute; left: 0; bottom: 0; height: 473px; width: 100%; content: ""; background: url(../images/login-content-bg.png) center bottom no-repeat; background-size: 100% auto;  background-size: cover; background-position-y: inherit;}
 .login2Box-text { display: flex; }
+
+.login2Box__Simple_Left { /* overflow: auto; */ position: relative; width: 100%; background: linear-gradient(180deg, #FFFFFF -1.17%, #F0FAFC 32.74%, #4CC2D7 144.51%); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); z-index: 0;  background-image: url(../images/frontBanner.jpeg);background-position: center;background-size: cover;background-repeat: no-repeat;}
+.login2Box__Simple_Left::after{position: absolute;
+    left: 0;top: 0;content: "";height: 100%;width: 100%;
+    background: linear-gradient(
+180deg
+,#000 -6.25%,transparent 14.34%,rgba(62,62,62,0) 73.33%,rgba(24,24,24,.877281) 85.12%,#000 94.52%),linear-gradient(
+0deg
+,rgba(26,82,141,.5),rgba(26,82,141,.5));
+}
+
+.login2Box__Simple_Left .headerBox__logo5{
+    z-index: 5;
+    position: relative;
+    padding-top: 2.25rem;
+    padding-left: 2.25rem;
+}
+.loginBox__Simple_label {
+    padding: 1.875rem 2rem 2rem 3.5rem; max-width: 39.5rem; font-size: 1.5rem; color: #fff; font-weight: 400; background: #015189; border-right: 1.25rem solid #01A6CE;position: absolute;bottom: 10rem; z-index: 5;
+}
+.loginBox__Simple_sublabel{
+    font-size: 1.18rem; font-weight: 500;
+}
 
 .login2Box.login2Box__small { z-index: 11; }
 .login2Box.login2Box__small > .login-bg-top { position: absolute; left: 0; top: 0; width: 100%;  z-index: -1; }
@@ -71,6 +92,13 @@
     .navigarion-bar__menu { padding: 1rem 0; width: 100%; border-bottom: 1px solid #005188; }
     .navigarion-bar__menu > li { padding: 0 1rem; }
     .navigarion-bar__menu > li > .btn { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+    .login2Box__Simple_Left{ min-height: 40vh; }
+    .loginBox__Simple_label{bottom: 0; font-size: 1.5rem;}
+    .login2Box__Simple_Left .headerBox__logo5{
+        padding-top: 1.25rem;
+        padding-left: 1.25rem;
+        max-width: 9rem;
+    }
 }
 
 /* All Mobile Sizes (devices and browser) */

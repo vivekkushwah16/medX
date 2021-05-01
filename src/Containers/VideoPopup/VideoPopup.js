@@ -96,9 +96,12 @@ function VideoPopup(props) {
         window.isOnHold = false
         window.videoEndTimestmap = new Date().getTime()
         window.videoTimeSpent += (window.videoEndTimestmap - window.videoStartTimestamp)
+        // console.log(window.videoTimeSpent, "<-- timespent", window.videoStartTimestamp, window.videoEndTimestmap)
+        window.previousStartTimestamp = window.videoStartTimestamp
     }
 
     function startTimer() {
+        // console.log("startTimer------------------------------------")
         if (window.isOnHold && window.videoStartTimestamp) {
             calculateTimeSpent()
         }
@@ -107,7 +110,8 @@ function VideoPopup(props) {
     }
 
     function stopTimer() {
-        if (window.videoStartTimestamp) {
+        // console.log("stopTimer------------------------------------", window.videoStartTimestamp, window.videoEndTimestmap)
+        if (window.videoStartTimestamp && window.previousStartTimestamp !== window.videoStartTimestamp) {
             calculateTimeSpent()
         }
         setRunningTimer(false);
@@ -243,10 +247,11 @@ function VideoPopup(props) {
                             controls={true}
                             width={"auto"}
                             height={"calc(0.56 * 56rem)"}
-                            onPlay={startTimer}
+                            // onPlay={startTimer}
                             style={{ "backgroundColor": "black" }}
                             playsinline={true}
                             onPlay={() => {
+                                startTimer()
                                 console.log("playing!!")
                                 playingStatus(true);
                                 endedStatus(false);
@@ -267,6 +272,7 @@ function VideoPopup(props) {
                             onEnded={() => {
                                 console.log("ended!!")
                                 endedStatus(true);
+                                stopTimer()
                             }}
                             onProgress={(event) => {
                                 if (videoData && videoData.videoTimestamp) {

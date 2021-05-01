@@ -15,9 +15,8 @@ import LoadableFallback from './Components/LoadableFallback/LoadableFallback';
 // import Upload from './Components/Upload/upload';
 // import LiveCount from './Pages/LiveCount/liveCount';
 // import QnaPage from './Pages/QnaPage/QnaPage';
-const RegisterLazy = loadable(() => import(/* webpackChunkName: "Register" */ "./Pages/EventRegister/Register"), { fallback: <LoadableFallback /> })
-const LoginLazy = loadable(() => import(/* webpackChunkName: "Login" */ "./Pages/EventLogin/Login"), { fallback: <LoadableFallback /> })
-const PreEventLazy = loadable(() => import(/* webpackChunkName: "PreEventLazy" */ './Pages/PreEvent/PreEvent'), { fallback: <LoadableFallback /> })
+const RegisterLazy = loadable(() => import(/* webpackChunkName: "Register" */ "./Pages/SimpleRegister/Register"), { fallback: <LoadableFallback /> })
+const LoginLazy = loadable(() => import(/* webpackChunkName: "Login" */ "./Pages/SimpleLogin/Login"), { fallback: <LoadableFallback /> })
 const MediaModalLazy = loadable(() => import(/* webpackChunkName: "MediaModal" */ './Containers/MediaModal/MediaModal'), { fallback: <LoadableFallback /> })
 const EventLazy = loadable(() => import(/* webpackChunkName: "EventLazy" */ './Pages/Event/Event'), { fallback: <LoadableFallback /> })
 const HomeLazy = loadable(() => import(/* webpackChunkName: "HomeLazy" */ './Pages/Home/Home'), { fallback: <LoadableFallback /> })
@@ -160,7 +159,8 @@ export default function App() {
                     <Switch>
                         {/* Register Route */}
                         <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={REGISTER_ROUTE + "/:event"}>
-                            <RegisterLazy />
+                            {/* <RegisterLazy /> */}
+                            <Redirect to={REGISTER_ROUTE}></Redirect>
                         </NotLoggedInRoutes>
                         <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={REGISTER_ROUTE}>
                             <RegisterLazy />
@@ -168,7 +168,8 @@ export default function App() {
 
                         {/* Login Route */}
                         <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={LOGIN_ROUTE + "/:event"}>
-                            <LoginLazy />
+                            {/* <LoginLazy /> */}
+                            <Redirect to={LOGIN_ROUTE}></Redirect>
                         </NotLoggedInRoutes>
                         <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={LOGIN_ROUTE}>
                             <LoginLazy />
@@ -177,29 +178,30 @@ export default function App() {
                         {/* Home Route */}
 
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>
-                            {/* <PreEventLazy /> */}
-                            <Redirect to={"/event/event-kmde59n5"}></Redirect>
+                            <HomeLazy />
+                            {/* <Redirect to={"/event/event-kmde59n5"}></Redirect> */}
                         </ProtectedRoute>
 
                         {/* event-kmde59n5 */}
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE + '/:id'}>
-                            <EventLazy />
+                            {/* <EventLazy /> */}
+                            <Redirect to={HOME_ROUTE}></Redirect>
                         </ProtectedRoute>
 
                         {/* UPLOAD */}
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/upload'}>
+                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/upload-kmp23'}>
                             <UploadLazy />
                         </ProtectedRoute>
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/liveCount'}>
+                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/liveCount-kmp23'}>
                             <LiveCountLazy />
                         </ProtectedRoute>
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/qna'}>
+                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/qna-kmp23'}>
                             <QnaPageLazy />
                         </ProtectedRoute>
 
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={"*"}>
                             {/* <PreEventLazy /> */}
-                            <HomeLazy />
+                            <Redirect to={HOME_ROUTE}></Redirect>
                         </ProtectedRoute>
                     </Switch>
                 }

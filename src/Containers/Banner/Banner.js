@@ -36,13 +36,14 @@ const BannerType = {
 }
 
 const BannerData = [
+    // {
+    //     type: BannerType.LiveEvent,
+    //     mainTitle: 'Tune in to leading minds in respiratory medicine',
+    //     subTitle: '',
+    //     eventId: '',
+    //     mainImageUrl: 'assets/images/logos/impact-logo.png',
+    // },
     {
-        type: BannerType.LiveEvent,
-        mainTitle: 'Tune in to leading minds in respiratory medicine',
-        subTitle: '',
-        eventId: '',
-        mainImageUrl: 'assets/images/logos/impact-logo.png',
-    },{
         type: BannerType.PromoVideoBanner,
         subTitle_line1: 'Concepts of ',
         mainTitle: 'Respiratory Sounds',

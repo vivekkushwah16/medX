@@ -5,7 +5,7 @@ export default function Notification(props) {
     return (
         <div className="notification">
             <a className="notification__btn" href="#"><i className="icon-bell"></i>
-                <div className="notification_indicator"></div>
+                {/* <div className="notification_indicator"></div> */}
             </a>
             <ul className="notification__dropdown">
                 {
