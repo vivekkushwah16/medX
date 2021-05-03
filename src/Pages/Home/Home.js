@@ -33,6 +33,7 @@ class Home extends Component {
             { tag: 'Asthma', header: 'Videos on Asthma' },
             { tag: 'ILD/IPF', header: 'Videos on ILD/IPF' },
             { tag: 'Telemedicine', header: 'Videos on Telemedicine' },
+            { tag: 'Impact Sessions', header: 'Videos of Impact session' },
             { tag: ['Inhalation Devices', 'Diagnosis', 'Pulmonary Hypertension', 'Pediatric asthma', 'Bronchiectasis', 'Allergic Rhinitis'], header: 'Videos on Other Respiratory Diseases', multipleTags: true },
 
 
@@ -59,6 +60,7 @@ class Home extends Component {
             { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
             { tag: 'ILD/IPF', header: 'ILD/IPF' },
             { tag: 'Telemedicine', header: 'Telemedicine' },
+            { tag: 'Impact Sessions', header: 'Impact Sessions' },
 
             // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
             // { tag: 'Recommendations', header: 'Recommendations' },
