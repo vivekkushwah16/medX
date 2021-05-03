@@ -199,6 +199,7 @@ body {
 
 .mobileView_timelineBox .timelineBox-item {
     align-items: flex-start;
+    justify-content: end;
     flex-direction: column;
     min-width: 10rem;
     margin-right: 0.85rem;
