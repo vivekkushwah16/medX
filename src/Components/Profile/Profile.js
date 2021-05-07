@@ -1,22 +1,26 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 import { logout } from '../../Firebase/firebase'
+import verified from '../../assets/images/UI/verified.png';
 
 const defaultImageUrl = "https://firebasestorage.googleapis.com/v0/b/djfarmademo.appspot.com/o/profileimages%2Fblank-avatar.png?alt=media&token=2af15226-9bd7-47ce-bc72-f3c1a12a0780";
 
 export default function Profile() {
-    const { userInfo } = useContext(UserContext)
+    const { userInfo, isVerifiedUser } = useContext(UserContext)
 
     return (
         <div className="headerBox__profile">
             <a className="profile__user" href="#">
                 {`${userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ''}${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ''} `}
-                {/* <img src={defaultImageUrl} alt="" /> */}
+                {
+                    userInfo.verified && <img className="profile_verified_badge" src={verified} alt="" />
+                }
             </a>
             <ul className="profile__dropdown">
                 <a href="#" className="profile__dropdown-profile">
                     <div className="profile__dropdown-profile-pic">
                         {`${userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ''}${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ''} `}
+                        
                         {/* <img src={defaultImageUrl} alt="" /> */}
                         {/* <i className="icon-crown"></i> */}
                     </div>

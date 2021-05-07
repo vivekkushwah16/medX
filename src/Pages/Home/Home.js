@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 // import { Splide, SplideSlide } from '@splidejs/react-splide';
 import VideoPopup from '../../Containers/VideoPopup/VideoPopup';
 // import '@splidejs/splide/dist/css/themes/splide-default.min.css';
@@ -14,11 +14,12 @@ import TagsRow from '../../Containers/TagsRow/TagsRow';
 import Footer from '../../Containers/Footer/Footer';
 import { isMobileOnly } from 'react-device-detect';
 import { UserContext } from '../../Context/Auth/UserContextProvider';
-import { firestore } from '../../Firebase/firebase';
+import { cloudFunction, cloudFunctionUS, firestore, logout } from '../../Firebase/firebase';
 import { BACKSTAGE_COLLECTION, PLATFORM_BACKSTAGE_DOC } from '../../AppConstants/CollectionConstants';
 import swal from 'sweetalert';
 import { withRouter } from 'react-router-dom';
-// import { color } from 'html2canvas/dist/types/css/types/color';
+import axios from 'axios';
+import { SEND_OTP_CLOUDFUNCTION, UPDATE_MOBILENUMBER_CLOUDFUNCTION, VERIFY_OTP_COLUDFUNCTION } from '../../AppConstants/CloudFunctionName';
 
 class Home extends Component {
 
@@ -50,6 +51,7 @@ class Home extends Component {
         ],
 
         tags: [
+            { tag: 'Impact Sessions', header: 'Impact Sessions' },
             { tag: 'COPD', header: 'COPD' },
             { tag: 'Asthma', header: 'Asthma' },
             { tag: 'Pediatric asthma', header: 'Pediatric Asthma' },
@@ -60,7 +62,6 @@ class Home extends Component {
             { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
             { tag: 'ILD/IPF', header: 'ILD/IPF' },
             { tag: 'Telemedicine', header: 'Telemedicine' },
-            { tag: 'Impact Sessions', header: 'Impact Sessions' },
 
             // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
             // { tag: 'Recommendations', header: 'Recommendations' },
@@ -72,14 +73,35 @@ class Home extends Component {
             // { tag: 'Diagnosis', header: 'Diagnosis' },
             // { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
         ],
-
-        activeTag: { tag: 'COPD', header: 'Videos on COPD' },
+        activeTag: { tag: 'Impact Sessions', header: 'Videos of Impact session' },
         lastPlayed: null,
         lastVideoMetadata: null,
         platformData: JSON.parse(localStorage.getItem('platformData'))
     }
 
+    contentBoXTop = createRef()
+
+    scrollToTargetAdjusted = () => {
+        if (this.contentBoXTop.current) {
+            var element = this.contentBoXTop.current;
+            var headerOffset = 100;
+            var elementPosition = element.getBoundingClientRect().top;
+            var offsetPosition = elementPosition - headerOffset + (window.scrollY ? window.scrollY : 0);
+            // let isInTheView = (elementPosition + 100 > window.scrollY) && ((elementPosition + 100) < (window.scrollY + window.innerHeight))
+            // console.log((elementPosition + 100 > window.scrollY), ((elementPosition + 100) < (window.scrollY + window.innerHeight)), isInTheView)
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+        }
+
+    }
+
     onTagSelect = (tag) => {
+        // if (this.contentBoXTop.current) {
+        //     this.contentBoXTop.current.scrollIntoView();
+        // }
+        this.scrollToTargetAdjusted()
         let _tag = this.state.rows.filter(r => !r.multipleTags ? r.tag === tag.tag : r.tag.indexOf(tag.tag) !== -1)[0]
         if (_tag.multipleTags) {
             this.setState({ activeTag: { ..._tag, currentTag: tag.tag } })
@@ -94,8 +116,417 @@ class Home extends Component {
             this.setState({ activeTag: tag })
     }
 
-    openVideoPop = (metadata, videoData, videosData, tagSelectedFrom) => {
-        console.log(metadata, videoData, videosData, tagSelectedFrom);
+    //#region verification flow
+
+    runEnteringMobileNumberProcess = () => {
+        const updateMobileNumberCLoudFunctionRef = cloudFunction.httpsCallable(UPDATE_MOBILENUMBER_CLOUDFUNCTION)
+        swal({
+            title: 'Update Number',
+            text: 'Please enter your updated Mobile Number.',
+            icon: "info",
+            closeOnClickOutside: false,
+            buttons: {
+                cancel: true,
+                confirm: {
+                    text: 'Confirm',
+                    closeModal: false,
+                },
+            },
+            content: {
+                element: "input",
+                attributes: {
+                    placeholder: "Enter Mobile Number (with country code eg. +91XXXX)",
+                    type: "text",
+                    required: true
+                },
+            },
+        }).then(value => {
+            if (value == null) {
+                return
+            }
+            if (value.length > 0) {
+                updateMobileNumberCLoudFunctionRef(JSON.stringify({ phoneNumber: value.trim(), verifyAcocunt: true })).then((res) => {
+                    console.log(res.data);
+                    if (res.data.status === "done") {
+                        swal({
+                            title: 'Number Updated',
+                            text: 'Please Re-Login to complete the process.',
+                            icon: "success",
+                        }).then(() => {
+                            logout()
+                        })
+                    } else if (res.data.status === 'fail' && res.data.code === 'auth/phone-number-already-exists') {
+                        swal({
+                            title: 'Already Exists',
+                            text: 'Another account is already registered with same Mobile Number.',
+                            icon: "error",
+                        })
+                    } else if (res.data.status === 'fail' && res.data.code === 'auth/invalid-phone-number') {
+                        swal({
+                            title: 'Invalid Number',
+                            text: 'Please enter a valid Mobile Number.',
+                            icon: "error",
+                        }).then(() => {
+                            this.runEnteringMobileNumberProcess();
+                        })
+                    } else if (res.data.status === 'fail' && res.data.code === 'auth/invalid-email') {
+                        swal({
+                            title: 'Invalid Format',
+                            text: 'Please enter your Number in proper format.',
+                            icon: "error",
+                        }).then(() => {
+                            this.runEnteringMobileNumberProcess();
+                        })
+
+                    } else if (res.data.status === 'fail' && res.data.code) {
+                        swal({
+                            title: 'Error',
+                            text: res.data.message,
+                            icon: "error",
+                        }).then(() => {
+                            this.runEnteringMobileNumberProcess();
+                        })
+                    } else {
+                        swal({
+                            title: 'Try Again',
+                            text: 'Sorry something went wrong, please try again.',
+                            icon: "error",
+                        })
+                    }
+                }).catch(err => {
+                    console.log(err);
+                })
+
+            } else {
+                this.runEnteringMobileNumberProcess()
+            }
+
+        })
+    }
+
+    showEnterOTP_UpdateInfo = () => {
+        const verifyCLoudFunctionRef = cloudFunction.httpsCallable(VERIFY_OTP_COLUDFUNCTION)
+        swal({
+            title: 'Verification Code',
+            text: 'Please enter verification code sent to your Registered Email Id to update your Mobile Number.',
+            icon: "info",
+            closeOnClickOutside: false,
+            buttons: {
+                cancel: true,
+                confirm: {
+                    text: 'Confirm',
+                    closeModal: false,
+                },
+            },
+            content: {
+                element: "input",
+                attributes: {
+                    placeholder: "Enter OTP",
+                    type: "text",
+                    required: true
+                },
+            },
+        }).then(value => {
+            if (value == null) {
+                return
+            }
+            if (value.length > 0) {
+                verifyCLoudFunctionRef(JSON.stringify({ otp: value })).then((res) => {
+                    console.log(res)
+                    if (res.data.type === 'success') {
+                        this.runEnteringMobileNumberProcess()
+                    } else if (res.data.type === 'error' && res.data.message === 'OTP not match') {
+
+                        swal({
+                            title: 'Incorrect OTP',
+                            text: 'Please try again with a valid OTP.',
+                            icon: "error",
+                            buttons: {
+                                Resend: {
+                                    text: 'Resend OTP (max: 3)',
+                                    closeModal: false,
+                                },
+                                Retry: {
+                                    text: 'Retry',
+                                    closeModal: false,
+                                },
+                            }
+                        }).then((value) => {
+                            switch (value) {
+                                case ('Resend'):
+                                    this.runUpdateInfoProcess()
+                                    break;
+                                case ('Retry'):
+                                    this.showEnterOTP_UpdateInfo()
+                                    break;
+                                default:
+                            }
+                        })
+                    } else if (res.data.type === 'error' && res.data.message === 'OTP expired') {
+                        swal({
+                            title: 'OTP Expired',
+                            text: 'This OTP has expired. Please try again.',
+                            icon: "error",
+                        }).then(() => {
+                            this.runNonVerifiedProcess()
+                        })
+                    } else if (res.data.type === 'error' && res.data.message === 'Max limit reached for this otp verification') {
+                        swal({
+                            title: 'Retries Exhausted',
+                            text: 'Too many invalid attempts. Please try again later.',
+                            icon: "error",
+                        })
+                    } else if (res.data.type === 'error' && res.data.message === 'Otp empty or not numeric') {
+                        swal({
+                            title: 'Incorrect OTP',
+                            text: 'Please try again with a valid OTP.',
+                            icon: "error",
+                        }).then(() => {
+                            this.showEnterOTP_UpdateInfo()
+                        })
+                    } else {
+                        swal({
+                            title: 'Try Again',
+                            text: 'Sorry something went wrong, please try again.',
+                            icon: "error",
+                        }).then(() => {
+                            this.runNonVerifiedProcess()
+                        })
+                    }
+                }).catch(err => {
+                    console.log(err);
+                })
+            } else {
+                this.showEnterOTP_UpdateInfo()
+            }
+        })
+    }
+
+    runUpdateInfoProcess = () => {
+        let count = sessionStorage.getItem('otpCountUpdateInfo')
+        if (count > 4) {
+            swal({
+                title: 'No Resends Left',
+                text: 'You have reached max limit to send OTP requests. Please try again later.',
+                icon: "error",
+            })
+            return
+        }
+
+        const cloudRef = cloudFunction.httpsCallable(SEND_OTP_CLOUDFUNCTION)
+        cloudRef(JSON.stringify({ uid: this.context.uid })).then((res) => {
+            console.log(res)
+            count = count ? count + 1 : 1
+            sessionStorage.setItem('otpCount', count)
+            this.showEnterOTP_UpdateInfo()
+        }).catch(error => {
+            var code = error.code;
+            var message = error.message;
+            var details = error.details;
+            console.log(error);
+            console.log(code, message, details)
+            swal({
+                title: 'TryAgain',
+                text: 'Something went wrong, please try again.',
+                icon: "error",
+            }).then(() => {
+                this.runNonVerifiedProcess()
+            })
+        })
+    }
+
+    showEnterOTP = () => {
+        const verifyCLoudFunctionRef = cloudFunction.httpsCallable(VERIFY_OTP_COLUDFUNCTION)
+        swal({
+            title: 'Enter OTP',
+            text: 'Please check your Registered Mobile Number or Email Id for the OTP.',
+            icon: "info",
+            closeOnClickOutside: false,
+            buttons: {
+                cancel: true,
+                confirm: {
+                    text: 'Confirm',
+                    closeModal: false,
+                }
+            },
+            content: {
+                element: "input",
+                attributes: {
+                    placeholder: "Enter OTP",
+                    type: "text",
+                    required: true
+                },
+            },
+        }).then((value) => {
+            if (value == null) {
+                return
+            }
+            if (value.length > 0) {
+                verifyCLoudFunctionRef(JSON.stringify({ otp: value, verifyAcocunt: true })).then((res) => {
+                    console.log(res)
+                    if (res.data.type === 'success') {
+                        swal({
+                            title: 'Account Verified',
+                            text: 'Congratulations your account has been verified. You may now access the platform.',
+                            icon: "success",
+                            closeOnClickOutside: false,
+                            button: {
+                                text: 'Continue',
+                                closeModal: false,
+                            },
+                        }).then(async () => {
+                            await this.context.forceUpdateUserInfo()
+                            swal.close()
+                        })
+                    } else if (res.data.type === 'error' && res.data.message === 'OTP not match') {
+                        swal({
+                            title: 'Incorrect OTP',
+                            text: 'Please try again with a valid OTP.',
+                            icon: "error",
+                            buttons: {
+                                Resend: {
+                                    text: 'Resend OTP (max: 3)',
+                                    closeModal: false,
+                                },
+                                Retry: {
+                                    text: 'Retry',
+                                    closeModal: false,
+                                },
+                            }
+                        }).then((value) => {
+                            switch (value) {
+                                case ('Resend'):
+                                    this.runOTPProcess()
+                                    break;
+                                case ('Retry'):
+                                    this.showEnterOTP()
+                                    break;
+                                default:
+                            }
+                        })
+                    } else if (res.data.type === 'error' && res.data.message === 'OTP expired') {
+                        swal({
+                            title: 'OTP Expired',
+                            text: 'This OTP has expired. Please try again.',
+                            icon: "error",
+                        }).then(() => {
+                            this.runNonVerifiedProcess()
+                        })
+                    } else if (res.data.type === 'error' && res.data.message === 'Max limit reached for this otp verification') {
+                        swal({
+                            title: 'Retries Exhausted',
+                            text: 'Too many invalid attempts. Please try again later.',
+                            icon: "error",
+                        })
+                    } else if (res.data.type === 'error' && res.data.message === 'Otp empty or not numeric') {
+                        swal({
+                            title: 'Incorrect OTP',
+                            text: 'Please try again with a valid OTP.',
+                            icon: "error",
+                        }).then(() => {
+                            this.showEnterOTP()
+                        })
+                    } else {
+                        swal({
+                            title: 'Try Again',
+                            text: 'Sorry something went wrong, please try again.',
+                            icon: "error",
+                        }).then(() => {
+                            this.runNonVerifiedProcess()
+                        })
+                    }
+                }).catch(err => {
+                    console.log(err);
+                })
+            } else {
+                this.showEnterOTP()
+            }
+
+        })
+    }
+
+    runOTPProcess = () => {
+        let count = sessionStorage.getItem('otpCount')
+        if (count > 4) {
+            swal({
+                title: 'No Resends Left',
+                text: 'You have reached max limit to send OTP requests. Please try again later.',
+                icon: "error",
+            })
+            return
+        }
+        const cloudRef = cloudFunction.httpsCallable(SEND_OTP_CLOUDFUNCTION)
+        cloudRef(JSON.stringify({ uid: this.context.uid })).then((res) => {
+            console.log(res)
+            count = count ? count + 1 : 1
+            sessionStorage.setItem('otpCount', count)
+            this.showEnterOTP()
+        }).catch(error => {
+            var code = error.code;
+            var message = error.message;
+            var details = error.details;
+            console.log(error);
+            console.log(code, message, details)
+            swal({
+                title: 'Try Again',
+                text: 'Sorry something went wrong, please try again.',
+                icon: "error",
+            }).then(() => {
+                this.runNonVerifiedProcess()
+            })
+        })
+    }
+
+    runNonVerifiedProcess = async () => {
+        try {
+            swal({
+                title: 'Verify Account',
+                text: 'Pleae verify your account using OTP to access the CiplaMedX platform.',
+                icon: "info",
+                closeOnClickOutside: false,
+                buttons: {
+                    cancel: true,
+                    updateInfo: {
+                        text: 'Update Mobile Number',
+                        closeModal: false,
+                    },
+                    SendOtp: {
+                        text: 'Send OTP',
+                        closeModal: false,
+                    },
+                },
+            }).then((value) => {
+                console.log(value)
+
+                switch (value) {
+                    case "updateInfo":
+                        this.runUpdateInfoProcess()
+                        break;
+                    case "SendOtp":
+                        // this.showEnterOTP()
+                        this.runOTPProcess()
+                        break
+                    default:
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    //#endregion
+
+    //function to open the videoPop 
+    openVideoPop = async (metadata, videoData, videosData, tagSelectedFrom) => {
+        // console.log(metadata, videoData, videosData, tagSelectedFrom);
+        //first check for verified user
+        let isVerified = await this.context.isVerifiedUser()
+        if (!isVerified) {
+            this.runNonVerifiedProcess();
+            return
+        }
+        //if user is verified play video
         this.closeVideoPop(metadata);
         setTimeout(() => {
             this.setState({
@@ -141,6 +572,8 @@ class Home extends Component {
                 }
             }
         })
+
+
     }
 
     render() {
@@ -158,10 +591,10 @@ class Home extends Component {
 
                             <TagsRow tags={this.state.tags} stickyOnScroll={false} onTagSelect={this.onTagSelect} activeTag={this.state.activeTag} />
 
-                            <div className="contentBox" >
+                            <div className="contentBox" ref={this.contentBoXTop}>
                                 {
                                     this.state.activeTag !== '' &&
-                                    <VideoRow heading={`${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed}
+                                    <VideoRow key={this.state.activeTag} heading={`${this.state.activeTag.header}`} lastPlayed={this.state.lastPlayed}
                                         tag={this.state.activeTag.tag}
                                         openVideoPop={this.openVideoPop} grid={false}
                                         multipleTags={this.state.activeTag.multipleTags}
@@ -172,7 +605,7 @@ class Home extends Component {
                                         <>
                                             {
                                                 row.tag !== this.state.activeTag.tag &&
-                                                <VideoRow heading={row.header} lastPlayed={this.state.lastPlayed} tag={row.tag}
+                                                <VideoRow key={row.tag} heading={row.header} lastPlayed={this.state.lastPlayed} tag={row.tag}
                                                     openVideoPop={this.openVideoPop}
                                                     grid={false}
                                                     multipleTags={row.multipleTags}

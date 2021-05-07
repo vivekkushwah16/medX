@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { UpcompingEventBanner, LiveEventBanner, ImageSingleButtonBanner,PromoVideoBanner,Custom1 } from '../../Components/Banners'
+import { UpcompingEventBanner, LiveEventBanner, ImageSingleButtonBanner,PromoVideoBanner,Custom1, Custom2 } from '../../Components/Banners'
 import * as Scroll from 'react-scroll';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -32,7 +32,8 @@ const BannerType = {
     ImageSingleButton: 'imageSingleButton',
     UpcompingEvent: 'upcompingEvent',
     PromoVideoBanner:'promoVideoBanner',
-    Custom1:'Custom1'
+    Custom1:'Custom1',
+    Custom2:'Custom2',
 }
 
 const BannerData = [
@@ -44,15 +45,11 @@ const BannerData = [
     //     mainImageUrl: 'assets/images/logos/impact-logo.png',
     // },
     {
-        type: BannerType.PromoVideoBanner,
-        subTitle_line1: 'Concepts of ',
-        mainTitle: 'Respiratory Sounds',
-        // subTitle_line2: 'resistant TB',
-        videoUrl: 'https://player.vimeo.com/video/536652520',
+        type: BannerType.Custom2,
         buttonText:'Watch Now',
-        mainImageUrl: 'assets/images/AdobeStock_205914003.jpeg',
-        // speakerId: 'speaker-kmfz0vco',
-        // eventId: 'event-kmde59n5'
+        mainImageUrl: 'assets/images/Banner_07052021.jpg',
+        logoImageUrl: 'assets/images/logoSessionLive.png',
+        route: 'Impact Sessions'
     },
     {
         type: BannerType.Custom1,
@@ -65,7 +62,17 @@ const BannerData = [
         // speakerId: 'speaker-kmfz0vco',
         route: 'ottContent'
     },
-    
+    {
+        type: BannerType.PromoVideoBanner,
+        subTitle_line1: 'Concepts of ',
+        mainTitle: 'Respiratory Sounds',
+        // subTitle_line2: 'resistant TB',
+        videoUrl: 'https://player.vimeo.com/video/536652520',
+        buttonText:'Watch Now',
+        mainImageUrl: 'assets/images/AdobeStock_205914003.jpeg',
+        // speakerId: 'speaker-kmfz0vco',
+        // eventId: 'event-kmde59n5'
+    },
     // {
     //     type: BannerType.UpcompingEvent,
     //     mainTitle: '50+ Eminent Speakers',
@@ -154,6 +161,10 @@ function Banner() {
                                 item.type === BannerType.Custom1 &&
                                 <Custom1 data={item} goToRoute={goToRoute} />
                                 
+                            }
+                             {
+                                item.type === BannerType.Custom2 &&
+                                <Custom2 data={item} goToRoute={goToRoute} />
                             }
                         </>
                     ))

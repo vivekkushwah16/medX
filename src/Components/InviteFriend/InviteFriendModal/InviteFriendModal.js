@@ -47,8 +47,8 @@ export default function InviteFriendModal(props) {
     const shareOnce = () => {
         if (navigator.share) {
             navigator.share({
-                text: 'I invite you to register for IMPACT \'21 on the CiplaMedX Platform.\n\nIMPACT \'21 is a 2 Day Cutting-Edge academic feast with Experts in Respiratory Medicine being organised on 16-17th April 2021.\n',
-                url: "https://ciplamedx.com/register/impact"//window.location.href,
+                text: 'I invite you to register CiplaMedX platform and start experiencing the platform for byte-sized expert views videos anytime anywhere.',
+                url: "https://ciplamedx.com/register"//window.location.href,
             });
         }
     };

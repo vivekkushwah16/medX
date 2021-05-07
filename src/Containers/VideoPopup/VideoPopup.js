@@ -13,6 +13,8 @@ import { UserContext } from '../../Context/Auth/UserContextProvider'
 import StartRating from '../../Components/StartRating/StartRating'
 import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider'
 import { VIDEO_CLICK, VIDEO_KEYFRAME_CLICK, VIDEO_TIMESPENT } from '../../AppConstants/AnalyticsEventName'
+import { scrollToTop } from 'react-scroll/modules/mixins/animate-scroll'
+import Header from '../Header/Header'
 
 const timeLimit = 10;
 let currenttimeWatched = 0;
@@ -34,6 +36,13 @@ function VideoPopup(props) {
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext)
     const { user } = useContext(UserContext)
 
+    const headerRef = useRef(null)
+
+    const scrollToHeader = () => {
+        if (headerRef.current) {
+            headerRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }
 
     useEffect(() => {
         getVideoData()
@@ -205,7 +214,7 @@ function VideoPopup(props) {
                 __closeVideoPop()
             }}></span>
             <div className="modalBox__inner">
-                <div className="modalBox__header">
+                <div className="modalBox__header" ref={headerRef}>
                     <h3 className="modalBox__title"></h3>
                     <button className="modalBox__close-link" onClick={() => {
                         __closeVideoPop()
@@ -311,6 +320,7 @@ function VideoPopup(props) {
                                 {
                                     videoData.videoTimestamp.map(timeline =>
                                         <TimelineBoxItem minPlayed={minPlayed} timelineData={timeline} timelineClick={(time) => {
+                                            scrollToHeader()
                                             addAnalyticsKeyFrameClick(timeline)
                                             seekTo(time)
                                         }} />
@@ -386,6 +396,29 @@ function VideoPopup(props) {
                             {/* <p className="videodetailBox__desc"><a href="javascript:void(0)">Show Less</a></p> */}
 
 
+                            {/* {
+                                moreVideos.length > 0 &&
+                                <>
+                                    <h4 className="videodetailBox__subtitle mg-t20">More Videos</h4>
+                                    <div className="videodetailBox__list">
+                                        {
+                                            moreVideos.map(currentVideoData =>
+                                                <VideoThumbnail_Compact videosData={currVideosData} currentVideoData={currentVideoData} openVideoPop={(currentVideoData, videosData) => {
+                                                    __closeVideoPop()
+                                                    addVideoClickAnalytics(currentVideoData)
+                                                    openVideoPop(videoData, currentVideoData, videosData, currentVideoData.tagSelectedFrom)
+                                                }} />
+                                            )
+                                        }
+                                    </div>
+                                </>
+                            } */}
+
+                        </div>
+                    </div>
+
+                    <div className="videodetailBox">
+                        <div className="videodetailBox__left">
                             {
                                 moreVideos.length > 0 &&
                                 <>
@@ -403,7 +436,6 @@ function VideoPopup(props) {
                                     </div>
                                 </>
                             }
-
                         </div>
                     </div>
                 </div>

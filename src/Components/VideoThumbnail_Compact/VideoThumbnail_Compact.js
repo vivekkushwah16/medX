@@ -2,7 +2,7 @@ import React from 'react'
 import ReadMore from '../ReadMore/ReadMore';
 import './VideoThumbnailCompact.css'
 
-let characterLimit=85;
+let characterLimit=150;
 function VideoThumbnail_Compact(props) {
     const { videosData, currentVideoData, openVideoPop } = props
 

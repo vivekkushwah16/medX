@@ -26,8 +26,12 @@ export const firestore = firebase.firestore();
 export const database = firebase.database();
 export const analytics = firebase.analytics();
 export const auth = firebase.auth();
+
 export const cloudFunction = firebase.app().functions('asia-south1')
-// export const cloudFunction = firebase.functions().useEmulator("localhost", 4000);
+// cloudFunction.useEmulator("localhost", 5001)
+// export const cloudFunctionUS = firebase.functions()
+
+// export const cloudFunctionUS = firebase.functions().useEmulator("localhost", 4000);
 
 export const logout = () => {
     firebase.auth().signOut()

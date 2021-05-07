@@ -9,12 +9,12 @@ export function Custom1(props) {
     const { data } = props
     return (
         <div className="bannerBox__inner gradient-bg2">
-            <div className="bannerBox__slide"  style={{ backgroundImage: `url(${data.mainImageUrl})` }}>
+            <div className="bannerBox__slide" style={{ backgroundImage: `url(${data.mainImageUrl})` }}>
                 <div class="container" >
-                    <div className={isMobileOnly?"bannerBox__left flexBoxC":"bannerBox__left"} >
-                    {isMobileOnly &&
-                        <img style={{height:"2.8rem"}} className="mg-b30" src="assets/images/logos/ciplamed-logo2.png"></img>
-                    }
+                    <div className={isMobileOnly ? "bannerBox__left flexBoxC" : "bannerBox__left"} >
+                        {isMobileOnly &&
+                            <img style={{ height: "2.8rem" }} className="mg-b30" src="assets/images/logos/ciplamed-logo2.png"></img>
+                        }
                         <h1 className="bannerBox__featired-title mg-b50" style={{ color: '#fff' }}>{data.mainTitle}<br></br><span>{data.subTitle_line1}<br></br>{data.subTitle_line2}</span></h1>
                         {/* <a href="#" className="bannerBox__profile mg-b50">
                             <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={data.speakerId} />
@@ -29,6 +29,23 @@ export function Custom1(props) {
         </div>
     )
 }
+//props -  logoImageUrl, route, mainImageUrl, gotoRoute(), buttonText
+export function Custom2(props) {
+    const { data } = props
+    return (
+        <div className="bannerBox__inner gradient-bg2">
+            <div className="bannerBox__slide" style={{ backgroundImage: `url(${data.mainImageUrl})` }}>
+                <div class="container" >
+                    <div className={isMobileOnly ? "bannerSubLogo flexBoxC" : "bannerSubLogo"} >
+                        <img className=" mg-b20" src={data.logoImageUrl} alt="logo"></img>
+                        {/* <h1 className="bannerBox__featired-title mg-b50" style={{ color: '#fff' }}>{data.mainTitle}<br></br><span>{data.subTitle_line1}<br></br>{data.subTitle_line2}</span></h1> */}
+                        <a href="#" className="btn   bannerBox__btn" onClick={() => props.goToRoute(data.route)}>{data.buttonText}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
 
 //props - mainTitle, subTitle, eventId, enterEvent()
 export function LiveEventBanner(props) {
@@ -38,18 +55,18 @@ export function LiveEventBanner(props) {
         <div className="bannerBox__inner ">
             <div className="bannerBox__slide" style={{ backgroundImage: 'url(/assets/images/banner-bg2.jpg)' }}>
                 <div class="container">
-                <div class="d-flex">
-                    <div className="bannerBox__left"> ̰
+                    <div class="d-flex">
+                        <div className="bannerBox__left"> ̰
                         <h1 className="bannerBox__title mg-b30">{data.mainTitle}</h1>
-                        <div className="bannerBox__status mg-b30">
-                            <h3 className="bannerBox__status-title">{data.subTitle}</h3>
-                            <span className="bannerBox__status-mark">LIVE</span>
+                            <div className="bannerBox__status mg-b30">
+                                <h3 className="bannerBox__status-title">{data.subTitle}</h3>
+                                <span className="bannerBox__status-mark">LIVE</span>
+                            </div>
+                            <a href="#" className="btn bannerBox__btn mg-b30" onClick={() => props.enterEvent(data.eventId)}>ENTER EVENT</a>
                         </div>
-                        <a href="#" className="btn bannerBox__btn mg-b30" onClick={() => props.enterEvent(data.eventId)}>ENTER EVENT</a>
-                    </div>
-                    <div className="bannerBox__right">
-                        <img className="bannerBox__pic" src={data.mainImageUrl} alt="" />
-                    </div>
+                        <div className="bannerBox__right">
+                            <img className="bannerBox__pic" src={data.mainImageUrl} alt="" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,7 +104,7 @@ export function PromoVideoBanner(props) {
 
     return (
         <div className="bannerBox__inner gradient-bg2">
-            <div className="bannerBox__slide"  style={{ backgroundImage: `url(${data.mainImageUrl})` }}>
+            <div className="bannerBox__slide" style={{ backgroundImage: `url(${data.mainImageUrl})` }}>
                 <div class="container" >
                     <div className="bannerBox__left" >
                         <span className="bannerBox__subtitle mg-b0" style={{ color: '#fff' }}>{data.subTitle_line1}</span>

@@ -50,6 +50,7 @@
     .videodetailBox__right .like-btn, 
     .videodetailBox .maincardBox__card.maincardBox__card--large { width: 47%; display: block; }
     .videodetailBox .maincardBox__card.maincardBox__card--large .maincardBox__card-right { padding-top: 1rem; padding-right: 1rem; padding-left: 1rem; }
+    .timelineBox-item { justify-content: start; }   
 }
 
 /* All Mobile Sizes (devices and browser) */

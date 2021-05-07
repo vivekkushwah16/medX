@@ -24,7 +24,8 @@ const UserContextProvider = (props) => {
 
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                // console.log(user.email)
+                console.log(user)
+                window.user = user
                 localStorage.setItem('userAuth', JSON.stringify(user))
                 setUser(user)
                 setInitalCheck(true)
@@ -125,9 +126,37 @@ const UserContextProvider = (props) => {
         return data;
     }
 
+    const isVerifiedUser = () => {
+        return new Promise(async (res, rej) => {
+            try {
+                if (!userInfo) {
+                    const __userInfo = await getUserProfile(user.uid)
+                    setuserInfo(__userInfo)
+                    res(__userInfo.verified)
+                } else {
+                    res(userInfo.verified)
+                }
+            } catch (error) {
+                rej(error)
+            }
+        })
+    }
+
+    const forceUpdateUserInfo = async () => {
+        return new Promise(async (res, rej) => {
+            try {
+                const __userInfo = await getUserProfile(user.uid)
+                setuserInfo(__userInfo)
+                res()
+            } catch (error) {
+                rej(error)
+            }
+        })
+    }
+
     return (
         <>
-            <UserContext.Provider value={{ user: user, initalCheck, userInfo, getVideoMetaData, setVideoMetaData, mediaMetaData }}>
+            <UserContext.Provider value={{ user: user, initalCheck, userInfo, getVideoMetaData, setVideoMetaData, mediaMetaData, isVerifiedUser, forceUpdateUserInfo }}>
                 {props.children}
             </UserContext.Provider>
         </>

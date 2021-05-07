@@ -26,7 +26,7 @@ export default function AnalyticsContextProvider(props) {
 
     async function addGAWithUserInfo(eventName, data = {}) {
         try {
-            console.log(eventName, data, userInfo);
+            // console.log(eventName, data, userInfo);
             if (!userInfo) {
                 console.error("No UsrInfo Found")
                 return
@@ -42,7 +42,7 @@ export default function AnalyticsContextProvider(props) {
                 dateTimeStamp: new Date().getTime()
             }
             let wholeData = { ...baseData, ...data }
-            console.log(wholeData)
+            // console.log(wholeData)
             analytics.logEvent(eventName, wholeData)
         } catch (error) {
             console.log(error)
@@ -96,8 +96,7 @@ export default function AnalyticsContextProvider(props) {
     //sessionId , timestamps, date
     const updateUserStatus = async (eventId, timelineId, timespent) => {
         try {
-            // console.log(user)
-
+            
             if (!sessionId) {
                 console.error("SessionId is null")
                 return
@@ -144,7 +143,7 @@ export default function AnalyticsContextProvider(props) {
             // dummyFunction(_data, user.uid)
             const cloudRef = cloudFunction.httpsCallable(UPDATE_USER_STAUS)
             cloudRef(JSON.stringify(_data)).then((res) => {
-                // console.log(res)
+                console.log(res)
             }).catch(err => {
                 console.log(err);
             })

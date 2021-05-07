@@ -195,6 +195,7 @@ body {
 
 .mobileView_timelineBox {
     display: flex;
+    overflow-x: auto;
 }
 
 .mobileView_timelineBox .timelineBox-item {
@@ -283,4 +284,18 @@ body {
 .swal-button:not([disabled]):hover {
     background-color: #fff;
     color: #015189;
+}
+
+.swal-button--cancel{
+    color: #fff;
+}
+.swal-button--loading:not([disabled]):hover{
+    background: #015189!important;
+}
+
+.swal-icon--success__line{
+    background-color: #015189;
+}
+.swal-icon--success__ring{
+    border: 4px solid hsl(205deg 99% 27%);
 }

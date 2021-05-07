@@ -26,7 +26,7 @@
 
 .headerBox__profile {  padding: 0.5rem 0 0.5rem 1rem; position: relative; }
 .profile__user { position: relative; display: flex; white-space: nowrap; align-items: center; width: 2.375rem; height: 2.375rem;  text-decoration: none; color: #fff;  filter: drop-shadow(0px 0px 14px rgba(0, 0, 0, 0.25)); background: linear-gradient(180deg, #30C1FF 0%, #1597CF 100%); justify-content: center; font-weight: 500; border-radius: 0.25rem;}
-.profile__user > img { display: block; height: 2.375rem; width: 2.375rem; min-height: 2.375rem; min-width: 2.375rem; border-radius: 50%; }
+/* .profile__user > img { display: block; height: 2.375rem; width: 2.375rem; min-height: 2.375rem; min-width: 2.375rem; border-radius: 50%; } */
 .profile__user::after { position: absolute; margin-left: 8px; left: 100%; top: 50%; margin-top: -4px; content: ""; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 8px solid #5A5A5A; }
 .profile__user:hover::after{border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 0; border-bottom: 8px solid #5A5A5A;}
 .profile__dropdown { padding: 0; opacity: 0; height: 0; overflow: hidden; transition: all 0.3s; margin-top: 1.25rem; width: 20rem; position: absolute; list-style-type: none; right: -0.75rem; top: 100%; border-radius: 0.5rem; box-shadow: 7px 9px 17px rgba(0, 0, 0, 0.25); border-radius: 0.625rem; background: #fff; }
@@ -37,6 +37,8 @@
 .profile__dropdown-profile-pic > i { padding: 3px; font-size: 0.5rem; color: #fff; position: absolute; right: -0.25rem; top: -0.25rem; border-radius: 50%; background: #068BEC; border: 1px solid rgba(6, 139, 236, 0.6); }
 .profile__dropdown-profile-title { margin-bottom: 0.25rem; font-size: 0.75rem; font-weight: 400; }
 .profile__dropdown-profile-subtitle { font-size: 0.75rem; font-weight: 400; }
+
+.profile_verified_badge{ position: absolute;  width: 1.5rem;  height: 1.5rem; top: -0.5rem; right: -0.5rem; }
 
 .profile__dropdown ul { list-style-type: none; margin-bottom: 0.5rem; }
 .profile__dropdown ul > li > a { padding: 1rem 1.5rem; color: rgba(0, 0, 0, 0.6); font-weight: 400; display: block; text-decoration: none; }
