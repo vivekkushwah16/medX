@@ -183,23 +183,23 @@ export default function App() {
                         </ProtectedRoute>
 
                         {/* event-kmde59n5 */}
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE + '/:id'}>
+                        <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={EVENT_ROUTE + '/:id'}>
                             {/* <EventLazy /> */}
                             <Redirect to={HOME_ROUTE}></Redirect>
                         </ProtectedRoute>
 
                         {/* UPLOAD */}
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/upload-kmp23'}>
+                        <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={'/upload-kmp23'}>
                             <UploadLazy />
                         </ProtectedRoute>
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/liveCount-kmp23'}>
+                        <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={'/liveCount-kmp23'}>
                             <LiveCountLazy />
                         </ProtectedRoute>
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={'/qna-kmp23'}>
+                        <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={'/qna-kmp23'}>
                             <QnaPageLazy />
                         </ProtectedRoute>
 
-                        <ProtectedRoute redirectTo={LOGIN_ROUTE} path={"*"}>
+                        <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>
                             {/* <PreEventLazy /> */}
                             <Redirect to={HOME_ROUTE}></Redirect>
                         </ProtectedRoute>

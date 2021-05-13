@@ -27,7 +27,7 @@ export default function TagsRow(props) {
     }
 
     const calculateYoffset = () => {
-        console.log('navBar', navBar.current, stickyOnScroll)
+        // console.log('navBar', navBar.current, stickyOnScroll)
         if (stickyOnScroll) {
             if (navBar.current) {
                 window.addEventListener('scroll', handleScroll);

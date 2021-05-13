@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component, createRef, useContext, useMemo } from 'react';
 // import { Splide, SplideSlide } from '@splidejs/react-splide';
 import VideoPopup from '../../Containers/VideoPopup/VideoPopup';
 // import '@splidejs/splide/dist/css/themes/splide-default.min.css';
@@ -17,9 +17,72 @@ import { UserContext } from '../../Context/Auth/UserContextProvider';
 import { cloudFunction, cloudFunctionUS, firestore, logout } from '../../Firebase/firebase';
 import { BACKSTAGE_COLLECTION, PLATFORM_BACKSTAGE_DOC } from '../../AppConstants/CollectionConstants';
 import swal from 'sweetalert';
-import { withRouter } from 'react-router-dom';
+import { Route, Switch, useLocation, useParams, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { SEND_OTP_CLOUDFUNCTION, UPDATE_MOBILENUMBER_CLOUDFUNCTION, VERIFY_OTP_COLUDFUNCTION } from '../../AppConstants/CloudFunctionName';
+import VideoManager from '../../Managers/VideoManager';
+
+const ComponentWillMountHook = (fun) => useMemo(fun, [])
+
+function HandleUrlParam(props) {
+    const { videopopVisible, openVideoPop } = props
+    const { getVideoMetaData } = useContext(UserContext);
+    //params will tell us the video Id
+    let { videoId } = useParams();
+    //using query we will get the tag
+    let urlQuery = useQuery();
+    function useQuery() {
+        return new URLSearchParams(useLocation().search);
+    }
+
+    const loadVideoWithOutTag = async () => {
+        //we first read the video from db using Id and then we will get the tag from it
+        let currentVideoData = await VideoManager.getVideoWithId(videoId)
+        let tag = currentVideoData.tags[0]
+        loadVideoWithTag(tag, currentVideoData)
+    }
+
+    const loadVideoWithTag = async (currentTag, _CurrentVideoData) => {
+        //get all video with the tag, we have to show them in suggestions
+        let currentVideoData = null
+        const videoArr = await VideoManager.getVideoWithTag([currentTag]);
+        let filterArr = videoArr.filter(data => data.id === videoId)
+        if (_CurrentVideoData) {
+            currentVideoData = _CurrentVideoData
+        }
+        else if (filterArr.length > 0) {
+            currentVideoData = filterArr[0]
+        } else {
+            currentVideoData = await VideoManager.getVideoWithId(videoId)
+        }
+        //get video meta data, will tell how much I have watch the video
+        const metaData = await getVideoMetaData(videoId)
+        openVideoPop(metaData, currentVideoData, videoArr, currentTag, false)
+    }
+
+
+    ComponentWillMountHook(async () => {
+        //check if videoPopVisible, if not then it's a direct link open
+        if (!videopopVisible) {
+            //we will find the tag
+            let currentTag = urlQuery.get("tag")
+            currentTag = decodeURIComponent(currentTag)
+            if (currentTag) {
+                loadVideoWithTag(currentTag)
+            } else {
+                loadVideoWithOutTag()
+            }
+        }
+    })
+
+
+
+    return (
+        <>
+            {props.children}
+        </>
+    )
+}
 
 class Home extends Component {
 
@@ -518,7 +581,7 @@ class Home extends Component {
     //#endregion
 
     //function to open the videoPop 
-    openVideoPop = async (metadata, videoData, videosData, tagSelectedFrom) => {
+    openVideoPop = async (metadata, videoData, videosData, tagSelectedFrom, updateUrl = true) => {
         // console.log(metadata, videoData, videosData, tagSelectedFrom);
         //first check for verified user
         let isVerified = await this.context.isVerifiedUser()
@@ -534,6 +597,11 @@ class Home extends Component {
                 videopopVisible: true,
                 videoPopupData: { ...videoData, tagSelectedFrom },
                 lastVideoMetadata: metadata
+            }, () => {
+                if (updateUrl) {
+                    const { history } = this.props;
+                    if (history) history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
+                }
             })
         }, 100);
 
@@ -622,14 +690,30 @@ class Home extends Component {
                     <Footer />
                 </div>
 
-                {
-                    this.state.videopopVisible &&
-                    <VideoPopup metadata={this.state.lastVideoMetadata}
-                        videoData={this.state.videoPopupData}
-                        currVideosData={this.state.currentVideosData}
-                        closeVideoPop={this.closeVideoPop}
-                        openVideoPop={this.openVideoPop} />
-                }
+                <Switch>
+                    <Route path={`/home/:videoId`} >
+                        <HandleUrlParam openVideoPop={this.openVideoPop} videopopVisible={this.state.videopopVisible}>
+                            {
+                                !this.state.videopopVisible &&
+                                <div className="loaderContainer">
+                                    <div className="lds-dual-ring"></div>
+                                </div>
+                            }
+                            {
+                                this.state.videopopVisible &&
+                                <VideoPopup metadata={this.state.lastVideoMetadata}
+                                    videoData={this.state.videoPopupData}
+                                    currVideosData={this.state.currentVideosData}
+                                    closeVideoPop={(videoData) => {
+                                        this.closeVideoPop(videoData)
+                                        const { history } = this.props;
+                                        if (history) history.push(`/home`);
+                                    }}
+                                    openVideoPop={this.openVideoPop} />
+                            }
+                        </HandleUrlParam>
+                    </Route>
+                </Switch>
             </>
             // </section>
         );

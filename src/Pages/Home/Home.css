@@ -299,3 +299,18 @@ body {
 .swal-icon--success__ring{
     border: 4px solid hsl(205deg 99% 27%);
 }
+
+.loaderContainer{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #020202de;
+    z-index: 15;
+}
+
+.lds-dual-ring{display:inline-block;width:80px;height:80px}.lds-dual-ring:after{content:" ";display:block;width:64px;height:64px;margin:8px;border-radius:50%;border:6px solid #015189;border-color:#015189 transparent #015189 transparent;animation:lds-dual-ring 1.2s linear infinite}@keyframes lds-dual-ring{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}

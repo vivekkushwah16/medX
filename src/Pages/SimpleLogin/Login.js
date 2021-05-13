@@ -58,7 +58,7 @@ class Login extends Component {
             .auth()
             .signInWithEmailAndPassword(this.state.phoneNumber + "@cipla.com", this.state.phoneNumber)
             .then((confirmationResult) => {
-                this.redirectToHome();
+                // this.redirectToHome();
                 this.setState({ isLoading: false })
             })
             .catch((error) => {
@@ -126,7 +126,13 @@ class Login extends Component {
 
     redirectToRegister = () => {
         const { history } = this.props;
-        if (history) history.push(REGISTER_ROUTE);
+        let newPath = REGISTER_ROUTE
+        let query = new URLSearchParams(this.props.location.search).get("return")
+        if (query) {
+            newPath += (query ? `?return=${encodeURIComponent(query)}` : '')
+        }
+        console.log(newPath)
+        if (history) history.push(newPath);
     }
 
     render() {

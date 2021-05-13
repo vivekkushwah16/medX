@@ -65,7 +65,13 @@ class Register extends Component {
 
     redirectToLogin = () => {
         const { history } = this.props;
-        if (history) history.push(LOGIN_ROUTE);
+        let newPath = LOGIN_ROUTE
+        let query = new URLSearchParams(this.props.location.search).get("return")
+        if (query) {
+            newPath += (query ? `?return=${encodeURIComponent(query)}` : '')
+        }
+        console.log(newPath)
+        if (history) history.push(newPath);
     }
 
     validateForm = () => {

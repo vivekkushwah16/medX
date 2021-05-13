@@ -13,7 +13,7 @@ export function Custom1(props) {
                 <div class="container" >
                     <div className={isMobileOnly ? "bannerBox__left flexBoxC" : "bannerBox__left"} >
                         {isMobileOnly &&
-                            <img style={{ height: "2.8rem" }} className="mg-b30" src="assets/images/logos/ciplamed-logo2.png"></img>
+                            <img style={{ height: "2.8rem" }} className="mg-b30" src="/assets/images/logos/ciplamed-logo2.png"></img>
                         }
                         <h1 className="bannerBox__featired-title mg-b50" style={{ color: '#fff' }}>{data.mainTitle}<br></br><span>{data.subTitle_line1}<br></br>{data.subTitle_line2}</span></h1>
                         {/* <a href="#" className="bannerBox__profile mg-b50">

@@ -47,8 +47,8 @@ const BannerData = [
     {
         type: BannerType.Custom2,
         buttonText:'Watch Now',
-        mainImageUrl: 'assets/images/Banner_07052021.jpg',
-        logoImageUrl: 'assets/images/logoSessionLive.png',
+        mainImageUrl: '/assets/images/Banner_07052021.jpg',
+        logoImageUrl: '/assets/images/logoSessionLive.png',
         route: 'Impact Sessions'
     },
     {
@@ -69,7 +69,7 @@ const BannerData = [
         // subTitle_line2: 'resistant TB',
         videoUrl: 'https://player.vimeo.com/video/536652520',
         buttonText:'Watch Now',
-        mainImageUrl: 'assets/images/AdobeStock_205914003.jpeg',
+        mainImageUrl: '/assets/images/AdobeStock_205914003.jpeg',
         // speakerId: 'speaker-kmfz0vco',
         // eventId: 'event-kmde59n5'
     },

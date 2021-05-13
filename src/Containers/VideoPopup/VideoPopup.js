@@ -94,7 +94,7 @@ function VideoPopup(props) {
                 runTimer();
             }, 1000);
             return () => {
-                console.log('Reached cleanup function');
+                // console.log('Reached cleanup function');
                 clearInterval(intervalId);
             };
         },
@@ -135,12 +135,12 @@ function VideoPopup(props) {
 
     const toggleLikeToTarget = async () => {
         if (like) {
-            console.log("removeLike")
+            // console.log("removeLike")
             const count = await removeLike(videoData.id, null, LikeType.VIDEO_LIKE)
             setLikeCount(count)
 
         } else {
-            console.log("addLike")
+            // console.log("addLike")
             const count = await addLike(videoData.id, null, LikeType.VIDEO_LIKE)
             setLikeCount(count)
         }
@@ -156,7 +156,7 @@ function VideoPopup(props) {
         moreVideos = currVideosData.filter(currentVideoData => currentVideoData.id !== videoData.id)
         if (randomNextVideo == -1) {
             randomNextVideo = Math.floor(Math.random() * moreVideos.length);
-            console.log(randomNextVideo);
+            // console.log(randomNextVideo);
         }
     }
 
@@ -261,25 +261,25 @@ function VideoPopup(props) {
                             playsinline={true}
                             onPlay={() => {
                                 startTimer()
-                                console.log("playing!!")
+                                // console.log("playing!!")
                                 playingStatus(true);
                                 endedStatus(false);
                             }}
                             onBuffer={() => {
-                                console.log('isBuffereing');
+                                // console.log('isBuffereing');
                                 window.isOnHold = true;
                             }}
                             onSeek={() => {
-                                console.log("seekingg!!")
+                                // console.log("seekingg!!")
                                 window.isOnHold = true
                             }}
                             onPause={() => {
-                                console.log("paused!!")
+                                // console.log("paused!!")
                                 playingStatus(false);
                                 stopTimer()
                             }}
                             onEnded={() => {
-                                console.log("ended!!")
+                                // console.log("ended!!")
                                 endedStatus(true);
                                 stopTimer()
                             }}
