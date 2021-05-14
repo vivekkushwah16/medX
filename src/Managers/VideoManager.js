@@ -389,7 +389,7 @@ const VideoManager = {
                     if (!doc.exists) {
                         let err = {
                             code: 'NotValidId',
-                            message: "No EventId Found"
+                            message: "No VideoId Found"
                         }
                         throw (err)
                     }

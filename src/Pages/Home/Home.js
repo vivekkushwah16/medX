@@ -17,7 +17,7 @@ import { UserContext } from '../../Context/Auth/UserContextProvider';
 import { cloudFunction, cloudFunctionUS, firestore, logout } from '../../Firebase/firebase';
 import { BACKSTAGE_COLLECTION, PLATFORM_BACKSTAGE_DOC } from '../../AppConstants/CollectionConstants';
 import swal from 'sweetalert';
-import { Route, Switch, useLocation, useParams, withRouter } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation, useParams, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { SEND_OTP_CLOUDFUNCTION, UPDATE_MOBILENUMBER_CLOUDFUNCTION, VERIFY_OTP_COLUDFUNCTION } from '../../AppConstants/CloudFunctionName';
 import VideoManager from '../../Managers/VideoManager';
@@ -27,6 +27,8 @@ const ComponentWillMountHook = (fun) => useMemo(fun, [])
 function HandleUrlParam(props) {
     const { videopopVisible, openVideoPop } = props
     const { getVideoMetaData } = useContext(UserContext);
+    //useHistory to redirect
+    let history = useHistory()
     //params will tell us the video Id
     let { videoId } = useParams();
     //using query we will get the tag
@@ -36,28 +38,33 @@ function HandleUrlParam(props) {
     }
 
     const loadVideoWithOutTag = async () => {
-        //we first read the video from db using Id and then we will get the tag from it
-        let currentVideoData = await VideoManager.getVideoWithId(videoId)
-        let tag = currentVideoData.tags[0]
-        loadVideoWithTag(tag, currentVideoData)
+        try {
+            //we first read the video from db using Id and then we will get the tag from it
+            let currentVideoData = await VideoManager.getVideoWithId(videoId)
+            let tag = currentVideoData.tags[0]
+            loadVideoWithTag(tag, currentVideoData)
+        } catch (error) {
+            history.push('/home');
+        }
+
     }
 
     const loadVideoWithTag = async (currentTag, _CurrentVideoData) => {
-        //get all video with the tag, we have to show them in suggestions
-        let currentVideoData = null
-        const videoArr = await VideoManager.getVideoWithTag([currentTag]);
-        let filterArr = videoArr.filter(data => data.id === videoId)
-        if (_CurrentVideoData) {
-            currentVideoData = _CurrentVideoData
+        try {
+            //get all video with the tag, we have to show them in suggestions
+            let currentVideoData = null
+            if (_CurrentVideoData) {
+                currentVideoData = _CurrentVideoData
+            } else {
+                currentVideoData = await VideoManager.getVideoWithId(videoId)
+            }
+            const videoArr = await VideoManager.getVideoWithTag([currentTag]);
+            //get video meta data, will tell how much I have watch the video
+            const metaData = await getVideoMetaData(videoId)
+            openVideoPop(metaData, currentVideoData, videoArr, currentTag, false)
+        } catch (error) {
+            history.push('/home');
         }
-        else if (filterArr.length > 0) {
-            currentVideoData = filterArr[0]
-        } else {
-            currentVideoData = await VideoManager.getVideoWithId(videoId)
-        }
-        //get video meta data, will tell how much I have watch the video
-        const metaData = await getVideoMetaData(videoId)
-        openVideoPop(metaData, currentVideoData, videoArr, currentTag, false)
     }
 
 
@@ -67,7 +74,7 @@ function HandleUrlParam(props) {
             //we will find the tag
             let currentTag = urlQuery.get("tag")
             currentTag = decodeURIComponent(currentTag)
-            if (currentTag) {
+            if (currentTag && currentTag !== "null") {
                 loadVideoWithTag(currentTag)
             } else {
                 loadVideoWithOutTag()
