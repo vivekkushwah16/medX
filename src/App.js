@@ -12,6 +12,8 @@ import './assets/css/modal.css'
 
 import loadable from '@loadable/component';
 import LoadableFallback from './Components/LoadableFallback/LoadableFallback';
+import PreEvent from './Pages/PreEvent/PreEvent';
+import EventRoute from './Components/EventRoute';
 // import Upload from './Components/Upload/upload';
 // import LiveCount from './Pages/LiveCount/liveCount';
 // import QnaPage from './Pages/QnaPage/QnaPage';
@@ -178,7 +180,8 @@ export default function App() {
                         {/* Home Route */}
 
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>
-                            <HomeLazy />
+                            <PreEvent />
+                            {/* <HomeLazy /> */}
                             {/* <Redirect to={"/event/event-kmde59n5"}></Redirect> */}
                         </ProtectedRoute>
 
@@ -198,6 +201,14 @@ export default function App() {
                         <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={'/qna-kmp23'}>
                             <QnaPageLazy />
                         </ProtectedRoute>
+
+                        <EventRoute
+                            login={LoginLazy} //For Login component
+                            register={RegisterLazy} //for register component
+                            notLive={PreEvent} //for prevent component
+                            liveEvent={Event} //for event component
+                            // finishedEvent={''}//for finished component
+                        />
 
                         <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>
                             {/* <PreEventLazy /> */}
