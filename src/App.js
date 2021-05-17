@@ -203,11 +203,13 @@ export default function App() {
                         </ProtectedRoute>
 
                         <EventRoute
+                            exact
+                            redirectTo={HOME_ROUTE}//redirect route if root got a hit
                             login={LoginLazy} //For Login component
                             register={RegisterLazy} //for register component
                             notLive={PreEvent} //for prevent component
                             liveEvent={Event} //for event component
-                            // finishedEvent={''}//for finished component
+                        // finishedEvent={''}//for finished component
                         />
 
                         <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { BACKSTAGE_COLLECTION, PLATFORM_BACKSTAGE_DOC } from '../../AppConstants/CollectionConstants';
+import { HOME_ROUTE } from '../../AppConstants/Routes';
 import { UserContext } from '../../Context/Auth/UserContextProvider';
 import { firestore } from '../../Firebase/firebase';
 import LoadableFallback from '../LoadableFallback/LoadableFallback';
@@ -30,6 +31,7 @@ export const EventChecker = (props) => {
     }, [event])
 
     const getEventNameAndCrossCheck = async () => {
+        console.log(event)
         let ref = firestore.collection(BACKSTAGE_COLLECTION).doc(PLATFORM_BACKSTAGE_DOC)
         const doc = await ref.get()
         if (!doc.exists) {
@@ -90,6 +92,7 @@ export const EventChecker = (props) => {
                         </>
                     }
                 </ProtectedRoute>
+                <Redirect to={HOME_ROUTE}></Redirect>
             </Switch>
         </>
     )
@@ -97,10 +100,15 @@ export const EventChecker = (props) => {
 
 export default function EventRoute(props) {
     return (
-        <Route exact={props.exact} path={'/:event'}>
-            <EventChecker login={props.login} register={props.register} notLive={props.notLive} liveEvent={props.liveEvent} finishedEvent={props.finishedEvent}>
-                {props.children}
-            </EventChecker>
-        </Route>
+        <>
+            <Route exact={props.exact} path={'/:event'}>
+                <EventChecker login={props.login} register={props.register} notLive={props.notLive} liveEvent={props.liveEvent} finishedEvent={props.finishedEvent}>
+                    {props.children}
+                </EventChecker>
+            </Route>
+            <Route exact path={'/'}>
+                <Redirect to={props.redirectTo}></Redirect>
+            </Route>
+        </>
     )
 }

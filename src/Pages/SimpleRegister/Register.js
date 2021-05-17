@@ -141,6 +141,9 @@ class Register extends Component {
             .then(async res => {
                 console.log(res)
                 console.log(res.data.userId);
+                if(!res.data){
+                    return
+                }
                 analytics.logEvent("user_registered", {
                     userId: res.data.userId,
                     country: this.state.country,
@@ -183,6 +186,7 @@ class Register extends Component {
             }).catch((error) => {
                 if (error.response) {
                     let data = error.response.data;
+                    console.log(data);
                     if (data.message && data.message.code === "auth/email-already-exists") {
                         this.setState((prev) => ({
                             errors: { ...prev.errors, alreadyRegistered: true }
@@ -200,10 +204,21 @@ class Register extends Component {
                         errors.phoneNumber = "Please enter valid phone number.";
                         this.setState({ errors: errors });
                     }
+                    if (data.code && (data.code === 'PhoneNumberInUser' || data.code === 'EmailInUser')) {
+                        this.setState((prev) => ({
+                            errors: { ...prev.errors, alreadyRegistered: true }
+                        }))
+                        console.log(this.pagetop.current)
+                        if (this.pagetop.current) {
+                            this.pagetop.current.scrollIntoView();
+                        }
+                    }
 
                 } else if (error.request) {
+                    console.log(error.request)
                     alert(error.request);
                 } else {
+                    console.log(error.message)
                     alert('Error ' + error.message);
                 }
                 console.log(error.config);
@@ -227,7 +242,7 @@ class Register extends Component {
     render() {
         return (
             <div className="login2Box__wrapper min-height-full gradient-bg3">
-              <AuthPageStaticSide />
+                <AuthPageStaticSide />
 
                 <article className={`login2Box login2Box__small `}>
                     <div ref={this.pagetop} class="login2Box__header ">

@@ -13,6 +13,10 @@
         "function": "accounts"
       },
       {
+        "source": "/accountsTest",
+        "function": "accountsTest"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
