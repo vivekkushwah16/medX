@@ -7,17 +7,17 @@ import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvid
 import { ADDTOCALENDAR_ANALYTICS_EVENT } from "../../AppConstants/AnalyticsEventName";
 
 export default function AddToCalendar(props) {
-  const startDatetime = moment("2021-04-16 19:00:00").utc();
+  const startDatetime = moment("2021-05-23 09:00:00").utc();
   const endDatetime = startDatetime.clone().add(2.5, "hours");
   const duration = endDatetime.diff(startDatetime, "hours");
   const event = {
     description:
-      "Impact 21 - International Meet on Changing Paradigms in Chest Medicine",
+      "Evolve Newer Paradigms in Respiratory Medicine.",
     duration,
     endDatetime: endDatetime.format("YYYYMMDDTHHmmssZ"),
-    location: "https://ciplamedx.com/register/impact",
+    location: "https://ciplamedx.com/evolve/register",
     startDatetime: startDatetime.format("YYYYMMDDTHHmmssZ"),
-    title: "Cipla Impact 21",
+    title: "Evolve '21 on CiplaMedX",
   };
   const AddToCalendarComp = props.blueBtn
     ? AddToCalendarHOC(addToCalendarBlueBtn, AddToCalendarDropDown)
@@ -27,22 +27,22 @@ export default function AddToCalendar(props) {
   window.AddToCalendarAnalytic = (optionName = "") => {
     if (optionName === "") {
       addGAWithUserInfo(ADDTOCALENDAR_ANALYTICS_EVENT, {
-        eventId: "event-kmde59n5",
+        eventId: "evolve",
       });
       addCAWithUserInfo(
         ADDTOCALENDAR_ANALYTICS_EVENT,
         true,
-        { eventId: "event-kmde59n5" },
+        { eventId: "evolve" },
         true
       );
     } else {
       addGAWithUserInfo(ADDTOCALENDAR_ANALYTICS_EVENT + "_" + optionName, {
-        eventId: "event-kmde59n5",
+        eventId: "evolve",
       });
       addCAWithUserInfo(
         ADDTOCALENDAR_ANALYTICS_EVENT + "_" + optionName,
         true,
-        { eventId: "event-kmde59n5" },
+        { eventId: "evolve" },
         true
       );
     }

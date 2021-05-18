@@ -30,7 +30,7 @@ function PreEvent() {
   let firstTime = useMemo(() => true, []);
 
   useEffect(() => {
-    getAgendaData("event-kmde59n5");
+    // getAgendaData("event-kmde59n5");
     return () => {
       removeTimelineListener();
     };

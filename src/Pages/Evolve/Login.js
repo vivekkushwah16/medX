@@ -46,8 +46,8 @@ class Login extends Component {
   firstTime = true;
 
   componentDidMount = async () => {
-    const agendaData = await EventManager.getAgenda("event-kmde59n5");
-    this.processAgendaData(agendaData);
+    // const agendaData = await EventManager.getAgenda("event-kmde59n5");
+    // this.processAgendaData(agendaData);
     // this.setState({ agendaData })
     this.handleResize();
     window.addEventListener("resize", this.handleResize);

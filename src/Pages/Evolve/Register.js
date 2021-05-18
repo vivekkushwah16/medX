@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import firebase, { analytics, database } from "../../Firebase/firebase";
+import firebase, { analytics, database, firestore } from "../../Firebase/firebase";
 
 import "./Register.css";
 import "react-phone-number-input/style.css";
@@ -12,7 +12,7 @@ import EventManager from "../../Managers/EventManager";
 import { isMobileOnly } from "react-device-detect";
 import { MonthName } from "../../AppConstants/Months";
 import SideAgendaNoUser from "../../Containers/SideAgendaNoUser/SideAgendaNoUser";
-import { CONFIRMATIONENDPOINT } from "../../AppConstants/APIEndpoints";
+import { CONFIRMATIONENDPOINT, EVENT_CONFIRMATION_ENDPOINT } from "../../AppConstants/APIEndpoints";
 import EventPageStatic from "../../Containers/AuthPageStaticSide/EventPageStatic";
 var uniqid = require("uniqid");
 
@@ -81,8 +81,8 @@ class Register extends Component {
   };
   firstTime = true;
   componentDidMount = async () => {
-    const agendaData = await EventManager.getAgenda("event-kmde59n5");
-    this.processAgendaData(agendaData);
+    // const agendaData = await EventManager.getAgenda("event-kmde59n5");
+    // this.processAgendaData(agendaData);
     // this.setState({ agendaData })
     window.addEventListener("resize", this.handleResize);
   };
@@ -93,9 +93,8 @@ class Register extends Component {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -241,7 +240,9 @@ class Register extends Component {
       .then(async (res) => {
         console.log(res);
         console.log(res.data.userId);
+
         analytics.logEvent("user_registered", {
+          eventId: 'evolve',
           userId: res.data.userId,
           country: this.state.country,
           state: this.state.state,
@@ -251,6 +252,7 @@ class Register extends Component {
           pincode: this.state.pincode,
           date: new Date().getTime(),
         });
+
         let _data = {
           userId: res.data.userId,
           email: this.state.email,
@@ -264,23 +266,28 @@ class Register extends Component {
           city: this.state.city,
           pincode: this.state.pincode,
           date: new Date().getTime(),
+          eventId: 'evolve',
         };
         await database
           .ref(`/user_registered/${uniqid("user_registered_")}`)
           .update(_data);
+
         const confirmationMailResponse = await axios({
           method: "post",
-          url: CONFIRMATIONENDPOINT,
+          url: EVENT_CONFIRMATION_ENDPOINT,
           data: {
-            eventName: "Cipla Impact 2021",
+            eventName: "Cipla Evolve '21",
             email: this.state.email,
             mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${
-              this.state.lastName ? this.state.lastName : ""
-            }`,
+            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
+              }`,
             isDoctor: this.state.profession === "Doctor",
           },
         });
+        await firestore.collection("userMetaData").doc(res.data.userId).set({
+          registeration: 'evolve'
+        })
+
         // this.setState({ isLoading: false })
         this.siginIn(_data);
         // this.redirectToLogin();
@@ -365,9 +372,8 @@ class Register extends Component {
         /> */}
         <EventPageStatic />
         <article
-          className={`login2Box login2Box__small ${
-            this.state.currentTab === TABS.AgendaTab ? "" : ""
-          }`}
+          className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? "" : ""
+            }`}
         >
           <div ref={this.pagetop} class="login2Box__header ">
             <h3

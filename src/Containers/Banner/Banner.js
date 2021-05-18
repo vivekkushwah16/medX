@@ -104,7 +104,7 @@ function Banner() {
         // history.push(`/#homeVideoContainer`);
     }
     const enterEvent = (eventId) => {
-        history.push(`${EVENT_ROUTE}/event-kmde59n5`);
+        history.push(`${EVENT_ROUTE}/evolve`);
     }
     const watchVideo = (videoUrl) => {
         //open video

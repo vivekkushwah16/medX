@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import firebase, { analytics, database } from '../../Firebase/firebase';
+import firebase, { analytics, database, firestore } from '../../Firebase/firebase';
 
 import './Register.css'
 import 'react-phone-number-input/style.css'
@@ -146,6 +146,7 @@ class Register extends Component {
                 }
                 analytics.logEvent("user_registered", {
                     userId: res.data.userId,
+                    event: 'ott',
                     country: this.state.country,
                     state: this.state.state,
                     city: this.state.city,
@@ -166,7 +167,8 @@ class Register extends Component {
                     state: this.state.state,
                     city: this.state.city,
                     pincode: this.state.pincode,
-                    date: new Date().getTime()
+                    date: new Date().getTime(),
+                    event: 'ott',
                 }
                 await database.ref(`/user_registered/${uniqid('user_registered_')}`).update(_data)
                 const confirmationMailResponse = await axios({
@@ -180,6 +182,9 @@ class Register extends Component {
                         isDoctor: this.state.profession === 'Doctor'
                     }
                 })
+                await firestore.collection("userMetaData").doc(res.data.userId).set({
+                    registeration: 'ott'
+                  })
                 // this.setState({ isLoading: false })
                 this.siginIn(_data)
                 // this.redirectToLogin();

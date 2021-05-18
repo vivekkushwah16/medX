@@ -268,7 +268,7 @@ function VideoPopup(props) {
 
   return (
     <>
-      {inviteFriend ? (
+      {/* {inviteFriend ? (
         <InviteFriendModal
           message={"From video page"}
           zIndex={18}
@@ -277,7 +277,7 @@ function VideoPopup(props) {
         />
       ) : (
         ""
-      )}
+      )} */}
 
       <div
         className="modalBox modalBox--large active videoModalBox"
@@ -455,18 +455,25 @@ function VideoPopup(props) {
             {/* </div> */}
             <div className="videodetailBox">
               <div className="videodetailBox__right hide-on-mobile">
-                <div className="likeBtnContainer dsk-like mg-b40">
+                <div className="likeBtnContainer  mg-b40">{/* dsk-like */}
                   {rating !== null && (
                     <>
-                      <div className="starParent dsk">
+                      <div className="starParent ">{/* dsk */}
                         <StartRating
                           initalRating={rating}
                           updateRating={updatingTimelineRating}
                         />
                       </div>
+                      <button
+                        className={`like-btn ${like ? "like-btn--active" : ""}`}
+                        onClick={() => toggleLikeToTarget()}
+                      >
+                        <i className="icon-like"></i>
+                        {likeCount}
+                      </button>
                     </>
                   )}
-                  <div className="btns-div">
+                  {/* <div className="btns-div">
                     {" "}
                     <button
                       className={`like-btn ${like ? "like-btn--active" : ""}`}
@@ -484,7 +491,7 @@ function VideoPopup(props) {
                       <FontAwesomeIcon icon={faShare} />
                       {"Share"}
                     </button>
-                  </div>
+                  </div> */}
                   {videoData.pdf && (
                     <button className="like-btn">Download PDF</button>
                   )}
@@ -573,7 +580,7 @@ function VideoPopup(props) {
                       <i className="icon-like"></i>
                       {likeCount}
                     </button>
-                    <button
+                    {/* <button
                       className={`like-btn`}
                       style={{ marginLeft: "1rem" }}
                       onClick={() => {
@@ -582,7 +589,7 @@ function VideoPopup(props) {
                     >
                       <FontAwesomeIcon icon={faShare} />
                       {"Share"}
-                    </button>
+                    </button> */}
                     {videoData.pdf && (
                       <button className="like-btn">Download PDF</button>
                     )}

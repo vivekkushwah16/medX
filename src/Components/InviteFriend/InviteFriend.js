@@ -33,7 +33,6 @@ export default function InviteFriend(props) {
       {props.showInviteFriendModal && (
         <InviteFriendModal
           handleClick={() => props.toggleInviteFriendModal(false)}
-          message={"Hello test Message"}
         />
       )}
     </>
