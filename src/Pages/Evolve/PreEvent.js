@@ -18,6 +18,7 @@ import evolve__logo from "./evolve-logo.svg";
 import cipla__res from "./cipla-res.svg";
 import thank__you from "./thak_you.svg";
 import timing from "./timing.svg";
+import mobile__blur from "./mobile-blur.svg";
 function PreEvent() {
   const { showMediaModal } = useContext(MediaModalContext);
   const [agendaData, setAgendaData] = useState(null);
@@ -92,6 +93,36 @@ function PreEvent() {
     <>
       <div className="evolve__main__div">
         <Header />
+        <div className="mobile__layout">
+          <img src={evolve__logo} alt="" className="evolve__logo" />
+          <img src={cipla__res} alt="" className="cipla__res" />
+          <div className="thanks">
+            <img src={thank__you} alt="" className="thank__you" />
+          </div>
+          <div className="timing--">
+            <img src={timing} alt="" className="timing-" />
+          </div>
+          <div className="buttons">
+            {/* <button className="btn btn-secondary evolve-btn">
+              Add to Calendar
+            </button> */}
+            <AddToCalendar blueBtn={true} />
+            <button
+              className="btn btn-secondary"
+              onClick={(e) => {
+                showMediaModal(
+                  MediaModalType.Videos,
+                  "https://player.vimeo.com/video/536876068"
+                );
+                // addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
+                // addCAWithUserInfo(`/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`, true, { eventId: 'event-kmde59n5' }, true)
+              }}
+            >
+              Watch Trailer
+            </button>
+          </div>
+        </div>
+        <img src={mobile__blur} alt="" className="mobile__blur" />
         <img src={blur__img} alt="" className="blur__img" />
         <img src={spider__img} alt="" className="spider__img" />
         <img src={right__wing} alt="" className="right__wing" />
@@ -102,7 +133,25 @@ function PreEvent() {
           <div className="timing--">
             <img src={timing} alt="" className="timing-" />
           </div>
-          <div className="buttons"></div>
+          <div className="buttons">
+            <AddToCalendar blueBtn={true} />
+            {/* <button className="btn btn-secondary evolve-btn">
+              Add to Calendar
+            </button> */}
+            <button
+              className="btn btn-secondary "
+              onClick={(e) => {
+                showMediaModal(
+                  MediaModalType.Videos,
+                  "https://player.vimeo.com/video/536876068"
+                );
+                // addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
+                // addCAWithUserInfo(`/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`, true, { eventId: 'event-kmde59n5' }, true)
+              }}
+            >
+              Watch Trailer
+            </button>
+          </div>
         </div>
         <div className="right__div">
           <img src={evolve__logo} alt="" className="evolve__logo" />

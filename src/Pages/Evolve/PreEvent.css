@@ -1,7 +1,7 @@
 .evolve__main__div {
   height: 100vh;
   width: 100%;
-  background-color: #fbfcfd;
+  background-color: #f2f2f2;
   display: flex;
 }
 .blur__img {
@@ -35,8 +35,11 @@
 }
 .left__div div {
   width: 100%;
-  align-items: center;
-  display: flex;
+  padding-left: 20%;
+}
+
+.timing- {
+  margin-top: 4rem;
 }
 .right__div {
   flex: 1;
@@ -55,4 +58,119 @@
 .cipla__res {
   margin-top: 5rem;
   width: 30%;
+}
+.evolve-btn {
+  font-weight: bold;
+}
+.buttons button:nth-child(1) {
+  margin-right: 2rem;
+  margin-top: 4rem;
+}
+.buttons button:nth-child(2) {
+  color: #015189;
+  background-color: #fff;
+  border-color: #015189;
+  margin-top: 4rem;
+  margin-bottom: 1.875rem;
+}
+.buttons button:nth-child(2):hover {
+  color: #fff;
+  background-color: #015189;
+  border-color: #015189;
+  transform: scale(1.1);
+}
+.mobile__blur {
+  display: none;
+}
+.mobile__layout {
+  display: none;
+}
+.buttons {
+  display: flex;
+}
+.buttons div {
+  padding-left: 0;
+  width: fit-content;
+}
+@media only screen and (max-width: 1024px) {
+  .left__div {
+    display: none;
+  }
+  .right__div {
+    display: none;
+  }
+  .blur__img {
+    width: auto;
+    height: auto;
+  }
+  .spider__img {
+    width: auto;
+    height: auto;
+  }
+  .mobile__blur {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  .mobile__layout {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 4;
+    align-items: center;
+    padding-top: 20vh;
+    width: 100%;
+    overflow-y: auto;
+    padding-bottom: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .evolve__logo {
+    all: unset;
+    max-width: 80%;
+  }
+  .cipla__res {
+    all: unset;
+    max-width: 40%;
+    margin-top: 2rem;
+  }
+  .thanks {
+    all: unset;
+    display: flex;
+    justify-content: center;
+  }
+  .timing-- {
+    all: unset;
+    display: flex;
+    justify-content: center;
+  }
+  .timing- {
+    all: unset;
+    margin-top: 2rem;
+    max-width: 60%;
+  }
+  .thank__you {
+    all: unset;
+    max-width: 80%;
+    margin-top: 3rem;
+  }
+  .buttons {
+    all: unset;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .buttons button:nth-child(1) {
+    margin-right: 2rem;
+    margin-top: 4rem;
+  }
+  .buttons button:nth-child(2) {
+    color: #015189;
+    background-color: #fff;
+    border-color: #015189;
+    margin-top: 4rem;
+  }
 }
