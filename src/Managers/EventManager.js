@@ -7,10 +7,10 @@ let trendingListenerRef = null;
 let eventListenerRef = null;
 
 const EventManager = {
-    addEvent: (title, description = "", videoUrl = "") => {
+    addEvent: (title, description = "", videoUrl = "", eventId = null) => {
         return new Promise(async (res, rej) => {
             try {
-                let eventId = uniqid('event-')
+                eventId = eventId ? eventId : uniqid('event-')
                 await firestore.collection(EVENT_COLLECTION).doc(eventId).set({
                     title,
                     description,
@@ -22,6 +22,10 @@ const EventManager = {
                     activeTimelineId: null,
                     activeCertificate: true,
                     likes: 0,
+                    noticeboard: {
+                        title: 'NoticeBoard Title will come here',
+                        url: '/web/viewer.html?file=%2Fassets%2Fpdf%2Fsample.pdf'
+                    }
                 })
                 res(eventId);
             } catch (error) {

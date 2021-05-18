@@ -14,6 +14,8 @@ import loadable from '@loadable/component';
 import LoadableFallback from './Components/LoadableFallback/LoadableFallback';
 import PreEvent from './Pages/PreEvent/PreEvent';
 import EventRoute from './Components/EventRoute';
+import EventManager from './Managers/EventManager';
+import { LOREM_TEXT } from './AppConstants/Lorem';
 // import Upload from './Components/Upload/upload';
 // import LiveCount from './Pages/LiveCount/liveCount';
 // import QnaPage from './Pages/QnaPage/QnaPage';
@@ -61,6 +63,7 @@ export default function App() {
     }, [initalCheck, user])
 
     useEffect(() => {
+        // EventManager.addEvent("Welcome to Evolve '21", LOREM_TEXT,"https://player.vimeo.com/video/537595557","evolve")
         // copyFromRealtoFirestore();
         // SpeakerManager.makeSpeaker("Dr. Dave Singh","",[],speakerProfileLink,{})
         // SpeakerManager.makeSpeaker("Dr. Senthil Rajappa","",[],speakerProfileLink,{})
