@@ -75,7 +75,18 @@
   margin-bottom: 1.875rem;
   margin-left: 2rem;
 }
-.buttons button:nth-child(2):hover {
+.buttons button:nth-child(2):disabled {
+  color: #015189!important;
+  background-color: #DCDCDC;
+  border-color: #015189;
+  margin-top: 4rem;
+  margin-bottom: 1.875rem;
+  margin-left: 2rem;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.75;
+}
+.buttons button:nth-child(2):not([disabled]):hover {
   color: #fff;
   background-color: #015189;
   border-color: #015189;

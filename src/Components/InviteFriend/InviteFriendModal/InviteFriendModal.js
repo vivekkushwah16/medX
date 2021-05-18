@@ -104,8 +104,8 @@ export default function InviteFriendModal(props) {
   };
 
   const addAnalytics = (name) => {
-    addGAWithUserInfo(name);
-    addCAWithUserInfo(name, true, {}, true);
+    addGAWithUserInfo(name,{eventId: 'evovle'});
+    addCAWithUserInfo(name, true, {eventId: 'evovle'}, true);
   };
 
   return (

@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
 import { UserContext } from "./Context/Auth/UserContextProvider";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import NotLoggedInRoutes from "./Components/NotLoggedInRoutes/NotLoggedInRoutes";
-import EvolveLogin from "./Pages/Evolve/Login";
-import EvolveRegister from "./Pages/Evolve/Register";
-import EvolvePreEvent from "./Pages/Evolve/PreEvent";
+
 import {
   HOME_ROUTE,
   LOGIN_ROUTE,
@@ -78,6 +76,25 @@ const UploadLazy = loadable(
   { fallback: <LoadableFallback /> }
 );
 
+const EvolveLoginLazy = loadable(
+  () =>
+    import(/* webpackChunkName: "UploadLazy" */ "./Pages/Evolve/Login"),
+  { fallback: <LoadableFallback /> }
+);
+const EvolveRegisterLazy = loadable(
+  () =>
+    import(/* webpackChunkName: "UploadLazy" */ "./Pages/Evolve/Register"),
+  { fallback: <LoadableFallback /> }
+);
+const EvolvePreEventLazy = loadable(
+  () =>
+    import(/* webpackChunkName: "UploadLazy" */ "./Pages/Evolve/PreEvent"),
+  { fallback: <LoadableFallback /> }
+);
+// import EvolveLogin from "./Pages/Evolve/Login";
+// import EvolveRegister from "./Pages/Evolve/Register";
+// import EvolvePreEvent from "./Pages/Evolve/PreEvent";
+
 // import VideoManager from './Managers/VideoManager';
 // import EventManager from './Managers/EventManager';
 // import EventManager from './Managers/EventManager';
@@ -111,7 +128,7 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-   }, []);
+  }, []);
   return (
     <>
       <MediaModalLazy />
@@ -119,17 +136,17 @@ export default function App() {
         {initalCheck && (
           <Switch>
             <NotLoggedInRoutes redirectTo={"/evolve"} path={"/evolve/register"}>
-              <EvolveRegister />
+              <EvolveRegisterLazy />
               {/* <Redirect to={REGISTER_ROUTE}></Redirect> */}
             </NotLoggedInRoutes>
             <NotLoggedInRoutes redirectTo={"/evolve"} path={"/evolve/login"}>
-              <EvolveLogin />
+              <EvolveLoginLazy />
               {/* <Redirect to={REGISTER_ROUTE}></Redirect> */}
             </NotLoggedInRoutes>
             <ProtectedRoute exact redirectTo={"/evolve/login"} path={"/evolve"}>
               {/* <EventLazy /> */}
               {/* <PreEventLazy /> */}
-              <EvolvePreEvent />
+              <EvolvePreEventLazy />
             </ProtectedRoute>
             {/* Register Route */}
             <NotLoggedInRoutes

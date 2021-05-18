@@ -46,6 +46,7 @@ class Login extends Component {
   firstTime = true;
 
   componentDidMount = async () => {
+    window.eventNameForLoginAnalytics = 'evolve';
     // const agendaData = await EventManager.getAgenda("event-kmde59n5");
     // this.processAgendaData(agendaData);
     // this.setState({ agendaData })
@@ -58,9 +59,8 @@ class Login extends Component {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -86,7 +86,7 @@ class Login extends Component {
     });
   };
 
-  componentWillUnmount = () => {
+  componentWillUnmount = () => {    
     window.removeEventListener("resize", this.handleResize);
   };
 
@@ -135,6 +135,7 @@ class Login extends Component {
         this.state.phoneNumber
       )
       .then((confirmationResult) => {
+        this.loogedIn = true
         this.redirectToHome();
         this.setState({ isLoading: false });
       })
@@ -248,9 +249,8 @@ class Login extends Component {
         /> */}
         <EventPageStatic />
         <article
-          className={`login2Box login2Box__small ${
-            this.state.currentTab === TABS.AgendaTab ? "" : ""
-          }`}
+          className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? "" : ""
+            }`}
         >
           {!this.state.showOtp && (
             <>

@@ -53,6 +53,12 @@ class Register extends Component {
         errors: { ...defaultErr },
     }
 
+
+    componentDidMount() {
+        if (window.eventNameForLoginAnalytics)
+            window.eventNameForLoginAnalytics = null;
+    }
+
     handleInputChange = (event) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -141,7 +147,7 @@ class Register extends Component {
             .then(async res => {
                 console.log(res)
                 console.log(res.data.userId);
-                if(!res.data){
+                if (!res.data) {
                     return
                 }
                 analytics.logEvent("user_registered", {
@@ -184,7 +190,7 @@ class Register extends Component {
                 })
                 await firestore.collection("userMetaData").doc(res.data.userId).set({
                     registeration: 'ott'
-                  })
+                })
                 // this.setState({ isLoading: false })
                 this.siginIn(_data)
                 // this.redirectToLogin();

@@ -26,7 +26,7 @@ export default function AnalyticsContextProvider(props) {
 
     async function addGAWithUserInfo(eventName, data = {}) {
         try {
-            // console.log(eventName, data, userInfo);
+            console.log(eventName, data, userInfo);
             if (!userInfo) {
                 console.error("No UsrInfo Found")
                 return

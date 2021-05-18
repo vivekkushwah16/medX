@@ -30,6 +30,12 @@ class Login extends Component {
     }
     firstTime = true;
 
+    componentDidMount() {
+        if (window.eventNameForLoginAnalytics)
+            window.eventNameForLoginAnalytics = null;
+    }
+
+
     handleInputChange = (event) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;

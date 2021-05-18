@@ -55,6 +55,8 @@ const UserContextProvider = (props) => {
             city: userInfo.city,
             date: new Date()
         }
+        if (window.eventNameForLoginAnalytics)
+            _data = { ..._data, eventId: window.eventNameForLoginAnalytics }
         analytics.logEvent("user_login", _data)
         // /user_login/${uid}_${new Date().getTime()}
         await database.ref(`/user_login/${uid}`).update({

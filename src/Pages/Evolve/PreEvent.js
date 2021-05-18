@@ -10,7 +10,7 @@ import AgendaNavBar from "../../Components/Event/AgendaNavBar/AgendaNavBar";
 import AgendaCard from "../../Components/AgendaCard/AgendaCard";
 import "./PreEvent.css";
 import { isMobileOnly } from "react-device-detect";
-import { KNOW_YOUR_SPEAKER_CLICK_EVENT } from "../../AppConstants/AnalyticsEventName";
+import { KNOW_YOUR_SPEAKER_CLICK_EVENT, WATCHTRAILER_ANALYTICS_EVENT } from "../../AppConstants/AnalyticsEventName";
 import blur__img from "./pre_event_blur.png";
 import spider__img from "./pre_event_bg.png";
 import right__wing from "./right-wing.png";
@@ -107,19 +107,20 @@ function PreEvent() {
               Add to Calendar
             </button> */}
             <AddToCalendar blueBtn={true} />
-            <button
+            {/* <button
               className="btn btn-secondary"
+              disabled
               onClick={(e) => {
                 showMediaModal(
                   MediaModalType.Videos,
                   "https://player.vimeo.com/video/536876068"
                 );
-                // addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
-                // addCAWithUserInfo(`/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`, true, { eventId: 'event-kmde59n5' }, true)
+                addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: 'evolve' })
+                addCAWithUserInfo(`/${WATCHTRAILER_ANALYTICS_EVENT}`, true, { eventId: 'evolve' }, true)
               }}
             >
               Watch Trailer
-            </button>
+            </button> */}
           </div>
         </div>
         <img src={mobile__blur} alt="" className="mobile__blur" />
@@ -138,19 +139,20 @@ function PreEvent() {
             {/* <button className="btn btn-secondary evolve-btn">
               Add to Calendar
             </button> */}
-            <button
+            {/* <button
               className="btn btn-secondary "
+              disabled
               onClick={(e) => {
                 showMediaModal(
                   MediaModalType.Videos,
                   "https://player.vimeo.com/video/536876068"
                 );
-                // addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
-                // addCAWithUserInfo(`/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`, true, { eventId: 'event-kmde59n5' }, true)
+                addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: 'evolve' })
+                addCAWithUserInfo(`/${WATCHTRAILER_ANALYTICS_EVENT}`, true, { eventId: 'evolve' }, true)
               }}
             >
               Watch Trailer
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="right__div">

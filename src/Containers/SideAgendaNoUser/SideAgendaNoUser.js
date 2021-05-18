@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { WATCHTRAILER_ANALYTICS_EVENT } from '../../AppConstants/AnalyticsEventName'
 import { MediaModalType } from '../../AppConstants/ModalType'
 import Agenda from '../../Components/Event/Agenda/Agenda'
 import AgendaNavBar from '../../Components/Event/AgendaNavBar/AgendaNavBar'
@@ -34,9 +35,9 @@ export default function SideAgendaNoUser(props) {
                                         <p className="bannerBox__desc mg-b35">with the Leaders in Respiratory Medicine</p>
                                         <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-b20" style={{fontSize: "1.1rem"}}
                                                         onClick={(e) => {
-                                                            showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/536876068')
-                                                            // addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, { eventId: 'event-kmde59n5' })
-                                                            // addCAWithUserInfo(`/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`, true, { eventId: 'event-kmde59n5' }, true)
+                                                            // showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/536876068')
+                                                            // addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: 'evolve' })
+                                                            // addCAWithUserInfo(`/${WATCHTRAILER_ANALYTICS_EVENT}`, true, { eventId: 'evolve' }, true)
                                                         }}>
 
                                                         {

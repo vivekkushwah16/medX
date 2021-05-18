@@ -51,7 +51,7 @@ const SPECIALITY = [
   "Chest Physician",
   "Consulting Physician",
   "General Physician",
-  "Cardiologist",
+  // "Cardiologist",
   "Paediatrics",
   "Others",
 ];
@@ -285,7 +285,8 @@ class Register extends Component {
           },
         });
         await firestore.collection("userMetaData").doc(res.data.userId).set({
-          registeration: 'evolve'
+          registeration: 'evolve',
+          events: ['evolve']
         })
 
         // this.setState({ isLoading: false })
