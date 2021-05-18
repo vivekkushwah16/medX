@@ -19,6 +19,8 @@ export const EventChecker = (props) => {
     //to wait till we reead values from firesbase
     const [doneCheck, setCheckDonw] = useState(false)
     const [eventStatus, setEventStatus] = useState(false)
+    const [eventDetails, setEventDetails] = useState(false)
+
 
 
     //Router hooks
@@ -40,7 +42,8 @@ export const EventChecker = (props) => {
         const activeEventList = doc.data().activeEventList
         if (activeEventList.hasOwnProperty(event)) {
             setEventStatus(activeEventList[event].status)
-            console.log(activeEventList[event].status)
+            setEventDetails(activeEventList[event])
+
             setCheckDonw(true)
         } else {
             history.push(`/home`);
@@ -56,13 +59,13 @@ export const EventChecker = (props) => {
             <Switch>
                 <NotLoggedInRoutes redirectTo={url} path={`${url}/login`}>
                     {props.login ?
-                        <props.login event={event} />
+                        <props.login event={event} haveAgenda={eventDetails.agenda}/>
                         : 'login'}
                 </NotLoggedInRoutes>
 
                 <NotLoggedInRoutes redirectTo={url} path={`${url}/register`}>
                     {props.register ?
-                        <props.register event={event} />
+                        <props.register event={event}  haveAgenda={eventDetails.agenda}/>
                         : 'register'}
                 </NotLoggedInRoutes>
 

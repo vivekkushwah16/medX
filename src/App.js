@@ -180,8 +180,8 @@ export default function App() {
                         {/* Home Route */}
 
                         <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>
-                            <PreEvent />
-                            {/* <HomeLazy /> */}
+                            {/* <PreEvent /> */}
+                            <HomeLazy />
                             {/* <Redirect to={"/event/event-kmde59n5"}></Redirect> */}
                         </ProtectedRoute>
 
