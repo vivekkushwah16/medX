@@ -1,0 +1,58 @@
+.evolve__main__div {
+  height: 100vh;
+  width: 100%;
+  background-color: #fbfcfd;
+  display: flex;
+}
+.blur__img {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  width: 100%;
+}
+.spider__img {
+  position: absolute;
+  height: 100%;
+  width: auto;
+  bottom: 0;
+}
+.right__wing {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-right: -3rem;
+  z-index: 3;
+}
+.left__div {
+  flex: 1;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+.left__div div {
+  width: 100%;
+  align-items: center;
+  display: flex;
+}
+.right__div {
+  flex: 1;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+.evolve__logo {
+  margin-top: -8rem;
+  width: 70%;
+}
+.cipla__res {
+  margin-top: 5rem;
+  width: 30%;
+}

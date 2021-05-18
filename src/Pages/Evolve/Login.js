@@ -12,7 +12,7 @@ import { isMobileOnly } from "react-device-detect";
 import { MonthName } from "../../AppConstants/Months";
 import SideAgendaNoUser from "../../Containers/SideAgendaNoUser/SideAgendaNoUser";
 import "react-phone-number-input/style.css";
-
+import EventPageStatic from "../../Containers/AuthPageStaticSide/EventPageStatic";
 const TABS = {
   bothTab: 2,
   LoginTab: 0,
@@ -115,7 +115,7 @@ class Login extends Component {
 
   redirectToHome = () => {
     const { history } = this.props;
-    if (history) history.push(HOME_ROUTE + "/impact");
+    if (history) history.push("/evolve");
   };
 
   handleSubmit = (event) => {
@@ -227,7 +227,7 @@ class Login extends Component {
 
   redirectToRegister = () => {
     const { history } = this.props;
-    if (history) history.push(REGISTER_ROUTE + "/impact");
+    if (history) history.push("/evolve/register");
   };
 
   render() {
@@ -236,7 +236,7 @@ class Login extends Component {
         <div ref={this.captcha}>
           <div id={"recaptcha-container"}></div>
         </div>
-        <SideAgendaNoUser
+        {/* <SideAgendaNoUser
           agendaData={this.state.agendaData}
           agendaDates={this.state.agendaDates}
           currentDate={this.state.currentDate}
@@ -245,11 +245,11 @@ class Login extends Component {
           currentTab={this.state.currentTab}
           tabsName={TABSName}
           ToggleTab={this.ToggleTab}
-        />
-
+        /> */}
+        <EventPageStatic />
         <article
           className={`login2Box login2Box__small ${
-            this.state.currentTab === TABS.AgendaTab ? "d-none" : ""
+            this.state.currentTab === TABS.AgendaTab ? "" : ""
           }`}
         >
           {!this.state.showOtp && (
