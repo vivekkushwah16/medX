@@ -157,7 +157,7 @@ class Login extends Component {
                         <>
                             <div class="login2Box__header ">
                                 <h3 class="login2Box__header-title mg-r10">
-                                    Not Registered for the Event?
+                                    Not Registered for CiplaMedX?
                                         </h3>
                                 <button class="btn btn-secondary" onClick={this.redirectToRegister}>Register</button>
                             </div>
