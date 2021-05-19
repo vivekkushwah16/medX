@@ -20,3 +20,5 @@ export const TRENDING_CLICK = 'trending_click'
 export const QNA_INTERATCION = 'qna_interaction'
 export const POLL_INTERACTION = 'poll_interaction'
 export const SESSION_ATTENDED = 'session_attended'
+
+export const OLD_USER_REGISTER_EVENT = 'old_user_register_event'

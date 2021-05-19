@@ -23,6 +23,8 @@ import PreEvent from "./Pages/PreEvent/PreEvent";
 import EventRoute from "./Components/EventRoute";
 import EventManager from "./Managers/EventManager";
 import { LOREM_TEXT } from "./AppConstants/Lorem";
+import { firestore } from "./Firebase/firebase";
+import { PROFILE_COLLECTION } from "./AppConstants/CollectionConstants";
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 // import Upload from './Components/Upload/upload';
@@ -128,7 +130,54 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
+
   }, []);
+
+  const updateUserMetaData = async () => {
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    const query = await firestore.collection(PROFILE_COLLECTION).get()
+    for (let i = 0; i < query.docs.length; i++) {
+      console.log("--------------------------" + ((i / query.docs.length) * 100) + "------------------------------")
+      await crossCheckForRegDateAndUpdateMetaData(query.docs[i])
+    }
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+
+  }
+  const crossCheckForRegDateAndUpdateMetaData = (doc) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let uid = doc.id
+        let docData = doc.data()
+        let regEvent = 'impact'
+        console.log(docData.date, 1618684200000, docData.date > 1618684200000)
+        if (docData.date > 1618684200000) {
+          regEvent = 'ott'
+        }
+        const ref = firestore.collection("userMetaData").doc(uid)
+        await firestore.runTransaction(async transcation => {
+          const metaDoc = await transcation.get(ref)
+          if (metaDoc.exists) {
+            return
+          } else {
+            let data = {}
+            if (regEvent === 'impact') {
+              data['registeration'] = 'impact'
+              data['events'] = ['impact']
+            } else {
+              data['registeration'] = 'ott'
+              data['events'] = []
+            }
+            return transcation.set(ref, data)
+          }
+        })
+        res()
+      } catch (error) {
+        rej(error)
+      }
+    })
+
+  }
+
   return (
     <>
       <MediaModalLazy />

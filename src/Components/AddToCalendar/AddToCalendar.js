@@ -7,12 +7,12 @@ import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvid
 import { ADDTOCALENDAR_ANALYTICS_EVENT } from "../../AppConstants/AnalyticsEventName";
 
 export default function AddToCalendar(props) {
-  const startDatetime = moment("2021-05-23 09:00:00").utc();
-  const endDatetime = startDatetime.clone().add(2.5, "hours");
+  const startDatetime = moment("2021-05-23 18:00:00").utc();
+  const endDatetime = startDatetime.clone().add(3.75, "hours");
   const duration = endDatetime.diff(startDatetime, "hours");
   const event = {
     description:
-      "Evolve Newer Paradigms in Respiratory Medicine.",
+      "Evolve '21 - Tune In to Explore Newer Paradigms in Respiratory Medicine.",
     duration,
     endDatetime: endDatetime.format("YYYYMMDDTHHmmssZ"),
     location: "https://ciplamedx.com/evolve/register",
