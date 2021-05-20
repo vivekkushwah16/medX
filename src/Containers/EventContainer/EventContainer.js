@@ -141,7 +141,7 @@ export default function EventContainer(props) {
     //#endregion
 
     useEffect(() => {
-        console.log(initalTimelineValue, data)
+        // console.log(initalTimelineValue, data)
         if (data && data.activeTimelineId) {
             let activeTimelineId = data.activeTimelineId
             if (initalTimelineValue) {
@@ -187,7 +187,7 @@ export default function EventContainer(props) {
             }
         })
         let dates = Object.keys(newData)
-        console.log(firstTime, ';;;x;x;x');
+        console.log(firstTime, ': first time of session');
         if (firstTime) {
             setCureentAgendaDate(dates[0])
             firstTime = false
