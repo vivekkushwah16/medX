@@ -5,7 +5,8 @@ import './LiveCount.css'
 
 const timeOffset = 1.5;
 
-export default function LiveCount() {
+export default function LiveCount(props) {
+    const {eventId} = props;
     const [data, setData] = useState(null)
     const [stateWiseData, setStateWiseData] = useState(null)
 
@@ -21,7 +22,7 @@ export default function LiveCount() {
         let date_obj = new Date();
         let dateString = `${date_obj.getDate()}-${date_obj.getMonth() + 1}-${date_obj.getFullYear()}`
         console.log(dateString)
-        database.ref(`/userStatus/${dateString}/`).once('value', (query) => {
+        database.ref(`/userStatus/${dateString}/${eventId}`).once('value', (query) => {
             if (!query.exists()) {
                 console.log("No Data")
             }

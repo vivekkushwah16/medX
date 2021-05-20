@@ -193,10 +193,18 @@ export default function App() {
               {/* <Redirect to={REGISTER_ROUTE}></Redirect> */}
             </NotLoggedInRoutes>
             <ProtectedRoute exact redirectTo={"/evolve/login"} path={"/evolve"}>
-              {/* <EventLazy /> */}
               {/* <PreEventLazy /> */}
-              <EvolvePreEventLazy />
+              {/* <EvolvePreEventLazy /> */}
+              <EventLazy eventId={'evolve'} />
             </ProtectedRoute>
+            <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"/evolve/liveCount-kmp23"} >
+              <LiveCountLazy />
+            </ProtectedRoute>
+            <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"/evolve/qna-kmp23"}>
+              <QnaPageLazy />
+            </ProtectedRoute>
+
+
             {/* Register Route */}
             <NotLoggedInRoutes
               redirectTo={HOME_ROUTE}

@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useMemo } from 'react'
 import './Event.css'
 import Footer from '../../Containers/Footer/Footer'
 import Header from '../../Containers/Header/Header'
-import { useParams } from 'react-router-dom'
+import { useParams, useRouteMatch } from 'react-router-dom'
 import EventContainer from '../../Containers/EventContainer/EventContainer'
 import { eventContext } from '../../Context/Event/EventContextProvider'
 import { likeContext } from '../../Context/Like/LikeContextProvider'
@@ -13,8 +13,13 @@ import { database } from '../../Firebase/firebase'
 import { SESSION_ATTENDED } from '../../AppConstants/AnalyticsEventName'
 import { UserContext } from '../../Context/Auth/UserContextProvider'
 
-export default function Event() {
-    let param = useParams()
+export default function Event(props) {
+    const { eventId } = props
+    const { path, url } = useRouteMatch();
+    //remove params as we not geting this from url now
+    // let param = useParams()
+    let param = useMemo(() => ({ id: eventId }), eventId)
+
     let { getTimelines, attachTrendingDataListener, removeTrendingDataListener,
         getPartnerWithUs, countPartnerWithUsAgree,
         sendQuestion, getEventDataListener, removeEventDataListener, attachTimelineListener, removeTimelineListener } = useContext(eventContext)
