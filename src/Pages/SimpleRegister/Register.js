@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import firebase, { analytics, database, firestore } from '../../Firebase/firebase';
+import firebase, { analytics, cloudFunction, database, firestore } from '../../Firebase/firebase';
 
 import './Register.css'
 import 'react-phone-number-input/style.css'
@@ -10,6 +10,8 @@ import PhoneInput from 'react-phone-number-input'
 import { LOGIN_ROUTE } from '../../AppConstants/Routes';
 import { CONFIRMATIONENDPOINT } from '../../AppConstants/APIEndpoints';
 import AuthPageStaticSide from '../../Containers/AuthPageStaticSide/AuthPageStaticSide';
+import { UserCreation_Cloufunction } from '../../AppConstants/CloudFunctionName';
+import swal from 'sweetalert';
 var uniqid = require('uniqid');
 
 
@@ -130,7 +132,9 @@ class Register extends Component {
             return;
         }
 
-        axios.post(`/accounts`, {
+
+        const cloudRef = cloudFunction.httpsCallable(UserCreation_Cloufunction);
+        cloudRef(JSON.stringify({
             email: this.state.email,
             phoneNumber: this.state.phoneNumber,
             firstName: this.state.firstName,
@@ -143,11 +147,13 @@ class Register extends Component {
             pincode: this.state.pincode,
             termsAndConditions: this.state.termsAndConditions,
             date: new Date().getTime()
-        })
-            .then(async res => {
-                console.log(res)
-                console.log(res.data.userId);
-                if (!res.data) {
+        }))
+            .then(async (res) => {
+                console.log(res);
+                console.log(res.data);
+                if (!res.data.userId) {
+                    window.alert('Please Try Again Later');
+                    this.setState({ isLoading: false })
                     return
                 }
                 analytics.logEvent("user_registered", {
@@ -176,7 +182,97 @@ class Register extends Component {
                     date: new Date().getTime(),
                     event: 'ott',
                 }
-                await database.ref(`/user_registered/${uniqid('user_registered_')}`).update(_data)
+                await database.ref(`/user_registered/${res.data.userId}`).update(_data)
+                const confirmationMailResponse = await axios({
+                    method: 'post',
+                    url: CONFIRMATIONENDPOINT,
+                    data: {
+                        eventName: 'CiplaMedX',
+                        email: this.state.email,
+                        mobileNumber: this.state.phoneNumber,
+                        name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ''}`,
+                        isDoctor: this.state.profession === 'Doctor'
+                    }
+                })
+                await firestore.collection("userMetaData").doc(res.data.userId).set({
+                    registeration: 'ott'
+                })
+                this.siginIn(_data)
+            })
+            .catch((error) => {
+                this.setState({ isLoading: false })
+                var code = error.code;
+                var message = error.message;
+                var details = error.details;
+                console.log(error);
+                console.log(code, message, details);
+                if (code === "already-exists") {
+                    this.setState((prev) => ({
+                        errors: { ...prev.errors, alreadyRegistered: true }
+                    }))
+                    console.log(this.pagetop.current)
+                    if (this.pagetop.current) {
+                        this.pagetop.current.scrollIntoView();
+                    }
+                }
+                if (code === "failed-precondition") {
+                    let errors = this.state.errors;
+                    errors.phoneNumber = "Please enter valid phone number.";
+                    this.setState({ errors: errors });
+                }
+            });
+        return
+        console.log('/accounts', this.state)
+        axios.post("/accountsTest", {
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            profession: this.state.profession,
+            speciality: this.state.speciality,
+            country: this.state.country,
+            state: this.state.state,
+            city: this.state.city,
+            pincode: this.state.pincode,
+            termsAndConditions: this.state.termsAndConditions,
+            date: new Date().getTime()
+        })
+            .then(async res => {
+                console.log(res)
+                console.log(res.data);
+                console.log(res.data.userId);
+                if (!res.data.userId) {
+                    window.alert('Please Try Again Later');
+                    this.setState({ isLoading: false })
+                    return
+                }
+                analytics.logEvent("user_registered", {
+                    userId: res.data.userId,
+                    event: 'ott',
+                    country: this.state.country,
+                    state: this.state.state,
+                    city: this.state.city,
+                    profession: this.state.profession,
+                    speciality: this.state.speciality,
+                    pincode: this.state.pincode,
+                    date: new Date().getTime()
+                })
+                let _data = {
+                    userId: res.data.userId,
+                    email: this.state.email,
+                    phoneNumber: this.state.phoneNumber,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    profession: this.state.profession,
+                    speciality: this.state.speciality,
+                    country: this.state.country,
+                    state: this.state.state,
+                    city: this.state.city,
+                    pincode: this.state.pincode,
+                    date: new Date().getTime(),
+                    event: 'ott',
+                }
+                await database.ref(`/user_registered/${res.data.userId}`).update(_data)
                 const confirmationMailResponse = await axios({
                     method: 'post',
                     url: CONFIRMATIONENDPOINT,
@@ -195,6 +291,7 @@ class Register extends Component {
                 this.siginIn(_data)
                 // this.redirectToLogin();
             }).catch((error) => {
+                console.log(error)
                 if (error.response) {
                     let data = error.response.data;
                     console.log(data);
@@ -442,7 +539,7 @@ class Register extends Component {
                                     onChange={this.handleInputChange} />
                                 <p style={{ maxWidth: '90%' }}>
                                     I hereby declare that I am a healthcare professional and I agree with the <a href="/assets/pdf/Disclaimer _ CiplaMed.pdf" target="_blank"><b> disclaimer and privacy policy</b></a>. I also agree to receive periodic Emails/SMS from Cipla in my primary area of interest.
-                                    </p>
+                                </p>
                             </label>
                             {this.state.errors.termsAndConditions &&
                                 <span className="input-error">{this.state.errors.termsAndConditions}</span>}

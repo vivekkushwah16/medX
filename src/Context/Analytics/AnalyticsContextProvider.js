@@ -84,7 +84,7 @@ export default function AnalyticsContextProvider(props) {
                 [customIncDetails.name]: firebase.database.ServerValue.increment(customIncDetails.value)
             }
         }
-
+        // console.log('cloudAnalytics', { ...baseData, ...data,})
         await database.ref(path).update({
             ...baseData,
             ...data,
@@ -96,7 +96,7 @@ export default function AnalyticsContextProvider(props) {
     //sessionId , timestamps, date
     const updateUserStatus = async (eventId, timelineId, timespent) => {
         try {
-            
+
             if (!sessionId) {
                 console.error("SessionId is null")
                 return
@@ -132,14 +132,14 @@ export default function AnalyticsContextProvider(props) {
                 country: userInfo.country,
                 state: userInfo.state,
                 city: userInfo.city,
-                dateString: `${currentDate.getDate()}-${currentDate.getMonth()+1}-${currentDate.getFullYear()}`,
+                dateString: `${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`,
                 //event based info
                 eventId, timelineId, timespent,
                 timestamp: currentDate.getTime(),
                 date: dateTimeStamp,
                 sessionId: _sessionId,
             }
-            // console.log(_data)
+            console.log(_data)
             // dummyFunction(_data, user.uid)
             const cloudRef = cloudFunction.httpsCallable(UPDATE_USER_STAUS)
             cloudRef(JSON.stringify(_data)).then((res) => {

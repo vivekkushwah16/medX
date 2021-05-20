@@ -46,7 +46,8 @@ var userRecord = {}
 var timelineIdRecord = {}
 
 export default function QnaPage(props) {
-    const [data, setData] = useState(null);
+    let { eventId } = props
+    let [data, setData] = useState(null);
 
     useEffect(() => {
         getData()
@@ -54,7 +55,7 @@ export default function QnaPage(props) {
 
     const getData = async () => {
         try {
-            let eventId = 'event-kmde59n5'
+            eventId = eventId ? eventId : 'event-kmde59n5'
             let docrRef = firestore.collection("qna").where("eventId", "==", eventId)//.orderBy("timestamp")
             await docrRef.onSnapshot(async real => {
                 if (real.empty) {

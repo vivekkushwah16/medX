@@ -53,10 +53,14 @@ function PreEvent() {
       .get()
       .then(doc => {
         const data = doc.data()
-        if (data.events.indexOf('evolve') === -1) {
-          setToggleForRegisterationForOldUser({ status: true, value: true })
+        if (data.events) {
+            if (data.events.indexOf('evolve') === -1) {
+              setToggleForRegisterationForOldUser({ status: true, value: true })
+            } else {
+              setToggleForRegisterationForOldUser({ status: true, value: false })
+            }
         } else {
-          setToggleForRegisterationForOldUser({ status: true, value: false })
+          setToggleForRegisterationForOldUser({ status: true, value: true })
         }
       }).catch(err => {
         console.log(err)
@@ -163,7 +167,7 @@ function PreEvent() {
                         }}
                       >
                         SignUp
-                          </button>
+                      </button>
                     </div>
                   </>
                   :
@@ -243,7 +247,7 @@ function PreEvent() {
                         }}
                       >
                         SignUp
-                          </button>
+                      </button>
                     </div>
 
                   </>
