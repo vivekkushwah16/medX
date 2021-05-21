@@ -126,6 +126,7 @@ class Home extends Component {
       { tag: "ILD/IPF", header: "Videos on ILD/IPF" },
       { tag: "Telemedicine", header: "Videos on Telemedicine" },
       { tag: "Impact Sessions", header: "Videos of Impact session" },
+      { tag: "covid19", header: "Videos on COVID-19" },
       {
         tag: [
           "Inhalation Devices",
