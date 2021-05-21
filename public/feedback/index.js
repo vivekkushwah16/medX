@@ -1,7 +1,21 @@
 var emojis = ["😠", "😦", "🙂", "😀", "😍"];
 var reviews3 = ["Extremely", "Very", "Somewhat", "Not so", "Not at all"];
-var reviews4 = ["Much too long", "Too long", "About right", "Too short", "Much much short"];
-var reviews6 = ["Topics", "Keynotes and panel discussion", "Phygital experience", "Speaker profiles", "Attendee profiles","Conference setup","others"];
+var reviews4 = [
+  "Much too long",
+  "Too long",
+  "About right",
+  "Too short",
+  "Much much short",
+];
+var reviews6 = [
+  "Topics",
+  "Keynotes and panel discussion",
+  "Phygital experience",
+  "Speaker profiles",
+  "Attendee profiles",
+  "Conference setup",
+  "others",
+];
 // var reviews = ["Very Bad", "Bad", "Average", "Good", "Very Good"];
 let response3 = 0;
 let response4 = 0;
@@ -20,15 +34,15 @@ let response6 = 0;
 //     console.log("hello");
 //   });
 
-  // document
-  // .getElementsByClassName("emojislider6")[0]
-  // .addEventListener("input", () => {
-  //   document.getElementsByClassName("review6")[0].innerHTML =
-  //     reviews6[document.getElementsByClassName("emojislider6")[0].value];
-  //   var i = document.getElementsByClassName("emojislider6")[0].value;
-  //   document.getElementsByClassName("emoji6")[0].innerHTML = emojis[i];
-  //   response6 = i;
-  // });
+// document
+// .getElementsByClassName("emojislider6")[0]
+// .addEventListener("input", () => {
+//   document.getElementsByClassName("review6")[0].innerHTML =
+//     reviews6[document.getElementsByClassName("emojislider6")[0].value];
+//   var i = document.getElementsByClassName("emojislider6")[0].value;
+//   document.getElementsByClassName("emoji6")[0].innerHTML = emojis[i];
+//   response6 = i;
+// });
 // $(".emojislider2").mousemove(function () {
 //   var i = $(this).val();
 //   $(".emoji2").html(emojis[i]);
@@ -129,6 +143,15 @@ $(document).ready(function () {
     }
   };
 
+  document.getElementById("questions6-5").addEventListener("input", () => {
+    if (document.getElementById("questions6-5").checked) {
+      document.getElementById("session6_com").classList.add("d-block");
+      document.getElementById("session6_com").classList.remove("d-none");
+    } else {
+      document.getElementById("session6_com").classList.remove("d-block");
+      document.getElementById("session6_com").classList.add("d-none");
+    }
+  });
   const successfulFeedback = () => {
     // $('#mainForm').fadeIn();
     document.querySelector("#mainForm").style.display = "none";
@@ -145,22 +168,21 @@ $(document).ready(function () {
   $("#mainForm").on("submit", async function (event) {
     console.log(event);
     event.preventDefault();
-    const survey1 = {
-    };
-    let formData = new FormData(document.querySelector('form'))
+    const survey1 = {};
+    let formData = new FormData(document.querySelector("form"));
     for (var pair of formData.entries()) {
-        // console.log(pair[0] + ': ' + pair[1]);
-        if (!survey1[`${pair[0]}`]) {
-            survey1[`${pair[0]}`] = pair[1];
-        } else {
-            survey1[`${pair[0]}`] += `| ${pair[1]}`
-            // if (typeof (survey[`${pair[0]}`]) === 'object') {
-            //     survey[`${pair[0]}`].push(pair[1])
-            // } else {
-            //     survey[`${pair[0]}`] = [survey[`${pair[0]}`]]
-            //     survey[`${pair[0]}`].push(pair[1])
-            // }
-        }
+      // console.log(pair[0] + ': ' + pair[1]);
+      if (!survey1[`${pair[0]}`]) {
+        survey1[`${pair[0]}`] = pair[1];
+      } else {
+        survey1[`${pair[0]}`] += `| ${pair[1]}`;
+        // if (typeof (survey[`${pair[0]}`]) === 'object') {
+        //     survey[`${pair[0]}`].push(pair[1])
+        // } else {
+        //     survey[`${pair[0]}`] = [survey[`${pair[0]}`]]
+        //     survey[`${pair[0]}`].push(pair[1])
+        // }
+      }
     }
 
     console.log(survey1);
@@ -182,9 +204,8 @@ $(document).ready(function () {
     //   question9: document.querySelector("#session9").value,
     // };
     console.log(currentUser.displayName);
-
     ///
-
+    return;
     // if (!survey.questions4_recommend) {
     //   showError(true, "Please answer the 3rd question also.");
     //   return;

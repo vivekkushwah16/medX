@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
     <link rel="stylesheet" href="./main.css">
     <style>
+        .com{
+            margin-left: 0 !important;
+        }
         .d-none {
             display: none !important;
         }
@@ -61,7 +64,6 @@
         .ans {
             margin-left: 36px !important
         }
-
         .btn:focus {
             outline: 0 !important;
             box-shadow: none !important
@@ -123,7 +125,15 @@
         .mt-2 {
             margin-top: 2rem;
         }
-
+        .com{
+            margin-left: 0 !important;
+        }
+        .d-none{
+            display: none;
+        }
+        .d-block{
+            display: block;
+        }
         .mb-2 {
             margin-bottom: 2rem;
         }.text-danger {
@@ -224,7 +234,11 @@
                                             class="starFont" for="star1" title="1 star"> </label>
                                     </div>
                                 </div>
-
+                                <div class="question bg-white p-3 border-bottom">
+                                    <div class="ans ml-2 com">
+                                        <input type="text" class="form-control" id="session3_com" name="question3_comment" required>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -250,7 +264,11 @@
                                             class="starFont" for="star1_4" title="1 star"> </label>
                                     </div>
                                 </div>
-
+                                <div class="question bg-white p-3 border-bottom">
+                                    <div class="ans ml-2 com">
+                                        <input type="text" class="form-control" id="session4_com" name="question4_comment" required>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -312,6 +330,11 @@
                                             style="width: 100%;">Other
                                             <!-- <input type="text" style="display: none;" name="questions6-5"
                                                 class="form-control" id="questions6-5-input"> </label> -->
+                                    </div>
+                                    <div class="question bg-white p-3 border-bottom" >
+                                        <div class="ans ml-2 com">
+                                            <input type="text" class="form-control d-none"  id="session6_com" name="question6_comment">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -443,7 +466,7 @@
                             <div class="question bg-white p-3 border-bottom">
                                 <div class="d-flex flex-row align-items-center question-title">
                                     <h3 class="text-danger">Q</h3>
-                                    <h5 class="mt-1 ml-2">8. Favourite Speaker</h5>
+                                    <h5 class="mt-1 ml-2">8. Let us know your favourite speaker</h5>
                                 </div>
                                 <div class="ans ml-2">
                                     <input type="text" class="form-control" id="session8" name="question8" required>
@@ -456,7 +479,7 @@
                             <div class="question bg-white p-3 border-bottom">
                                 <div class="d-flex flex-row align-items-center question-title">
                                     <h3 class="text-danger">Q</h3>
-                                    <h5 class="mt-1 ml-2">9. Favourite Topic</h5>
+                                    <h5 class="mt-1 ml-2">9. Let us know your favourite topic that was covered during the event</h5>
                                 </div>
                                 <div class="ans ml-2">
                                     <input type="text" class="form-control" id="session9" name="question9" required>
