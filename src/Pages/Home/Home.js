@@ -162,6 +162,7 @@ class Home extends Component {
       { tag: "Inhalation Devices", header: "Inhalation Devices" },
       { tag: "ILD/IPF", header: "ILD/IPF" },
       { tag: "Telemedicine", header: "Telemedicine" },
+      { tag: "covid19", header: "COVID-19" },
 
       // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
       // { tag: 'Recommendations', header: 'Recommendations' },
