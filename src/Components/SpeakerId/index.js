@@ -44,7 +44,10 @@ export function CardSpeaker(props) {
       key={`${profile.id}-profile`}
       id={`${props.fromTitle ? "" : profile.id}`}
       className={`maincardBox__card-profile`}
-      style={{ marginRight: "2rem" }}
+      style={{
+        marginRight: "2rem",
+        pointerEvents: `${props.fromTitle ? "none" : ""}`,
+      }}
     >
       {/* ${isProfileActive ? 'active' : ''}`} > */}
       {isProfileActive && (
