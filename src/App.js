@@ -210,8 +210,8 @@ export default function App() {
             </NotLoggedInRoutes>
             <ProtectedRoute exact redirectTo={"/evolve/login"} path={"/evolve"}>
               {/* <PreEventLazy /> */}
-              <EvolvePreEventLazy />
-              {/* <EventLazy eventId={'evolve'} /> */}
+              {/* <EvolvePreEventLazy /> */}
+              <EventLazy eventId={'evolve'} />
             </ProtectedRoute>
             <ProtectedRoute
               exact

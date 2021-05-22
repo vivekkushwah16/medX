@@ -169,6 +169,7 @@ export default function EventContainer(props) {
   };
 
   const startTimespentCalculation = () => {
+    console.log("Started TIme Calculation")
     updateUserStatus(id, data.activeTimelineId, 0);
     window.session_CurrentHit_StartTimestamp = new Date().getTime();
     window.sessionTimerRef = setInterval(() => {
@@ -212,6 +213,7 @@ export default function EventContainer(props) {
     if (data && data.activeTimelineId) {
       let activeTimelineId = data.activeTimelineId;
       if (initalTimelineValue) {
+        // console.log("////////////////////////////////////")
         if (initalTimelineValue !== activeTimelineId) {
           sendSessionAnalytics(activeTimelineId);
           stopTimespentCalculation(true, initalTimelineValue);
@@ -237,6 +239,7 @@ export default function EventContainer(props) {
       props.agendaData.filter((item) => item.id === activeTimelineId)[0]
     );
   }, [activeTimelineId]);
+
   useEffect(() => {
     if (_initalAgendaData) processAgendaData(_initalAgendaData);
     setActiveTimeline(
