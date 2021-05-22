@@ -150,6 +150,7 @@ $(document).ready(function () {
     } else {
       document.getElementById("session6_com").classList.remove("d-block");
       document.getElementById("session6_com").classList.add("d-none");
+      document.getElementById("session6_com").value = "";
     }
   });
   const successfulFeedback = () => {
@@ -205,7 +206,6 @@ $(document).ready(function () {
     // };
     console.log(currentUser.displayName);
     ///
-    return;
     // if (!survey.questions4_recommend) {
     //   showError(true, "Please answer the 3rd question also.");
     //   return;
@@ -219,6 +219,7 @@ $(document).ready(function () {
         ...survey1,
         name: currentUser.displayName,
         email: currentUser.email,
+        eventId: "evolve",
       })
       .then(() => {
         successfulFeedback();

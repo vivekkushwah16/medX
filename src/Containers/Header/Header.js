@@ -5,6 +5,7 @@ import Profile from "../../Components/Profile/Profile";
 import CIPLAMEDXLOGO from "../../assets/images/medXlogo.png";
 import CIPLAMEDXLOGO_WHITE from "../../assets/images/ciplamed-logo2.png";
 import ciplamedximpact from "../../assets/images/logos/ciplamedximpact.png";
+import ciplamedxevolve from "../../assets/images/ciplamedxevolve.png";
 import { RootRoute } from "../../AppConstants/Routes";
 import { MediaModalContext } from "../../Context/MedialModal/MediaModalContextProvider";
 import { MediaModalType } from "../../AppConstants/ModalType";
@@ -76,7 +77,7 @@ export default function Header(props) {
                   props.whiteLogo
                     ? CIPLAMEDXLOGO_WHITE
                     : props.eventPage
-                    ? ciplamedximpact
+                    ? ciplamedxevolve
                     : CIPLAMEDXLOGO
                 }
                 alt="CIPLAMEDXLOGO"
@@ -94,7 +95,7 @@ export default function Header(props) {
                   if (props.disableFeedback)
                     swal(
                       "Event still in progress",
-                      "Please collect your certificate at the end of the event on 17th April!"
+                      "Please collect your certificate at the end of the event"
                     );
                   else {
                     addClickAnalytics(CERTIFICATE_CLICK);

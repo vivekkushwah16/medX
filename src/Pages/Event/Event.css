@@ -6,96 +6,95 @@
 @import url("/src/assets/css/maincard.css");
 @import url("/src/assets/css/login2.css");
 
-
 .eventBox__sidebar-btn {
-    top: 15rem;
-    right: -3.5rem;
-    animation: 0.75s eventBox__sidebar forwards;
-    box-shadow: 0px 0px 10px 5px rgba(128, 128, 128, 0.279);
+  top: 15rem;
+  right: -3.5rem;
+  animation: 0.75s eventBox__sidebar forwards;
+  box-shadow: 0px 0px 10px 5px rgba(128, 128, 128, 0.279);
 }
 
 @keyframes eventBox__sidebar {
-    0% {
-        right: -8rem;
-    }
-    100% {
-        right: -3.5rem;
-    }
+  0% {
+    right: -8rem;
+  }
+  100% {
+    right: -3.5rem;
+  }
 }
 
 .communityBox {
-    border-top-right-radius: 0rem!important;
-    border-bottom-right-radius: 0rem!important;
+  border-top-right-radius: 0rem !important;
+  border-bottom-right-radius: 0rem !important;
 }
 
 .eventBox__right {
-    padding-right: 0!important;
-    height: calc(100vh - 12rem);
-    /* height: auto!important; */
-    /* position: absolute!important; */
+  padding-right: 0 !important;
+  height: calc(100vh - 12rem);
+  /* height: auto!important; */
+  /* position: absolute!important; */
 }
 
 .eventBox .container {
-    transition: 0.25s;
-    /* max-width: unset; */
+  transition: 0.25s;
+  /* max-width: unset; */
 }
 
 .eventBox__inner {
-    transition: 0.25s;
+  transition: 0.25s;
 }
 
-.eventBox .eventBox__inner .eventBox__video>div {
-    width: calc(100vw - 33rem)!important;
-    height: calc((100vw - 33rem) * 0.56)!important;
+.eventBox .eventBox__inner .eventBox__video > div {
+  width: calc(100vw - 33rem) !important;
+  height: calc((100vw - 33rem) * 0.56) !important;
 }
 
-.addChildMarginBt-10>div {
-    margin-bottom: 1.15rem;
+.addChildMarginBt-10 > div {
+  margin-bottom: 1.15rem;
 }
 
 .liveBlock {
-    margin-left: 0.75rem;
-    padding: 0.15rem 0.5rem;
-    border-radius: 0.25rem;
-    /* width: 2.5rem;
+  margin-left: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+  /* width: 2.5rem;
     height: 2rem; */
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: white;
 }
 
-.liveBlock>span {
-    padding: 0.25rem;
-    border-radius: 50%;
-    background-color: red;
-    margin-right: 0.25rem;
-    animation: 1.5s liveBlock forwards;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+.liveBlock > span {
+  padding: 0.25rem;
+  border-radius: 50%;
+  background-color: red;
+  margin-right: 0.25rem;
+  animation: 1.5s liveBlock forwards;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
-.partnerBox__item-desc a{
-    color: #015189;
+.partnerBox__item-desc a {
+  color: #015189;
 }
 
 @keyframes liveBlock {
-    0% {
-        transform: scale(0.7);
-    }
-    50% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(0.7);
-    }
+  0% {
+    transform: scale(0.7);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.7);
+  }
 }
 
-.maincardBox__card-body>.text-block {
-    min-width: 70%;
+.maincardBox__card-body > .text-block {
+  min-width: 60%;
 }
 
 /* 
@@ -119,134 +118,134 @@
 } */
 
 .eventBoxBg {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .eventBoxBg::before {
-    z-index: -1;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 45%;
-    width: 100%;
-    content: "";
-    background: url(../../assets/images/bg_wave.png) center bottom no-repeat;
-    background-size: 100% auto;
-    background-size: cover;
-    background-position-y: inherit;
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  content: "";
+  background: url(../../assets/images/bg_wave.png) center center no-repeat;
+  background-size: 100% auto;
+  background-size: cover;
+  background-position-y: inherit;
 }
 
 .eventBox__tabs-content .navigarion-bar {
-    width: 90%;
+  width: 90%;
 }
 
 #tab3 .maincardBox.maincardBox--large .maincardBox__card {
-    padding-left: 15rem;
+  padding-left: 15rem;
 }
 
 #tab3 .maincardBox.maincardBox--large .maincardBox__card-video {
-    width: 15rem;
-    min-width: 15rem;
+  width: 15rem;
+  min-width: 15rem;
 }
 
 #eventPage .headerBox--full .container {
-    max-width: unset;
-    padding: 0rem 2.5rem;
-    /* background: black; */
+  max-width: unset;
+  padding: 0rem 2.5rem;
+  /* background: black; */
 }
 
 #eventPage .headerBox {
-    padding-top: 1.125rem!important;
+  padding-top: 1.125rem !important;
 }
 
 #eventPage .eventBox {
-    /* padding: 6.875rem ​0rem!important; */
-    padding: 6.875rem 0;
+  /* padding: 6.875rem ​0rem!important; */
+  padding: 6.875rem 0;
 }
 
 #eventPage .eventBox__video iframe {
-    border-radius: 0.75rem;
+  border-radius: 0.75rem;
 }
 
 #eventPage .eventBox__video {
-    background: transparent;
+  background: transparent;
 }
 
 .noVisiblePoll {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
-    padding: 0.75rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 0.75rem;
 }
 
-.text_underline{
-    text-decoration-line: underline;
-    text-decoration-style: dashed;
-    text-underline-position: under;
-    text-decoration-color: rgb(1 81 137 / 42%);
-    transition: 0.15s;
+.text_underline {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-underline-position: under;
+  text-decoration-color: rgb(1 81 137 / 42%);
+  transition: 0.15s;
 }
-.text_underline:hover{
-    text-decoration-color: rgb(1 81 137 / 100%);
-}
-
-.noVisiblePoll>h2 {
-    color: #015189;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
+.text_underline:hover {
+  text-decoration-color: rgb(1 81 137 / 100%);
 }
 
-.noVisiblePoll>p {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 0.9rem;
+.noVisiblePoll > h2 {
+  color: #015189;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.partnerWithUs-lessThan2{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    overflow-x: auto;
-}
-.partnerWithUs-lessThan2 .partnerBox__item{
-    opacity: 1;
-    /* min-height: 26rem; */
+.noVisiblePoll > p {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
 }
 
-#eventPage .eventBox_btn_box .btn{
-    font-size: 1.45rem!important;
+.partnerWithUs-lessThan2 {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  overflow-x: auto;
+}
+.partnerWithUs-lessThan2 .partnerBox__item {
+  opacity: 1;
+  /* min-height: 26rem; */
+}
+
+#eventPage .eventBox_btn_box .btn {
+  font-size: 1.45rem !important;
 }
 
 @media only screen and (max-width: 1023px) {
-    #tab3 .maincardBox {
-        padding: 0rem;
-    }
+  #tab3 .maincardBox {
+    padding: 0rem;
+  }
 }
 
 @media only screen and (max-width: 991px) {
-    .eventBox .container {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    #tab3 .rating-block {
-        margin-bottom: 0;
-    }
-    #eventPage .eventBox__video {
-        background: black;
-    }
+  .eventBox .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  #tab3 .rating-block {
+    margin-bottom: 0;
+  }
+  #eventPage .eventBox__video {
+    background: black;
+  }
 }
 
 @media only screen and (max-width: 767px) {
-    #tab3 .maincardBox.maincardBox--large .maincardBox__card-video {
-        min-width: unset;
-        background-position: center;
-    }
+  #tab3 .maincardBox.maincardBox--large .maincardBox__card-video {
+    min-width: unset;
+    background-position: center;
+  }
 }

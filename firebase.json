@@ -1,12 +1,8 @@
 {
   "hosting": {
-    "site": "test-ciplamedx",
+    "site": "express-impact",
     "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "/accounts",

@@ -25,6 +25,8 @@ import EventManager from "./Managers/EventManager";
 import { LOREM_TEXT } from "./AppConstants/Lorem";
 import { firestore } from "./Firebase/firebase";
 import { PROFILE_COLLECTION } from "./AppConstants/CollectionConstants";
+import { PollManager } from "./Managers/PollManager";
+import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 // import Upload from './Components/Upload/upload';
@@ -79,18 +81,15 @@ const UploadLazy = loadable(
 );
 
 const EvolveLoginLazy = loadable(
-  () =>
-    import(/* webpackChunkName: "UploadLazy" */ "./Pages/Evolve/Login"),
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Evolve/Login"),
   { fallback: <LoadableFallback /> }
 );
 const EvolveRegisterLazy = loadable(
-  () =>
-    import(/* webpackChunkName: "UploadLazy" */ "./Pages/Evolve/Register"),
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Evolve/Register"),
   { fallback: <LoadableFallback /> }
 );
 const EvolvePreEventLazy = loadable(
-  () =>
-    import(/* webpackChunkName: "UploadLazy" */ "./Pages/Evolve/PreEvent"),
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Evolve/PreEvent"),
   { fallback: <LoadableFallback /> }
 );
 // import EvolveLogin from "./Pages/Evolve/Login";
@@ -130,53 +129,70 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-
+    // EventManager.addEventTimeLine(
+    //   "evolve",
+    //   "Managing OADs in CVD patients: Why and How?",
+    //   "",
+    //   [],
+    //   1621782900000,
+    //   "25"
+    // );
+    // EventManager.addEventTimeLine(
+    //   "evolve",
+    //   "Healthy doctors for healthy patients: Protecting oneself in the COVID scenario",
+    //   "",
+    //   [],
+    //   1621784400000,
+    //   "20"
+    // );
   }, []);
 
   const updateUserMetaData = async () => {
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-    const query = await firestore.collection(PROFILE_COLLECTION).get()
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+    const query = await firestore.collection(PROFILE_COLLECTION).get();
     for (let i = 0; i < query.docs.length; i++) {
-      console.log("--------------------------" + ((i / query.docs.length) * 100) + "------------------------------")
-      await crossCheckForRegDateAndUpdateMetaData(query.docs[i])
+      console.log(
+        "--------------------------" +
+          (i / query.docs.length) * 100 +
+          "------------------------------"
+      );
+      await crossCheckForRegDateAndUpdateMetaData(query.docs[i]);
     }
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-
-  }
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+  };
   const crossCheckForRegDateAndUpdateMetaData = (doc) => {
     return new Promise(async (res, rej) => {
       try {
-        let uid = doc.id
-        let docData = doc.data()
-        let regEvent = 'impact'
-        console.log(docData.date, 1618684200000, docData.date > 1618684200000)
+        let uid = doc.id;
+        let docData = doc.data();
+        let regEvent = "impact";
+        console.log(docData.date, 1618684200000, docData.date > 1618684200000);
         if (docData.date > 1618684200000) {
-          regEvent = 'ott'
+          regEvent = "ott";
         }
-        const ref = firestore.collection("userMetaData").doc(uid)
-        await firestore.runTransaction(async transcation => {
-          const metaDoc = await transcation.get(ref)
+        const ref = firestore.collection("userMetaData").doc(uid);
+        await firestore.runTransaction(async (transcation) => {
+          const metaDoc = await transcation.get(ref);
           if (metaDoc.exists) {
-            return
+            return;
           } else {
-            let data = {}
-            if (regEvent === 'impact') {
-              data['registeration'] = 'impact'
-              data['events'] = ['impact']
+            let data = {};
+            if (regEvent === "impact") {
+              data["registeration"] = "impact";
+              data["events"] = ["impact"];
             } else {
-              data['registeration'] = 'ott'
-              data['events'] = []
+              data["registeration"] = "ott";
+              data["events"] = [];
             }
-            return transcation.set(ref, data)
+            return transcation.set(ref, data);
           }
-        })
-        res()
+        });
+        res();
       } catch (error) {
-        rej(error)
+        rej(error);
       }
-    })
-
-  }
+    });
+  };
 
   return (
     <>
@@ -197,13 +213,20 @@ export default function App() {
               <EvolvePreEventLazy />
               {/* <EventLazy eventId={'evolve'} /> */}
             </ProtectedRoute>
-            <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"/evolve/liveCount-kmp23"} >
-              <LiveCountLazy eventId={'evolve'} />
+            <ProtectedRoute
+              exact
+              redirectTo={LOGIN_ROUTE}
+              path={"/evolve/liveCount-kmp23"}
+            >
+              <LiveCountLazy eventId={"evolve"} />
             </ProtectedRoute>
-            <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"/evolve/qna-kmp23"}>
-              <QnaPageLazy eventId={'evolve'} />
+            <ProtectedRoute
+              exact
+              redirectTo={LOGIN_ROUTE}
+              path={"/evolve/qna-kmp23"}
+            >
+              <QnaPageLazy eventId={"evolve"} />
             </ProtectedRoute>
-
 
             {/* Register Route */}
             <NotLoggedInRoutes
@@ -275,7 +298,14 @@ export default function App() {
               liveEvent={Event} //for event component
               // finishedEvent={''}//for finished component
             /> */}
-
+            <ProtectedRoute
+              exact
+              redirectTo={LOGIN_ROUTE}
+              path={"/event-kmde59n5"}
+            >
+              {/* <PreEventLazy /> */}
+              <EventLazy />
+            </ProtectedRoute>
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>
               {/* <PreEventLazy /> */}
               <Redirect to={HOME_ROUTE}></Redirect>
