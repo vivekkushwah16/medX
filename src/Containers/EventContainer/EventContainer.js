@@ -169,7 +169,7 @@ export default function EventContainer(props) {
   };
 
   const startTimespentCalculation = () => {
-    console.log("Started TIme Calculation")
+    console.log("Started TIme Calculation");
     updateUserStatus(id, data.activeTimelineId, 0);
     window.session_CurrentHit_StartTimestamp = new Date().getTime();
     window.sessionTimerRef = setInterval(() => {
@@ -332,7 +332,50 @@ export default function EventContainer(props) {
                 <h1 className="eventBox__title mg-b30 new__title">
                   {data.title}
                 </h1>
-
+                {isMobileOnly && (
+                  <div
+                    className="mobile__btns"
+                    style={{ marginBottom: "1.7rem", paddingLeft: "0.75rem" }}
+                  >
+                    <button
+                      style={{ margin: "0rem 1rem 0rem 0rem !important" }}
+                      className="btn btn-secondary btn-sm mg-b10 mg-t10 font-18 "
+                      onClick={() => {
+                        if (!data.activeCertificate)
+                          swal(
+                            "Event in progress",
+                            "Please collect your certificate at the end of the event"
+                          );
+                        else {
+                          showMediaModal(MediaModalType.Component, {
+                            component: Certificate,
+                            data: {
+                              addClickAnalytics: () => {
+                                addClickAnalytics(DOWNLOAD_CERTIFICATE);
+                              },
+                            },
+                          });
+                          addClickAnalytics(CERTIFICATE_CLICK);
+                        }
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faAward} />
+                    </button>
+                    <button
+                      style={{ margin: "0rem 1rem 0rem 0rem !important" }}
+                      className="btn btn-secondary btn-sm mg-b10 font-18 "
+                      onClick={() => {
+                        addClickAnalytics(FEEDBACK_CLICK);
+                        showMediaModal(
+                          MediaModalType.PDF,
+                          "/feedback/index.html"
+                        );
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faTasks} />
+                    </button>
+                  </div>
+                )}
                 {activeTimeline ? (
                   <AgendaCard
                     fromTitle={true}
@@ -385,45 +428,6 @@ export default function EventContainer(props) {
                   <i className="icon-like"></i>
                   {data.likes}
                 </a> */}
-                {isMobileOnly && (
-                  <>
-                    <button
-                      className="btn btn-secondary btn-sm mg-b10 mg-t10 font-18 "
-                      onClick={() => {
-                        if (!data.activeCertificate)
-                          swal(
-                            "Event in progress",
-                            "Please collect your certificate at the end of the event"
-                          );
-                        else {
-                          showMediaModal(MediaModalType.Component, {
-                            component: Certificate,
-                            data: {
-                              addClickAnalytics: () => {
-                                addClickAnalytics(DOWNLOAD_CERTIFICATE);
-                              },
-                            },
-                          });
-                          addClickAnalytics(CERTIFICATE_CLICK);
-                        }
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faAward} />
-                    </button>
-                    <button
-                      className="btn btn-secondary btn-sm mg-b10 font-18 "
-                      onClick={() => {
-                        addClickAnalytics(FEEDBACK_CLICK);
-                        showMediaModal(
-                          MediaModalType.PDF,
-                          "/feedback/index.html"
-                        );
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faTasks} />
-                    </button>
-                  </>
-                )}
               </div>
             </div>
             {/* {
