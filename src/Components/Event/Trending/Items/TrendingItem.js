@@ -22,7 +22,7 @@ export default function TrendingItem(props) {
     <div
       key={`AgendaCard-${data.id}`}
       id={`AgendaCard-${data.id}`}
-      className={`maincardBox__card `}
+      className={`maincardBox__card  ${props.fromTrending ? "trending" : ""}`}
       style={{ border: "0.12rem solid rgb(174 165 165 / 39%)" }}
     >
       {/* {

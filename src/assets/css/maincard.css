@@ -80,6 +80,9 @@
   font-weight: 700;
   color: #01518a;
 }
+/* .trending .maincardBox__card-title {
+  color: #000 !important;
+} */
 .from__title .maincardBox__card-title {
   font-size: 1.5rem;
   font-weight: 500;
@@ -88,6 +91,9 @@
   font-size: 0.75rem;
   line-height: 0.9375rem;
   font-weight: 400;
+}
+.trending .maincardBox__card-desc {
+  color: #000 !important;
 }
 .maincardBox__card-desc > a {
   color: #0869a8;
