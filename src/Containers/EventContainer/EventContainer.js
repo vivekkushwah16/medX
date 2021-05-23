@@ -338,7 +338,7 @@ export default function EventContainer(props) {
                     style={{ marginBottom: "1.7rem", paddingLeft: "0.75rem" }}
                   >
                     <button
-                      style={{ margin: "0rem 1rem 0rem 0rem !important" }}
+                      style={{ marginRight: "1rem" }}
                       className="btn btn-secondary btn-sm mg-b10 mg-t10 font-18 "
                       onClick={() => {
                         if (!data.activeCertificate)
@@ -362,7 +362,7 @@ export default function EventContainer(props) {
                       <FontAwesomeIcon icon={faAward} />
                     </button>
                     <button
-                      style={{ margin: "0rem 1rem 0rem 0rem !important" }}
+                      style={{ marginRight: "1rem" }}
                       className="btn btn-secondary btn-sm mg-b10 font-18 "
                       onClick={() => {
                         addClickAnalytics(FEEDBACK_CLICK);
