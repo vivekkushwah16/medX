@@ -2,20 +2,23 @@ import React, { useContext, useEffect, useState, useMemo } from "react";
 import "./Event.css";
 import Footer from "../../Containers/Footer/Footer";
 import Header from "../../Containers/Header/Header";
-import { useParams, useRouteMatch } from "react-router-dom";
+import { useHistory, useParams, useRouteMatch } from "react-router-dom";
 import EventContainer from "../../Containers/EventContainer/EventContainer";
 import { eventContext } from "../../Context/Event/EventContextProvider";
 import { likeContext } from "../../Context/Like/LikeContextProvider";
 import { LikeType } from "../../AppConstants/TypeConstant";
 import { isMobileOnly } from "react-device-detect";
 import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
-import { database } from "../../Firebase/firebase";
+import { database, firestore } from "../../Firebase/firebase";
 import { SESSION_ATTENDED } from "../../AppConstants/AnalyticsEventName";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
+import { USERMETADATA_COLLECTION } from "../../AppConstants/CollectionConstants";
+import LoadableFallback from "../../Components/LoadableFallback/LoadableFallback";
 
 export default function Event(props) {
   const { eventId } = props;
   const { path, url } = useRouteMatch();
+  const history = useHistory();
   //remove params as we not geting this from url now
   // let param = useParams()
   let param = useMemo(() => ({ id: "evolve" }), eventId);
@@ -40,19 +43,55 @@ export default function Event(props) {
   const [trendingData, setTrendingData] = useState(null);
   const [partnerWithUsData, setPartnerWithUsData] = useState(null);
   const [likedEvent, setLikeEvent] = useState(false);
+  const [isloading, setIsloading] = useState(true)
 
   useEffect(() => {
-    getEventInfo();
-    getAgendaInfo();
-    getTrending();
-    getPartnerWithUsData();
-
+    checkIfUserIsRegistered()
     return () => {
       removeTrendingDataListener();
       removeEventDataListener();
       removeTimelineListener();
     };
   }, []);
+
+  const checkIfUserIsRegistered = async () => {
+    firestore.collection(USERMETADATA_COLLECTION)
+      .doc(user.uid)
+      .get()
+      .then(doc => {
+        const data = doc.data()
+        if (data.events) {
+          if (data.events.indexOf(param.id) === -1) {
+            //not registered in event
+            redirectToLoggedInRegister()
+          } else {
+            //registered in event
+            startLoadingContent();
+          }
+        } else {
+          //never registered into any event
+          redirectToLoggedInRegister()
+        }
+      }).catch(err => {
+        console.log(err)
+        //redirect
+        redirectToLoggedInRegister();
+      })
+  }
+
+  const redirectToLoggedInRegister = () => {
+    if (history) {
+      history.push('/evolve/register-ott')
+    }
+  }
+
+  const startLoadingContent = () => {
+    setIsloading(false);
+    getEventInfo();
+    getAgendaInfo();
+    getTrending();
+    getPartnerWithUsData();
+  }
 
   const getEventInfo = async () => {
     try {
@@ -127,7 +166,26 @@ export default function Event(props) {
     addCAWithUserInfo(`/${eventName}`, true, { eventId: param.id }, true);
   };
   return (
+
     <section className="wrapper" id="root">
+      {
+        isloading &&
+        <>
+          <div style={{
+            width: '100vw',
+            height: '100vh',
+            backgroundImage: `url('/assets/images/evolveLoader.jpg')`,
+            backgroundPosition: 'center',
+            backgroundSize: 'auto',
+            backgroundRepeat:'no-repeat'
+          }}>
+          <LoadableFallback  />
+        </div>
+        </>
+      }
+{
+  !isloading &&
+    <>
       <div className="eventBoxBg"></div>
       <div className="topicsBox__wrapper" id="eventPage">
         {isMobileOnly ? (
@@ -162,6 +220,8 @@ export default function Event(props) {
         )}
         {/* <Footer /> */}
       </div>
-    </section>
+    </>
+}
+    </section >
   );
 }

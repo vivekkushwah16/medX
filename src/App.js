@@ -145,6 +145,8 @@ export default function App() {
     //   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/evolve%2Ftrending%2FLevosalbutamol%20BAI_Study-%201.pdf?alt=media&token=5b797fa5-77ef-4484-a67b-7980a0f83ab6",
     //   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FNutshell%20Issue%206%20-%20Cough%20Variant_page-0001.jpg?alt=media&token=e9a47171-da42-4a0e-811f-c108d07c2bdb"
     // );
+
+    
   }, []);
 
   const updateUserMetaData = async () => {
@@ -153,8 +155,8 @@ export default function App() {
     for (let i = 0; i < query.docs.length; i++) {
       console.log(
         "--------------------------" +
-          (i / query.docs.length) * 100 +
-          "------------------------------"
+        (i / query.docs.length) * 100 +
+        "------------------------------"
       );
       await crossCheckForRegDateAndUpdateMetaData(query.docs[i]);
     }
@@ -208,11 +210,15 @@ export default function App() {
               <EvolveLoginLazy />
               {/* <Redirect to={REGISTER_ROUTE}></Redirect> */}
             </NotLoggedInRoutes>
+            <ProtectedRoute exact redirectTo={"/evolve/login"} path={"/evolve/register-ott"}>
+              <EvolvePreEventLazy />
+            </ProtectedRoute>
             <ProtectedRoute exact redirectTo={"/evolve/login"} path={"/evolve"}>
               {/* <PreEventLazy /> */}
               {/* <EvolvePreEventLazy /> */}
               <EventLazy eventId={'evolve'} />
             </ProtectedRoute>
+
             <ProtectedRoute
               exact
               redirectTo={LOGIN_ROUTE}
@@ -271,7 +277,7 @@ export default function App() {
             </ProtectedRoute>
 
             {/* UPLOAD */}
-            <ProtectedRoute
+            {/* <ProtectedRoute
               exact
               redirectTo={LOGIN_ROUTE}
               path={"/upload-kmp23"}
@@ -287,7 +293,7 @@ export default function App() {
             </ProtectedRoute>
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"/qna-kmp23"}>
               <QnaPageLazy />
-            </ProtectedRoute>
+            </ProtectedRoute> */}
 
             {/* <EventRoute
               exact
@@ -298,14 +304,13 @@ export default function App() {
               liveEvent={Event} //for event component
               // finishedEvent={''}//for finished component
             /> */}
-            <ProtectedRoute
+            {/* <ProtectedRoute
               exact
               redirectTo={LOGIN_ROUTE}
               path={"/event-kmde59n5"}
             >
-              {/* <PreEventLazy /> */}
               <EventLazy />
-            </ProtectedRoute>
+            </ProtectedRoute> */}
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>
               {/* <PreEventLazy /> */}
               <Redirect to={HOME_ROUTE}></Redirect>

@@ -37,13 +37,15 @@ const BannerType = {
 }
 
 const BannerData = [
-    // {
-    //     type: BannerType.LiveEvent,
-    //     mainTitle: 'Tune in to leading minds in respiratory medicine',
-    //     subTitle: '',
-    //     eventId: '',
-    //     mainImageUrl: 'assets/images/logos/impact-logo.png',
-    // },
+    {
+        type: BannerType.LiveEvent,
+        mainTitle: 'Tune In To Explore Newer Paradigms In Respiratory Medicine',
+        subTitle: '',
+        eventId: '',
+        mainImageUrl: '/assets/images/logos/impact-logo.png',
+        // mainImageUrl: '/assets/images/logos/evolveLogo.png',
+
+    },
     {
         type: BannerType.Custom2,
         buttonText:'Watch Now',
@@ -104,7 +106,7 @@ function Banner() {
         // history.push(`/#homeVideoContainer`);
     }
     const enterEvent = (eventId) => {
-        history.push(`${EVENT_ROUTE}/evolve`);
+        history.push(`/evolve`);
     }
     const watchVideo = (videoUrl) => {
         //open video

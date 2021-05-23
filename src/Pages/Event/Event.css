@@ -13,6 +13,14 @@
   box-shadow: 0px 0px 10px 5px rgba(128, 128, 128, 0.279);
 }
 
+/* .eventInitalLoadingScreen{
+  background-image: url('/assets/images/evolveLoader.jpg');
+  background-position: center;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}  */
+
 @keyframes eventBox__sidebar {
   0% {
     right: -8rem;

@@ -23,12 +23,14 @@ import firebase, { firestore } from "../../Firebase/firebase";
 import { USERMETADATA_COLLECTION } from "../../AppConstants/CollectionConstants";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import LoadableFallback from "../../Components/LoadableFallback/LoadableFallback";
+import { useHistory } from "react-router-dom";
 function PreEvent() {
   const { user } = useContext(UserContext)
   const { showMediaModal } = useContext(MediaModalContext);
   const [agendaData, setAgendaData] = useState(null);
   const [agendaDates, setAgendaDates] = useState([]);
   const [cureentAgendaDate, setCureentAgendaDate] = useState(null);
+  const history = useHistory();
 
   const [showRegisterForOldUser, setToggleForRegisterationForOldUser] = useState({ status: false, value: false });
 
@@ -54,11 +56,11 @@ function PreEvent() {
       .then(doc => {
         const data = doc.data()
         if (data.events) {
-            if (data.events.indexOf('evolve') === -1) {
-              setToggleForRegisterationForOldUser({ status: true, value: true })
-            } else {
-              setToggleForRegisterationForOldUser({ status: true, value: false })
-            }
+          if (data.events.indexOf('evolve') === -1) {
+            setToggleForRegisterationForOldUser({ status: true, value: true })
+          } else {
+            setToggleForRegisterationForOldUser({ status: true, value: false })
+          }
         } else {
           setToggleForRegisterationForOldUser({ status: true, value: true })
         }
@@ -192,6 +194,14 @@ function PreEvent() {
                     </button> 
                     */}
                       <AddToCalendar blueBtn={true} />
+                      <button
+                        className="btn btn-secondary"
+                        onClick={(e) => {
+                          if(history){history.push('/evolve')}
+                        }}
+                      >
+                        Enter Event
+                      </button>
                       {/* 
                         <button
                         className="btn btn-secondary"
@@ -270,6 +280,14 @@ function PreEvent() {
 
                     <div className="buttons">
                       <AddToCalendar blueBtn={true} />
+                      <button
+                        className="btn btn-secondary"
+                        onClick={(e) => {
+                          if(history){history.push('/evolve')}
+                        }}
+                      >
+                        Enter Event
+                      </button>
                       {/* <button className="btn btn-secondary evolve-btn">
                             Add to Calendar
                           </button>
