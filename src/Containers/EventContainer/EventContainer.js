@@ -36,7 +36,7 @@ const menuItemsId = {
 const menuItems = [
   { id: menuItemsId.About, name: "Faculty", className: "" },
   { id: menuItemsId.Agenda, name: "Agenda", className: "" },
-  { id: menuItemsId.Trending, name: "Trending", className: "" },
+  { id: menuItemsId.Trending, name: "Resources", className: "" },
   { id: menuItemsId.Polls, name: "Q&A", className: "hide-on-desktop" },
   { id: menuItemsId.Partner_with_us, name: "Partner with us", className: "" },
 ];
@@ -224,6 +224,7 @@ export default function EventContainer(props) {
       }
     } else {
       console.log("No Active timeline");
+      setActiveTimelineId(null);
     }
   }, [data]);
 

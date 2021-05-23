@@ -129,21 +129,21 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    // EventManager.addEventTimeLine(
+    // EventManager.addTrendingItem(
     //   "evolve",
-    //   "Managing OADs in CVD patients: Why and How?",
-    //   "",
-    //   [],
-    //   1621782900000,
-    //   "25"
+    //   TRENDING_ITEM_TYPE.PDF,
+    //   "Unleashing the Efficacy & Safety of Levosalbutamol",
+    //   "Unleashing the Efficacy & Safety of Levosalbutamol",
+    //   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/evolve%2Ftrending%2FInsync-Levolin%20Issue%201.pdf?alt=media&token=c9b34df5-c4ab-48e5-8325-cc0a42bb5f2e",
+    //   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FNutshell%20Issue%206%20-%20Cough%20Variant_page-0001.jpg?alt=media&token=e9a47171-da42-4a0e-811f-c108d07c2bdb"
     // );
-    // EventManager.addEventTimeLine(
+    // EventManager.addTrendingItem(
     //   "evolve",
-    //   "Healthy doctors for healthy patients: Protecting oneself in the COVID scenario",
-    //   "",
-    //   [],
-    //   1621784400000,
-    //   "20"
+    //   TRENDING_ITEM_TYPE.PDF,
+    //   "Simplicity with Safety- Levosalbutamol in Breathe-Actuated Inhaler",
+    //   "Simplicity with Safety- Levosalbutamol in Breathe-Actuated Inhaler",
+    //   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/evolve%2Ftrending%2FLevosalbutamol%20BAI_Study-%201.pdf?alt=media&token=5b797fa5-77ef-4484-a67b-7980a0f83ab6",
+    //   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FNutshell%20Issue%206%20-%20Cough%20Variant_page-0001.jpg?alt=media&token=e9a47171-da42-4a0e-811f-c108d07c2bdb"
     // );
   }, []);
 
