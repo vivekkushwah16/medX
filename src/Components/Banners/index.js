@@ -111,10 +111,11 @@ export function LiveEventBanner(props) {
               <a
                 href="#"
                 className="btn bannerBox__btn mg-b30"
-                onClick={(e) =>{
-                  e.preventDefault()
-                  props.enterEvent(data.eventId)
-                } }
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log(data.eventId);
+                  props.enterEvent(data.eventId);
+                }}
               >
                 ENTER EVENT
               </a>
