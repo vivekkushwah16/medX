@@ -106,7 +106,7 @@ export function LiveEventBanner(props) {
               <h1 className="bannerBox__title mg-b30">{data.mainTitle}</h1>
               <div className="bannerBox__status mg-b30">
                 <h3 className="bannerBox__status-title">{data.subTitle}</h3>
-                <span className="bannerBox__status-mark">LIVE</span>
+                {/* <span className="bannerBox__status-mark">LIVE</span> */}
               </div>
               <a
                 href="#"
