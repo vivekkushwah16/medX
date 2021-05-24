@@ -24,7 +24,9 @@ function validateEmail(email) {
 export default function InviteFriendModal(props) {
   const alert = useAlert();
   // const [url, setUrl] = useState(window.location.href);
-  const [url, setUrl] = useState("https://ciplamedx.com/evolve/register");
+  const [url, setUrl] = useState(
+    `https://ciplamedx.com/${props.event}/register`
+  );
   //   const [urlShare, setUrlShare] = useState(
   //     "I+invite+you+to+register+for+IMPACT+%2721+on+the+CiplaMedX+Platform.%0D%0A%0D%0AIMPACT+%2721+is+a+2+Day+Cutting-Edge+academic+feast+with+Experts+in+Respiratory+Medicine+being+organized+on+16-17th+April+2021.%0D%0A%0D%0Ahttps%3A%2F%2Fciplamedx.com%2Fregister%2Fimpact"
   //   );
@@ -32,7 +34,7 @@ export default function InviteFriendModal(props) {
     window.encodeURI(
       props.message
         ? props.message
-        : "Join us for Evolve '21 on the CiplaMedX platform by registering at the following link: https://ciplamedx.com/evolve/register"
+        : `Join us for ${props.eventTitle} on the CiplaMedX platform by registering at the following link: https://ciplamedx.com/${props.event}/register`
     )
   );
   const [textArea, setTextarea] = useState({});
@@ -56,8 +58,8 @@ export default function InviteFriendModal(props) {
   const shareOnce = () => {
     if (navigator.share) {
       navigator.share({
-        text: "Join us for Evolve '21 on the CiplaMedX platform by registering at the following link:  https://ciplamedx.com/evolve/register",
-        url: "https://ciplamedx.com/evolve/register", //window.location.href,
+        text: `Join us for ${props.eventTitle} on the CiplaMedX platform by registering at the following link:  https://ciplamedx.com/${props.event}/register`,
+        url: `https://ciplamedx.com/${props.event}/register`, //window.location.href,
       });
     }
   };
@@ -75,18 +77,23 @@ export default function InviteFriendModal(props) {
         setError(true);
         setLoading(false);
       }
-      const link =
-        window.location.hostname === "localhost"
-          ? "https://ciplamedx.com/evolve/register"
-          : window.location.href;
+      // const link =
+      //   window.location.hostname === "localhost"
+      //     ? "https://ciplamedx.com/evolve/register"
+      //     : window.location.href;
+      const link = window.location.href;
       axios
         .post(
-          props.mail_endpoint ? props.mail_endpoint : EVENT_INVITEYOURPEER_ENDPOINT,
+          props.mail_endpoint
+            ? props.mail_endpoint
+            : EVENT_INVITEYOURPEER_ENDPOINT,
           {
             name: user.displayName,
             email: email.toLowerCase(),
             senderMail: userInfo.email,
             link,
+            event: props.event,
+            title: props.eventTitle,
           }
         )
         .then((res) => {
@@ -104,8 +111,8 @@ export default function InviteFriendModal(props) {
   };
 
   const addAnalytics = (name) => {
-    addGAWithUserInfo(name,{eventId: 'evovle'});
-    addCAWithUserInfo(name, true, {eventId: 'evovle'}, true);
+    addGAWithUserInfo(name, { eventId: props.event });
+    addCAWithUserInfo(name, true, { eventId: props.event }, true);
   };
 
   return (

@@ -103,3 +103,9 @@
 //   "LOREM_TEXT",
 //   "/assets/images/doctors.jpg"
 // );
+EventManager.addEvent(
+  "Welcome to Orient '21",
+  LOREM_TEXT,
+  "https://player.vimeo.com/video/537595557",
+  "orient21-26may"
+);

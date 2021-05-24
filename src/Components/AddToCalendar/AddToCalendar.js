@@ -7,17 +7,16 @@ import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvid
 import { ADDTOCALENDAR_ANALYTICS_EVENT } from "../../AppConstants/AnalyticsEventName";
 
 export default function AddToCalendar(props) {
-  const startDatetime = moment("2021-05-23 18:00:00").utc();
-  const endDatetime = startDatetime.clone().add(3.75, "hours");
+  const startDatetime = moment("2021-05-26 19:00:00").utc();
+  const endDatetime = startDatetime.clone().add(1, "hours");
   const duration = endDatetime.diff(startDatetime, "hours");
   const event = {
-    description:
-      "Evolve '21 - Tune In to Explore Newer Paradigms in Respiratory Medicine.",
+    description: "Orient '21 - Mucormycosis- What lies beneath",
     duration,
     endDatetime: endDatetime.format("YYYYMMDDTHHmmssZ"),
-    location: "https://ciplamedx.com/evolve/register",
+    location: "https://ciplamedx.com/orient21-26may/register",
     startDatetime: startDatetime.format("YYYYMMDDTHHmmssZ"),
-    title: "Evolve '21 on CiplaMedX",
+    title: "Orient '21 on CiplaMedX",
   };
   const AddToCalendarComp = props.blueBtn
     ? AddToCalendarHOC(addToCalendarBlueBtn, AddToCalendarDropDown)
@@ -27,22 +26,22 @@ export default function AddToCalendar(props) {
   window.AddToCalendarAnalytic = (optionName = "") => {
     if (optionName === "") {
       addGAWithUserInfo(ADDTOCALENDAR_ANALYTICS_EVENT, {
-        eventId: "evolve",
+        eventId: "orient21-26may",
       });
       addCAWithUserInfo(
         ADDTOCALENDAR_ANALYTICS_EVENT,
         true,
-        { eventId: "evolve" },
+        { eventId: "orient21-26may" },
         true
       );
     } else {
       addGAWithUserInfo(ADDTOCALENDAR_ANALYTICS_EVENT + "_" + optionName, {
-        eventId: "evolve",
+        eventId: "orient21-26may",
       });
       addCAWithUserInfo(
         ADDTOCALENDAR_ANALYTICS_EVENT + "_" + optionName,
         true,
-        { eventId: "evolve" },
+        { eventId: "orient21-26may" },
         true
       );
     }

@@ -28,10 +28,13 @@ export default function InviteFriend(props) {
   return (
     <>
       <InviteFriendBtn
+        event={props.event}
         handleClick={() => props.toggleInviteFriendModal(true)}
       />
       {props.showInviteFriendModal && (
         <InviteFriendModal
+          eventTitle={props.eventTitle}
+          event={props.event}
           handleClick={() => props.toggleInviteFriendModal(false)}
         />
       )}

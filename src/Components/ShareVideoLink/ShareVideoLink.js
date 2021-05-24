@@ -26,7 +26,6 @@ export default function ShareVideoLink(props) {
   const [url, setUrl] = useState(window.location.href);
   // const [url, setUrl] = useState("https://ciplamedx.com/evolve/register");
   const [urlShare, setUrlShare] = useState(window.encodeURI(props.message));
-  // const [urlShare, setUrlShare] = useState(
   //   window.encodeURI(
   //     props.message
   //       ? props.message
@@ -78,7 +77,6 @@ export default function ShareVideoLink(props) {
       //     ? "https://ciplamedx.com/evolve/register"
       //     : window.location.href;
       const link = window.location.href;
-      console.log(link, props.email_endpoint, "*********");
       axios
         .post(
           props.email_endpoint

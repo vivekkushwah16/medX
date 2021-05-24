@@ -271,7 +271,7 @@ function VideoPopup(props) {
     <>
       {inviteFriend ? (
         <ShareVideoLink
-          message={"From video page"}
+          message={`Check out this informative video from CiplaMedX: LINK: ${window.location.href}`}
           zIndex={18}
           email_endpoint="https://ciplamedx-mail.djvirtualevents.com/shareVideo"
           closeInvitePopup={closeInvitePopup}

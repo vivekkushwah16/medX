@@ -92,6 +92,18 @@ const EvolvePreEventLazy = loadable(
   () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Evolve/PreEvent"),
   { fallback: <LoadableFallback /> }
 );
+const OrientLoginLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Orient/Login"),
+  { fallback: <LoadableFallback /> }
+);
+const OrientRegisterLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Orient/Register"),
+  { fallback: <LoadableFallback /> }
+);
+const OrientPreEventLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Orient/PreEvent"),
+  { fallback: <LoadableFallback /> }
+);
 // import EvolveLogin from "./Pages/Evolve/Login";
 // import EvolveRegister from "./Pages/Evolve/Register";
 // import EvolvePreEvent from "./Pages/Evolve/PreEvent";
@@ -129,38 +141,24 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    // EventManager.addTrendingItem(
-    //   "evolve",
-    //   TRENDING_ITEM_TYPE.PDF,
-    //   "Unleashing the Efficacy & Safety of Levosalbutamol",
-    //   "Unleashing the Efficacy & Safety of Levosalbutamol",
-    //   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/evolve%2Ftrending%2FInsync-Levolin%20Issue%201.pdf?alt=media&token=c9b34df5-c4ab-48e5-8325-cc0a42bb5f2e",
-    //   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FNutshell%20Issue%206%20-%20Cough%20Variant_page-0001.jpg?alt=media&token=e9a47171-da42-4a0e-811f-c108d07c2bdb"
+    // EventManager.addEvent(
+    //   "Welcome to Orient '21",
+    //   LOREM_TEXT,
+    //   "https://player.vimeo.com/video/537595557",
+    //   "orient21-26may"
     // );
-    // EventManager.addTrendingItem(
-    //   "evolve",
-    //   TRENDING_ITEM_TYPE.PDF,
-    //   "Simplicity with Safety- Levosalbutamol in Breathe-Actuated Inhaler",
-    //   "Simplicity with Safety- Levosalbutamol in Breathe-Actuated Inhaler",
-    //   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/evolve%2Ftrending%2FLevosalbutamol%20BAI_Study-%201.pdf?alt=media&token=5b797fa5-77ef-4484-a67b-7980a0f83ab6",
-    //   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FNutshell%20Issue%206%20-%20Cough%20Variant_page-0001.jpg?alt=media&token=e9a47171-da42-4a0e-811f-c108d07c2bdb"
-    // );
-
-    
   }, []);
 
   const updateUserMetaData = async () => {
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     const query = await firestore.collection(PROFILE_COLLECTION).get();
     for (let i = 0; i < query.docs.length; i++) {
       console.log(
         "--------------------------" +
-        (i / query.docs.length) * 100 +
-        "------------------------------"
+          (i / query.docs.length) * 100 +
+          "------------------------------"
       );
       await crossCheckForRegDateAndUpdateMetaData(query.docs[i]);
     }
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
   };
   const crossCheckForRegDateAndUpdateMetaData = (doc) => {
     return new Promise(async (res, rej) => {
@@ -202,6 +200,25 @@ export default function App() {
       <Router>
         {initalCheck && (
           <Switch>
+            {/* <ProtectedRoute exact redirectTo={"/orient/login"} path={"/orient"}>
+              <EventLazy />
+              <OrientPreEventLazy />
+            </ProtectedRoute>{" "}
+            <NotLoggedInRoutes redirectTo={"/orient"} path={"/orient/register"}>
+              <OrientRegisterLazy />
+              <Redirect to={REGISTER_ROUTE}></Redirect>
+            </NotLoggedInRoutes>
+            <NotLoggedInRoutes redirectTo={"/orient"} path={"/orient/login"}>
+              <OrientLoginLazy />
+              <Redirect to={REGISTER_ROUTE}></Redirect>
+            </NotLoggedInRoutes> */}
+            {/* <ProtectedRoute
+              exact
+              redirectTo={"/orient/login"}
+              path={"/orient/register-ott"}
+            >
+              <EvolvePreEventLazy />
+            </ProtectedRoute> */}
             <NotLoggedInRoutes redirectTo={"/evolve"} path={"/evolve/register"}>
               <EvolveRegisterLazy />
               {/* <Redirect to={REGISTER_ROUTE}></Redirect> */}
@@ -210,15 +227,18 @@ export default function App() {
               <EvolveLoginLazy />
               {/* <Redirect to={REGISTER_ROUTE}></Redirect> */}
             </NotLoggedInRoutes>
-            <ProtectedRoute exact redirectTo={"/evolve/login"} path={"/evolve/register-ott"}>
+            <ProtectedRoute
+              exact
+              redirectTo={"/evolve/login"}
+              path={"/evolve/register-ott"}
+            >
               <EvolvePreEventLazy />
             </ProtectedRoute>
             <ProtectedRoute exact redirectTo={"/evolve/login"} path={"/evolve"}>
               {/* <PreEventLazy /> */}
               {/* <EvolvePreEventLazy /> */}
-              <EventLazy eventId={'evolve'} />
+              <EventLazy eventId={"evolve"} />
             </ProtectedRoute>
-
             <ProtectedRoute
               exact
               redirectTo={LOGIN_ROUTE}
@@ -233,7 +253,6 @@ export default function App() {
             >
               <QnaPageLazy eventId={"evolve"} />
             </ProtectedRoute>
-
             {/* Register Route */}
             <NotLoggedInRoutes
               redirectTo={HOME_ROUTE}
@@ -245,7 +264,6 @@ export default function App() {
             <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={REGISTER_ROUTE}>
               <RegisterLazy />
             </NotLoggedInRoutes>
-
             {/* Login Route */}
             <NotLoggedInRoutes
               redirectTo={HOME_ROUTE}
@@ -257,15 +275,12 @@ export default function App() {
             <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={LOGIN_ROUTE}>
               <LoginLazy />
             </NotLoggedInRoutes>
-
             {/* Home Route */}
-
             <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>
               {/* <PreEvent /> */}
               <HomeLazy />
               {/* <Redirect to={"/event/event-kmde59n5"}></Redirect> */}
             </ProtectedRoute>
-
             {/* event-kmde59n5 */}
             <ProtectedRoute
               exact
@@ -275,7 +290,6 @@ export default function App() {
               {/* <EventLazy /> */}
               <Redirect to={HOME_ROUTE}></Redirect>
             </ProtectedRoute>
-
             {/* UPLOAD */}
             {/* <ProtectedRoute
               exact
@@ -294,23 +308,15 @@ export default function App() {
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"/qna-kmp23"}>
               <QnaPageLazy />
             </ProtectedRoute> */}
-
-            {/* <EventRoute
+            <EventRoute
               exact
               redirectTo={HOME_ROUTE} //redirect route if root got a hit
-              login={LoginLazy} //For Login component
-              register={RegisterLazy} //for register component
-              notLive={PreEvent} //for prevent component
+              login={OrientLoginLazy} //For Login component
+              register={OrientRegisterLazy} //for register component
+              notLive={OrientPreEventLazy} //for prevent component
               liveEvent={Event} //for event component
               // finishedEvent={''}//for finished component
-            /> */}
-            {/* <ProtectedRoute
-              exact
-              redirectTo={LOGIN_ROUTE}
-              path={"/event-kmde59n5"}
-            >
-              <EventLazy />
-            </ProtectedRoute> */}
+            />
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>
               {/* <PreEventLazy /> */}
               <Redirect to={HOME_ROUTE}></Redirect>

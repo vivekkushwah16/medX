@@ -126,6 +126,8 @@ export default function Header(props) {
             )}
             {!props.hideInviteFriend && (
               <InviteFriend
+                eventTitle={props.eventTitle}
+                event={props.event}
                 toggleInviteFriendModal={toggleInviteFriendModal}
                 showInviteFriendModal={showInviteFriendModal}
               />
