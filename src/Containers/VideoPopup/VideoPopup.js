@@ -553,7 +553,10 @@ function VideoPopup(props) {
                     </div>
                   </>
                 )}
-                <p className="videodetailBox__desc mg-b40">
+                <p
+                  className="videodetailBox__desc mg-b40"
+                  style={{ textAlign: "justify" }}
+                >
                   {videoData.description}
                 </p>
 
