@@ -25,7 +25,7 @@ export default function Certificate(props) {
   return (
     <div className="certificateContainer" ref={certificatBody}>
       <img
-        src="/assets/images/EvolveCertificate.png"
+        src="/assets/images/orientCertificate.png"
         width="100%"
         height="auto"
         className="certificate"
