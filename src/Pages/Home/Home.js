@@ -748,9 +748,13 @@ class Home extends Component {
         document.body.scrollTop > 50 ||
         document.documentElement.scrollTop > 50
       ) {
-        document.querySelector(".scroll__btn").style.display = "flex";
+        if (document.querySelector(".scroll__btn")) {
+          document.querySelector(".scroll__btn").style.display = "flex";
+        }
       } else {
-        document.querySelector(".scroll__btn").style.display = "none";
+        if (document.querySelector(".scroll__btn")) {
+          document.querySelector(".scroll__btn").style.display = "none";
+        }
       }
     });
   }
