@@ -20,7 +20,7 @@ import "./assets/css/modal.css";
 import loadable from "@loadable/component";
 import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 import PreEvent from "./Pages/PreEvent/PreEvent";
-import EventRoute from "./Components/EventRoute";
+import EventRoute, { EventStausType } from "./Components/EventRoute";
 import EventManager from "./Managers/EventManager";
 import { LOREM_TEXT } from "./AppConstants/Lorem";
 import { firestore } from "./Firebase/firebase";
@@ -225,13 +225,13 @@ export default function App() {
             >
               <EvolvePreEventLazy />
             </ProtectedRoute> */}
-            <NotLoggedInRoutes redirectTo={"/evolve"} path={"/evolve/register"}>
+
+            {/* EVOLVE EVENT */}
+            {/* <NotLoggedInRoutes redirectTo={"/evolve"} path={"/evolve/register"}>
               <EvolveRegisterLazy />
-              {/* <Redirect to={REGISTER_ROUTE}></Redirect> */}
             </NotLoggedInRoutes>
             <NotLoggedInRoutes redirectTo={"/evolve"} path={"/evolve/login"}>
               <EvolveLoginLazy />
-              {/* <Redirect to={REGISTER_ROUTE}></Redirect> */}
             </NotLoggedInRoutes>
             <ProtectedRoute
               exact
@@ -241,10 +241,9 @@ export default function App() {
               <EvolvePreEventLazy />
             </ProtectedRoute>
             <ProtectedRoute exact redirectTo={"/evolve/login"} path={"/evolve"}>
-              {/* <PreEventLazy /> */}
-              {/* <EvolvePreEventLazy /> */}
               <EventLazy eventId={"evolve"} />
-            </ProtectedRoute>
+            </ProtectedRoute> */}
+
             <ProtectedRoute
               exact
               redirectTo={LOGIN_ROUTE}
@@ -319,9 +318,11 @@ export default function App() {
               redirectTo={HOME_ROUTE} //redirect route if root got a hit
               login={OrientLoginLazy} //For Login component
               register={OrientRegisterLazy} //for register component
-              notLive={OrientEventLazy} //for prevent component
+              notLive={OrientPreEventLazy} //for prevent component
               liveEvent={OrientEventLazy} //for event component
               // finishedEvent={''}//for finished component
+              env={"dev"}//dev or prod
+              forceState={EventStausType.Live}
             />
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>
               {/* <PreEventLazy /> */}

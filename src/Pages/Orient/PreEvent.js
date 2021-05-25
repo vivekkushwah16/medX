@@ -46,14 +46,19 @@ function PreEvent(props) {
   let firstTime = useMemo(() => true, []);
 
   const regeristerUser = async () => {
-    setToggleForRegisterationForOldUser({ status: false, value: true });
-    await firestore
-      .collection(USERMETADATA_COLLECTION)
-      .doc(user.uid)
-      .update({
-        events: firebase.firestore.FieldValue.arrayUnion(props.event),
-      });
-    setToggleForRegisterationForOldUser({ status: true, value: false });
+    try {
+      setToggleForRegisterationForOldUser({ status: false, value: true });
+      await firestore
+        .collection(USERMETADATA_COLLECTION)
+        .doc(user.uid)
+        .update({
+          events: firebase.firestore.FieldValue.arrayUnion(props.event),
+        });
+      setToggleForRegisterationForOldUser({ status: true, value: false });
+    } catch (error) {
+      console.log(error)
+    }
+
   };
 
   const componentDIdMount = () => {
@@ -104,9 +109,8 @@ function PreEvent(props) {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -204,16 +208,19 @@ function PreEvent(props) {
                     </button> 
                     */}
                     <AddToCalendar blueBtn={true} />
-                    {/* <button
-                      className="btn btn-secondary"
-                      onClick={(e) => {
-                        if (history) {
-                          history.push("/evolve");
-                        }
-                      }}
-                    >
-                      Enter Event
-                    </button> */}
+                    {
+                      props.canEnterEvent && props.event &&
+                      <button
+                        className="btn btn-secondary"
+                        onClick={(e) => {
+                          if (history) {
+                            history.push(`/${props.event}`);
+                          }
+                        }}
+                      >
+                        Enter Event
+                      </button>
+                    }
                     {/* 
                         <button
                         className="btn btn-secondary"
@@ -290,16 +297,19 @@ function PreEvent(props) {
 
                   <div className="buttons">
                     <AddToCalendar blueBtn={true} />
-                    {/* <button
-                      className="btn btn-secondary"
-                      onClick={(e) => {
-                        if (history) {
-                          history.push("/evolve");
-                        }
-                      }}
-                    >
-                      Enter Event
-                    </button> */}
+                    {
+                      props.canEnterEvent && props.event &&
+                      <button
+                        className="btn btn-secondary"
+                        onClick={(e) => {
+                          if (history) {
+                            history.push(`/${props.event}`);
+                          }
+                        }}
+                      >
+                        Enter Event
+                      </button>
+                    }
                     {/* <button className="btn btn-secondary evolve-btn">
                             Add to Calendar
                           </button>

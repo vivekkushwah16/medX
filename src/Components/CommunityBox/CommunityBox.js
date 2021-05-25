@@ -7,7 +7,10 @@ export default function CommunityBox(props) {
     return (
         <div className="communityBox">
             <AskQuestion id={props.id} sendQuestion={props.sendQuestion} showCloseButton={props.showCloseButton} handleCloseBtn={props.handleCloseBtn} />
-            <Noticeboard message={props.noticeboard}/>
+            {
+                props.noticeboard && !props.noticeboard.disabled &&
+                <Noticeboard message={props.noticeboard} />
+            }
             <PollContainer id={props.id} pollAnalytics={props.pollAnalytics} />
         </div>
     )

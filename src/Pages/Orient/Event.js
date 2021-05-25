@@ -83,7 +83,7 @@ export default function Event(props) {
 
   const redirectToLoggedInRegister = () => {
     if (history) {
-      history.push("/evolve/register-ott");
+      history.push(`/${param.id}/register-ott`);
     }
   };
 
