@@ -104,6 +104,10 @@ const OrientPreEventLazy = loadable(
   () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Orient/PreEvent"),
   { fallback: <LoadableFallback /> }
 );
+const OrientEventLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Orient/Event"),
+  { fallback: <LoadableFallback /> }
+);
 // import EvolveLogin from "./Pages/Evolve/Login";
 // import EvolveRegister from "./Pages/Evolve/Register";
 // import EvolvePreEvent from "./Pages/Evolve/PreEvent";
@@ -141,11 +145,13 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    // EventManager.addEvent(
-    //   "Welcome to Orient '21",
-    //   LOREM_TEXT,
-    //   "https://player.vimeo.com/video/537595557",
-    //   "orient21-26may"
+    // EventManager.addEventTimeLine(
+    //   "orient21-26may",
+    //   "Mucormycosis - What lies beneath",
+    //   "",
+    //   [],
+    //   1622035800000,
+    //   "60"
     // );
   }, []);
 
@@ -313,8 +319,8 @@ export default function App() {
               redirectTo={HOME_ROUTE} //redirect route if root got a hit
               login={OrientLoginLazy} //For Login component
               register={OrientRegisterLazy} //for register component
-              notLive={OrientPreEventLazy} //for prevent component
-              liveEvent={Event} //for event component
+              notLive={OrientEventLazy} //for prevent component
+              liveEvent={OrientEventLazy} //for event component
               // finishedEvent={''}//for finished component
             />
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>

@@ -7,6 +7,7 @@
   padding-right: 2rem;
   width: 100%;
   order: 1;
+  max-width: 45ch;
 }
 .videodetailBox__title {
   margin-bottom: 0.5rem;
@@ -84,7 +85,6 @@
   padding-left: 0;
   order: 2;
   min-width: 13.75rem;
-  max-width: 13.75rem;
 }
 .videodetailBox__right .like-btn {
   padding-left: 1rem;

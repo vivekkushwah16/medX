@@ -207,13 +207,13 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  display: grid;
+  /* display: grid; */
   grid-template-columns: 1fr 0.3fr;
   grid-row-gap: 1rem;
   grid-template-rows: 1fr 1fr;
 }
 .btns-div button {
-  margin-left: 0;
+  /* margin-left: 0; */
 }
 @media (max-width: 1000px) {
   .likeBtnContainer {

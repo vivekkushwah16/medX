@@ -67,9 +67,9 @@
   height: 8.125rem;
   position: absolute;
   left: 0;
-  top: 3rem;
+  top: 5rem;
   /* background: url(../images/evolve-wave.svg) center center no-repeat; */
-  background: url(../images/evolve-wave.png) center center repeat-x;
+  background: url(../images/orient-wave.svg) center center repeat-x;
   background-size: cover;
   opacity: 1;
   z-index: -1;
