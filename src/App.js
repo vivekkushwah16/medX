@@ -323,7 +323,7 @@ export default function App() {
               // finishedEvent={''}//for finished component
               qnaPage={QnaPageLazy}
               liveCount={LiveCountLazy}
-              env={"dev"} //dev or prod
+              env={"prod"} //dev or prod
               forceState={EventStausType.Live}
             />
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>

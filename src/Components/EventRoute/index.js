@@ -43,22 +43,28 @@ export const EventChecker = (props) => {
     let ref = firestore
       .collection(BACKSTAGE_COLLECTION)
       .doc(PLATFORM_BACKSTAGE_DOC);
-    const doc = await ref.get();
-    if (!doc.exists) {
-      history.push(`/home`);
-    }
-    const activeEventList = doc.data().activeEventList;
-    if (activeEventList.hasOwnProperty(event)) {
-      if (props.env === "dev") {
-        activeEventList[event].status = props.forceState;
-      }
-      setEventStatus(activeEventList[event].status);
-      setEventDetails(activeEventList[event]);
+    const doc = await ref.onSnapshot(
+      (doc) => {
+        if (!doc.exists) {
+          history.push(`/home`);
+        }
+        const activeEventList = doc.data().activeEventList;
+        if (activeEventList.hasOwnProperty(event)) {
+          if (props.env === "dev") {
+            activeEventList[event].status = props.forceState;
+          }
+          setEventStatus(activeEventList[event].status);
+          setEventDetails(activeEventList[event]);
 
-      setCheckDonw(true);
-    } else {
-      history.push(`/home`);
-    }
+          setCheckDonw(true);
+        } else {
+          history.push(`/home`);
+        }
+      },
+      (error) => {
+        history.push("/home");
+      }
+    );
   };
 
   if (!doneCheck) {
