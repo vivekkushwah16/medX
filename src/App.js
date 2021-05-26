@@ -145,13 +145,16 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    // EventManager.addEventTimeLine(
+    // PollManager.addPollQuestion(
     //   "orient21-26may",
-    //   "Mucormycosis - What lies beneath",
-    //   "",
-    //   [],
-    //   1622035800000,
-    //   "60"
+    //   1,
+    //   "HOW TO DESIGN A VIRTUAL EVENT?",
+    //   [
+    //     "By Understanding User",
+    //     "By Thinking out of box",
+    //     "By doing nothing",
+    //     "By consulting DJ Virtual Event",
+    //   ]
     // );
   }, []);
 

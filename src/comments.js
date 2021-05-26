@@ -81,12 +81,17 @@
 //   "1621773000000",
 //   "10"
 // );
-// PollManager.addPollQuestion("evolve", 1, "HOW TO DESIGN A VIRTUAL EVENT?", [
-//   "By Understanding User",
-//   "By Thinking out of box",
-//   "By doing nothing",
-//   "By consulting DJ Virtual Event",
-// ]);
+PollManager.addPollQuestion(
+  "orient21-26may",
+  1,
+  "HOW TO DESIGN A VIRTUAL EVENT?",
+  [
+    "By Understanding User",
+    "By Thinking out of box",
+    "By doing nothing",
+    "By consulting DJ Virtual Event",
+  ]
+);
 // EventManager.addTrendingItem(
 //   "evolve",
 //   TRENDING_ITEM_TYPE.PDF,

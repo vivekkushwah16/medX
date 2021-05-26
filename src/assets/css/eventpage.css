@@ -179,6 +179,8 @@
   border: none;
   max-width: 90%;
   min-width: 90%;
+  position: relative;
+  z-index: 2;
 }
 #tab2 {
   display: flex !important;
