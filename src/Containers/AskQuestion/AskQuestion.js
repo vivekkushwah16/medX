@@ -23,9 +23,9 @@ export default function AskQuestion(props) {
     if (ques.length > 0) {
       setQuestion("");
       setCurrentState(possibleState.askedQuestion);
-      console.log(ques);
+      // console.log(ques);
       await sendQuestion(eventId, ques);
-      console.log("done");
+      // console.log("done");
     }
   };
 

@@ -145,7 +145,7 @@ export default function EventContainer(props) {
   };
 
   const sendSessionAnalytics = (initalTimelineValue) => {
-    console.log({ timelineId: initalTimelineValue });
+    // console.log({ timelineId: initalTimelineValue });
     setActiveTimelineId(initalTimelineValue);
     addGAWithUserInfo(SESSION_ATTENDED, {
       eventId: id,
@@ -169,7 +169,7 @@ export default function EventContainer(props) {
   };
 
   const startTimespentCalculation = () => {
-    console.log("Started TIme Calculation");
+    // console.log("Started TIme Calculation");
     updateUserStatus(id, data.activeTimelineId, 0);
     window.session_CurrentHit_StartTimestamp = new Date().getTime();
     window.sessionTimerRef = setInterval(() => {
@@ -223,7 +223,7 @@ export default function EventContainer(props) {
         startTimespentCalculation();
       }
     } else {
-      console.log("No Active timeline");
+      // console.log("No Active timeline");
       setActiveTimelineId(null);
     }
   }, [data]);
@@ -235,7 +235,7 @@ export default function EventContainer(props) {
   }, []);
 
   useEffect(() => {
-    console.log(activeTimelineId);
+    // console.log(activeTimelineId);
     setActiveTimeline(
       props.agendaData.filter((item) => item.id === activeTimelineId)[0]
     );
@@ -270,7 +270,7 @@ export default function EventContainer(props) {
       }
     });
     let dates = Object.keys(newData);
-    console.log(firstTime, ": first time of session");
+    // console.log(firstTime, ": first time of session");
     if (firstTime) {
       setCureentAgendaDate(dates[0]);
       firstTime = false;
@@ -286,7 +286,7 @@ export default function EventContainer(props) {
     setCureentAgendaDate(date);
   };
   useEffect(() => {
-    console.log(activeTimeline, "*************");
+    // console.log(activeTimeline, "*************");
   }, [activeTimeline]);
   return (
     <div className="eventBox">

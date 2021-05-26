@@ -101,7 +101,7 @@ function Banner() {
   const { showMediaModal } = useContext(MediaModalContext);
 
   const goToRoute = async (id) => {
-    console.log(id);
+    // console.log(id);
 
     var thing = document.getElementById("bannerParentDiv");
     window.scrollTo(0, thing.scrollHeight - 200);

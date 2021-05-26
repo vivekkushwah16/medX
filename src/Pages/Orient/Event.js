@@ -16,7 +16,7 @@ import { USERMETADATA_COLLECTION } from "../../AppConstants/CollectionConstants"
 import LoadableFallback from "../../Components/LoadableFallback/LoadableFallback";
 
 export default function Event(props) {
-  console.log(props);
+  // console.log(props);
   const { eventId } = props;
   const { path, url } = useRouteMatch();
   const history = useHistory();

@@ -21,7 +21,7 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 export default function InviteFriendModal(props) {
-  console.log(props);
+  // console.log(props);
   const alert = useAlert();
   // const [url, setUrl] = useState(window.location.href);
   const [url, setUrl] = useState(
@@ -102,7 +102,7 @@ export default function InviteFriendModal(props) {
           addAnalytics(INVITEYOURFRIEND_EVENT_EMAIL);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setError(true);
           alert.error("Failed: Mail not sent.");
           setLoading(false);

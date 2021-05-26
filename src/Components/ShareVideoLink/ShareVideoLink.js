@@ -96,7 +96,7 @@ export default function ShareVideoLink(props) {
           addAnalytics(INVITEYOURFRIEND_EVENT_EMAIL);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setError(true);
           alert.error("Failed: Mail not sent.");
           setLoading(false);
