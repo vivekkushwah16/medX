@@ -17,7 +17,6 @@ import { firestore } from "../../Firebase/firebase";
 import LoadableFallback from "../LoadableFallback/LoadableFallback";
 import NotLoggedInRoutes from "../NotLoggedInRoutes/NotLoggedInRoutes";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-
 export const EventStausType = {
     NotLive: "notLive",
     Live: "live",
@@ -102,6 +101,21 @@ export const EventChecker = (props) => {
                     />
                 </ProtectedRoute>
 
+                <ProtectedRoute
+                    exact
+                    redirectTo={`${url}/login`}
+                    path={`${url}/liveCount-kmp23`}
+                >
+                    <props.liveCount eventId={event} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                    exact
+                    redirectTo={`${url}/login`}
+                    path={`${url}/qna-kmp23`}
+                >
+                    <props.qnaPage eventId={event} />
+                </ProtectedRoute>
+
                 <ProtectedRoute redirectTo={`${url}/login`} path={url}>
                     {eventStatus === EventStausType.NotLive && (
                         <>
@@ -149,6 +163,8 @@ export default function EventRoute(props) {
                     finishedEvent={props.finishedEvent}
                     env={props.env}//dev or prod
                     forceState={props.forceState}
+                    qnaPage={props.qnaPage}
+                    liveCount={props.liveCount}
                 >
                     {props.children}
                 </EventChecker>

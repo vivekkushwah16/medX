@@ -321,6 +321,8 @@ export default function App() {
               notLive={OrientPreEventLazy} //for prevent component
               liveEvent={OrientEventLazy} //for event component
               // finishedEvent={''}//for finished component
+              qnaPage={QnaPageLazy}
+              liveCount={LiveCountLazy}
               env={"dev"}//dev or prod
               forceState={EventStausType.Live}
             />
