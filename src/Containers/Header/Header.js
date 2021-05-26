@@ -23,6 +23,7 @@ import swal from "sweetalert";
 
 //showCertificate, showFeedback
 export default function Header(props) {
+  // console.log(props);
   const { stickyOnScroll, addClickAnalytics } = props;
   const [showInviteFriendModal, toggleInviteFriendModal] = useState(false);
   const { showMediaModal } = useContext(MediaModalContext);
@@ -53,7 +54,7 @@ export default function Header(props) {
         setSticky(false);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -138,7 +139,7 @@ export default function Header(props) {
               handleClick={() => {
                 // showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fimages%2Fnewflyer.pdf')
               }}
-              data={["💡 Successfully registered!!"]}
+              data={["No Notifications"]}
             />
             <Profile />
           </div>

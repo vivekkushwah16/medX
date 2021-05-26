@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import firebase, { analytics, cloudFunction, database, firestore } from "../../Firebase/firebase";
+import firebase, {
+  analytics,
+  cloudFunction,
+  database,
+  firestore,
+} from "../../Firebase/firebase";
 
 import "./Register.css";
 import "react-phone-number-input/style.css";
@@ -12,7 +17,10 @@ import EventManager from "../../Managers/EventManager";
 import { isMobileOnly } from "react-device-detect";
 import { MonthName } from "../../AppConstants/Months";
 import SideAgendaNoUser from "../../Containers/SideAgendaNoUser/SideAgendaNoUser";
-import { CONFIRMATIONENDPOINT, EVENT_CONFIRMATION_ENDPOINT } from "../../AppConstants/APIEndpoints";
+import {
+  CONFIRMATIONENDPOINT,
+  EVENT_CONFIRMATION_ENDPOINT,
+} from "../../AppConstants/APIEndpoints";
 import EventPageStatic from "../../Containers/AuthPageStaticSide/EventPageStatic";
 import { UserCreation_Cloufunction } from "../../AppConstants/CloudFunctionName";
 var uniqid = require("uniqid");
@@ -94,8 +102,9 @@ class Register extends Component {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
-        } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${
+        MonthName[new Date(timeline.startTime).getMonth()]
+      } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -206,7 +215,7 @@ class Register extends Component {
         this.setState({ isLoading: false });
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         this.setState({ isLoading: false });
       });
   };
@@ -218,45 +227,47 @@ class Register extends Component {
     this.validateForm();
 
     if (!this.isValidForm(this.state.errors)) {
-      console.log(this.state.errors);
+      // console.log(this.state.errors);
       this.setState({ isLoading: false });
       return;
     }
 
     const cloudRef = cloudFunction.httpsCallable(UserCreation_Cloufunction);
-    cloudRef(JSON.stringify({
-      email: this.state.email,
-      phoneNumber: this.state.phoneNumber,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      profession: this.state.profession,
-      speciality: this.state.speciality,
-      country: this.state.country,
-      state: this.state.state,
-      city: this.state.city,
-      pincode: this.state.pincode,
-      termsAndConditions: this.state.termsAndConditions,
-      date: new Date().getTime()
-    }))
+    cloudRef(
+      JSON.stringify({
+        email: this.state.email,
+        phoneNumber: this.state.phoneNumber,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        profession: this.state.profession,
+        speciality: this.state.speciality,
+        country: this.state.country,
+        state: this.state.state,
+        city: this.state.city,
+        pincode: this.state.pincode,
+        termsAndConditions: this.state.termsAndConditions,
+        date: new Date().getTime(),
+      })
+    )
       .then(async (res) => {
         console.log(res);
         console.log(res.data);
         if (!res.data.userId) {
-          window.alert('Please Try Again Later');
-          this.setState({ isLoading: false })
-          return
+          window.alert("Please Try Again Later");
+          this.setState({ isLoading: false });
+          return;
         }
         analytics.logEvent("user_registered", {
           userId: res.data.userId,
-          event: 'evolve',
+          event: "evolve",
           country: this.state.country,
           state: this.state.state,
           city: this.state.city,
           profession: this.state.profession,
           speciality: this.state.speciality,
           pincode: this.state.pincode,
-          date: new Date().getTime()
-        })
+          date: new Date().getTime(),
+        });
         let _data = {
           userId: res.data.userId,
           email: this.state.email,
@@ -270,39 +281,44 @@ class Register extends Component {
           city: this.state.city,
           pincode: this.state.pincode,
           date: new Date().getTime(),
-          event: 'evolve',
-        }
-        await database.ref(`/user_registered/${res.data.userId}`).update(_data)
+          event: "evolve",
+        };
+        await database.ref(`/user_registered/${res.data.userId}`).update(_data);
         const confirmationMailResponse = await axios({
-          method: 'post',
+          method: "post",
           url: CONFIRMATIONENDPOINT,
           data: {
             eventName: "Cipla MedX Evolve '21",
             email: this.state.email,
             mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ''}`,
-            isDoctor: this.state.profession === 'Doctor'
-          }
-        })
-        await firestore.collection("userMetaData").doc(res.data.userId).set({
-          registeration: 'evolve',
-          events: ['evolve']
-        })
-        this.siginIn(_data)
+            name: `${this.state.firstName} ${
+              this.state.lastName ? this.state.lastName : ""
+            }`,
+            isDoctor: this.state.profession === "Doctor",
+          },
+        });
+        await firestore
+          .collection("userMetaData")
+          .doc(res.data.userId)
+          .set({
+            registeration: "evolve",
+            events: ["evolve"],
+          });
+        this.siginIn(_data);
       })
       .catch((error) => {
-        this.setState({ isLoading: false })
+        this.setState({ isLoading: false });
         var code = error.code;
         var message = error.message;
         var details = error.details;
         console.log(error);
         console.log(code, message, details);
-        console.log('xxxxxxxxxxxxxxxx')
+        console.log("xxxxxxxxxxxxxxxx");
         if (code === "already-exists") {
           this.setState((prev) => ({
-            errors: { ...prev.errors, alreadyRegistered: true }
-          }))
-          console.log(this.pagetop.current)
+            errors: { ...prev.errors, alreadyRegistered: true },
+          }));
+          console.log(this.pagetop.current);
           if (this.pagetop.current) {
             this.pagetop.current.scrollIntoView();
           }
@@ -314,7 +330,7 @@ class Register extends Component {
         }
       });
 
-    return
+    return;
     axios
       .post(`/accounts`, {
         email: this.state.email,
@@ -335,7 +351,7 @@ class Register extends Component {
         console.log(res.data.userId);
 
         analytics.logEvent("user_registered", {
-          eventId: 'evolve',
+          eventId: "evolve",
           userId: res.data.userId,
           country: this.state.country,
           state: this.state.state,
@@ -359,7 +375,7 @@ class Register extends Component {
           city: this.state.city,
           pincode: this.state.pincode,
           date: new Date().getTime(),
-          eventId: 'evolve',
+          eventId: "evolve",
         };
         await database
           .ref(`/user_registered/${uniqid("user_registered_")}`)
@@ -372,15 +388,19 @@ class Register extends Component {
             eventName: "Cipla Evolve '21",
             email: this.state.email,
             mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
-              }`,
+            name: `${this.state.firstName} ${
+              this.state.lastName ? this.state.lastName : ""
+            }`,
             isDoctor: this.state.profession === "Doctor",
           },
         });
-        await firestore.collection("userMetaData").doc(res.data.userId).set({
-          registeration: 'evolve',
-          events: ['evolve']
-        })
+        await firestore
+          .collection("userMetaData")
+          .doc(res.data.userId)
+          .set({
+            registeration: "evolve",
+            events: ["evolve"],
+          });
 
         // this.setState({ isLoading: false })
         this.siginIn(_data);
@@ -466,8 +486,9 @@ class Register extends Component {
         /> */}
         <EventPageStatic />
         <article
-          className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? "" : ""
-            }`}
+          className={`login2Box login2Box__small ${
+            this.state.currentTab === TABS.AgendaTab ? "" : ""
+          }`}
         >
           <div ref={this.pagetop} class="login2Box__header ">
             <h3

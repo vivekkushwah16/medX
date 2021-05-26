@@ -175,7 +175,7 @@ class Register extends Component {
                 this.setState({ isLoading: false })
             })
             .catch((error) => {
-                console.log(error)
+                // console.log(error)
                 this.setState({ isLoading: false })
             });
     }
@@ -187,7 +187,7 @@ class Register extends Component {
         this.validateForm();
 
         if (!this.isValidForm(this.state.errors)) {
-            console.log(this.state.errors);
+            // console.log(this.state.errors);
             this.setState({ isLoading: false })
             return;
         }
@@ -207,8 +207,8 @@ class Register extends Component {
             date: new Date().getTime()
         })
             .then(async res => {
-                console.log(res)
-                console.log(res.data.userId);
+                // console.log(res)
+                // console.log(res.data.userId);
                 analytics.logEvent("user_registered", {
                     userId: res.data.userId,
                     country: this.state.country,
@@ -255,7 +255,7 @@ class Register extends Component {
                         this.setState((prev) => ({
                             errors: { ...prev.errors, alreadyRegistered: true }
                         }))
-                        console.log(this.pagetop.current)
+                        // console.log(this.pagetop.current)
                         if (this.pagetop.current) {
                             this.pagetop.current.scrollIntoView();
                         }
@@ -274,7 +274,7 @@ class Register extends Component {
                 } else {
                     alert('Error ' + error.message);
                 }
-                console.log(error.config);
+                // console.log(error.config);
                 this.setState({ isLoading: false })
             });
 

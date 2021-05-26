@@ -124,7 +124,7 @@ class Login extends Component {
     this.validateForm();
 
     if (!this.isValidForm(this.state.errors)) {
-      console.log(this.state.errors);
+      // console.log(this.state.errors);
       this.setState({ isLoading: false });
       return;
     }

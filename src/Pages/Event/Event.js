@@ -43,10 +43,10 @@ export default function Event(props) {
   const [trendingData, setTrendingData] = useState(null);
   const [partnerWithUsData, setPartnerWithUsData] = useState(null);
   const [likedEvent, setLikeEvent] = useState(false);
-  const [isloading, setIsloading] = useState(true)
+  const [isloading, setIsloading] = useState(true);
 
   useEffect(() => {
-    checkIfUserIsRegistered()
+    checkIfUserIsRegistered();
     return () => {
       removeTrendingDataListener();
       removeEventDataListener();
@@ -55,35 +55,37 @@ export default function Event(props) {
   }, []);
 
   const checkIfUserIsRegistered = async () => {
-    firestore.collection(USERMETADATA_COLLECTION)
+    firestore
+      .collection(USERMETADATA_COLLECTION)
       .doc(user.uid)
       .get()
-      .then(doc => {
-        const data = doc.data()
+      .then((doc) => {
+        const data = doc.data();
         if (data.events) {
           if (data.events.indexOf(param.id) === -1) {
             //not registered in event
-            redirectToLoggedInRegister()
+            redirectToLoggedInRegister();
           } else {
             //registered in event
             startLoadingContent();
           }
         } else {
           //never registered into any event
-          redirectToLoggedInRegister()
+          redirectToLoggedInRegister();
         }
-      }).catch(err => {
-        console.log(err)
+      })
+      .catch((err) => {
+        // console.log(err)
         //redirect
         redirectToLoggedInRegister();
-      })
-  }
+      });
+  };
 
   const redirectToLoggedInRegister = () => {
     if (history) {
-      history.push('/evolve/register-ott')
+      history.push("/evolve/register-ott");
     }
-  }
+  };
 
   const startLoadingContent = () => {
     setIsloading(false);
@@ -91,7 +93,7 @@ export default function Event(props) {
     getAgendaInfo();
     getTrending();
     getPartnerWithUsData();
-  }
+  };
 
   const getEventInfo = async () => {
     try {
@@ -102,14 +104,14 @@ export default function Event(props) {
       });
       getLike(param.id).then((status) => setLikeEvent(status));
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   const getAgendaInfo = async () => {
     try {
       attachTimelineListener(param.id, (data, err) => {
         if (err) {
-          console.log(err);
+          // console.log(err);
           return;
         }
         setAgendaData(data);
@@ -118,7 +120,7 @@ export default function Event(props) {
       // const data = await getTimelines(param.id)
       // setAgendaData(data)
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -128,7 +130,7 @@ export default function Event(props) {
         setTrendingData(data);
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -137,7 +139,7 @@ export default function Event(props) {
       const data = await getPartnerWithUs(param.id);
       setPartnerWithUsData(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -161,67 +163,68 @@ export default function Event(props) {
   };
 
   const addClickAnalytics = (eventName) => {
-    console.log(userInfo);
+    // console.log(userInfo);
     addGAWithUserInfo(eventName, { eventId: param.id });
     addCAWithUserInfo(`/${eventName}`, true, { eventId: param.id }, true);
   };
   return (
-
     <section className="wrapper" id="root">
-      {
-        isloading &&
+      {isloading && (
         <>
-          <div style={{
-            width: '100vw',
-            height: '100vh',
-            backgroundImage: `url('/assets/images/evolveLoader.jpg')`,
-            backgroundPosition: 'center',
-            backgroundSize: 'auto',
-            backgroundRepeat:'no-repeat'
-          }}>
-          <LoadableFallback  />
-        </div>
+          <div
+            style={{
+              width: "100vw",
+              height: "100vh",
+              backgroundImage: `url('/assets/images/evolveLoader.jpg')`,
+              backgroundPosition: "center",
+              backgroundSize: "auto",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <LoadableFallback />
+          </div>
         </>
-      }
-{
-  !isloading &&
-    <>
-      <div className="eventBoxBg"></div>
-      <div className="topicsBox__wrapper" id="eventPage">
-        {isMobileOnly ? (
-          <Header
-            showCertificate={false}
-            showFeedback={false}
-            disableFeedback={false}
-            stickyOnScroll={true}
-          />
-        ) : (
-          <Header
-            eventPage={true}
-            addClickAnalytics={addClickAnalytics}
-            showCertificate={true}
-            showFeedback={true}
-            disableFeedback={eventData ? !eventData.activeCertificate : false}
-            stickyOnScroll={true}
-          />
-        )}
-        {eventData && (
-          <EventContainer
-            id={param.id}
-            data={eventData}
-            agendaData={agendaData}
-            trendingData={trendingData}
-            partnerWithUsData={partnerWithUsData}
-            countPartnerWithUsAgree={countPartnerWithUsAgree}
-            sendQuestion={sendQuestion}
-            likedEvent={likedEvent}
-            handleEventLikeButton={handleEventLikeButton}
-          />
-        )}
-        {/* <Footer /> */}
-      </div>
-    </>
-}
-    </section >
+      )}
+      {!isloading && (
+        <>
+          <div className="eventBoxBg"></div>
+          <div className="topicsBox__wrapper" id="eventPage">
+            {isMobileOnly ? (
+              <Header
+                showCertificate={false}
+                showFeedback={false}
+                disableFeedback={false}
+                stickyOnScroll={true}
+              />
+            ) : (
+              <Header
+                eventPage={true}
+                addClickAnalytics={addClickAnalytics}
+                showCertificate={true}
+                showFeedback={true}
+                disableFeedback={
+                  eventData ? !eventData.activeCertificate : false
+                }
+                stickyOnScroll={true}
+              />
+            )}
+            {eventData && (
+              <EventContainer
+                id={param.id}
+                data={eventData}
+                agendaData={agendaData}
+                trendingData={trendingData}
+                partnerWithUsData={partnerWithUsData}
+                countPartnerWithUsAgree={countPartnerWithUsAgree}
+                sendQuestion={sendQuestion}
+                likedEvent={likedEvent}
+                handleEventLikeButton={handleEventLikeButton}
+              />
+            )}
+            {/* <Footer /> */}
+          </div>
+        </>
+      )}
+    </section>
   );
 }

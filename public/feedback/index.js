@@ -64,7 +64,7 @@ $(document).ready(function () {
       your_name = user.displayName;
       your_email = user.email;
       your_id = user.uid;
-      console.log(your_email);
+      // console.log(your_email);
       firebase
         .firestore()
         .collection("userLogged")
@@ -88,7 +88,7 @@ $(document).ready(function () {
         });
       // getDataIfExist();
     } else {
-      console.log("Nobody is Signed In");
+      // console.log("Nobody is Signed In");
       //window.location.href = "/login/index.html";
     }
   });
@@ -112,7 +112,7 @@ $(document).ready(function () {
 
   function LimitMultipleAnswers(className, limit) {
     let q5Array = document.querySelectorAll(`.${className}`);
-    console.log(q5Array);
+    // console.log(q5Array);
     q5Array.forEach((q5Option) => {
       q5Option.addEventListener("change", function (event) {
         count = 0;
@@ -121,7 +121,7 @@ $(document).ready(function () {
             count++;
           }
         });
-        console.log(count);
+        // console.log(count);
         if (count > limit) {
           q5Option.checked = false;
         }
@@ -167,7 +167,7 @@ $(document).ready(function () {
   };
 
   $("#mainForm").on("submit", async function (event) {
-    console.log(event);
+    // console.log(event);
     event.preventDefault();
     const survey1 = {};
     let formData = new FormData(document.querySelector("form"));
@@ -186,7 +186,7 @@ $(document).ready(function () {
       }
     }
 
-    console.log(survey1);
+    // console.log(survey1);
 
     showError(false);
     // const survey = {
@@ -204,7 +204,7 @@ $(document).ready(function () {
     //   question8: document.querySelector("#session8").value,
     //   question9: document.querySelector("#session9").value,
     // };
-    console.log(currentUser.displayName);
+    // console.log(currentUser.displayName);
     ///
     // if (!survey.questions4_recommend) {
     //   showError(true, "Please answer the 3rd question also.");
@@ -225,7 +225,7 @@ $(document).ready(function () {
         successfulFeedback();
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         failedFeedback(err);
       });
     // if (currentUser) {

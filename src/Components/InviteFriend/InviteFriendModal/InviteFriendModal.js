@@ -20,8 +20,8 @@ function validateEmail(email) {
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
-
 export default function InviteFriendModal(props) {
+  console.log(props);
   const alert = useAlert();
   // const [url, setUrl] = useState(window.location.href);
   const [url, setUrl] = useState(

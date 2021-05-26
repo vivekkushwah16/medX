@@ -172,7 +172,7 @@ const EventManager = {
             try {
                 const timelineRef = firestore.collection(TIMELINE_COLLECTION).doc(timelineId)
                 const LikeRef = firestore.collection(LIKES_COLLECTION).doc(`${userId}+${timelineId}`)
-                console.log(`${userId}+${timelineId}`)
+                // console.log(`${userId}+${timelineId}`)
                 let id = uniqid('like-')
                 await firestore.runTransaction(async transcation => {
                     let doc = await transcation.get(timelineRef)
@@ -183,7 +183,7 @@ const EventManager = {
                             message: "This Time has ALready Been Liked"
                         }
                         // throw (err)
-                        console.log(err)
+                        // console.log(err)
                         res()
                     }
                     if (!doc.exists) {
@@ -610,7 +610,7 @@ const EventManager = {
                     transcation.update(docRef, {
                         likes: firebase.firestore.FieldValue.increment(-1)
                     })
-                    console.log(mainDoc.data())
+                    // console.log(mainDoc.data())
                     return mainDoc.data().likes ? mainDoc.data().likes - 1 : 0
                 })
                 res(count);

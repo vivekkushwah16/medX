@@ -113,7 +113,7 @@ export function LiveEventBanner(props) {
                 className="btn bannerBox__btn mg-b30"
                 onClick={(e) => {
                   e.preventDefault();
-                  console.log(data.eventId);
+                  // console.log(data.eventId);
                   props.enterEvent(data.eventId);
                 }}
               >

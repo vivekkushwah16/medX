@@ -135,7 +135,7 @@ export default function App() {
   const { initalCheck, user } = useContext(UserContext);
   useEffect(() => {
     if (user) {
-      console.log("App Started - DJ");
+      // console.log("App Started - DJ");
       preload(EventLazy);
       preload(HomeLazy);
     } else {
@@ -158,11 +158,11 @@ export default function App() {
   const updateUserMetaData = async () => {
     const query = await firestore.collection(PROFILE_COLLECTION).get();
     for (let i = 0; i < query.docs.length; i++) {
-      console.log(
-        "--------------------------" +
-          (i / query.docs.length) * 100 +
-          "------------------------------"
-      );
+      // console.log(
+      //   "--------------------------" +
+      //     (i / query.docs.length) * 100 +
+      //     "------------------------------"
+      // );
       await crossCheckForRegDateAndUpdateMetaData(query.docs[i]);
     }
   };
@@ -172,7 +172,7 @@ export default function App() {
         let uid = doc.id;
         let docData = doc.data();
         let regEvent = "impact";
-        console.log(docData.date, 1618684200000, docData.date > 1618684200000);
+        // console.log(docData.date, 1618684200000, docData.date > 1618684200000);
         if (docData.date > 1618684200000) {
           regEvent = "ott";
         }
@@ -323,7 +323,7 @@ export default function App() {
               // finishedEvent={''}//for finished component
               qnaPage={QnaPageLazy}
               liveCount={LiveCountLazy}
-              env={"dev"}//dev or prod
+              env={"dev"} //dev or prod
               forceState={EventStausType.Live}
             />
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>

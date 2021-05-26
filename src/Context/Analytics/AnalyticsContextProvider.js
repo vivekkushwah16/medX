@@ -48,7 +48,7 @@ export default function AnalyticsContextProvider(props) {
       // console.log(wholeData)
       analytics.logEvent(eventName, wholeData);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -154,20 +154,20 @@ export default function AnalyticsContextProvider(props) {
         date: dateTimeStamp,
         sessionId: _sessionId,
       };
-      console.log(_data);
+      // console.log(_data);
       // dummyFunction(_data, user.uid)
       const cloudRef = cloudFunction.httpsCallable(UPDATE_USER_STAUS);
       cloudRef(JSON.stringify(_data))
         .then((res) => {
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
       // const res = await cloudRef(JSON.stringify(_data))
       // console.log(res)
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
