@@ -622,3 +622,12 @@ const EventManager = {
 }
 
 export default EventManager;
+
+/**
+ * active Event List
+ *  eventName 
+ *   agenda (boolean)
+ *   id
+ *   status - live, noLice
+ *   title
+ */

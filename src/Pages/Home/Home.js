@@ -807,7 +807,7 @@ class Home extends Component {
             hideInviteFriend={true}
             whiteLogo={true}
             stickyOnScroll={true}
-            // scrollIntoView={scrollIntoViewHead}
+          // scrollIntoView={scrollIntoViewHead}
           />
           <Banner />
 
