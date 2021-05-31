@@ -1,0 +1,180 @@
+.scroll__btn {
+  display: flex;
+  position: fixed;
+  right: 0;
+  bottom: 0%;
+  z-index: 17;
+  margin: 1rem;
+  height: fit-content;
+  width: fit-content;
+  /* padding: 0.5rem; */
+}
+.back_to_top {
+  height: fit-content;
+  width: fit-content;
+  height: 50px;
+  width: 50px;
+  margin-right: 1rem;
+}
+.back_to_top img {
+  cursor: pointer;
+}
+.chat__btn {
+  min-height: 50px;
+  min-width: 50px;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.chat__btn img {
+  height: 50px;
+}
+.chat__cont {
+  height: 25rem;
+  width: 27rem;
+  position: absolute;
+  background-color: #fff;
+  bottom: 5rem;
+  right: 2.5rem;
+  transform: scale(0);
+  transition: 0.3s linear;
+  transform-origin: right bottom;
+  border-radius: 0.7rem;
+  display: grid;
+  grid-template-rows: 1fr 2.5fr 1fr;
+}
+.show {
+  transform: scale(1);
+}
+.close {
+  transform: scale(0);
+}
+.chat__cont .header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.chat__cont label {
+  margin-right: 1rem;
+}
+.chat__cont .header select {
+  height: 50%;
+  width: 70%;
+  background-color: #dddddd;
+  border-radius: 0.35rem;
+  outline: 0;
+  border: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.chat__cont .textarea {
+  display: grid;
+  place-items: center;
+}
+.chat__cont .textarea textarea {
+  height: 90% !important;
+  width: 85% !important;
+  font-size: 0.95rem;
+  outline: 0;
+  border-radius: 0.35rem;
+  padding: 1rem;
+  border: 2px solid #dddddd;
+  resize: none;
+}
+.chat__cont .submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat__cont .submit div {
+  height: 100%;
+  width: 85%;
+  display: flex;
+  align-items: center;
+}
+.chat__cont .submit div button {
+  height: 50%;
+  padding: 0.5rem 2.5rem;
+  cursor: pointer;
+  outline: 0;
+  border: 0;
+  border-radius: 0.35rem;
+  background: linear-gradient(to bottom, #30c1ff, #1597cf);
+  color: #fff;
+  transition: 0.3s ease;
+}
+.chat__cont .submit div button:hover {
+  transform: scale(1.09);
+}
+.chat-icon {
+  display: none;
+}
+.ask {
+  display: block;
+}
+@media (max-width: 600px) and (orientation: portrait) {
+  .scroll__btn {
+    z-index: 111;
+  }
+  .chat__btn {
+    position: fixed;
+    bottom: 0;
+    right: 0%;
+    margin: 1rem;
+  }
+  .back_to_top {
+    margin-right: 60px;
+  }
+  .ask {
+    display: none;
+  }
+  .chat-icon {
+    display: block;
+  }
+  .chat__cont {
+    height: calc(100vh - (3rem + 40px) - 5%);
+    bottom: auto;
+    position: fixed;
+    width: 90%;
+    top: 5%;
+    right: 5%;
+    border-radius: 0.5rem;
+  }
+  .main__chat {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    backdrop-filter: blur(1rem);
+    top: 0;
+    left: 0;
+    transition: 0.3s ease;
+  }
+  .chat__cont .submit div button {
+    height: 40%;
+    padding: 0.5rem 3rem;
+  }
+  .chat__cont .header select {
+    height: 40%;
+    width: 70%;
+  }
+}
+@media (max-width: 991px) and (orientation: landscape) {
+  .chat__cont {
+    height: calc(100vh - (4rem + 40px));
+    bottom: auto;
+    position: fixed;
+    width: 80%;
+    top: 1rem;
+    border-radius: 0;
+    padding: 1rem;
+  }
+  .chat__cont .submit div button {
+    height: 90%;
+    padding: 0.5rem 3rem;
+  }
+  .chat__cont .header select {
+    height: 90%;
+    width: 70%;
+  }
+}

@@ -4,12 +4,11 @@
 @import url("/src/assets/css/maincard.css");
 @import url("/src/assets/css/homepage2.css");
 
-
-#RegisterBtn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#RegisterBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-#RegisterBtn img{
-    width: 2rem;
+#RegisterBtn img {
+  width: 2rem;
 }

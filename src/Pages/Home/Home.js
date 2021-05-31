@@ -47,6 +47,8 @@ import {
   VERIFY_OTP_COLUDFUNCTION,
 } from "../../AppConstants/CloudFunctionName";
 import VideoManager from "../../Managers/VideoManager";
+import Myprofile from "../../Containers/myProfile/Myprofile";
+import Chatbot from "../../Components/chatbot/Chatbot";
 
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
 
@@ -745,15 +747,15 @@ class Home extends Component {
   componentDidMount() {
     window.addEventListener("scroll", () => {
       if (
-        document.body.scrollTop > 50 ||
-        document.documentElement.scrollTop > 50
+        document.body.scrollTop > window.innerHeight ||
+        document.documentElement.scrollTop > window.innerHeight
       ) {
-        if (document.querySelector(".scroll__btn")) {
-          document.querySelector(".scroll__btn").style.display = "flex";
+        if (document.querySelector(".back_to_top")) {
+          document.querySelector(".back_to_top").style.display = "flex";
         }
       } else {
-        if (document.querySelector(".scroll__btn")) {
-          document.querySelector(".scroll__btn").style.display = "none";
+        if (document.querySelector(".back_to_top")) {
+          document.querySelector(".back_to_top").style.display = "none";
         }
       }
     });
@@ -774,33 +776,21 @@ class Home extends Component {
           id="scrollable"
           style={{ position: "absolute", top: "0", height: 1, width: 1 }}
         ></div>
-        <div
-          className="scroll__btn"
-          style={{
-            display: "none",
-            position: "fixed",
-            right: 0,
-            bottom: 0,
-            zIndex: 11,
-            // backgroundColor: "rgba(255, 255, 255, 0.7)",
-            height: "3rem",
-            width: "3rem",
-            borderRadius: "100%",
-            margin: "1rem",
-            cursor: "pointer",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-          onClick={() => {
-            this.scrollIntoViewHead(document.getElementById("scrollable"));
-          }}
-        >
-          {/* <p style={{ fontWeight: "bolder", transform: "rotate(-90deg)" }}>
-            {">"}
-          </p> */}
-          {/* <p style={{ fontWeight: "bolder" }}>TOP</p> */}
-          <img src={top} alt="" style={{ minWidth: "100%" }} />
+        <div className="scroll__btn" style={{}}>
+          <div className="back_to_top" style={{ display: "none" }}>
+            <img
+              src={top}
+              alt=""
+              style={{ minWidth: "100%" }}
+              onClick={() => {
+                this.scrollIntoViewHead(document.getElementById("scrollable"));
+              }}
+            />
+          </div>
+          <Chatbot
+            videoVisible={this.state.videopopVisible}
+            history={this.props}
+          />
         </div>
         <div className="topicsBox__wrapper" id="homePageConatiner">
           <Header
@@ -868,6 +858,15 @@ class Home extends Component {
         </div>
 
         <Switch>
+          <Route path={`/home/profile`}>
+            {this.context.userInfo ? (
+              <Myprofile />
+            ) : (
+              <div className="loaderContainer">
+                <div className="lds-dual-ring"></div>
+              </div>
+            )}
+          </Route>
           <Route path={`/home/:videoId`}>
             <HandleUrlParam
               openVideoPop={this.openVideoPop}

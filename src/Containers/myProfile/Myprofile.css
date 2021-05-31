@@ -1,0 +1,85 @@
+.left__part {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.myprofile .modalBox__header {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+  background-color: #aeaeae;
+  border-radius: 0 !important;
+}
+.myprofile .modalBox__title {
+  margin-left: 1rem;
+}
+.myprofile .profile__user::after {
+  display: none;
+}
+.myprofile .modalBox__body {
+  background-color: #f7f7f8;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 3rem !important;
+  border-radius: 0 !important;
+}
+.profile__cont {
+  width: 80%;
+}
+/* .PhoneInputCountry {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  margin-right: 0.35em;
+}
+.PhoneInput {
+  display: flex;
+  align-items: center;
+}
+.PhoneInputCountrySelect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.PhoneInputCountryIcon {
+  width: calc(
+    var(--PhoneInputCountryFlag-height) *
+      var(--PhoneInputCountryFlag-aspectRatio)
+  );
+  height: var(--PhoneInputCountryFlag-height);
+} */
+.form-control input[type="tel"] {
+  border: none;
+  outline: none;
+}
+/* .save__btn {
+  background: linear-gradient(to bottom, #1597cf, #1597cf) !important;
+  border: #1597cf;
+  transition: 0.3s ease-in;
+}
+.save__btn:hover {
+  background: #f7f7f8 !important;
+  color: #1597cf;
+} */
+.myprofile label {
+  display: inline-block;
+  margin-bottom: 0.75rem !important;
+}
+@media (max-width: 500px) {
+  .profile__cont {
+    width: 100%;
+  }
+}
+.save__btn {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}

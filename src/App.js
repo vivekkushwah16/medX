@@ -27,6 +27,7 @@ import { firestore } from "./Firebase/firebase";
 import { PROFILE_COLLECTION } from "./AppConstants/CollectionConstants";
 import { PollManager } from "./Managers/PollManager";
 import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
+import Myprofile from "./Containers/myProfile/Myprofile";
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 // import Upload from './Components/Upload/upload';
@@ -254,6 +255,9 @@ export default function App() {
             >
               <LiveCountLazy eventId={"evolve"} />
             </ProtectedRoute>
+            {/* <ProtectedRoute path={`/home/profile`}>
+              <Myprofile />
+            </ProtectedRoute> */}
             <ProtectedRoute
               exact
               redirectTo={LOGIN_ROUTE}
