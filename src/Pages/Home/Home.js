@@ -790,6 +790,7 @@ class Home extends Component {
           <Chatbot
             videoVisible={this.state.videopopVisible}
             history={this.props}
+            videoData={this.state.videoPopupData}
           />
         </div>
         <div className="topicsBox__wrapper" id="homePageConatiner">
@@ -797,7 +798,7 @@ class Home extends Component {
             hideInviteFriend={true}
             whiteLogo={true}
             stickyOnScroll={true}
-          // scrollIntoView={scrollIntoViewHead}
+            // scrollIntoView={scrollIntoViewHead}
           />
           <Banner />
 
