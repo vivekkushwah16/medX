@@ -798,7 +798,7 @@ class Home extends Component {
             hideInviteFriend={true}
             whiteLogo={true}
             stickyOnScroll={true}
-            // scrollIntoView={scrollIntoViewHead}
+          // scrollIntoView={scrollIntoViewHead}
           />
           <Banner />
 
@@ -893,6 +893,13 @@ class Home extends Component {
               )}
             </HandleUrlParam>
           </Route>
+          <Route exact path={`/home`}>
+                  <CheckState resetVideoPopup={()=>{
+                    this.setState({
+                      videopopVisible: false
+                    })
+                  }}/>
+          </Route>
         </Switch>
       </>
       // </section>
@@ -902,3 +909,11 @@ class Home extends Component {
 
 export default withRouter(Home);
 Home.contextType = UserContext;
+
+function CheckState(props) {
+  const { resetVideoPopup } = props
+  useEffect(() => {
+    resetVideoPopup()
+  }, [])
+  return (null)
+}
