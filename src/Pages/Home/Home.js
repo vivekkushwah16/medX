@@ -745,6 +745,7 @@ class Home extends Component {
       });
   }
   componentDidMount() {
+    // console.log(this.props);
     window.addEventListener("scroll", () => {
       if (
         document.body.scrollTop > window.innerHeight ||
@@ -859,6 +860,7 @@ class Home extends Component {
         </div>
 
         <Switch>
+          <Route exact path={`/home`}></Route>
           <Route path={`/home/profile`}>
             {this.context.userInfo ? (
               <Myprofile />

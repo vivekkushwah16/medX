@@ -5,6 +5,7 @@ import cut from "./cut.svg";
 import chat from "./chat.svg";
 import axios from "axios";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
+import cross from "./cross.svg";
 import firebase, { firestore } from "../../Firebase/firebase";
 var uniqid = require("uniqid");
 function Chatbot(props) {
@@ -12,6 +13,7 @@ function Chatbot(props) {
   const [topic, setTopic] = useState(
     !props.videoVisible ? "Platform" : props.videoData.title
   );
+  const [showThankyou, setThankyou] = useState(false);
   // console.log(props);
   const [message, setMessage] = useState("");
   const { user, userInfo } = useContext(UserContext);
@@ -19,6 +21,7 @@ function Chatbot(props) {
   const timeRef = useRef(null);
 
   useEffect(() => {
+    console.log(props);
     setTopic(!props.videoVisible ? "Platform" : props.videoData.title);
   }, [props.videoVisible]);
   const sendMail = () => {
@@ -38,7 +41,7 @@ function Chatbot(props) {
           .collection("queries")
           .doc(document)
           .set({
-            senderName: userInfo.firstName,
+            senderName: `${userInfo.firstName} ${userInfo.lastName}`,
             senderMail: userInfo.email,
             senderMobileNumber: userInfo.phoneNumber,
             topic: topic,
@@ -52,6 +55,7 @@ function Chatbot(props) {
             console.log(res, "done");
             setMessage("");
             setLoading(false);
+            setThankyou(true);
           });
       })
       .catch((err) => {
@@ -122,6 +126,23 @@ function Chatbot(props) {
       )}
       <div className="chat">
         <div className={`chat__cont ${showChat ? "show" : "close"}`}>
+          <div className="cross__">
+            <img
+              src={cross}
+              alt=""
+              onClick={() => {
+                setShow(false);
+                if (
+                  (document.querySelector(".back_to_top") &&
+                    document.body.scrollTop > 50) ||
+                  document.documentElement.scrollTop > 50
+                ) {
+                  document.querySelector(".back_to_top").style.display =
+                    "block";
+                }
+              }}
+            />
+          </div>
           <div className="header">
             <label for="topics">Topic:</label>
             <select
@@ -131,6 +152,7 @@ function Chatbot(props) {
               onChange={(e) => {
                 setTopic(e.target.value);
               }}
+              disabled={loading}
             >
               <option value="Platform">Platform</option>
               {props.videoVisible && <option value={topic}>{topic}</option>}
@@ -139,34 +161,50 @@ function Chatbot(props) {
             </select>
           </div>
           <div className="textarea">
-            <textarea
-              name="message"
-              id="message"
-              cols="30"
-              rows="10"
-              placeholder="Share  your thoughts"
-              value={message}
-              onChange={(e) => {
-                setMessage(e.target.value);
-              }}
-            ></textarea>
+            {showThankyou ? (
+              <p>Thank you for sharing your thaughts</p>
+            ) : (
+              <textarea
+                disabled={loading}
+                name="message"
+                id="message"
+                cols="30"
+                rows="10"
+                placeholder="Share  your thoughts"
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                }}
+              ></textarea>
+            )}
           </div>
           <div className="submit">
             <div>
-              <button onClick={sendMail}>
-                {" "}
-                {loading ? (
-                  <>
-                    <img
-                      src="/assets/images/loader.gif"
-                      alt="loading"
-                      style={{ maxHeight: "20px" }}
-                    />
-                  </>
-                ) : (
-                  "Send"
-                )}
-              </button>
+              {!showThankyou ? (
+                <button onClick={sendMail} disabled={loading}>
+                  {" "}
+                  {loading ? (
+                    <>
+                      <img
+                        src="/assets/images/loader.gif"
+                        alt="loading"
+                        style={{ maxHeight: "20px" }}
+                      />
+                    </>
+                  ) : (
+                    "Send"
+                  )}
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setShow(false);
+                    setThankyou(false);
+                  }}
+                >
+                  {"Close"}
+                </button>
+              )}
             </div>
           </div>
         </div>

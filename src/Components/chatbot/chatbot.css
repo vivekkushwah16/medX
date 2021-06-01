@@ -42,7 +42,10 @@
   transform-origin: right bottom;
   border-radius: 0.7rem;
   display: grid;
-  grid-template-rows: 1fr 2.5fr 1fr;
+  grid-template-rows: 0.2fr 1fr 2.5fr 1fr;
+}
+.cross__ img {
+  display: none;
 }
 .show {
   transform: scale(1);
@@ -113,9 +116,22 @@
 .ask {
   display: block;
 }
+.chat__cont .textarea p {
+  font-size: 1.5rem;
+  text-align: center;
+}
 @media (max-width: 600px) and (orientation: portrait) {
   .scroll__btn {
     z-index: 111;
+  }
+  .cross__ {
+    padding-right: 1rem;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .cross__ img {
+    display: block;
   }
   .chat__btn {
     position: fixed;
@@ -168,6 +184,16 @@
     top: 1rem;
     border-radius: 0;
     padding: 1rem;
+  }
+  .cross__ {
+    padding-right: 1rem;
+
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .cross__ img {
+    display: block;
   }
   .chat__cont .submit div button {
     height: 90%;
