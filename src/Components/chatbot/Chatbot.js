@@ -21,7 +21,7 @@ function Chatbot(props) {
   const timeRef = useRef(null);
 
   useEffect(() => {
-    console.log(props);
+    // console.log(props);
     setTopic(!props.videoVisible ? "Platform" : props.videoData.title);
   }, [props.videoVisible]);
   const sendMail = () => {
