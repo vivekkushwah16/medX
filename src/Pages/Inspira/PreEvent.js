@@ -10,6 +10,7 @@ import AgendaNavBar from "../../Components/Event/AgendaNavBar/AgendaNavBar";
 import AgendaCard from "../../Components/AgendaCard/AgendaCard";
 import "./PreEvent.css";
 import { isMobileOnly } from "react-device-detect";
+import { Route, Switch } from "react-router-dom";
 import {
   KNOW_YOUR_SPEAKER_CLICK_EVENT,
   WATCHTRAILER_ANALYTICS_EVENT,
@@ -29,14 +30,14 @@ import { USERMETADATA_COLLECTION } from "../../AppConstants/CollectionConstants"
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import LoadableFallback from "../../Components/LoadableFallback/LoadableFallback";
 import { useHistory } from "react-router-dom";
+import Myprofile from "../../Containers/myProfile/Myprofile";
 function PreEvent(props) {
-  const { user } = useContext(UserContext);
+  const { user, userInfo } = useContext(UserContext);
   const { showMediaModal } = useContext(MediaModalContext);
   const [agendaData, setAgendaData] = useState(null);
   const [agendaDates, setAgendaDates] = useState([]);
   const [cureentAgendaDate, setCureentAgendaDate] = useState(null);
   const history = useHistory();
-
   const [showRegisterForOldUser, setToggleForRegisterationForOldUser] =
     useState({ status: false, value: false });
 
@@ -56,9 +57,8 @@ function PreEvent(props) {
         });
       setToggleForRegisterationForOldUser({ status: true, value: false });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
   };
 
   const componentDIdMount = () => {
@@ -109,8 +109,9 @@ function PreEvent(props) {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
-        } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${
+        MonthName[new Date(timeline.startTime).getMonth()]
+      } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -208,8 +209,7 @@ function PreEvent(props) {
                     </button> 
                     */}
                     <AddToCalendar blueBtn={true} />
-                    {
-                      props.canEnterEvent && props.event &&
+                    {props.canEnterEvent && props.event && (
                       <button
                         className="btn btn-secondary"
                         onClick={(e) => {
@@ -220,7 +220,7 @@ function PreEvent(props) {
                       >
                         Enter Event
                       </button>
-                    }
+                    )}
                     {/* 
                         <button
                         className="btn btn-secondary"
@@ -297,8 +297,7 @@ function PreEvent(props) {
 
                   <div className="buttons">
                     <AddToCalendar blueBtn={true} />
-                    {
-                      props.canEnterEvent && props.event &&
+                    {props.canEnterEvent && props.event && (
                       <button
                         className="btn btn-secondary"
                         onClick={(e) => {
@@ -309,7 +308,7 @@ function PreEvent(props) {
                       >
                         Enter Event
                       </button>
-                    }
+                    )}
                     {/* <button className="btn btn-secondary evolve-btn">
                             Add to Calendar
                           </button>
@@ -340,6 +339,17 @@ function PreEvent(props) {
           {/* <img src={cipla__res} alt="" className="cipla__res" /> */}
         </div>
       </div>
+      <Switch>
+        <Route path={`/:event/profile`}>
+          {userInfo ? (
+            <Myprofile returnUrl={`/${props.event}`} />
+          ) : (
+            <div className="loaderContainer">
+              <div className="lds-dual-ring"></div>
+            </div>
+          )}
+        </Route>
+      </Switch>
     </>
   );
 }

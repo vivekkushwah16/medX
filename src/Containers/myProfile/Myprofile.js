@@ -91,7 +91,8 @@ function Myprofile(props) {
         class="modalBox__overlay"
         onClick={() => {
           console.log(props);
-          if (history) history.push("/home");
+          if (history)
+            history.push(props.returnUrl ? props.returnUrl : "/home");
         }}
       ></span>
       <div className="modalBox__inner myprofile">
@@ -114,7 +115,8 @@ function Myprofile(props) {
           <button
             className="modalBox__close-link"
             onClick={() => {
-              if (history) history.push("/home");
+              if (history)
+                history.push(props.returnUrl ? props.returnUrl : "/home");
             }}
           >
             CLOSE

@@ -2,7 +2,13 @@ import React, { useContext, useEffect, useState, useMemo } from "react";
 import "./Event.css";
 import Footer from "../../Containers/Footer/Footer";
 import Header from "../../Containers/Header/Header";
-import { useHistory, useParams, useRouteMatch } from "react-router-dom";
+import {
+  Switch,
+  useHistory,
+  useParams,
+  useRouteMatch,
+  Route,
+} from "react-router-dom";
 import EventContainer from "../../Containers/EventContainer/EventContainer";
 import { eventContext } from "../../Context/Event/EventContextProvider";
 import { likeContext } from "../../Context/Like/LikeContextProvider";
@@ -14,6 +20,7 @@ import { SESSION_ATTENDED } from "../../AppConstants/AnalyticsEventName";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import { USERMETADATA_COLLECTION } from "../../AppConstants/CollectionConstants";
 import LoadableFallback from "../../Components/LoadableFallback/LoadableFallback";
+import Myprofile from "../../Containers/myProfile/Myprofile";
 
 export default function Event(props) {
   // console.log(props);
@@ -231,6 +238,17 @@ export default function Event(props) {
             )}
             {/* <Footer /> */}
           </div>
+          <Switch>
+            <Route path={`/:event/profile`}>
+              {userInfo ? (
+                <Myprofile returnUrl={`/${props.event}`} />
+              ) : (
+                <div className="loaderContainer">
+                  <div className="lds-dual-ring"></div>
+                </div>
+              )}
+            </Route>
+          </Switch>
         </>
       )}
     </section>
