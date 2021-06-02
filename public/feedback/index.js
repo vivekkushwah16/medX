@@ -20,6 +20,8 @@ var reviews6 = [
 let response3 = 0;
 let response4 = 0;
 let response6 = 0;
+let eventId = null;
+let eventTitle = null;
 // $(".emoji1").html("hello");
 // $(".emojislider1").mousemove(function () {
 //   var i = $(this).val();
@@ -71,6 +73,23 @@ $(document).ready(function () {
         .doc(your_id)
         .get()
         .then((doc) => {
+          const urlQuery = new URLSearchParams(window.location.href);
+          eventId = urlQuery.get("event");
+          eventTitle = urlQuery.get("title");
+          document.getElementById("q3-title").innerHTML =
+            document.getElementById("q3-title").innerHTML +
+            " " +
+            eventTitle +
+            "?";
+          document.getElementById("q5-title").innerHTML =
+            document.getElementById("q5-title").innerHTML +
+            " " +
+            eventTitle.split(`'`)[0].toUpperCase() +
+            " program ?";
+          // console.log(eventId, eventTitle);
+          if (eventId === null) {
+            return;
+          }
           document.querySelector("#mainForm").style.display = "block";
           document.querySelector("#loader").style.display = "none";
           document.querySelector("#finalMessage").style.display = "none";
@@ -219,7 +238,7 @@ $(document).ready(function () {
         ...survey1,
         name: currentUser.displayName,
         email: currentUser.email,
-        eventId: "orient21-26may",
+        eventId: eventId,
       })
       .then(() => {
         successfulFeedback();

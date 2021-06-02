@@ -49,12 +49,16 @@ export const EventChecker = (props) => {
           history.push(`/home`);
         }
         const activeEventList = doc.data().activeEventList;
-        if (activeEventList.hasOwnProperty(event)) {
-          if (props.env === "dev") {
-            activeEventList[event].status = props.forceState;
+        if (activeEventList.hasOwnProperty(event.toLowerCase())) {
+          if (activeEventList[event.toLowerCase()].disabled) {
+            history.push(`/home`);
+            return;
           }
-          setEventStatus(activeEventList[event].status);
-          setEventDetails(activeEventList[event]);
+          if (props.env === "dev") {
+            activeEventList[event.toLowerCase()].status = props.forceState;
+          }
+          setEventStatus(activeEventList[event.toLowerCase()].status);
+          setEventDetails(activeEventList[event.toLowerCase()]);
 
           setCheckDonw(true);
         } else {
@@ -77,7 +81,7 @@ export const EventChecker = (props) => {
         <NotLoggedInRoutes redirectTo={url} path={`${url}/login`}>
           {props.login ? (
             <props.login
-              event={event}
+              event={event.toLowerCase()}
               haveAgenda={eventDetails.agenda}
               registerUrl={`${url}/register`}
             />
@@ -89,7 +93,7 @@ export const EventChecker = (props) => {
         <NotLoggedInRoutes redirectTo={url} path={`${url}/register`}>
           {props.register ? (
             <props.register
-              event={event}
+              event={event.toLowerCase()}
               haveAgenda={eventDetails.agenda}
               loginUrl={`${url}/login`}
               eventTitle={eventDetails.title}
@@ -104,7 +108,7 @@ export const EventChecker = (props) => {
           path={`${url}/register-ott`}
         >
           <props.notLive
-            event={event}
+            event={event.toLowerCase()}
             eventTitle={eventDetails.title}
             canEnterEvent={eventStatus === EventStausType.Live}
           />
@@ -129,7 +133,10 @@ export const EventChecker = (props) => {
           {eventStatus === EventStausType.NotLive && (
             <>
               {props.notLive ? (
-                <props.notLive event={event} eventTitle={eventDetails.title} />
+                <props.notLive
+                  event={event.toLowerCase()}
+                  eventTitle={eventDetails.title}
+                />
               ) : (
                 "NotLive Event"
               )}
@@ -139,7 +146,7 @@ export const EventChecker = (props) => {
             <>
               {props.liveEvent ? (
                 <props.liveEvent
-                  event={event}
+                  event={event.toLowerCase()}
                   eventTitle={eventDetails.title}
                 />
               ) : (
@@ -150,7 +157,7 @@ export const EventChecker = (props) => {
           {eventStatus === EventStausType.Finished && (
             <>
               {props.finishedEvent ? (
-                <props.finishedEvent event={event} />
+                <props.finishedEvent event={event.toLowerCase()} />
               ) : (
                 "Finished Event"
               )}

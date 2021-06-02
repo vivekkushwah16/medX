@@ -114,3 +114,9 @@ PollManager.addPollQuestion(
 //   "https://player.vimeo.com/video/537595557",
 //   "orient21-26may"
 // );
+EventManager.addEvent(
+  "Welcome to Evolve '21",
+  LOREM_TEXT,
+  "https://player.vimeo.com/video/537595557",
+  "evolve"
+);

@@ -121,7 +121,10 @@ export default function Header(props) {
                 className="btn btn-secondary"
                 onClick={() => {
                   addClickAnalytics(FEEDBACK_CLICK);
-                  showMediaModal(MediaModalType.PDF, "/feedback/index.html");
+                  showMediaModal(
+                    MediaModalType.PDF,
+                    `/feedback/index.html?id=123&event=${props.event}&title=${props.eventTitle}`
+                  );
                 }}
               >
                 Feedback

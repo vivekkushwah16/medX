@@ -45,7 +45,7 @@ export default function AnalyticsContextProvider(props) {
         dateTimeStamp: new Date().getTime(),
       };
       let wholeData = { ...baseData, ...data };
-      // console.log(wholeData)
+      console.log(wholeData);
       analytics.logEvent(eventName, wholeData);
     } catch (error) {
       // console.log(error);

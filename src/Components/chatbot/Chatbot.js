@@ -11,7 +11,7 @@ var uniqid = require("uniqid");
 function Chatbot(props) {
   const [showChat, setShow] = useState(false);
   const [topic, setTopic] = useState(
-    !props.videoVisible ? "Platform" : props.videoData.title
+    !props.videoVisible ? "About Ciplamedx" : props.videoData.title
   );
   const [showThankyou, setThankyou] = useState(false);
   // console.log(props);
@@ -154,9 +154,9 @@ function Chatbot(props) {
               }}
               disabled={loading}
             >
-              <option value="Platform">Platform</option>
+              <option value="About Ciplamedx">About Ciplamedx</option>
               {props.videoVisible && <option value={topic}>{topic}</option>}
-              <option value="Content">Content</option>
+              <option value="Cipla events">Cipla events</option>
               <option value="Feedback">Feedback</option>
             </select>
           </div>

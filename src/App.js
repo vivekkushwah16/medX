@@ -109,6 +109,22 @@ const OrientEventLazy = loadable(
   () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Orient/Event"),
   { fallback: <LoadableFallback /> }
 );
+const InspiraLoginLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Inspira/Login"),
+  { fallback: <LoadableFallback /> }
+);
+const InspiraRegisterLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Inspira/Register"),
+  { fallback: <LoadableFallback /> }
+);
+const InspiraPreEventLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Inspira/PreEvent"),
+  { fallback: <LoadableFallback /> }
+);
+const InspiraEventLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Inspira/Event"),
+  { fallback: <LoadableFallback /> }
+);
 // import EvolveLogin from "./Pages/Evolve/Login";
 // import EvolveRegister from "./Pages/Evolve/Register";
 // import EvolvePreEvent from "./Pages/Evolve/PreEvent";
@@ -146,16 +162,11 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    // PollManager.addPollQuestion(
-    //   "orient21-26may",
-    //   1,
-    //   "HOW TO DESIGN A VIRTUAL EVENT?",
-    //   [
-    //     "By Understanding User",
-    //     "By Thinking out of box",
-    //     "By doing nothing",
-    //     "By consulting DJ Virtual Event",
-    //   ]
+    // EventManager.addEvent(
+    //   "Welcome to Inspira '21",
+    //   LOREM_TEXT,
+    //   "https://player.vimeo.com/video/537595557",
+    //   "inspira21-jun5"
     // );
   }, []);
 
@@ -323,14 +334,14 @@ export default function App() {
             <EventRoute
               exact
               redirectTo={HOME_ROUTE} //redirect route if root got a hit
-              login={OrientLoginLazy} //For Login component
-              register={OrientRegisterLazy} //for register component
-              notLive={OrientPreEventLazy} //for prevent component
-              liveEvent={OrientEventLazy} //for event component
+              login={InspiraLoginLazy} //For Login component
+              register={InspiraRegisterLazy} //for register component
+              notLive={InspiraPreEventLazy} //for prevent component
+              liveEvent={InspiraEventLazy} //for event component
               // finishedEvent={''}//for finished component
               qnaPage={QnaPageLazy}
               liveCount={LiveCountLazy}
-              env={"dev"} //dev or prod
+              env={"prod"} //dev or prod
               forceState={EventStausType.Live}
             />
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>

@@ -22,7 +22,10 @@ export default function Event(props) {
   const history = useHistory();
   //remove params as we not geting this from url now
   // let param = useParams()
-  let param = useMemo(() => ({ id: "orient21-26may" }), eventId);
+  let param = useMemo(
+    () => ({ id: props.event ? props.event : "inspira21-jun5" }),
+    eventId
+  );
 
   let {
     getTimelines,
