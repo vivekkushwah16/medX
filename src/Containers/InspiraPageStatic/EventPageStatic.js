@@ -26,7 +26,7 @@ export default function EventPageStatic() {
         </Link>
         <img src={cipla_res} alt="" className="cipla-res" />
         <img src={center_logo} alt="" className="center_logo" />
-        <img src={timing} alt="" className="timing" />
+        {/* <img src={timing} alt="" className="timing" /> */}
         {/* <div className="loginBox__Simple_label">
           <b>Expert Views</b> <br></br>
           Watch Anywhere, Watch Anytime

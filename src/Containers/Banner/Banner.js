@@ -47,14 +47,14 @@ const BannerType = {
 };
 
 const BannerData = [
-  // {
-  //   type: BannerType.LiveEvent,
-  //   mainTitle: "Mucormycosis - What lies beneath",
-  //   subTitle: "",
-  //   eventId: "orient21-26may",
-  //   mainImageUrl: "/assets/images/logos/impact-logo.png",
-  //   // mainImageUrl: '/assets/images/logos/evolveLogo.png',
-  // },
+  {
+    type: BannerType.LiveEvent,
+    mainTitle: "Webinar on Management of Invasive Fungal Infections",
+    subTitle: "",
+    eventId: "inspira21-jun5",
+    mainImageUrl: "/assets/images/logos/impact-logo.png",
+    // mainImageUrl: '/assets/images/logos/evolveLogo.png',
+  },
   {
     type: BannerType.Custom2,
     buttonText: "Watch Now",

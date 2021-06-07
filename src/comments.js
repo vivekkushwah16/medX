@@ -92,14 +92,14 @@ PollManager.addPollQuestion(
     "By consulting DJ Virtual Event",
   ]
 );
-// EventManager.addTrendingItem(
-//   "evolve",
-//   TRENDING_ITEM_TYPE.PDF,
-//   "Acute Asthma Booklet - 2021",
-//   "Acute Asthma Booklet - 2021",
-//   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/evolve%2Ftrending%2FAcute%20Asthma%20Booklet%20-%202021.pdf?alt=media&token=06466d46-eac2-4b93-adae-475eca3e26e0",
-//   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FNutshell%20Issue%206%20-%20Cough%20Variant_page-0001.jpg?alt=media&token=e9a47171-da42-4a0e-811f-c108d07c2bdb"
-// );
+EventManager.addTrendingItem(
+  "evolve",
+  TRENDING_ITEM_TYPE.PDF,
+  "Acute Asthma Booklet - 2021",
+  "Acute Asthma Booklet - 2021",
+  "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/evolve%2Ftrending%2FAcute%20Asthma%20Booklet%20-%202021.pdf?alt=media&token=06466d46-eac2-4b93-adae-475eca3e26e0",
+  "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FNutshell%20Issue%206%20-%20Cough%20Variant_page-0001.jpg?alt=media&token=e9a47171-da42-4a0e-811f-c108d07c2bdb"
+);
 // EventManager.addPartnerWithUs(
 //   "orient21-26may",
 //   "Clinical Trial Participation 1",
@@ -119,4 +119,20 @@ EventManager.addEvent(
   LOREM_TEXT,
   "https://player.vimeo.com/video/537595557",
   "evolve"
+);
+EventManager.addPartnerWithUs(
+  "event-kmde59n5",
+  "Clinical Trial Participation 1",
+  "LOREM_TEXT",
+  "Clinical Trial Participation sub1",
+  "LOREM_TEXT",
+  "/assets/images/doctors.jpg"
+);
+EventManager.addEventTimeLine(
+  "inspira21-jun5",
+  "MANAGEMENT OF INVASIVE FUNGAL INFECTIONS - CURRENTS CONCEPTS",
+  "",
+  [],
+  1622892600000,
+  "60"
 );

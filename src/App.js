@@ -162,11 +162,13 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    // EventManager.addEvent(
-    //   "Welcome to Inspira '21",
-    //   LOREM_TEXT,
-    //   "https://player.vimeo.com/video/537595557",
-    //   "inspira21-jun5"
+    // EventManager.addEventTimeLine(
+    //   "inspira21-jun5",
+    //   "MANAGEMENT OF INVASIVE FUNGAL INFECTIONS - CURRENTS CONCEPTS",
+    //   "",
+    //   [],
+    //   1622892600000,
+    //   "60"
     // );
   }, []);
 
@@ -341,7 +343,7 @@ export default function App() {
               // finishedEvent={''}//for finished component
               qnaPage={QnaPageLazy}
               liveCount={LiveCountLazy}
-              env={"dev"} //dev or prod
+              env={"prod"} //dev or prod
               forceState={EventStausType.Live}
             />
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>

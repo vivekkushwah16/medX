@@ -161,13 +161,8 @@ function PreEvent(props) {
             <>
               {showRegisterForOldUser.value ? (
                 <>
-                  <div className="thanks_text">
-                    Sign Up To Explore Newer Paradigms In Respiratory Medicine
-                    {/* <img src={thank__you} alt="" className="thank__you" /> */}
-                  </div>
-                  <div className="timing--">
-                    Date: 23 May 2021
-                    {/* <img src={timing} alt="" className="timing-" /> */}
+                  <div className="thanks">
+                    <img src={doc__profile} alt="" className="thank__you" />
                   </div>
                   <div className="buttons">
                     <button
@@ -191,13 +186,13 @@ function PreEvent(props) {
                 </>
               ) : (
                 <>
-                  <div className="thanks_text">
+                  {/* <div className="thanks_text">
                     Mucormycosis -<br></br>
                     What lies beneath
                   </div>
                   <div className="timing--">
                     26th May, 2021 | <strong>7:00 PM - 8:00 PM</strong>
-                  </div>
+                  </div> */}
 
                   <div className="thanks">
                     <img src={doc__profile} alt="" className="thank__you" />
@@ -257,10 +252,13 @@ function PreEvent(props) {
             <>
               {showRegisterForOldUser.value ? (
                 <>
-                  <div className="thanks_text">
+                  {/* <div className="thanks_text">
                     Sign Up To Explore Newer Paradigms In Respiratory Medicine
                   </div>
-                  <div className="timing--">Date: 23 May 2021</div>
+                  <div className="timing--">Date: 05 June 2021</div> */}
+                  <div className="thanks">
+                    <img src={doc__profile} alt="" className="thank__you" />
+                  </div>
                   <div className="buttons">
                     <button
                       className="btn btn-secondary "
@@ -283,13 +281,13 @@ function PreEvent(props) {
                 </>
               ) : (
                 <>
-                  <div className="thanks_text">
+                  {/* <div className="thanks_text">
                     Mucormycosis - <br></br>
                     What lies beneath
                   </div>
                   <div className="timing--" style={{ marginBottom: "1em" }}>
                     26th May, 2021 | <strong>7:00 PM - 8:00 PM</strong>
-                  </div>
+                  </div> */}
 
                   <div className="thanks">
                     <img src={doc__profile} alt="" className="thank__you" />

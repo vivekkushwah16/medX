@@ -8,7 +8,8 @@
   flex-direction: column;
 }
 .event.login2Box__Simple_Left .center_logo {
-  max-width: 50%;
+  max-width: 80%;
+  max-height: 70%;
 }
 .timing {
   max-width: 60%;
@@ -51,8 +52,8 @@
 }
 @media only screen and (max-width: 991px) {
   .event.login2Box__Simple_Left .center_logo {
-    max-width: 30%;
-    margin-top: 5rem;
+    max-width: 40%;
+    margin-top: 3rem;
   }
   .timing {
     margin-top: 1rem;
@@ -69,7 +70,7 @@
 }
 @media only screen and (max-width: 991px) and (orientation: portrait) {
   .event.login2Box__Simple_Left .center_logo {
-    max-width: 40%;
+    max-width: 60%;
   }
   .timing {
     margin-top: 1rem;

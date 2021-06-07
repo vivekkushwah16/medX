@@ -44,8 +44,7 @@ export default function Profile() {
           </div>
         </a>
         <ul className="">
-          <li>
-            {/* <Link to={`/home/myprofile`}></Link> */}
+          {/* <li>
             <a
               onClick={(e) => {
                 e.preventDefault();
@@ -54,7 +53,7 @@ export default function Profile() {
             >
               My Profile
             </a>
-          </li>
+          </li> */}
           {/* <li>
             <a href="#">Achievement</a>
           </li>

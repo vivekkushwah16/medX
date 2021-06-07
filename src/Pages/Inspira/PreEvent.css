@@ -36,6 +36,11 @@
   padding: 3rem;
   padding-left: 5rem;
 }
+@media (min-width: 1200px) {
+  .thanks img {
+    margin-left: -5rem;
+  }
+}
 .left__div div {
   /* width: 100%; */
   /* padding-left: 20%; */
@@ -55,8 +60,9 @@
   padding: 3rem;
 }
 .evolve__logo {
-  margin-top: -8rem;
-  width: 70%;
+  /* margin-top: -8rem; */
+  width: 100%;
+  max-height: 80%;
 }
 .cipla__res {
   margin-top: 5rem;
@@ -170,7 +176,7 @@
   }
   .evolve__logo {
     all: unset;
-    max-width: 60%;
+    max-width: 80%;
     margin-top: 2rem;
   }
   .cipla__res {

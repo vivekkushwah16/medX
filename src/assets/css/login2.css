@@ -161,8 +161,9 @@
 .login2Box__Simple_Left .headerBox__logo5 {
   z-index: 5;
   position: relative;
-  padding-top: 2.25rem;
-  padding-left: 2.25rem;
+  /* padding-top: 2.25rem;
+  padding-left: 2.25rem; */
+  margin: 3% 5%;
 }
 .loginBox__Simple_label {
   padding: 1.875rem 2rem 2rem 3.5rem;

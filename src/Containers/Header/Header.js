@@ -7,7 +7,7 @@ import CIPLAMEDXLOGO_WHITE from "../../assets/images/ciplamed-logo2.png";
 import ciplamedximpact from "../../assets/images/logos/ciplamedximpact.png";
 import ciplamedxevolve from "../../assets/images/ciplamedxevolve.png";
 import ciplamedxorient from "../../assets/images/ciplamedxorient.png";
-
+import ciplamedxinspira from "../../assets/images/ciplamedexinspira.png";
 import { RootRoute } from "../../AppConstants/Routes";
 import { MediaModalContext } from "../../Context/MedialModal/MediaModalContextProvider";
 import { MediaModalType } from "../../AppConstants/ModalType";
@@ -80,7 +80,7 @@ export default function Header(props) {
                   props.whiteLogo
                     ? CIPLAMEDXLOGO_WHITE
                     : props.eventPage
-                    ? ciplamedxorient
+                    ? ciplamedxinspira
                     : CIPLAMEDXLOGO
                 }
                 alt="CIPLAMEDXLOGO"

@@ -2,9 +2,9 @@
 <rect width="1440" height="74" fill="url(#paint0_linear)"/>
 <defs>
 <linearGradient id="paint0_linear" x1="1566.5" y1="37" x2="-122" y2="37" gradientUnits="userSpaceOnUse">
-<stop stop-color="#05B29A" stop-opacity="0"/>
-<stop offset="0.532673" stop-color="#05B29A" stop-opacity="0.65"/>
-<stop offset="1" stop-color="#05B29A" stop-opacity="0"/>
+<stop stop-color="#F58220" stop-opacity="0"/>
+<stop offset="0.532673" stop-color="#1862F3" stop-opacity="0.65"/>
+<stop offset="1" stop-color="#1862F3" stop-opacity="0"/>
 </linearGradient>
 </defs>
 </svg>
