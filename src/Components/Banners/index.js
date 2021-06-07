@@ -4,6 +4,7 @@ import SpeakerProfile from "../../Containers/SpeakerProfile.js/SpeakerProfile";
 import AddToCalendar from "../AddToCalendar/AddToCalendar";
 import "./bannerIndex.css";
 import { isMobileOnly } from "react-device-detect";
+import Countdown from "../../Containers/Countdown/Countdown";
 //props -  mainTitle, subTitle_line1, subTitle_line2, route, mainImageUrl, gotoRoute(),buttonText
 export function Custom1(props) {
   const { data } = props;
@@ -108,6 +109,7 @@ export function LiveEventBanner(props) {
                 <h3 className="bannerBox__status-title">{data.subTitle}</h3>
                 {/* <span className="bannerBox__status-mark">LIVE</span> */}
               </div>
+              <Countdown event={data.eventId} />
               <a
                 href="#"
                 className="btn bannerBox__btn mg-b30"

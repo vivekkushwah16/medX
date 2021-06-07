@@ -1,0 +1,39 @@
+.count__container {
+  height: fit-content;
+  width: fit-content;
+  margin-bottom: 5rem;
+}
+.count__container ul {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+.count__container ul li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.count__container .num {
+  font-size: 3rem;
+  font-weight: bold;
+}
+.count__container .txt {
+  color: #fff;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+.txt.head {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 1025px) {
+  .count__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
