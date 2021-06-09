@@ -316,14 +316,14 @@ export default function App() {
               <Redirect to={HOME_ROUTE}></Redirect>
             </ProtectedRoute>
             {/* UPLOAD */}
-            {/* <ProtectedRoute
+            <ProtectedRoute
               exact
               redirectTo={LOGIN_ROUTE}
               path={"/upload-kmp23"}
             >
               <UploadLazy />
             </ProtectedRoute>
-            <ProtectedRoute
+            {/* <ProtectedRoute
               exact
               redirectTo={LOGIN_ROUTE}
               path={"/liveCount-kmp23"}

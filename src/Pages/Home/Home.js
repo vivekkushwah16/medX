@@ -129,8 +129,8 @@ class Home extends Component {
       { tag: "Telemedicine", header: "Videos on Telemedicine" },
       { tag: "Impact Sessions", header: "Videos of Impact session" },
       { tag: "covid19", header: "Videos on COVID-19" },
-      { tag: "cardiovascular", header: "Cardiovascular" },
-      { tag: "Heart Failure", header: "Heart Failure" },
+      // { tag: "cardiovascular", header: "Cardiovascular" },
+      { tag: "HeartFailure", header: "Videos of Heart Failure" },
       {
         tag: [
           "Inhalation Devices",
@@ -168,8 +168,8 @@ class Home extends Component {
       { tag: "ILD/IPF", header: "ILD/IPF" },
       { tag: "Telemedicine", header: "Telemedicine" },
       { tag: "covid19", header: "COVID-19" },
-      { tag: "cardiovascular", header: "Cardiovascular" },
-      { tag: "Heart Failure", header: "Heart Failure" },
+      // { tag: "cardiovascular", header: "Cardiovascular" },
+      { tag: "HeartFailure", header: "Heart Failure" },
 
       // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
       // { tag: 'Recommendations', header: 'Recommendations' },
