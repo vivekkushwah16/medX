@@ -10,7 +10,7 @@ import PhoneInput from 'react-phone-number-input'
 import { LOGIN_ROUTE } from '../../AppConstants/Routes';
 import { CONFIRMATIONENDPOINT } from '../../AppConstants/APIEndpoints';
 import AuthPageStaticSide from '../../Containers/AuthPageStaticSide/AuthPageStaticSide';
-import { UserCreation_Cloufunction } from '../../AppConstants/CloudFunctionName';
+import { GET_LOCATION_DATA, UserCreation_Cloufunction } from '../../AppConstants/CloudFunctionName';
 import swal from 'sweetalert';
 var uniqid = require('uniqid');
 
@@ -53,6 +53,36 @@ class Register extends Component {
         termsAndConditions: false,
         showVideo: false,
         errors: { ...defaultErr },
+    }
+
+
+    getLocationName = () => {
+        let pincode = this.state.pincode
+        const cloudRef = cloudFunction.httpsCallable(GET_LOCATION_DATA);
+        cloudRef(
+            JSON.stringify({
+                pincode: pincode,
+            })
+        )
+            .then(async (res) => {
+                let returnedData = res.data
+                console.log(returnedData);
+                if (returnedData.code === "ok") {
+                    let locationResult = returnedData.result
+                    if (locationResult.state) {
+                        this.setState({ state: locationResult.state })
+                    }
+                    if (locationResult.city) {
+                        this.setState({ city: locationResult.city })
+                    }
+                    if (locationResult.country) {
+                        this.setState({ country: locationResult.country })
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+            });
     }
 
 
@@ -528,6 +558,9 @@ class Register extends Component {
                                     onChange={this.handleInputChange}
                                     maxLength={6}
                                 />
+                                <div href="#" className="searchButton_Pincode" onClick={this.getLocationName}>
+                                    <i className="icon-search"></i>
+                                </div>
                                 {this.state.errors.pincode &&
                                     <span className="input-error2">{this.state.errors.pincode}</span>}
                             </div>
