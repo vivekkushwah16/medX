@@ -131,6 +131,7 @@ class Home extends Component {
       { tag: "covid19", header: "Videos on COVID-19" },
       // { tag: "cardiovascular", header: "Cardiovascular" },
       { tag: "HeartFailure", header: "Videos of Heart Failure" },
+      { tag: "nebulization", header: "Videos of Nebulization" },
       {
         tag: [
           "Inhalation Devices",
@@ -170,6 +171,7 @@ class Home extends Component {
       { tag: "covid19", header: "COVID-19" },
       // { tag: "cardiovascular", header: "Cardiovascular" },
       { tag: "HeartFailure", header: "Heart Failure" },
+      { tag: "nebulization", header: "Nebulization" },
 
       // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
       // { tag: 'Recommendations', header: 'Recommendations' },
