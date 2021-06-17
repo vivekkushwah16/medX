@@ -513,42 +513,7 @@ class Register extends Component {
                                         <span className="input-error2">{this.state.errors.speciality}</span>}
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <div className="custom-select">
-                                    <CountryDropdown
-                                        defaultOptionLabel="Select country"
-                                        name="country" id="country" name="country" className="form-control"
-                                        value={this.state.country}
-                                        onChange={(val) => this.setState({ country: val })}
-                                    />
-                                    {this.state.errors.country &&
-                                        <span className="input-error2">{this.state.errors.country}</span>}
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <div className="custom-select">
-                                    <RegionDropdown
-                                        defaultOptionLabel="Select State"
-                                        name="state" className="form-control"
-                                        country={this.state.country}
-                                        value={this.state.state}
-                                        onChange={(val) => this.setState({ state: val })}
-                                    />
-                                    {this.state.errors.state &&
-                                        <span className="input-error2">{this.state.errors.state}</span>}
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <input type="text"
-                                    className="form-control"
-                                    placeholder="City"
-                                    name="city"
-                                    value={this.state.city}
-                                    onChange={this.handleInputChange}
-                                />
-                                {this.state.errors.city &&
-                                    <span className="input-error2">{this.state.errors.city}</span>}
-                            </div>
+
                             <div className="form-group mg-b30">
                                 <input type="text"
                                     className="form-control"
@@ -564,6 +529,47 @@ class Register extends Component {
                                 {this.state.errors.pincode &&
                                     <span className="input-error2">{this.state.errors.pincode}</span>}
                             </div>
+
+                            <div className="form-group">
+                                <input type="text"
+                                    className="form-control"
+                                    placeholder="City"
+                                    name="city"
+                                    value={this.state.city}
+                                    onChange={this.handleInputChange}
+                                />
+                                {this.state.errors.city &&
+                                    <span className="input-error2">{this.state.errors.city}</span>}
+                            </div>
+
+                            <div className="form-group">
+                                <div className="custom-select">
+                                    <RegionDropdown
+                                        defaultOptionLabel="Select State"
+                                        name="state" className="form-control"
+                                        country={this.state.country}
+                                        value={this.state.state}
+                                        onChange={(val) => this.setState({ state: val })}
+                                    />
+                                    {this.state.errors.state &&
+                                        <span className="input-error2">{this.state.errors.state}</span>}
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <div className="custom-select">
+                                    <CountryDropdown
+                                        defaultOptionLabel="Select country"
+                                        name="country" id="country" name="country" className="form-control"
+                                        value={this.state.country}
+                                        onChange={(val) => this.setState({ country: val })}
+                                    />
+                                    {this.state.errors.country &&
+                                        <span className="input-error2">{this.state.errors.country}</span>}
+                                </div>
+                            </div>
+
+
                             <label className="custom-checkbox mg-b30" style={{ display: 'flex' }}>
                                 <input
                                     name="termsAndConditions"

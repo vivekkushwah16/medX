@@ -792,11 +792,11 @@ class Home extends Component {
               }}
             />
           </div>
-          {/* <Chatbot
+          <Chatbot
             videoVisible={this.state.videopopVisible}
             history={this.props}
             videoData={this.state.videoPopupData}
-          /> */}
+          />
         </div>
         <div className="topicsBox__wrapper" id="homePageConatiner">
           <Header
