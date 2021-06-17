@@ -124,6 +124,7 @@ class Home extends Component {
     rows: [
       { tag: "COPD", header: "Videos on COPD" },
       // { tag: 'Asthma', header: 'Videos on Asthma' },
+      { tag: "nebulization", header: "Videos of Nebulization" },
       { tag: "Asthma", header: "Videos on Asthma" },
       { tag: "ILD/IPF", header: "Videos on ILD/IPF" },
       { tag: "Telemedicine", header: "Videos on Telemedicine" },
@@ -131,7 +132,6 @@ class Home extends Component {
       { tag: "covid19", header: "Videos on COVID-19" },
       // { tag: "cardiovascular", header: "Cardiovascular" },
       { tag: "HeartFailure", header: "Videos of Heart Failure" },
-      { tag: "nebulization", header: "Videos of Nebulization" },
       {
         tag: [
           "Inhalation Devices",
