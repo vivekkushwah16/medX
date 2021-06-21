@@ -21,7 +21,7 @@ const TWITTERLink = "https://twitter.com/";
 const LINKEDINLink = "https://www.linkedin.com/";
 
 export function CardSpeaker(props) {
-  const { profile } = props;
+  const { profile, nonClickable } = props;
   const [isProfileActive, setIsProfileActive] = useState(false);
   const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext);
   const { user } = useContext(UserContext);
@@ -118,22 +118,27 @@ export function CardSpeaker(props) {
         src={profile.photoURL}
         alt=""
         onClick={() => {
-          setIsProfileActive(true);
+          if (!nonClickable) {
+            setIsProfileActive(true);
+          }
         }}
       />
       <div
         className="maincardBox__card-profile-text"
         onClick={() => {
-          setIsProfileActive(true);
-          if (user) {
-            addGAWithUserInfo(SPEAKER_PROFILE_CLICK_EVENT, { id: profile.id });
-            addCAWithUserInfo(
-              `/${SPEAKER_PROFILE_CLICK_EVENT}/${user.uid}_${profile.id}`,
-              false,
-              { id: profile.id },
-              true
-            );
+          if (!nonClickable) {
+            setIsProfileActive(true);
+            if (user) {
+              addGAWithUserInfo(SPEAKER_PROFILE_CLICK_EVENT, { id: profile.id });
+              addCAWithUserInfo(
+                `/${SPEAKER_PROFILE_CLICK_EVENT}/${user.uid}_${profile.id}`,
+                false,
+                { id: profile.id },
+                true
+              );
+            }
           }
+
         }}
       >
         <p
@@ -144,7 +149,7 @@ export function CardSpeaker(props) {
         </p>
         <p
           className="maincardBox__card-profile-subtitle"
-          // style={{color:'#ffffff96'}}
+        // style={{color:'#ffffff96'}}
         >
           {profile.designation}
         </p>

@@ -1,0 +1,87 @@
+.videodetailBox__list{
+    position: relative;
+}
+.searchResult {
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    color: white;
+    transform: scale(1);
+    transition: all 0.3s;
+}
+
+.searchResult_media {
+    min-height: 9.33rem;
+    min-width: 15.5rem;
+    border-radius: 0.5rem;
+    margin-right: 1.15rem;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchResult_playIcon .icon-play {
+    color: #fff;
+    font-size: 1.6rem;
+}
+
+.searchResult_playIcon {
+    transition: all 0.3s;
+    opacity: 0;
+    text-decoration: none;
+    z-index: 1;
+    transform: scale(0.3)rotate(180deg);
+}
+
+.searchResult .maincardBox__card-title {
+    color: #fff!important;
+}
+
+.searchResult .maincardBox__card-desc {
+    color: rgba(255, 255, 255, 0.603)!important;
+}
+
+.searchResult:hover .searchResult_playIcon {
+    opacity: 1;
+    font-size: 1.8rem;
+    transform: scale(1)rotate(0deg);
+}
+
+.searchResult:hover .searchResult_media {
+    background-color: rgba(51, 51, 51, 0.39);
+    background-blend-mode: saturation;
+}
+
+.search_video_txt{
+    max-width: 80ch;
+    text-align: justify;
+}
+
+.searchResult_media_rightContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.searchResult_media_rightContainer
+.maincardBox__card-profile{
+    margin-bottom: 0.45rem;
+    color: #fff;
+}
+
+.searchResult_media_rightContainer
+.maincardBox__card-profile-pic{
+    width: 3rem;
+    height: 3rem;
+}
+
+.searchResult_media_rightContainer
+.maincardBox__card-profile-title{
+    font-size: 0.75rem;
+}
+
+.searchResult_media_rightContainer
+.maincardBox__card-profile-subtitle{
+    font-size: 0.65rem;
+}

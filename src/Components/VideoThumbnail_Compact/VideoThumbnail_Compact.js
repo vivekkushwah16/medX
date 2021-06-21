@@ -19,8 +19,8 @@ function VideoThumbnail_Compact(props) {
           className="videoThumbnailContainer_media"
           style={{ backgroundImage: `url(${currentVideoData.thumnailUrl})` }}
         >
-          <a href="#" class="videoThumbnailContainer_playIcon">
-            <i class="icon-play"></i>
+          <a href="#" className="videoThumbnailContainer_playIcon">
+            <i className="icon-play"></i>
           </a>
         </div>
         <div>

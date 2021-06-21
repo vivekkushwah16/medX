@@ -20,11 +20,12 @@ import {
 } from "../../AppConstants/AnalyticsEventName";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 //showCertificate, showFeedback
 export default function Header(props) {
   // console.log(props);
-  const { stickyOnScroll, addClickAnalytics } = props;
+  const { stickyOnScroll, addClickAnalytics, showSearchBar, doSearch, initalSearchKeyword } = props;
   const [showInviteFriendModal, toggleInviteFriendModal] = useState(false);
   const { showMediaModal } = useContext(MediaModalContext);
 
@@ -60,9 +61,8 @@ export default function Header(props) {
 
   return (
     <div
-      className={` headerBox--full pd-r0 ${
-        sticky ? "headerBox_sticky" : "headerBox"
-      }`}
+      className={` headerBox--full pd-r0 ${sticky ? "headerBox_sticky" : "headerBox"
+        }`}
       ref={navBar}
       id="header"
     >
@@ -80,8 +80,8 @@ export default function Header(props) {
                   props.whiteLogo
                     ? CIPLAMEDXLOGO_WHITE
                     : props.eventPage
-                    ? ciplamedxinspira
-                    : CIPLAMEDXLOGO
+                      ? ciplamedxinspira
+                      : CIPLAMEDXLOGO
                 }
                 alt="CIPLAMEDXLOGO"
               />
@@ -90,6 +90,12 @@ export default function Header(props) {
                             <img src={props.whiteLogo ? CIPLAMEDXLOGO_WHITE : CIPLAMEDXLOGO} alt="CIPLAMEDXLOGO" />
                         </a> */}
           </div>
+
+          {
+            showSearchBar &&
+            <SearchBar doSearch={doSearch} initalSearchKeyword={initalSearchKeyword} />
+          }
+
           <div className="headerBox__right headerBox__right--nogap">
             {props.showCertificate && (
               <button
@@ -146,6 +152,7 @@ export default function Header(props) {
             />
             <Profile />
           </div>
+
         </div>
       </div>
     </div>
