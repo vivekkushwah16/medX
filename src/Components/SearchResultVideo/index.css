@@ -11,8 +11,9 @@
 }
 
 .searchResult_media {
-    min-height: 9.33rem;
+    height: 9.33rem;
     min-width: 15.5rem;
+    max-width: 15.5rem;
     border-radius: 0.5rem;
     margin-right: 1.15rem;
     background-size: cover;
