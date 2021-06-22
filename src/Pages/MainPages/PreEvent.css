@@ -1,0 +1,249 @@
+.evolve__main__div {
+  height: 100vh;
+  width: 100%;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+}
+.blur__img {
+  position: absolute;
+  height: 50%;
+  bottom: 0;
+  width: 100%;
+  top: auto;
+}
+.spider__img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  bottom: 0;
+  top: auto;
+}
+.right__wing {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-right: -3rem;
+  z-index: 3;
+}
+.left__div {
+  flex: 1;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  padding: 3rem;
+  padding-left: 5rem;
+}
+@media (min-width: 1200px) {
+  .thanks img {
+    /* margin-left: -5rem; */
+  }
+}
+.left__div div {
+  /* width: 100%; */
+  /* padding-left: 20%; */
+}
+
+.timing- {
+  margin-top: 4rem;
+}
+.right__div {
+  flex: 1;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+.evolve__logo {
+  /* margin-top: -8rem; */
+  width: 100%;
+  max-height: 80%;
+}
+.cipla__res {
+  margin-top: 5rem;
+  width: 30%;
+}
+.evolve-btn {
+  font-weight: bold;
+}
+.buttons button:nth-child(1) {
+  /* margin-right: 2rem; */
+  margin-top: 4rem;
+}
+.buttons button:nth-child(2) {
+  color: #015189;
+  background-color: #fff;
+  border-color: #015189;
+  margin-top: 4rem;
+  margin-bottom: 1.875rem;
+  margin-left: 2rem;
+}
+.buttons button:nth-child(2):disabled {
+  color: #015189 !important;
+  background-color: #dcdcdc;
+  border-color: #015189;
+  margin-top: 4rem;
+  margin-bottom: 1.875rem;
+  margin-left: 2rem;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.75;
+}
+.buttons button:nth-child(2):not([disabled]):hover {
+  color: #fff;
+  background-color: #015189;
+  border-color: #015189;
+  transform: scale(1.1);
+}
+.mobile__blur {
+  display: none;
+}
+.mobile__layout {
+  display: none;
+}
+.buttons {
+  display: flex;
+}
+.buttons div {
+  padding-left: 0;
+  /* width: fit-content; */
+}
+
+.evolve__main__div .buttons > .btn {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+.thanks_text {
+  font-size: 1.85rem;
+  color: #015189;
+  font-weight: 700;
+  /* line-height: 1.5rem; */
+  margin-bottom: 0.75em;
+}
+
+.timing-- {
+  font-size: 1.35rem;
+  color: #09549f;
+  font-weight: 500;
+}
+
+.bottom_right_eventLogo{
+  position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 2rem;
+    max-width: 11rem;
+}
+
+@media only screen and (min-width: 1024px) {
+  .evolve__main__div .container {
+    max-width: calc(100vw - 8rem);
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .bottom_right_eventLogo{
+      right: auto;
+  }
+
+  .left__div {
+    display: none;
+  }
+  .right__div {
+    display: none;
+  }
+  .blur__img {
+    width: auto;
+    height: auto;
+  }
+  .spider__img {
+    width: 100%;
+    height: 100%;
+  }
+  .mobile__blur {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+  .mobile__layout {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 4;
+    align-items: center;
+    padding-top: 20vh;
+    width: 100%;
+    overflow-y: auto;
+    padding-bottom: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .evolve__logo {
+    all: unset;
+    max-width: 100%;
+    margin-top: 2rem;
+  }
+  .cipla__res {
+    all: unset;
+    max-width: 40%;
+    margin-top: 2rem;
+  }
+
+  .thanks_text {
+    font-size: 1.25rem;
+    text-align: center;
+    padding: 0 1em;
+    margin: 2em 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .thanks {
+    all: unset;
+    display: flex;
+    justify-content: center;
+  }
+  .timing-- {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: #09549f;
+    font-weight: 500;
+  }
+  .timing- {
+    all: unset;
+    margin-top: 2rem;
+    max-width: 60%;
+  }
+  .thank__you {
+    all: unset;
+    max-width: 80%;
+    margin-top: 3rem;
+  }
+  .buttons {
+    all: unset;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .buttons button:nth-child(1) {
+    /* margin-right: 2rem; */
+    margin-top: 4rem;
+  }
+  .buttons button:nth-child(2) {
+    color: #015189;
+    background-color: #fff;
+    border-color: #015189;
+    margin-top: 4rem;
+  }
+}

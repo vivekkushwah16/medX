@@ -49,10 +49,10 @@ const BannerType = {
 const BannerData = [
   // {
   //   type: BannerType.LiveEvent,
-  //   mainTitle: "Webinar on Management of Invasive Fungal Infections",
+  //   mainTitle: "‘New Frontiers in Paediatric Asthma Management’ A Case Guided Approach",
   //   subTitle: "",
-  //   eventId: "inspira21-jun5",
-  //   mainImageUrl: "/assets/images/logos/impact-logo.png",
+  //   eventId: "pedasthmamanagement",
+  //   mainImageUrl: "https://storage.googleapis.com/cipla-impact.appspot.com/pedasthmamanagement/eventLogo.png",
   //   // mainImageUrl: '/assets/images/logos/evolveLogo.png',
   // },
   {

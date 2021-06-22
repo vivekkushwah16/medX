@@ -125,21 +125,24 @@ const InspiraEventLazy = loadable(
   () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/Inspira/Event"),
   { fallback: <LoadableFallback /> }
 );
-// import EvolveLogin from "./Pages/Evolve/Login";
-// import EvolveRegister from "./Pages/Evolve/Register";
-// import EvolvePreEvent from "./Pages/Evolve/PreEvent";
 
-// import VideoManager from './Managers/VideoManager';
-// import EventManager from './Managers/EventManager';
-// import EventManager from './Managers/EventManager';
-// import Trending from './Components/Event/Trending/Trending';
-// import { TRENDING_ITEM_TYPE } from './AppConstants/TrendingItemTypes';
-// import { LOREM_TEXT } from './AppConstants/Lorem';
-// import { PollManager } from './Managers/PollManager';
-// import axios from 'axios';
-// import { CONFIRMATIONENDPOINT } from './AppConstants/APIEndpoints';
-// import SpeakerManager from './Managers/SpeakerManager';
-// import SpeakerManager from './Managers/SpeakerManager';
+
+const MainPagesLoginLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Login"),
+  { fallback: <LoadableFallback /> }
+);
+const MainPagesRegisterLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Register"),
+  { fallback: <LoadableFallback /> }
+);
+const MainPagesPreEventLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/PreEvent"),
+  { fallback: <LoadableFallback /> }
+);
+const MainPagesEventLazy = loadable(
+  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Event"),
+  { fallback: <LoadableFallback /> }
+);
 
 const speakerProfileLink =
   "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
@@ -336,10 +339,10 @@ export default function App() {
             <EventRoute
               exact
               redirectTo={HOME_ROUTE} //redirect route if root got a hit
-              login={InspiraLoginLazy} //For Login component
-              register={InspiraRegisterLazy} //for register component
-              notLive={InspiraPreEventLazy} //for prevent component
-              liveEvent={InspiraEventLazy} //for event component
+              login={MainPagesLoginLazy} //For Login component
+              register={MainPagesRegisterLazy} //for register component
+              notLive={MainPagesPreEventLazy} //for prevent component
+              liveEvent={MainPagesEventLazy} //for event component
               // finishedEvent={''}//for finished component
               qnaPage={QnaPageLazy}
               liveCount={LiveCountLazy}
