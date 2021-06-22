@@ -25,6 +25,7 @@
   top: 0;
   z-index: 12;
   margin: 3% 5%;
+  max-width: 10rem;
 }
 .left-wing {
   position: absolute;
