@@ -1,0 +1,20 @@
+@import url("/src/assets/css/header2.css");
+@import url("/src/assets/css/login2.css");
+@import url("/src/assets/css/fix.css");
+@import url("/src/assets/css/maincard.css");
+@import url("/src/assets/css/homepage2.css");
+
+#RegisterBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#RegisterBtn img {
+  width: 2rem;
+}
+.event .login2Box__title {
+  display: block;
+}
+.event .login2Box__body {
+  padding-top: 2rem;
+}
