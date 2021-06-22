@@ -109,6 +109,7 @@ export const EventChecker = (props) => {
         >
           <props.notLive
             event={event.toLowerCase()}
+            calendatDetails={eventDetails.calendar}
             eventTitle={eventDetails.title}
             canEnterEvent={eventStatus === EventStausType.Live}
           />
@@ -136,6 +137,7 @@ export const EventChecker = (props) => {
                 <props.notLive
                   event={event.toLowerCase()}
                   eventTitle={eventDetails.title}
+                  calendatDetails={eventDetails.calendar}
                 />
               ) : (
                 "NotLive Event"

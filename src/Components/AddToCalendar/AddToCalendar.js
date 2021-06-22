@@ -7,17 +7,18 @@ import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvid
 import { ADDTOCALENDAR_ANALYTICS_EVENT } from "../../AppConstants/AnalyticsEventName";
 
 export default function AddToCalendar(props) {
-  const startDatetime = moment("2021-06-05 17:00:00").utc();
-  const endDatetime = startDatetime.clone().add(1, "hours");
+  const { calendatDetails, eventId } = props
+  const startDatetime = moment(calendatDetails ? calendatDetails.startTime : "2021-06-05 17:00:00").utc();
+  const endDatetime = startDatetime.clone().add((calendatDetails ? calendatDetails.duration : 1), "hours");
   const duration = endDatetime.diff(startDatetime, "hours");
   const event = {
     description:
-      "Inspira '21 - Webinar on Management of Invasive Fungal Infections",
+      calendatDetails ? calendatDetails.description : "",
     duration,
     endDatetime: endDatetime.format("YYYYMMDDTHHmmssZ"),
-    location: "https://ciplamedx.com/inspira21-jun5/register",
+    location: `https://ciplamedx.com/${eventId}/register`,
     startDatetime: startDatetime.format("YYYYMMDDTHHmmssZ"),
-    title: "Inspira '21 on CiplaMedX",
+    title: calendatDetails ? calendatDetails.title : eventId,
   };
   const AddToCalendarComp = props.blueBtn
     ? AddToCalendarHOC(addToCalendarBlueBtn, AddToCalendarDropDown)
@@ -27,22 +28,22 @@ export default function AddToCalendar(props) {
   window.AddToCalendarAnalytic = (optionName = "") => {
     if (optionName === "") {
       addGAWithUserInfo(ADDTOCALENDAR_ANALYTICS_EVENT, {
-        eventId: "inspira21-jun5",
+        eventId: eventId,
       });
       addCAWithUserInfo(
         ADDTOCALENDAR_ANALYTICS_EVENT,
         true,
-        { eventId: "inspira21-jun5" },
+        { eventId: eventId },
         true
       );
     } else {
       addGAWithUserInfo(ADDTOCALENDAR_ANALYTICS_EVENT + "_" + optionName, {
-        eventId: "inspira21-jun5",
+        eventId: eventId,
       });
       addCAWithUserInfo(
         ADDTOCALENDAR_ANALYTICS_EVENT + "_" + optionName,
         true,
-        { eventId: "inspira21-jun5" },
+        { eventId: eventId },
         true
       );
     }

@@ -1,0 +1,91 @@
+.event.login2Box__Simple_Left::after {
+  display: none !important;
+}
+.event.login2Box__Simple_Left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.event.login2Box__Simple_Left .center_logo {
+  max-width: 80%;
+  max-height: 70%;
+}
+.timing {
+  max-width: 60%;
+}
+.event .headerBox__logo5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.cipla-res {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 12;
+  margin: 3% 5%;
+  max-width: 10rem;
+}
+.left-wing {
+  position: absolute;
+  left: 0;
+  bottom: 0%;
+  max-width: 10%;
+}
+.right-wing {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: -3rem;
+}
+.timing {
+  margin-top: 4rem;
+}
+.bg2 {
+  position: absolute;
+  height: 45%;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  top: auto;
+}
+@media only screen and (max-width: 991px) {
+  .event.login2Box__Simple_Left .center_logo {
+    max-width: 40%;
+    margin-top: 3rem;
+  }
+  .timing {
+    margin-top: 1rem;
+    max-width: 45%;
+    margin-bottom: 1rem;
+  }
+  .right-wing {
+    max-width: 30%;
+  }
+  .cipla-res {
+    max-width: 20%;
+    margin: 3% 9%;
+  }
+}
+@media only screen and (max-width: 991px) and (orientation: portrait) {
+  .event.login2Box__Simple_Left .center_logo {
+    max-width: 60%;
+  }
+  .timing {
+    margin-top: 1rem;
+    max-width: 75%;
+  }
+  .right-wing {
+    max-width: 70%;
+  }
+  .headerBox__logo5 {
+    margin: 0 !important;
+  }
+  .cipla-res {
+    max-width: 30%;
+    margin: 0;
+    padding: 1.25rem 1.25rem 0rem 0rem !important;
+  }
+}
