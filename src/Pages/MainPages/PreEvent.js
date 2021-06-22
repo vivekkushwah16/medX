@@ -285,7 +285,7 @@ function PreEvent(props) {
                   </div>
 
                   <div className="buttons">
-                    <AddToCalendar blueBtn={true} />
+                    <AddToCalendar blueBtn={true} calendatDetails={props.calendatDetails} eventId={props.event} />
                     {props.canEnterEvent && props.event && (
                       <button
                         className="btn btn-secondary"
