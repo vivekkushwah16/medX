@@ -141,7 +141,7 @@ function PreEvent(props) {
       <div className="evolve__main__div">
         <Header event={props.event} eventTitle={props.eventTitle} />
         <div className="mobile__layout">
-          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_right_speakers.svg`} alt="" className="evolve__logo" />
+          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_right_speakers.svg?updated=1`} alt="" className="evolve__logo" />
           {/* <img src={cipla__res} alt="" className="cipla__res" /> */}
           {!showRegisterForOldUser.status && (
             <>
@@ -153,7 +153,7 @@ function PreEvent(props) {
               {showRegisterForOldUser.value ? (
                 <>
                   <div className="thanks">
-                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg`} alt="" className="thank__you" />
+                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg?updated=1`} alt="" className="thank__you" />
                   </div>
                   <div className="buttons">
                     <button
@@ -186,7 +186,7 @@ function PreEvent(props) {
                   </div> */}
 
                   <div className="thanks">
-                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg`} alt="" className="thank__you" />
+                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg?updated=1`} alt="" className="thank__you" />
                   </div>
 
                   <div className="buttons">
@@ -231,7 +231,7 @@ function PreEvent(props) {
         </div>
         {/* <img src={mobile__blur} alt="" className="mobile__blur" /> */}
         {/* <img src={blur__img} alt="" className="blur__img" /> */}
-        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/pre_event_bg.jpg`} alt="" className="spider__img" />
+        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/pre_event_bg.jpg?updated=1`} alt="" className="spider__img" />
         {/* <img src={right__wing} alt="" className="right__wing" /> */}
         <div className="left__div">
           {!showRegisterForOldUser.status && (
@@ -248,7 +248,7 @@ function PreEvent(props) {
                   </div>
                   <div className="timing--">Date: 05 June 2021</div> */}
                   <div className="thanks">
-                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg`} alt="" className="thank__you" />
+                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg?updated=1`} alt="" className="thank__you" />
                   </div>
                   <div className="buttons">
                     <button
@@ -281,7 +281,7 @@ function PreEvent(props) {
                   </div> */}
 
                   <div className="thanks">
-                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg`} alt="" className="thank__you" />
+                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg?updated=1`} alt="" className="thank__you" />
                   </div>
 
                   <div className="buttons">
@@ -324,11 +324,11 @@ function PreEvent(props) {
           )}
         </div>
         <div className="right__div">
-          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_right_speakers.svg`} alt="" className="speakerAreas" />
+          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_right_speakers.svg?updated=1`} alt="" className="speakerAreas" />
         </div>
 
         <div className="bottom_right_eventLogo">
-          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/eventLogo.png`} alt="" className="eventLogo" />
+          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/eventLogo.png?updated=1`} alt="" className="eventLogo" />
         </div>
       </div>
       <Switch>
