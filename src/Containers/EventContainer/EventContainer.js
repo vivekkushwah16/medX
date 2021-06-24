@@ -41,6 +41,12 @@ const menuItems = [
   { id: menuItemsId.Partner_with_us, name: "Partner with us", className: "" },
 ];
 
+const eventBoxStyle = {
+  '& :after': {
+    background: 'red'
+  }
+}
+
 // custom hook for getting previous value
 export function usePrevious(value) {
   const ref = useRef();
@@ -254,9 +260,8 @@ export default function EventContainer(props) {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -289,7 +294,7 @@ export default function EventContainer(props) {
     // console.log(activeTimeline, "*************");
   }, [activeTimeline]);
   return (
-    <div className="eventBox">
+    <div className="eventBox" style={eventBoxStyle}>
       {!activePollPanel && !isMobileOnly && (
         <a
           href="#"
@@ -309,9 +314,8 @@ export default function EventContainer(props) {
         style={activePollPanel && !isMobileOnly ? { maxWidth: "unset" } : {}}
       >
         <div
-          className={`d-flex row d-sm-block  ${
-            activePollPanel && !isMobileOnly ? "eventBox__inner" : ""
-          }`}
+          className={`d-flex row d-sm-block  ${activePollPanel && !isMobileOnly ? "eventBox__inner" : ""
+            }`}
         >
           <div className="eventBox__left col">
             <div className="eventBox__video">
@@ -519,9 +523,8 @@ export default function EventContainer(props) {
           </div>
           {!isMobileOnly && (
             <div
-              className={`eventBox__right  show-on-desktop col ${
-                activePollPanel ? "active" : ""
-              }`}
+              className={`eventBox__right  show-on-desktop col ${activePollPanel ? "active" : ""
+                }`}
             >
               <CommunityBox
                 sendQuestion={(eventId, ques) => {
