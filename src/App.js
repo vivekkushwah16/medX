@@ -347,7 +347,7 @@ export default function App() {
               qnaPage={QnaPageLazy}
               liveCount={LiveCountLazy}
               env={"dev"} //dev or prod
-              forceState={EventStausType.NotLive}
+              forceState={EventStausType.Live}
             />
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>
               {/* <PreEventLazy /> */}

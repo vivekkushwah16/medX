@@ -141,7 +141,8 @@
   height: 50%;
   width: 100%;
   content: "";
-  background: url(../../assets/images/bg_wave.png) center center no-repeat;
+  background: var(--eventPageBg) center center no-repeat;
+  /* background: url(../../assets/images/bg_wave.png) center center no-repeat; */
   background-size: 100% auto;
   background-size: cover;
   background-position-y: inherit;

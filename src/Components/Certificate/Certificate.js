@@ -6,7 +6,7 @@ import html2canvas from "html2canvas";
 import canvasToImage from "canvas-to-image";
 
 export default function Certificate(props) {
-  const { addClickAnalytics } = props.data;
+  const { addClickAnalytics, event } = props.data;
   const { user } = useContext(UserContext);
   const certificatBody = createRef(null);
 
@@ -25,7 +25,7 @@ export default function Certificate(props) {
   return (
     <div className="certificateContainer" ref={certificatBody}>
       <img
-        src="/assets/images/inspiraCertificate.png"
+        src={`https://storage.googleapis.com/cipla-impact.appspot.com/${event}/certificate.jpg`}
         width="100%"
         height="auto"
         className="certificate"

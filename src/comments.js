@@ -121,7 +121,7 @@ EventManager.addEvent(
   "evolve"
 );
 EventManager.addPartnerWithUs(
-  "event-kmde59n5",
+  "pedasthmamanagement",
   "Clinical Trial Participation 1",
   "LOREM_TEXT",
   "Clinical Trial Participation sub1",
@@ -135,4 +135,13 @@ EventManager.addEventTimeLine(
   [],
   1622892600000,
   "60"
+);
+
+EventManager.addPartnerWithUs(
+  "pedasthmamanagement",
+  "BreatheFree Services",
+  "BreatheFree is a unique service For an efficient patient education, counselling and support. If you are interested in our BreatheFree services around clinic and/or BreatheFree digital educator, kindly share your contact details we will reach out shortly",
+  "",
+  "",
+  "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2FwebAssets%2Fbreathefree.jpeg?alt=media&token=0929f9d3-a812-42dc-be8b-51ceaa9faa9c"
 );
