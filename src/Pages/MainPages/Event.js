@@ -71,8 +71,8 @@ export default function Event(props) {
       // Get the root element
       var r = document.querySelector(':root');
       //to get value
-      var rs = getComputedStyle(r);
-      rs.getPropertyValue('--eventPageHeaderBand')
+      // var rs = getComputedStyle(r);
+      // rs.getPropertyValue('--eventPageHeaderBand')
 
       let val = " url(\"https://storage.googleapis.com/cipla-impact.appspot.com/" + event + "/eventPageHeaderBand.svg?upated=1\")"
       r.style.setProperty('--eventPageHeaderBand', val);
