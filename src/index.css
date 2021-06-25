@@ -1,4 +1,7 @@
 :root {
     --eventPageHeaderBand: url();
     --eventPageBg: url();
+    --preeventButtonColor: #fff;
+    --preeventButtonBg: #015189;
+    --preeventButtonShadow: #015189b0;
   }  

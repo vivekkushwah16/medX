@@ -112,6 +112,7 @@ export const EventChecker = (props) => {
             calendatDetails={eventDetails.calendar}
             eventTitle={eventDetails.title}
             canEnterEvent={eventStatus === EventStausType.Live}
+            eventData={eventDetails}
           />
         </ProtectedRoute>
 
@@ -138,6 +139,7 @@ export const EventChecker = (props) => {
                   event={event.toLowerCase()}
                   eventTitle={eventDetails.title}
                   calendatDetails={eventDetails.calendar}
+                  eventData={eventDetails}
                 />
               ) : (
                 "NotLive Event"
