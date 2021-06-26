@@ -6,12 +6,17 @@ function Countdown(props) {
   const [hours, setHours] = useState(0);
   const [mins, setMins] = useState(0);
   const [secs, setSecs] = useState(0);
+  const [showTimer, setTimerVisiblity] = useState(false)
   const timerRef = React.useRef();
+
   const startTimer = (eventTime) => {
     const DateNow = new Date().getTime();
     const difference = eventTime - DateNow;
     if (difference < 0) {
-      console.log("event live");
+      setTimerVisiblity(false)
+      if (timerRef.current) {
+        clearInterval(timerRef.current)
+      }
       return;
     }
     const sec = 1 * 1000;
@@ -27,18 +32,43 @@ function Countdown(props) {
     setHours(remainingHours);
     setMins(remainingMin);
     setSecs(remainingSec);
+    if(!showTimer)
+    {
+      setTimerVisiblity(true)
+    }
   };
+
   React.useEffect(() => {
     firestore
       .collection("events")
       .doc(props.event ? props.event : "inspira21-jun5")
       .onSnapshot((timeline) => {
+
         const eventTime = timeline.data().eventTime;
-        setInterval(() => {
+
+        if (!eventTime) {
+          return
+        }
+        const DateNow = new Date().getTime();
+        const difference = eventTime - DateNow;
+        if (difference < 0) {
+          return;
+        }
+        if (timerRef.current) {
+          clearInterval(timerRef.current)
+        }
+
+        timerRef.current = setInterval(() => {
           startTimer(eventTime);
         }, 1000);
+
       });
   }, []);
+
+  if (!showTimer) {
+    return (null)
+  }
+
   return (
     <div className="count__container">
       <p className="txt head">Event starts in</p>

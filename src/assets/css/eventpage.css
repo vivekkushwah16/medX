@@ -69,7 +69,10 @@
   left: 0;
   top: 5rem;
   /* background: url(../images/evolve-wave.svg) center center no-repeat; */
-  background: url(../images/orient-wave.svg) center center repeat-x;
+  /* background: url( ../images/eventPageHeaderBand.svg) center center repeat-x; */
+  background: var(--eventPageHeaderBand) center center repeat-x;
+  /* background-image: ; */
+
   background-size: cover;
   opacity: 1;
   z-index: -1;

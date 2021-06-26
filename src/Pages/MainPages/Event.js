@@ -24,14 +24,14 @@ import Myprofile from "../../Containers/myProfile/Myprofile";
 
 export default function Event(props) {
   // console.log(props);
-  const { eventId } = props;
+  const { event } = props;
   const { path, url } = useRouteMatch();
   const history = useHistory();
   //remove params as we not geting this from url now
   // let param = useParams()
   let param = useMemo(
     () => ({ id: props.event ? props.event.toLowerCase() : "inspira21-jun5" }),
-    eventId
+    event
   );
 
   let {
@@ -64,6 +64,22 @@ export default function Event(props) {
       removeTimelineListener();
     };
   }, []);
+
+  useEffect(() => {
+    console.log(event)
+    if (event) {
+      // Get the root element
+      var r = document.querySelector(':root');
+      //to get value
+      // var rs = getComputedStyle(r);
+      // rs.getPropertyValue('--eventPageHeaderBand')
+
+      let val = " url(\"https://storage.googleapis.com/cipla-impact.appspot.com/" + event + "/eventPageHeaderBand.svg?upated=1\")"
+      r.style.setProperty('--eventPageHeaderBand', val);
+      let eventPageBottomBg = " url(\"https://storage.googleapis.com/cipla-impact.appspot.com/" + event + "/eventPageBottomBg.png?upated=1\")"
+      r.style.setProperty('--eventPageBg', eventPageBottomBg);
+    }
+  }, [event])
 
   const checkIfUserIsRegistered = async () => {
     firestore
@@ -186,7 +202,7 @@ export default function Event(props) {
             style={{
               width: "100vw",
               height: "100vh",
-              backgroundImage: `url('/assets/images/${param.id}Loader.jpg')`,
+              backgroundImage: `url('https://storage.googleapis.com/cipla-impact.appspot.com/${param.id}/eventPageInitalLoader.png?updated=${Math.random() * 100}')`,
               backgroundPosition: "center",
               backgroundSize: "auto",
               backgroundRepeat: "no-repeat",
@@ -212,6 +228,7 @@ export default function Event(props) {
             ) : (
               <Header
                 eventPage={true}
+                eventAndCiplaLogo={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/cipla_with_eventLogo.png?updated=1`}
                 event={props.event}
                 eventTitle={props.eventTitle}
                 addClickAnalytics={addClickAnalytics}

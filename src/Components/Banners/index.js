@@ -92,7 +92,7 @@ export function Custom2(props) {
 
 //props - mainTitle, subTitle, eventId, enterEvent()
 export function LiveEventBanner(props) {
-  const { data } = props;
+  const { data, needCountDown } = props;
   return (
     // bannerBox__inner2 gradient-bg4
     <div className="bannerBox__inner ">
@@ -103,13 +103,16 @@ export function LiveEventBanner(props) {
         <div class="container">
           <div class="d-flex">
             <div className="bannerBox__left">
-               ̰
+              ̰
               <h1 className="bannerBox__title mg-b30">{data.mainTitle}</h1>
               <div className="bannerBox__status mg-b30">
                 <h3 className="bannerBox__status-title">{data.subTitle}</h3>
                 {/* <span className="bannerBox__status-mark">LIVE</span> */}
               </div>
-              <Countdown event={data.eventId} />
+              {
+                needCountDown &&
+                <Countdown event={data.eventId} />
+              }
               <a
                 href="#"
                 className="btn bannerBox__btn mg-b30"

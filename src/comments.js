@@ -82,7 +82,7 @@
 //   "10"
 // );
 PollManager.addPollQuestion(
-  "orient21-26may",
+  "pedasthmamanagement",
   1,
   "HOW TO DESIGN A VIRTUAL EVENT?",
   [
@@ -121,7 +121,7 @@ EventManager.addEvent(
   "evolve"
 );
 EventManager.addPartnerWithUs(
-  "event-kmde59n5",
+  "pedasthmamanagement",
   "Clinical Trial Participation 1",
   "LOREM_TEXT",
   "Clinical Trial Participation sub1",
@@ -134,5 +134,31 @@ EventManager.addEventTimeLine(
   "",
   [],
   1622892600000,
+  "60"
+);
+
+EventManager.addPartnerWithUs(
+  "pedasthmamanagement",
+  "BreatheFree Services",
+  "BreatheFree is a unique service For an efficient patient education, counselling and support. If you are interested in our BreatheFree services around clinic and/or BreatheFree digital educator, kindly share your contact details we will reach out shortly",
+  "",
+  "",
+  "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2FwebAssets%2Fbreathefree.jpeg?alt=media&token=0929f9d3-a812-42dc-be8b-51ceaa9faa9c"
+);
+
+EventManager.addTrendingItem(
+  "pedasthmamanagement",
+  TRENDING_ITEM_TYPE.URL,
+  "ciplamedX – Expert Views. Watch Anywhere. Watch Anytime.",
+  "A platform to access byte-sized expert views anytime, anywhere on a wide range of topics. Explore at your time and convenience.",
+  "https://ciplamedx.com",
+  "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2Fciplamedx-thumb.jpg?alt=media&token=673add68-c1ca-4ce7-a6c9-24f56bd4e335"
+)
+EventManager.addEventTimeLine(
+  "pedasthmamanagement",
+  "‘New Frontiers in Paediatric Asthma Management’ A Case Guided Approach",
+  "",
+  [],
+  1624737600000,
   "60"
 );

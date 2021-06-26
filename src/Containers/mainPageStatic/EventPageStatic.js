@@ -16,14 +16,14 @@ export default function EventPageStatic({ event }) {
     <>
       <div
         className="login2Box__Simple_Left event"
-        style={{ backgroundImage: `url(https://storage.googleapis.com/cipla-impact.appspot.com/${event}/bg.jpg)` }}
+        style={{ backgroundImage: `url(https://storage.googleapis.com/cipla-impact.appspot.com/${event}/bg.jpg?updated=1)` }}
       >
-        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${event}/bg2.png`} alt="" className="bg2" />
+        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${event}/bg2.png?updated=1`} alt="" className="bg2" />
         <Link to={RootRoute} className={"headerBox__logo5"}>
           <img src={ciplaMedX} alt="CIPLAMEDXLOGO" />
         </Link>
-        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${event}/eventLogo.png`} alt="" className="cipla-res" />
-        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${event}/center-logo.png`} alt="" className="center_logo" />
+        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${event}/eventLogo.png?updated=1`} alt="" className="cipla-res" />
+        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${event}/center-logo.png?updated=1`} alt="" className="center_logo" />
       </div>
     </>
   );

@@ -55,7 +55,7 @@ export default function QnaPage(props) {
 
     const getData = async () => {
         try {
-            eventId = eventId ? eventId : 'event-kmde59n5'
+            eventId = eventId ? eventId.toLowerCase() : 'event-kmde59n5'
             let docrRef = firestore.collection("qna").where("eventId", "==", eventId)//.orderBy("timestamp")
             await docrRef.onSnapshot(async real => {
                 if (real.empty) {

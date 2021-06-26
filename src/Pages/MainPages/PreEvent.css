@@ -37,6 +37,26 @@
   padding: 3rem;
   padding-left: 5rem;
 }
+
+.preventPage  .left__div .buttons .addToCalendar{
+  margin-bottom: 0!important;
+}
+
+.preventPage  .left__div .buttons .addToCalendar #addToCal{
+  background: var(--preeventButtonBg);
+  border-color: var(--preeventButtonBg);
+  color: var(--preeventButtonColor);
+  box-shadow: 4px 4px 6px 0px var(--preeventButtonShadow);
+}
+
+.preventPage  .left__div .buttons .addToCalendar #addToCal:hover{
+  color: var(--preeventButtonBg);
+  border-color: var(--preeventButtonBg);
+  background: var(--preeventButtonColor);
+  box-shadow: 4px 4px 6px 0px var(--preeventButtonShadow);
+}
+
+
 @media (min-width: 1200px) {
   .thanks img {
     /* margin-left: -5rem; */
@@ -74,7 +94,7 @@
 }
 .buttons button:nth-child(1) {
   /* margin-right: 2rem; */
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 .buttons button:nth-child(2) {
   color: #015189;

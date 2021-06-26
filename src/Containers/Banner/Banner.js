@@ -47,14 +47,15 @@ const BannerType = {
 };
 
 const BannerData = [
-  // {
-  //   type: BannerType.LiveEvent,
-  //   mainTitle: "‘New Frontiers in Paediatric Asthma Management’ A Case Guided Approach",
-  //   subTitle: "",
-  //   eventId: "pedasthmamanagement",
-  //   mainImageUrl: "https://storage.googleapis.com/cipla-impact.appspot.com/pedasthmamanagement/eventLogo.png",
-  //   // mainImageUrl: '/assets/images/logos/evolveLogo.png',
-  // },
+  {
+    type: BannerType.LiveEvent,
+    mainTitle: "‘New Frontiers in Paediatric Asthma Management’ A Case Guided Approach",
+    subTitle: "",
+    eventId: "pedasthmamanagement",
+    mainImageUrl: "",
+    needCountDown: true,
+    // mainImageUrl: '/assets/images/logos/evolveLogo.png',
+  },
   {
     type: BannerType.Custom2,
     buttonText: "Watch Now",
@@ -159,7 +160,7 @@ function Banner() {
         {BannerData.map((item) => (
           <>
             {item.type === BannerType.LiveEvent && (
-              <LiveEventBanner data={item} enterEvent={enterEvent} />
+              <LiveEventBanner data={item} enterEvent={enterEvent} needCountDown={item.needCountDown} />
             )}
             {item.type === BannerType.ImageSingleButton && (
               <ImageSingleButtonBanner

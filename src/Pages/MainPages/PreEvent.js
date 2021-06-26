@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, { useContext, useState, useEffect, useMemo, useRef } from "react";
 import { eventContext } from "../../Context/Event/EventContextProvider";
 import Header from "../../Containers/Header/Header";
 import AddToCalendar from "../../Components/AddToCalendar/AddToCalendar";
@@ -136,12 +136,41 @@ function PreEvent(props) {
     setCureentAgendaDate(date);
   };
 
+  let initalCSSValues = useRef({})
+  useEffect(() => {
+    if (props.eventData) {
+      if (props.eventData.preventStyle) {
+        let root = document.querySelector(':root');
+        let computedStyle = getComputedStyle(root);
+        let preeventStyle = props.eventData.preventStyle
+
+        Object.keys(preeventStyle).forEach(varName => {
+          let initalValue = computedStyle.getPropertyValue(`--${varName}`)
+          if (initalValue) {
+            initalCSSValues.current[varName] = initalValue
+          }
+          root.style.setProperty(`--${varName}`, preeventStyle[varName]);
+        })
+
+      }
+
+    }
+    return () => {
+      if (initalCSSValues.current) {
+        let root = document.querySelector(':root');
+        Object.keys(initalCSSValues.current).forEach(varName => {
+          root.style.setProperty(`--${varName}`, initalCSSValues.current[varName]);
+        })
+      }
+    }
+  }, [props.eventData])
+
   return (
     <>
-      <div className="evolve__main__div">
+      <div className="evolve__main__div preventPage">
         <Header event={props.event} eventTitle={props.eventTitle} />
         <div className="mobile__layout">
-          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_right_speakers.svg`} alt="" className="evolve__logo" />
+          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_right_speakers.svg?updated=${Math.random() * 100}`} alt="" className="evolve__logo" />
           {/* <img src={cipla__res} alt="" className="cipla__res" /> */}
           {!showRegisterForOldUser.status && (
             <>
@@ -153,7 +182,7 @@ function PreEvent(props) {
               {showRegisterForOldUser.value ? (
                 <>
                   <div className="thanks">
-                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg`} alt="" className="thank__you" />
+                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg?updated=${Math.random() * 100}`} alt="" className="thank__you" />
                   </div>
                   <div className="buttons">
                     <button
@@ -186,7 +215,7 @@ function PreEvent(props) {
                   </div> */}
 
                   <div className="thanks">
-                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg`} alt="" className="thank__you" />
+                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg?updated=${Math.random() * 100}`} alt="" className="thank__you" />
                   </div>
 
                   <div className="buttons">
@@ -231,7 +260,7 @@ function PreEvent(props) {
         </div>
         {/* <img src={mobile__blur} alt="" className="mobile__blur" /> */}
         {/* <img src={blur__img} alt="" className="blur__img" /> */}
-        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/pre_event_bg.jpg`} alt="" className="spider__img" />
+        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/pre_event_bg.jpg?updated=${Math.random() * 100}`} alt="" className="spider__img" />
         {/* <img src={right__wing} alt="" className="right__wing" /> */}
         <div className="left__div">
           {!showRegisterForOldUser.status && (
@@ -248,7 +277,7 @@ function PreEvent(props) {
                   </div>
                   <div className="timing--">Date: 05 June 2021</div> */}
                   <div className="thanks">
-                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg`} alt="" className="thank__you" />
+                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg?updated=${Math.random() * 100}`} alt="" className="thank__you" />
                   </div>
                   <div className="buttons">
                     <button
@@ -281,7 +310,7 @@ function PreEvent(props) {
                   </div> */}
 
                   <div className="thanks">
-                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg`} alt="" className="thank__you" />
+                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg?updated=${Math.random() * 100}`} alt="" className="thank__you" />
                   </div>
 
                   <div className="buttons">
@@ -324,11 +353,11 @@ function PreEvent(props) {
           )}
         </div>
         <div className="right__div">
-          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_right_speakers.svg`} alt="" className="speakerAreas" />
+          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_right_speakers.svg?updated=${Math.random() * 100}`} alt="" className="speakerAreas" />
         </div>
 
         <div className="bottom_right_eventLogo">
-          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/eventLogo.png`} alt="" className="eventLogo" />
+          <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/eventLogo.png?updated=${Math.random() * 100}`} alt="" className="eventLogo" />
         </div>
       </div>
       <Switch>
