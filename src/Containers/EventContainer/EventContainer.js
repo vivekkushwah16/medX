@@ -169,9 +169,13 @@ export default function EventContainer(props) {
 
   //#region maintain timespent
   const calcaulateLastTimespent = () => {
-    return Math.round(
-      (new Date().getTime() - window.session_CurrentHit_StartTimestamp) / 1000
-    );
+    if (window.session_CurrentHit_StartTimestamp) {
+      return Math.round(
+        (new Date().getTime() - window.session_CurrentHit_StartTimestamp) / 1000
+      );
+    } else {
+      return 0
+    }
   };
 
   const startTimespentCalculation = () => {
