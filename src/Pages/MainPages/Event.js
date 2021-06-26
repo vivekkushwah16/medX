@@ -202,7 +202,7 @@ export default function Event(props) {
             style={{
               width: "100vw",
               height: "100vh",
-              backgroundImage: `url('/assets/images/${param.id}Loader.jpg')`,
+              backgroundImage: `url('https://storage.googleapis.com/cipla-impact.appspot.com/${param.id}/eventPageInitalLoader.png?updated=${Math.random() * 100}')`,
               backgroundPosition: "center",
               backgroundSize: "auto",
               backgroundRepeat: "no-repeat",

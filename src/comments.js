@@ -82,7 +82,7 @@
 //   "10"
 // );
 PollManager.addPollQuestion(
-  "orient21-26may",
+  "pedasthmamanagement",
   1,
   "HOW TO DESIGN A VIRTUAL EVENT?",
   [
@@ -144,4 +144,21 @@ EventManager.addPartnerWithUs(
   "",
   "",
   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2FwebAssets%2Fbreathefree.jpeg?alt=media&token=0929f9d3-a812-42dc-be8b-51ceaa9faa9c"
+);
+
+EventManager.addTrendingItem(
+  "pedasthmamanagement",
+  TRENDING_ITEM_TYPE.URL,
+  "ciplamedX – Expert Views. Watch Anywhere. Watch Anytime.",
+  "A platform to access byte-sized expert views anytime, anywhere on a wide range of topics. Explore at your time and convenience.",
+  "https://ciplamedx.com",
+  "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2Fciplamedx-thumb.jpg?alt=media&token=673add68-c1ca-4ce7-a6c9-24f56bd4e335"
+)
+EventManager.addEventTimeLine(
+  "pedasthmamanagement",
+  "‘New Frontiers in Paediatric Asthma Management’ A Case Guided Approach",
+  "",
+  [],
+  1624737600000,
+  "60"
 );

@@ -165,14 +165,7 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    // EventManager.addEventTimeLine(
-    //   "inspira21-jun5",
-    //   "MANAGEMENT OF INVASIVE FUNGAL INFECTIONS - CURRENTS CONCEPTS",
-    //   "",
-    //   [],
-    //   1622892600000,
-    //   "60"
-    // );
+
   }, []);
 
   const updateUserMetaData = async () => {
@@ -346,8 +339,8 @@ export default function App() {
               // finishedEvent={''}//for finished component
               qnaPage={QnaPageLazy}
               liveCount={LiveCountLazy}
-              env={"prod"} //dev or prod
-              forceState={EventStausType.NotLive}
+              env={"dev"} //dev or prod
+              forceState={EventStausType.Live}
             />
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>
               {/* <PreEventLazy /> */}
