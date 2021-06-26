@@ -218,19 +218,23 @@ export default function EventContainer(props) {
     // console.log(initalTimelineValue, data)
     if (data && data.activeTimelineId) {
       let activeTimelineId = data.activeTimelineId;
+      // console.log(activeTimelineId)
       if (initalTimelineValue) {
         // console.log("////////////////////////////////////")
         if (initalTimelineValue !== activeTimelineId) {
+          // console.log("differentTimeLineFOund, restart")
           sendSessionAnalytics(activeTimelineId);
           stopTimespentCalculation(true, initalTimelineValue);
         }
       } else {
+        // console.log("startCalcTimeFORFirstTIme")
         sendSessionAnalytics(activeTimelineId);
         startTimespentCalculation();
       }
     } else {
       // console.log("No Active timeline");
       setActiveTimelineId(null);
+      stopTimespentCalculation();
     }
   }, [data]);
 

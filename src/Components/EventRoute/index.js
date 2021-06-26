@@ -31,7 +31,10 @@ export const EventChecker = (props) => {
 
   //Router hooks
   let { url } = useRouteMatch();
-  const { event } = useParams();
+  let { event } = useParams();
+  if(event){
+    event = event.toLowerCase()
+  }
   const history = useHistory();
 
   useEffect(() => {
