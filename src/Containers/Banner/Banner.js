@@ -47,15 +47,15 @@ const BannerType = {
 };
 
 const BannerData = [
-  {
-    type: BannerType.LiveEvent,
-    mainTitle: "‘New Frontiers in Paediatric Asthma Management’ A Case Guided Approach",
-    subTitle: "",
-    eventId: "pedasthmamanagement",
-    mainImageUrl: "",
-    needCountDown: true,
-    // mainImageUrl: '/assets/images/logos/evolveLogo.png',
-  },
+  // {
+  //   type: BannerType.LiveEvent,
+  //   mainTitle: "‘New Frontiers in Paediatric Asthma Management’ A Case Guided Approach",
+  //   subTitle: "",
+  //   eventId: "pedasthmamanagement",
+  //   mainImageUrl: "",
+  //   needCountDown: true,
+  //   // mainImageUrl: '/assets/images/logos/evolveLogo.png',
+  // },
   {
     type: BannerType.Custom2,
     buttonText: "Watch Now",
