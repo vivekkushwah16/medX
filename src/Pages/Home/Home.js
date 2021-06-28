@@ -127,6 +127,7 @@ class Home extends Component {
       { tag: "nebulization", header: "Videos of Nebulization" },
       { tag: "Asthma", header: "Videos on Asthma" },
       { tag: "ILD/IPF", header: "Videos on ILD/IPF" },
+      { tag: "anti fungal", header: "Videos of Anti Fungal" },
       { tag: "Telemedicine", header: "Videos on Telemedicine" },
       { tag: "Impact Sessions", header: "Videos of Impact session" },
       { tag: "covid19", header: "Videos on COVID-19" },
@@ -144,7 +145,6 @@ class Home extends Component {
         header: "Videos on Other Respiratory Diseases",
         multipleTags: true,
       },
-
       // { tag: 'Recommendations', header: 'Videos on Recommendations' },
       // { tag: 'Pediatric asthma', header: 'Videos on Pediatric asthma' },
       // { tag: 'Expert Views', header: 'Videos on Expert Views' },
@@ -172,6 +172,8 @@ class Home extends Component {
       // { tag: "cardiovascular", header: "Cardiovascular" },
       { tag: "HeartFailure", header: "Heart Failure" },
       { tag: "nebulization", header: "Nebulization" },
+      { tag: "anti fungal", header: "Anti Fungal" },
+
 
       // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
       // { tag: 'Recommendations', header: 'Recommendations' },
