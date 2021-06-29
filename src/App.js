@@ -10,6 +10,7 @@ import {
   REGISTER_ROUTE,
   RootRoute,
   EVENT_ROUTE,
+  INTEREST_ROUTE,
 } from "./AppConstants/Routes";
 
 // import css
@@ -28,6 +29,7 @@ import { PROFILE_COLLECTION } from "./AppConstants/CollectionConstants";
 import { PollManager } from "./Managers/PollManager";
 import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
 import Myprofile from "./Containers/myProfile/Myprofile";
+import IntersetSelection from "./Containers/IntersetSelection";
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 // import Upload from './Components/Upload/upload';
@@ -293,9 +295,18 @@ export default function App() {
               {/* <LoginLazy /> */}
               <Redirect to={LOGIN_ROUTE}></Redirect>
             </NotLoggedInRoutes>
+
             <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={LOGIN_ROUTE}>
               <LoginLazy />
             </NotLoggedInRoutes>
+            <ProtectedRoute redirectTo={LOGIN_ROUTE} path={INTEREST_ROUTE}>
+              <UserContext.Consumer>
+                {value =>
+                  <IntersetSelection value={value.userInfo}/>
+                }
+              </UserContext.Consumer>
+            </ProtectedRoute>
+
             {/* Home Route */}
             <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>
               {/* <PreEvent /> */}
