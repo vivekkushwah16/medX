@@ -27,7 +27,7 @@
   z-index: 3;
 }
 .left__div {
-  flex: 1;
+  flex: 0.5 1;
   position: relative;
   z-index: 3;
   display: flex;
@@ -42,7 +42,7 @@
   margin-bottom: 0!important;
 }
 
-.preventPage  .left__div .buttons .addToCalendar #addToCal{
+.preventPage  .left__div .buttons .addToCalendar #addToCal, .preventPage .mobile__layout .buttons .addToCalendar #addToCal{
   background: var(--preeventButtonBg);
   border-color: var(--preeventButtonBg);
   color: var(--preeventButtonColor);
@@ -71,7 +71,7 @@
   margin-top: 4rem;
 }
 .right__div {
-  flex: 1;
+  flex: 1 1;
   position: relative;
   z-index: 3;
   display: flex;
@@ -169,6 +169,7 @@
 
 @media only screen and (max-width: 1024px) {
   .bottom_right_eventLogo{
+    display: none;
       right: auto;
   }
 
@@ -200,7 +201,7 @@
     position: relative;
     z-index: 4;
     align-items: center;
-    padding-top: 20vh;
+    padding-top: 8vh;
     width: 100%;
     overflow-y: auto;
     padding-bottom: 5rem;

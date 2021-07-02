@@ -31,7 +31,7 @@ export default function AgendaTab(props) {
                         // <div className="maincardBox__card-wrap">
                         <>
                             < AgendaCard
-                                timeline={timeline} haveVideo={haveVideo} haveLikeButton={activeTimeline !== null ? activeAgendaStartTime >= timeline.startTime : haveLikeButton} handleClick={startVideo} animate={true} placeIndex={index}
+                                timeline={timeline} haveVideo={haveVideo} haveLikeButton={activeTimeline !== null ? activeAgendaStartTime >= timeline.startTime : false} handleClick={startVideo} animate={true} placeIndex={index}
                                 forEventPage={true} wantHeaderFooter={true}
                                 showLive={activeTimeline !== null ? timeline.id === activeTimeline : activeTimeline}
                             />

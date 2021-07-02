@@ -162,3 +162,28 @@ EventManager.addEventTimeLine(
   1624737600000,
   "60"
 );
+
+
+// IMAGE LIST
+/**
+ * eventPage - 
+ * certificate.jpg
+ * eventPageBottomBg.png
+ * eventPageHeaderBand.svg
+ * eventPageInitalLoader.png
+ * cipla_with_eventLogo.png
+ * 
+ * preeventPage -
+ * cipla_with_eventLogo.png
+ * preEventPage_left_heading.svg
+ * preEventPage_right_speakers.png
+ * pre_event_bg.jpg
+ * preevent_mobile_Speaker.png
+ * prevent_mobile_info.png
+ * 
+ * authPages - 
+ * bg.jpg
+ * bg2.png
+ * center-logo.png
+ * eventLogo.png
+ */
