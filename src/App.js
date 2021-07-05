@@ -10,6 +10,7 @@ import {
   REGISTER_ROUTE,
   RootRoute,
   EVENT_ROUTE,
+  INTEREST_ROUTE,
 } from "./AppConstants/Routes";
 
 // import css
@@ -26,10 +27,14 @@ import EventRoute, { EventStausType } from "./Components/EventRoute";
 import { firestore } from "./Firebase/firebase";
 import { PROFILE_COLLECTION } from "./AppConstants/CollectionConstants";
 import { PollManager } from "./Managers/PollManager";
-// import { PollManager } from "./Managers/PollManager";
-// import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
-// import Myprofile from "./Containers/myProfile/Myprofile";
-
+import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
+import Myprofile from "./Containers/myProfile/Myprofile";
+import IntersetSelection from "./Containers/IntersetSelection";
+// import loadable from "@loadable/component";
+// import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
+// import Upload from './Components/Upload/upload';
+// import LiveCount from './Pages/LiveCount/liveCount';
+// import QnaPage from './Pages/QnaPage/QnaPage';
 const RegisterLazy = loadable(
   () =>
     import(
@@ -94,6 +99,25 @@ const MainPagesEventLazy = loadable(
   { fallback: <LoadableFallback /> }
 );
 
+// const MainPagesLoginLazy = loadable(
+//   () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Login"),
+//   { fallback: <LoadableFallback /> }
+// );
+// const MainPagesRegisterLazy = loadable(
+//   () =>
+//     import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Register"),
+//   { fallback: <LoadableFallback /> }
+// );
+// const MainPagesPreEventLazy = loadable(
+//   () =>
+//     import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/PreEvent"),
+//   { fallback: <LoadableFallback /> }
+// );
+// const MainPagesEventLazy = loadable(
+//   () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Event"),
+//   { fallback: <LoadableFallback /> }
+// );
+
 const speakerProfileLink =
   "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
 
@@ -114,14 +138,7 @@ export default function App() {
     }
   }, [initalCheck, user]);
 
-  useEffect(() => {
-    // PollManager.addPollQuestion(
-    //   "copdmanagement",
-    //   1,
-    //   "What is your preferred initial pharmacologic management for most of your patients?",
-    //   ["LAMA", "LABA-LAMA", "LABA-LAMA-ICS", "Others"]
-    // );
-  }, []);
+  useEffect(() => {}, []);
 
   const updateUserMetaData = async () => {
     const query = await firestore.collection(PROFILE_COLLECTION).get();
@@ -177,10 +194,23 @@ export default function App() {
             <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={REGISTER_ROUTE}>
               <RegisterLazy />
             </NotLoggedInRoutes>
+            {/* Login Route */}
+            <NotLoggedInRoutes
+              redirectTo={HOME_ROUTE}
+              path={LOGIN_ROUTE + "/:event"}
+            >
+              {/* <LoginLazy /> */}
+              <Redirect to={LOGIN_ROUTE}></Redirect>
+            </NotLoggedInRoutes>
 
             <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={LOGIN_ROUTE}>
               <LoginLazy />
             </NotLoggedInRoutes>
+            <ProtectedRoute redirectTo={LOGIN_ROUTE} path={INTEREST_ROUTE}>
+              <UserContext.Consumer>
+                {(value) => <IntersetSelection value={value.userInfo} />}
+              </UserContext.Consumer>
+            </ProtectedRoute>
 
             {/* Home Route */}
             <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>

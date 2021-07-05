@@ -47,15 +47,15 @@ const BannerType = {
 };
 
 const BannerData = [
-  {
-    type: BannerType.LiveEvent,
-    mainTitle: "Bronchodilators for COPD: When, where and which",
-    subTitle: "",
-    eventId: "copdmanagement",
-    mainImageUrl: "",
-    needCountDown: true,
-    mainImageUrl: 'https://storage.googleapis.com/cipla-impact.appspot.com/copdmanagement/BannerImage.png',
-  },
+  // {
+  //   type: BannerType.LiveEvent,
+  //   mainTitle: "‘New Frontiers in Paediatric Asthma Management’ A Case Guided Approach",
+  //   subTitle: "",
+  //   eventId: "pedasthmamanagement",
+  //   mainImageUrl: "",
+  //   needCountDown: true,
+  //   // mainImageUrl: '/assets/images/logos/evolveLogo.png',
+  // },
   {
     type: BannerType.Custom2,
     buttonText: "Watch Now",
@@ -160,7 +160,11 @@ function Banner() {
         {BannerData.map((item) => (
           <>
             {item.type === BannerType.LiveEvent && (
-              <LiveEventBanner data={item} enterEvent={enterEvent} needCountDown={item.needCountDown} />
+              <LiveEventBanner
+                data={item}
+                enterEvent={enterEvent}
+                needCountDown={item.needCountDown}
+              />
             )}
             {item.type === BannerType.ImageSingleButton && (
               <ImageSingleButtonBanner
