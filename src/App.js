@@ -25,6 +25,7 @@ import EventRoute, { EventStausType } from "./Components/EventRoute";
 // import { LOREM_TEXT } from "./AppConstants/Lorem";
 import { firestore } from "./Firebase/firebase";
 import { PROFILE_COLLECTION } from "./AppConstants/CollectionConstants";
+import { PollManager } from "./Managers/PollManager";
 // import { PollManager } from "./Managers/PollManager";
 // import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
 // import Myprofile from "./Containers/myProfile/Myprofile";
@@ -74,17 +75,18 @@ const UploadLazy = loadable(
   { fallback: <LoadableFallback /> }
 );
 
-
 const MainPagesLoginLazy = loadable(
   () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Login"),
   { fallback: <LoadableFallback /> }
 );
 const MainPagesRegisterLazy = loadable(
-  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Register"),
+  () =>
+    import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Register"),
   { fallback: <LoadableFallback /> }
 );
 const MainPagesPreEventLazy = loadable(
-  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/PreEvent"),
+  () =>
+    import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/PreEvent"),
   { fallback: <LoadableFallback /> }
 );
 const MainPagesEventLazy = loadable(
@@ -113,6 +115,12 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
+    // PollManager.addPollQuestion(
+    //   "copdmanagement",
+    //   1,
+    //   "What is your preferred initial pharmacologic management for most of your patients?",
+    //   ["LAMA", "LABA-LAMA", "LABA-LAMA-ICS", "Others"]
+    // );
   }, []);
 
   const updateUserMetaData = async () => {
@@ -166,7 +174,6 @@ export default function App() {
       <Router>
         {initalCheck && (
           <Switch>
-
             <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={REGISTER_ROUTE}>
               <RegisterLazy />
             </NotLoggedInRoutes>

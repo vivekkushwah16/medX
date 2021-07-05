@@ -153,7 +153,7 @@ EventManager.addTrendingItem(
   "A platform to access byte-sized expert views anytime, anywhere on a wide range of topics. Explore at your time and convenience.",
   "https://ciplamedx.com",
   "https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2Fciplamedx-thumb.jpg?alt=media&token=673add68-c1ca-4ce7-a6c9-24f56bd4e335"
-)
+);
 EventManager.addEventTimeLine(
   "pedasthmamanagement",
   "‘New Frontiers in Paediatric Asthma Management’ A Case Guided Approach",
@@ -163,16 +163,15 @@ EventManager.addEventTimeLine(
   "60"
 );
 
-
 // IMAGE LIST
 /**
- * eventPage - 
+ * eventPage -
  * certificate.jpg
  * eventPageBottomBg.png
  * eventPageHeaderBand.svg
  * eventPageInitalLoader.png
  * cipla_with_eventLogo.png
- * 
+ *
  * preeventPage -
  * cipla_with_eventLogo.png
  * preEventPage_left_heading.svg
@@ -180,10 +179,17 @@ EventManager.addEventTimeLine(
  * pre_event_bg.jpg
  * preevent_mobile_Speaker.png
  * prevent_mobile_info.png
- * 
- * authPages - 
+ *
+ * authPages -
  * bg.jpg
  * bg2.png
  * center-logo.png
  * eventLogo.png
  */
+
+PollManager.addPollQuestion(
+  "copdmanagement",
+  1,
+  "What is your preferred initial pharmacologic management for most of your patients?",
+  ["LAMA", "LABA-LAMA", "LABA-LAMA-ICS", "Others"]
+);
