@@ -867,7 +867,6 @@ class Home extends Component {
                     multipleTags={this.state.activeTag.multipleTags}
                   />
                 )}
-
                 {preDefinedRows.map((row) => (
                   <VideoRow
                     key={row.tag}

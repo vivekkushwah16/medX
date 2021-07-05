@@ -164,7 +164,7 @@ function Chatbot(props) {
           </div>
           <div className="textarea">
             {showThankyou ? (
-              <p>Thank you for sharing your thaughts</p>
+              <p>Thank you for sharing your thoughts</p>
             ) : (
               <textarea
                 disabled={loading}
@@ -175,7 +175,7 @@ function Chatbot(props) {
                 placeholder="Please share your thoughts"
                 value={message}
                 onChange={(e) => {
-                  setMessage(e.target.value);
+                  setMessage(e.target.value.substring(0, 150));
                 }}
               ></textarea>
             )}
