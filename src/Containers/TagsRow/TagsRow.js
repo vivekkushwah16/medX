@@ -15,7 +15,13 @@ export default function TagsRow(props) {
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <button className="slider-btn slider-btn-next" onClick={onClick}>
+      <button
+        style={{
+          display: className.includes("slick-disable") ? "none" : "block",
+        }}
+        className={`slider-btn slider-btn-next `}
+        onClick={onClick}
+      >
         <i className="icon-angle-right"></i>
       </button>
     );
@@ -24,7 +30,13 @@ export default function TagsRow(props) {
   function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <button className="slider-btn slider-btn-prev" onClick={onClick}>
+      <button
+        style={{
+          display: className.includes("slick-disable") ? "none" : "block",
+        }}
+        className={`slider-btn slider-btn-prev`}
+        onClick={onClick}
+      >
         <i className="icon-angle-left"></i>
       </button>
     );
@@ -35,29 +47,10 @@ export default function TagsRow(props) {
     arrows: true,
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
-    slidesToShow: 5,
+    slidesToShow: 1,
+    variableWidth: true,
     slidesToScroll: 1,
-    initialSlide: 0,
-    responsive: [
-      {
-        breakpoint: 1334,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 650,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 520,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-    ],
+    rows: 1,
   };
 
   const handleScroll = () => {
@@ -82,7 +75,7 @@ export default function TagsRow(props) {
         window.addEventListener("scroll", handleScroll);
         // console.log(navBar.current.offsetTop)
         return navBar.current.offsetTop < 0
-          ? window.innerHeight + navBar.current.offsetTop + 100
+          ? window.innerHeight + navBar.current.offsetTop - 100
           : navBar.current.offsetTop;
       }
     }

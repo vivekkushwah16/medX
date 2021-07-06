@@ -9,7 +9,7 @@ const SearchBar = React.memo((props) => {
     props.initalSearchKeyword ? props.initalSearchKeyword : ""
   );
   const { doSearch, sticky } = props;
-  console.log(history);
+
   return (
     <div
       className="search-container"

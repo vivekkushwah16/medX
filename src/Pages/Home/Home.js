@@ -192,7 +192,7 @@ class Home extends Component {
   scrollToTargetAdjusted = () => {
     if (this.contentBoXTop.current) {
       var element = this.contentBoXTop.current;
-      var headerOffset = 100;
+      var headerOffset = 150;
       var elementPosition = element.getBoundingClientRect().top;
       var offsetPosition =
         elementPosition - headerOffset + (window.scrollY ? window.scrollY : 0);
@@ -774,7 +774,10 @@ class Home extends Component {
     // window.scrollTo({ top: 0 });
   };
   doSearch = (searchText) => {
-    console.log("called", searchText);
+    this.props.history.push({
+      pathname: "/search",
+      search: `?keyword=${searchText}`,
+    });
   };
   render() {
     return (
