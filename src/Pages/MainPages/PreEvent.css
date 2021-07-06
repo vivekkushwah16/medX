@@ -47,6 +47,10 @@
   margin-top: 2rem;
 }
 
+.preventPage .headerBox.headerBox--full{
+  background: #dddddd8a;
+}
+
 .preventPage  .left__div .buttons .addToCalendar #addToCal, .preventPage .mobile__layout .buttons .addToCalendar #addToCal{
   background: var(--preeventButtonBg);
   border-color: var(--preeventButtonBg);
@@ -269,7 +273,7 @@
 }
   .buttons button:nth-child(1) {
     /* margin-right: 2rem; */
-    margin-top: 4rem;
+    margin-top: 2rem;
   }
   .buttons button:nth-child(2) {
     color: #015189;

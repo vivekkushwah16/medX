@@ -45,7 +45,7 @@
 .bannerBox__status-mark:after { position: absolute; left: 0.5rem; top: 50%; margin-top: -0.375rem; height: 0.75rem; width: 0.75rem; border-radius: 50%; content: ""; background: #EE2E2E;; }
 .bannerBox__btn { font-weight: 700; font-size: 1.1875rem; }
 .bannerBox__pic { margin: 0 auto; max-width: 33.125rem; width: 100%; }
-.bannerBox__inner .bannerBox__right .bannerBox__pic{ max-width: 50rem; }
+.bannerBox__inner .bannerBox__right .bannerBox__pic{ max-width: 35rem; }
 
 .bannerBox__profile { margin-bottom: 0.5rem; display: flex; align-items: center; text-decoration: none; color: #0B55A0; line-height: 2rem; }
 .bannerBox__profile-pic { margin-right: 2rem; display: block; width: 2.125rem; height: 2.125rem; border-radius: 50%; box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25); }
