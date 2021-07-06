@@ -81,7 +81,7 @@ export const EventChecker = (props) => {
   return (
     <>
       <Switch>
-        <NotLoggedInRoutes redirectTo={url} path={`${url}/login`}>
+        <NotLoggedInRoutes redirectTo={url} path={`${url}/signup`}>
           {props.login ? (
             <props.login
               event={event.toLowerCase()}
@@ -89,17 +89,18 @@ export const EventChecker = (props) => {
               registerUrl={`${url}/register`}
             />
           ) : (
-            "login"
+            "signup"
           )}
         </NotLoggedInRoutes>
 
         <NotLoggedInRoutes redirectTo={url} path={`${url}/register`}>
           {props.register ? (
             <props.register
-              event={event.toLowerCase()}
               haveAgenda={eventDetails.agenda}
-              loginUrl={`${url}/login`}
+              loginUrl={`${url}/signup`}
+              event={event.toLowerCase()}
               eventTitle={eventDetails.title}
+              eventDate={eventDetails.eventDate}
             />
           ) : (
             "register"
@@ -107,7 +108,7 @@ export const EventChecker = (props) => {
         </NotLoggedInRoutes>
 
         <ProtectedRoute
-          redirectTo={`${url}/login`}
+          redirectTo={`${url}/signup`}
           path={`${url}/register-ott`}
         >
           <props.notLive
@@ -121,25 +122,26 @@ export const EventChecker = (props) => {
 
         <ProtectedRoute
           exact
-          redirectTo={`${url}/login`}
+          redirectTo={`${url}/signup`}
           path={`${url}/liveCount-kmp23`}
         >
           <props.liveCount eventId={event} />
         </ProtectedRoute>
         <ProtectedRoute
           exact
-          redirectTo={`${url}/login`}
+          redirectTo={`${url}/signup`}
           path={`${url}/qna-kmp23`}
         >
           <props.qnaPage eventId={event} />
         </ProtectedRoute>
 
-        <ProtectedRoute redirectTo={`${url}/login`} path={url}>
+        <ProtectedRoute redirectTo={`${url}/signup`} path={url}>
           {eventStatus === EventStausType.NotLive && (
             <>
               {props.notLive ? (
                 <props.notLive
                   event={event.toLowerCase()}
+                  eventDate={eventDetails.eventDate}
                   eventTitle={eventDetails.title}
                   calendatDetails={eventDetails.calendar}
                   eventData={eventDetails}
