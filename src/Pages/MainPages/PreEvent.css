@@ -38,8 +38,8 @@
   padding-left: 5rem;
 }
 
-.preventPage .left__div .buttons .addToCalendar {
-  margin-bottom: 0 !important;
+.preventPage  .left__div .buttons .addToCalendar{
+  margin-bottom: 0!important;
 }
 
 .preventPage .left__div .buttons  .explore-btn{
@@ -54,12 +54,13 @@
   box-shadow: 4px 4px 6px 0px var(--preeventButtonShadow);
 }
 
-.preventPage .left__div .buttons .addToCalendar #addToCal:hover {
+.preventPage  .left__div .buttons .addToCalendar #addToCal:hover{
   color: var(--preeventButtonBg);
   border-color: var(--preeventButtonBg);
   background: var(--preeventButtonColor);
   box-shadow: 4px 4px 6px 0px var(--preeventButtonShadow);
 }
+
 
 @media (min-width: 1200px) {
   .thanks img {
@@ -157,12 +158,12 @@
   font-weight: 500;
 }
 
-.bottom_right_eventLogo {
+.bottom_right_eventLogo{
   position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 2rem;
-  max-width: 11rem;
+    bottom: 0;
+    right: 0;
+    margin: 2rem;
+    max-width: 11rem;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -172,8 +173,9 @@
 }
 
 @media only screen and (max-width: 1024px) {
-  .bottom_right_eventLogo {
-    right: auto;
+  .bottom_right_eventLogo{
+    display: none;
+      right: auto;
   }
 
   .left__div {
@@ -204,7 +206,7 @@
     position: relative;
     z-index: 4;
     align-items: center;
-    padding-top: 20vh;
+    padding-top: 8vh;
     width: 100%;
     overflow-y: auto;
     padding-bottom: 5rem;
