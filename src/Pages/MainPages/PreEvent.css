@@ -42,7 +42,12 @@
   margin-bottom: 0 !important;
 }
 
-.preventPage .left__div .buttons .addToCalendar #addToCal {
+.preventPage .left__div .buttons  .explore-btn{
+  margin-bottom: 0!important;
+  margin-top: 2rem;
+}
+
+.preventPage  .left__div .buttons .addToCalendar #addToCal, .preventPage .mobile__layout .buttons .addToCalendar #addToCal{
   background: var(--preeventButtonBg);
   border-color: var(--preeventButtonBg);
   color: var(--preeventButtonColor);
@@ -254,7 +259,12 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
   }
+  
+.preventPage .mobile__layout .buttons  .explore-btn{
+  margin: 0;
+}
   .buttons button:nth-child(1) {
     /* margin-right: 2rem; */
     margin-top: 4rem;

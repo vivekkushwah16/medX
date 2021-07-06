@@ -9,6 +9,7 @@ import { MonthName } from "../../AppConstants/Months";
 import AgendaNavBar from "../../Components/Event/AgendaNavBar/AgendaNavBar";
 import AgendaCard from "../../Components/AgendaCard/AgendaCard";
 import "./PreEvent.css";
+import axios from "axios";
 import { isMobileOnly } from "react-device-detect";
 import { Route, Switch } from "react-router-dom";
 import {
@@ -23,6 +24,9 @@ import { UserContext } from "../../Context/Auth/UserContextProvider";
 import LoadableFallback from "../../Components/LoadableFallback/LoadableFallback";
 import { useHistory } from "react-router-dom";
 import Myprofile from "../../Containers/myProfile/Myprofile";
+import { HOME_ROUTE } from "../../AppConstants/Routes";
+import { EVENT_CONFIRMATION_ENDPOINT } from "../../AppConstants/APIEndpoints";
+
 function PreEvent(props) {
   const { user, userInfo } = useContext(UserContext);
   const { showMediaModal } = useContext(MediaModalContext);
@@ -32,12 +36,11 @@ function PreEvent(props) {
   const history = useHistory();
   const [showRegisterForOldUser, setToggleForRegisterationForOldUser] =
     useState({ status: false, value: false });
-
   const { attachTimelineListener, removeTimelineListener } =
     useContext(eventContext);
   const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext);
-  let firstTime = useMemo(() => true, []);
 
+  let firstTime = useMemo(() => true, []);
   const regeristerUser = async () => {
     try {
       setToggleForRegisterationForOldUser({ status: false, value: true });
@@ -47,35 +50,75 @@ function PreEvent(props) {
         .update({
           events: firebase.firestore.FieldValue.arrayUnion(props.event),
         });
+      const confirmationMailResponse = await axios({
+        method: "post",
+        url: EVENT_CONFIRMATION_ENDPOINT,
+        data: {
+          title: props.eventTitle,
+          email: userInfo.email,
+          mobileNumber: userInfo.phoneNumber,
+          name: `${userInfo.firstName} ${userInfo.lastName ? userInfo.lastName : ""
+            }`,
+          isDoctor: userInfo.profession === "Doctor",
+          event: props.event,
+          date: props.eventDate ? props.eventDate : `03 July 2021`,
+        },
+      });
       setToggleForRegisterationForOldUser({ status: true, value: false });
     } catch (error) {
       console.log(error);
     }
   };
 
-  const componentDIdMount = () => {
-    firestore
-      .collection(USERMETADATA_COLLECTION)
-      .doc(user.uid)
-      .get()
-      .then((doc) => {
-        const data = doc.data();
-        if (data.events) {
-          if (data.events.indexOf(props.event) === -1) {
-            setToggleForRegisterationForOldUser({ status: true, value: true });
+  // const componentDIdMount = () => {
+  //   firestore
+  //     .collection(USERMETADATA_COLLECTION)
+  //     .doc(user.uid)
+  //     .get()
+  //     .then((doc) => {
+  //       const data = doc.data();
+  //       if (data.events) {
+  //         if (data.events.indexOf(props.event) === -1) {
+  //           setToggleForRegisterationForOldUser({ status: true, value: true });
+  //         } else {
+  //           setToggleForRegisterationForOldUser({ status: true, value: false });
+  //         }
+  //       } else {
+  //         setToggleForRegisterationForOldUser({ status: true, value: true });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setToggleForRegisterationForOldUser({ status: true, value: false });
+  //     });
+  // };
+  // let componentDIdMountRef = useMemo(() => componentDIdMount(), []);
+
+  useEffect(() => {
+    if (userInfo) {
+      firestore
+        .collection(USERMETADATA_COLLECTION)
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          const data = doc.data();
+          if (data.events) {
+            if (data.events.indexOf(props.event) === -1) {
+              regeristerUser()
+            } else {
+              setToggleForRegisterationForOldUser({ status: true, value: false });
+            }
           } else {
-            setToggleForRegisterationForOldUser({ status: true, value: false });
+            regeristerUser()
+
           }
-        } else {
-          setToggleForRegisterationForOldUser({ status: true, value: true });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setToggleForRegisterationForOldUser({ status: true, value: false });
-      });
-  };
-  let componentDIdMountRef = useMemo(() => componentDIdMount(), []);
+        })
+        .catch((err) => {
+          console.log(err);
+          setToggleForRegisterationForOldUser({ status: true, value: false });
+        });
+    }
+  }, [userInfo])
 
   useEffect(() => {
     // getAgendaData("event-kmde59n5");
@@ -248,9 +291,22 @@ function PreEvent(props) {
                     </button> 
                     */}
                     <AddToCalendar blueBtn={true} />
+                    {
+                      !props.canEnterEvent &&
+                      <button
+                        className="btn btn-secondary  explore-btn"
+                        onClick={(e) => {
+                          if (history) {
+                            history.push(HOME_ROUTE);
+                          }
+                        }}
+                      >
+                        Explore Informative videos
+                      </button>
+                    }
                     {props.canEnterEvent && props.event && (
                       <button
-                        className="btn btn-secondary"
+                        className="btn btn-secondary  explore-btn"
                         onClick={(e) => {
                           if (history) {
                             history.push(`/${props.event}`);
@@ -360,14 +416,23 @@ function PreEvent(props) {
                   </div>
 
                   <div className="buttons">
-                    <AddToCalendar
-                      blueBtn={true}
-                      calendatDetails={props.calendatDetails}
-                      eventId={props.event}
-                    />
+                    <AddToCalendar blueBtn={true} calendatDetails={props.calendatDetails} eventId={props.event} />
+                    {
+                      !props.canEnterEvent &&
+                      <button
+                        className="btn btn-secondary explore-btn"
+                        onClick={(e) => {
+                          if (history) {
+                            history.push(HOME_ROUTE);
+                          }
+                        }}
+                      >
+                        Explore Informative videos
+                      </button>
+                    }
                     {props.canEnterEvent && props.event && (
                       <button
-                        className="btn btn-secondary"
+                        className="btn btn-secondary  explore-btn"
                         onClick={(e) => {
                           if (history) {
                             history.push(`/${props.event}`);

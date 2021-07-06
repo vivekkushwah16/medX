@@ -172,9 +172,8 @@ class Register extends Component {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -361,12 +360,11 @@ class Register extends Component {
             title: this.props.eventTitle,
             email: this.state.email,
             mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${
-              this.state.lastName ? this.state.lastName : ""
-            }`,
+            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
+              }`,
             isDoctor: this.state.profession === "Doctor",
             event: this.props.event,
-            date: `26 May 2021`,
+            date: this.props.eventDate ? this.props.eventDate : `03 July 2021`,
           },
         });
         await firestore
@@ -460,9 +458,8 @@ class Register extends Component {
             eventName: "Cipla Orient '21",
             email: this.state.email,
             mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${
-              this.state.lastName ? this.state.lastName : ""
-            }`,
+            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
+              }`,
             isDoctor: this.state.profession === "Doctor",
           },
         });
@@ -558,9 +555,8 @@ class Register extends Component {
         /> */}
         <EventPageStatic event={this.props.event} />
         <article
-          className={`login2Box login2Box__small ${
-            this.state.currentTab === TABS.AgendaTab ? "" : ""
-          }`}
+          className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? "" : ""
+            }`}
         >
           <div ref={this.pagetop} class="login2Box__header ">
             <h3
