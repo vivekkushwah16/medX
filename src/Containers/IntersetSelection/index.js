@@ -134,7 +134,7 @@ class IntersetSelection extends Component {
                         <div className="container">
                             <div className="d-flex align-items-center justify-content-between">
                                 <div className="headerBox__left">
-                                    <a href="#" className="headerBox__logo">
+                                    <a href="/home" className="headerBox__logo">
                                         <img src="../assets/images/logo.png" alt="" />
                                     </a>
                                 </div>
