@@ -773,6 +773,9 @@ class Home extends Component {
     });
     // window.scrollTo({ top: 0 });
   };
+  doSearch = (searchText) => {
+    console.log("called", searchText);
+  };
   render() {
     return (
       // <section className="wrapper" id="root" style={{background: 'black'}}>
@@ -803,6 +806,8 @@ class Home extends Component {
             hideInviteFriend={true}
             whiteLogo={true}
             stickyOnScroll={true}
+            showSearchBar={true}
+            doSearch={this.doSearch}
             // scrollIntoView={scrollIntoViewHead}
           />
           <Banner />
@@ -824,7 +829,7 @@ class Home extends Component {
 
               <TagsRow
                 tags={this.state.tags}
-                stickyOnScroll={false}
+                stickyOnScroll={true}
                 onTagSelect={this.onTagSelect}
                 activeTag={this.state.activeTag}
               />

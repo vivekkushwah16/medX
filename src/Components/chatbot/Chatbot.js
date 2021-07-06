@@ -144,7 +144,7 @@ function Chatbot(props) {
             />
           </div>
           <div className="header">
-            <label for="topics">Topic:</label>
+            <label htmlFor="topics">Topic:</label>
             <select
               name="topics"
               id="topics"

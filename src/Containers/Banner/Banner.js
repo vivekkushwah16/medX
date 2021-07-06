@@ -18,6 +18,7 @@ import { MediaModalType } from "../../AppConstants/ModalType";
 import { isMobileOnly } from "react-device-detect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 let scroll = Scroll.animateScroll;
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -182,6 +183,7 @@ function Banner() {
           </>
         ))}
       </Slider>
+
       {isMobileOnly && (
         <div class="arrow bounce">
           {/* <i className="icon-play whiteColor"></i> */}

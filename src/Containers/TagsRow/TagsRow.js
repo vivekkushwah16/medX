@@ -2,6 +2,7 @@ import React, { useContext, useState, useRef, useMemo, useEffect } from "react";
 import { TAG_CLICKED } from "../../AppConstants/AnalyticsEventName";
 import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
+import Slider from "react-slick";
 import "./TagsRow.css";
 
 export default function TagsRow(props) {
@@ -10,6 +11,54 @@ export default function TagsRow(props) {
   const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext);
   const navBar = useRef(null);
   const [sticky, setSticky] = useState(false);
+
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <button className="slider-btn slider-btn-next" onClick={onClick}>
+        <i className="icon-angle-right"></i>
+      </button>
+    );
+  }
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <button className="slider-btn slider-btn-prev" onClick={onClick}>
+        <i className="icon-angle-left"></i>
+      </button>
+    );
+  }
+  var settings = {
+    dots: false,
+    infinite: false,
+    arrows: true,
+    prevArrow: <SamplePrevArrow />,
+    nextArrow: <SampleNextArrow />,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1334,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
+        breakpoint: 650,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 520,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
+  };
 
   const handleScroll = () => {
     try {
@@ -63,28 +112,31 @@ export default function TagsRow(props) {
       className={`tabBox__list ${sticky ? "tabBox__list_sticky" : ""}`}
     >
       {/* <li>Topics : </li> */}
-      {tags.map((currTag) => (
-        // <li><a className={activeTag.tag==currTag.tag?"tagDiv tagDivactive":"tagDiv"} onClick={()=>onTagSelect(currTag)}>{currTag.header}</a></li>
-        <li>
-          <a
-            className={
-              checkForActiveTag(currTag.tag) ? "active mg-b20" : "mg-b20"
-            }
-            onClick={() => {
-              addGAWithUserInfo(TAG_CLICKED, { tag: currTag.tag });
-              addCAWithUserInfo(
-                `/${TAG_CLICKED}/${user.uid}_${currTag.tag}`,
-                false,
-                { tag: currTag.tag },
-                true
-              );
-              onTagSelect(currTag);
-            }}
-          >
-            {currTag.header}
-          </a>
-        </li>
-      ))}
+      <Slider style={{ display: "flex" }} {...settings}>
+        {tags.map((currTag) => (
+          // <li><a className={activeTag.tag==currTag.tag?"tagDiv tagDivactive":"tagDiv"} onClick={()=>onTagSelect(currTag)}>{currTag.header}</a></li>
+          <li key={currTag.header}>
+            <a
+              className={
+                // checkForActiveTag(currTag.tag) ? "active mg-b20" : "mg-b20"
+                checkForActiveTag(currTag.tag) && "active"
+              }
+              onClick={() => {
+                addGAWithUserInfo(TAG_CLICKED, { tag: currTag.tag });
+                addCAWithUserInfo(
+                  `/${TAG_CLICKED}/${user.uid}_${currTag.tag}`,
+                  false,
+                  { tag: currTag.tag },
+                  true
+                );
+                onTagSelect(currTag);
+              }}
+            >
+              {currTag.header}
+            </a>
+          </li>
+        ))}
+      </Slider>
     </ul>
   );
 }

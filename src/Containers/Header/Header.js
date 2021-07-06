@@ -61,8 +61,9 @@ export default function Header(props) {
 
   return (
     <div
-      className={` headerBox--full pd-r0 ${sticky ? "headerBox_sticky" : "headerBox"
-        }`}
+      className={` headerBox--full pd-r0 ${
+        sticky ? "headerBox_sticky" : "headerBox"
+      }`}
       ref={navBar}
       id="header"
     >
@@ -80,8 +81,8 @@ export default function Header(props) {
                   props.whiteLogo
                     ? CIPLAMEDXLOGO_WHITE
                     : props.eventPage
-                      ? ciplamedxinspira
-                      : CIPLAMEDXLOGO
+                    ? ciplamedxinspira
+                    : CIPLAMEDXLOGO
                 }
                 alt="CIPLAMEDXLOGO"
               />
@@ -91,10 +92,13 @@ export default function Header(props) {
                         </a> */}
           </div>
 
-          {
-            showSearchBar &&
-            <SearchBar doSearch={doSearch} initalSearchKeyword={initalSearchKeyword} />
-          }
+          {showSearchBar && (
+            <SearchBar
+              doSearch={doSearch}
+              initalSearchKeyword={initalSearchKeyword}
+              sticky={sticky}
+            />
+          )}
 
           <div className="headerBox__right headerBox__right--nogap">
             {props.showCertificate && (
@@ -152,7 +156,6 @@ export default function Header(props) {
             />
             <Profile />
           </div>
-
         </div>
       </div>
     </div>
