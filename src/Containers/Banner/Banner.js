@@ -160,7 +160,11 @@ function Banner() {
         {BannerData.map((item) => (
           <>
             {item.type === BannerType.LiveEvent && (
-              <LiveEventBanner data={item} enterEvent={enterEvent} needCountDown={item.needCountDown} />
+              <LiveEventBanner
+                data={item}
+                enterEvent={enterEvent}
+                needCountDown={item.needCountDown}
+              />
             )}
             {item.type === BannerType.ImageSingleButton && (
               <ImageSingleButtonBanner

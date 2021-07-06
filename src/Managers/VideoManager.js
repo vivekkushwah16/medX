@@ -364,7 +364,8 @@ const VideoManager = {
     tag = [],
     limit = 20,
     docRefToStartFrom = null,
-    filter = videoSortFilter.date
+    filter = videoSortFilter.date,
+    filterWithViews = false
   ) => {
     return new Promise(async (res, rej) => {
       try {
@@ -377,7 +378,7 @@ const VideoManager = {
           // console.log(filter)
           switch (filter) {
             case videoSortFilter.date:
-              docRef = docRef.orderBy("timeStamp");
+              docRef = docRef.orderBy("timestamp");
               break;
             case videoSortFilter.AtoZ:
               docRef = docRef.orderBy("name", "asc");
@@ -386,8 +387,11 @@ const VideoManager = {
               docRef = docRef.orderBy("name", "desc");
               break;
             default:
-              docRef = docRef.orderBy("timeStamp");
+              docRef = docRef.orderBy("timestamp");
           }
+        }
+        if (filterWithViews) {
+          docRef = docRef.orderBy("views", "desc")
         }
 
         if (docRefToStartFrom !== null)
@@ -464,6 +468,87 @@ const VideoManager = {
       }
     });
   },
+
+  getLatestVideos: ({ limit }) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let docRef = firestore.collection(VIDEO_COLLECTION).orderBy("timestamp", "desc")
+        if (limit)
+          docRef = docRef.limit(limit);
+
+        const query = await docRef.get();
+        // console.log(query)
+
+        if (query.empty) {
+          res([]);
+        }
+        let _data = [];
+        query.docs.forEach((doc) => {
+          _data.push(doc.data());
+        });
+        res(_data);
+      } catch (error) {
+        rej(error);
+      }
+    });
+  },
+  getTrendingVideos: ({ limit }) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let docRef = firestore.collection(VIDEO_COLLECTION).orderBy("views", "desc")
+        if (limit)
+          docRef = docRef.limit(limit);
+
+        const query = await docRef.get();
+        // console.log(query)
+
+        if (query.empty) {
+          res([]);
+        }
+        let _data = [];
+        query.docs.forEach((doc) => {
+          _data.push(doc.data());
+        });
+        res(_data);
+      } catch (error) {
+        rej(error);
+      }
+    });
+  },
+  getBasicRecommendedVideos: (intersetedTags = [], tagsToFetch = 3, limit = 10) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let mainTags = intersetedTags
+        if (intersetedTags.length > 3) {
+          mainTags = getRandomElementFromArray(mainTags, tagsToFetch)
+        }
+        let _data = [];
+        for (let i = 0; i < mainTags.length; i++) {
+          let a = await VideoManager.getVideoWithTag([mainTags[i]], Math.floor(limit / mainTags.length), null, null, true);
+          _data = [..._data, ...a]
+        }
+
+        res(_data);
+      } catch (error) {
+        rej(error);
+      }
+    });
+  }
+
 };
+
+function getRandomElementFromArray(arr, n) {
+  var result = new Array(n),
+    len = arr.length,
+    taken = new Array(len);
+  if (n > len)
+    throw new RangeError("getRandom: more elements taken than available");
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
+}
 
 export default VideoManager;

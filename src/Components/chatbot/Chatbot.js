@@ -154,15 +154,17 @@ function Chatbot(props) {
               }}
               disabled={loading}
             >
-              <option value="About Ciplamedx">About Ciplamedx</option>
+              <option value="What kind of videos you would like to see more?">
+                What kind of videos you would like to see more?
+              </option>
               {props.videoVisible && <option value={topic}>{topic}</option>}
-              <option value="Cipla events">Cipla events</option>
-              <option value="Feedback">Feedback</option>
+              {/* <option value="Cipla events">Cipla events</option> */}
+              {/* <option value="Feedback">Feedback</option> */}
             </select>
           </div>
           <div className="textarea">
             {showThankyou ? (
-              <p>Thank you for sharing your thaughts</p>
+              <p>Thank you for sharing your thoughts</p>
             ) : (
               <textarea
                 disabled={loading}
@@ -170,10 +172,10 @@ function Chatbot(props) {
                 id="message"
                 cols="30"
                 rows="10"
-                placeholder="Share  your thoughts"
+                placeholder="Please share your thoughts"
                 value={message}
                 onChange={(e) => {
-                  setMessage(e.target.value);
+                  setMessage(e.target.value.substring(0, 150));
                 }}
               ></textarea>
             )}

@@ -25,18 +25,31 @@ function SamplePrevArrow(props) {
 }
 
 function VideoRow(props) {
-    const { heading, tag, lastPlayed, openVideoPop, grid, multipleTags } = props;
+    const { heading, tag, lastPlayed, openVideoPop, grid, multipleTags, systemTags, rowData } = props;
     const [videosData, setData] = useState(null);
-    const { mediaMetaData } = useContext(UserContext);
+    const { userInfo } = useContext(UserContext);
 
     useEffect(() => {
         // console.log(multipleTags, tag)
-        if (multipleTags) {
-            getVideosFromMultipleTags()
+        if (systemTags) {
+            getSystemTags()
         } else {
-            getVideos()
+            if (multipleTags) {
+                getVideosFromMultipleTags()
+            } else {
+                getVideos()
+            }
         }
     }, [tag])
+
+    useEffect(() => {
+        if (systemTags && "RecommendedVideos" === rowData.tag) {
+            if (userInfo.interests) {
+                getSystemTags()
+            }
+        }
+
+    }, [userInfo])
 
     const getVideosFromMultipleTags = async () => {
         let arr = [];
@@ -54,12 +67,34 @@ function VideoRow(props) {
         setData(arr);
     }
 
+    const getSystemTags = useCallback(
+        async () => {
+            if (rowData && rowData.videoFetchFunction) {
+                let arr = []
+                if (rowData.fetchParameters) {
+                    arr = await rowData.videoFetchFunction(rowData.fetchParameters)
+                } else if ("RecommendedVideos" === rowData.tag) {
+                    let recommendedTags = []
+                    if (userInfo.interests) {
+                        Object.keys(userInfo.interests).forEach(cate => {
+                            recommendedTags = [...recommendedTags, ...userInfo.interests[cate]]
+                        })
+                        arr = await VideoManager.getBasicRecommendedVideos(recommendedTags, 3, 10)
+                    }
+                } else {
+                    arr = await rowData.videoFetchFunction()
+                }
+                setData(arr);
+            }
+        }, [rowData, userInfo]
+    )
+
 
     var settings = {
         dots: false,
         infinite: false,
         speed: 300,
-        rows:1,
+        rows: 1,
         slidesToShow: 1,
         slidesToScroll: 1,
         variableWidth: true,

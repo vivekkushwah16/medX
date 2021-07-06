@@ -3,6 +3,7 @@ import { UserContext } from "../../Context/Auth/UserContextProvider";
 import { logout } from "../../Firebase/firebase";
 import verified from "../../assets/images/UI/verified.png";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { INTEREST_ROUTE } from "../../AppConstants/Routes";
 
 const defaultImageUrl =
   "https://firebasestorage.googleapis.com/v0/b/djfarmademo.appspot.com/o/profileimages%2Fblank-avatar.png?alt=media&token=2af15226-9bd7-47ce-bc72-f3c1a12a0780";
@@ -44,7 +45,7 @@ export default function Profile() {
           </div>
         </a>
         <ul className="">
-          {/* <li>
+          <li>
             <a
               onClick={(e) => {
                 e.preventDefault();
@@ -53,7 +54,17 @@ export default function Profile() {
             >
               My Profile
             </a>
-          </li> */}
+          </li>
+          <li>
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                if (history) history.push(INTEREST_ROUTE);
+              }}
+            >
+              My Interest
+            </a>
+          </li>
           {/* <li>
             <a href="#">Achievement</a>
           </li>

@@ -49,6 +49,8 @@ import {
 import VideoManager from "../../Managers/VideoManager";
 import Myprofile from "../../Containers/myProfile/Myprofile";
 import Chatbot from "../../Components/chatbot/Chatbot";
+import IntersetSelection from "../../Containers/IntersetSelection";
+import { INTEREST_ROUTE } from "../../AppConstants/Routes";
 
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
 
@@ -114,6 +116,32 @@ function HandleUrlParam(props) {
   }, []);
   return <>{props.children}</>;
 }
+const RecommendedRow = [
+  {
+    tag: "RecommendedVideos",
+    header: "Recommended Videos",
+    videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+  },
+];
+const preDefinedRows = [
+  // {
+  //   tag: "RecommendedVideos",
+  //   header: "Recommended Videos",
+  //   videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+  // },
+  {
+    tag: "TrendingVideos",
+    header: "Trending Videos",
+    videoFetchFunction: VideoManager.getTrendingVideos,
+    fetchParameters: { limit: 10 },
+  },
+  {
+    tag: "LatestVideos",
+    header: "Latest Videos",
+    videoFetchFunction: VideoManager.getLatestVideos,
+    fetchParameters: { limit: 10 },
+  },
+];
 
 class Home extends Component {
   state = {
@@ -123,7 +151,6 @@ class Home extends Component {
     currentVideosData: null,
     rows: [
       { tag: "COPD", header: "Videos on COPD" },
-      // { tag: 'Asthma', header: 'Videos on Asthma' },
       { tag: "nebulization", header: "Videos of Nebulization" },
       { tag: "Asthma", header: "Videos on Asthma" },
       { tag: "ILD/IPF", header: "Videos on ILD/IPF" },
@@ -131,7 +158,6 @@ class Home extends Component {
       { tag: "Telemedicine", header: "Videos on Telemedicine" },
       { tag: "Impact Sessions", header: "Videos of Impact session" },
       { tag: "covid19", header: "Videos on COVID-19" },
-      // { tag: "cardiovascular", header: "Cardiovascular" },
       { tag: "HeartFailure", header: "Videos of Heart Failure" },
       {
         tag: [
@@ -145,15 +171,6 @@ class Home extends Component {
         header: "Videos on Other Respiratory Diseases",
         multipleTags: true,
       },
-      // { tag: 'Recommendations', header: 'Videos on Recommendations' },
-      // { tag: 'Pediatric asthma', header: 'Videos on Pediatric asthma' },
-      // { tag: 'Expert Views', header: 'Videos on Expert Views' },
-      // { tag: 'Pulmonary Hypertension', header: 'Videos on Pulmonary Hypertension' },
-
-      // { tag: 'Bronchiectasis', header: 'Videos on Bronchiectasis' },
-      // { tag: 'Diagnosis', header: 'Videos on Diagnosis' },
-
-      // { tag: 'Inhalation Devices', header: 'Videos on Inhalation Devices' },
     ],
 
     tags: [
@@ -169,21 +186,10 @@ class Home extends Component {
       { tag: "ILD/IPF", header: "ILD/IPF" },
       { tag: "Telemedicine", header: "Telemedicine" },
       { tag: "covid19", header: "COVID-19" },
-      // { tag: "cardiovascular", header: "Cardiovascular" },
       { tag: "HeartFailure", header: "Heart Failure" },
       { tag: "nebulization", header: "Nebulization" },
       { tag: "anti fungal", header: "Anti Fungal" },
-
-
       // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
-      // { tag: 'Recommendations', header: 'Recommendations' },
-      // { tag: 'Pediatric asthma', header: 'Pediatric asthma' },
-      // { tag: 'Expert Views', header: 'Expert Views' },
-      // { tag: 'Pulmonary Hypertension', header: 'Pulmonary Hypertension' },
-
-      // { tag: 'Bronchiectasis', header: 'Bronchiectasis' },
-      // { tag: 'Diagnosis', header: 'Diagnosis' },
-      // { tag: 'Inhalation Devices', header: 'Inhalation Devices' },
     ],
     activeTag: { tag: "Impact Sessions", header: "Videos of Impact session" },
     lastPlayed: null,
@@ -659,7 +665,7 @@ class Home extends Component {
         },
       }).then((value) => {
         console.log(value);
-
+        document.body.style.overflow = "auto";
         switch (value) {
           case "updateInfo":
             this.runUpdateInfoProcess();
@@ -725,6 +731,11 @@ class Home extends Component {
   };
 
   componentDidMount() {
+    console.log(this.context.userInfo);
+
+    if (this.context.userInfo) {
+    }
+
     firestore
       .collection(BACKSTAGE_COLLECTION)
       .doc(PLATFORM_BACKSTAGE_DOC)
@@ -751,9 +762,7 @@ class Home extends Component {
           }
         }
       });
-  }
-  componentDidMount() {
-    // console.log(this.props);
+
     window.addEventListener("scroll", () => {
       if (
         document.body.scrollTop > window.innerHeight ||
@@ -796,11 +805,11 @@ class Home extends Component {
               }}
             />
           </div>
-          {/* <Chatbot
+          <Chatbot
             videoVisible={this.state.videopopVisible}
             history={this.props}
             videoData={this.state.videoPopupData}
-          /> */}
+          />
         </div>
         <div className="topicsBox__wrapper" id="homePageConatiner">
           <Header
@@ -834,6 +843,19 @@ class Home extends Component {
               />
 
               <div className="contentBox" ref={this.contentBoXTop}>
+                {RecommendedRow.map((row) => (
+                  <VideoRow
+                    key={row.tag}
+                    heading={row.header}
+                    lastPlayed={this.state.lastPlayed}
+                    tag={row.tag}
+                    openVideoPop={this.openVideoPop}
+                    grid={false}
+                    multipleTags={row.multipleTags}
+                    systemTags
+                    rowData={row}
+                  />
+                ))}
                 {this.state.activeTag !== "" && (
                   <VideoRow
                     key={this.state.activeTag}
@@ -845,6 +867,20 @@ class Home extends Component {
                     multipleTags={this.state.activeTag.multipleTags}
                   />
                 )}
+                {preDefinedRows.map((row) => (
+                  <VideoRow
+                    key={row.tag}
+                    heading={row.header}
+                    lastPlayed={this.state.lastPlayed}
+                    tag={row.tag}
+                    openVideoPop={this.openVideoPop}
+                    grid={false}
+                    multipleTags={row.multipleTags}
+                    systemTags
+                    rowData={row}
+                  />
+                ))}
+
                 {this.state.rows.map((row) => (
                   <>
                     {row.tag !== this.state.activeTag.tag && (
@@ -909,6 +945,10 @@ class Home extends Component {
                   videopopVisible: false,
                 });
               }}
+              showIntersetSelection={() => {
+                const { history } = this.props;
+                if (history) history.push(INTEREST_ROUTE);
+              }}
             />
           </Route>
         </Switch>
@@ -922,7 +962,15 @@ export default withRouter(Home);
 Home.contextType = UserContext;
 
 function CheckState(props) {
-  const { resetVideoPopup } = props;
+  const { resetVideoPopup, showIntersetSelection } = props;
+  const { userInfo } = useContext(UserContext);
+
+  useEffect(() => {
+    if (userInfo && !userInfo.interests && showIntersetSelection) {
+      // console.log(userInfo)
+      showIntersetSelection();
+    }
+  }, [userInfo]);
   useEffect(() => {
     resetVideoPopup();
   }, []);
