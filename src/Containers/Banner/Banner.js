@@ -49,12 +49,12 @@ const BannerType = {
 const BannerData = [
   {
     type: BannerType.LiveEvent,
-    mainTitle: "Bronchodilators for COPD: When, where and which",
+    mainTitle: "Covid Antibody Cocktail Therapy A ray of Hope for country to win over Covid-19",
     subTitle: "",
-    eventId: "copdmanagement",
+    eventId: "apicon",
     mainImageUrl: "",
     needCountDown: true,
-    mainImageUrl: 'https://storage.googleapis.com/cipla-impact.appspot.com/copdmanagement/BannerImage.png',
+    mainImageUrl: 'https://storage.googleapis.com/cipla-impact.appspot.com/apicon/preEventPage_right_speakers.png',
   },
   {
     type: BannerType.Custom2,

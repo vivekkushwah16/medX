@@ -32,7 +32,7 @@ export const EventChecker = (props) => {
   //Router hooks
   let { url } = useRouteMatch();
   let { event } = useParams();
-  if(event){
+  if (event) {
     event = event.toLowerCase()
   }
   const history = useHistory();
@@ -53,10 +53,10 @@ export const EventChecker = (props) => {
         }
         const activeEventList = doc.data().activeEventList;
         if (activeEventList.hasOwnProperty(event.toLowerCase())) {
-          if (activeEventList[event.toLowerCase()].disabled) {
-            history.push(`/home`);
-            return;
-          }
+          // if (activeEventList[event.toLowerCase()].disabled && props.env !== "dev") {
+          //   history.push(`/home`);
+          //   return;
+          // }
           if (props.env === "dev") {
             activeEventList[event.toLowerCase()].status = props.forceState;
           }
