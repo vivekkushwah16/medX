@@ -816,7 +816,7 @@ class Home extends Component {
           <Banner />
 
           <div className="tabBox" id="homeVideoContainer">
-            <div class="container" id="ottContent">
+            <div className="container" id="ottContent">
               <div
                 style={{
                   zIndex: "1",
@@ -850,7 +850,7 @@ class Home extends Component {
                   />
                 )}
                 {this.state.rows.map((row) => (
-                  <>
+                  <div key={row.header}>
                     {row.tag !== this.state.activeTag.tag && (
                       <VideoRow
                         key={row.tag}
@@ -862,7 +862,7 @@ class Home extends Component {
                         multipleTags={row.multipleTags}
                       />
                     )}
-                  </>
+                  </div>
                 ))}
               </div>
             </div>

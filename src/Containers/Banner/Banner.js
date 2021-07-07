@@ -158,7 +158,7 @@ function Banner() {
     >
       <Slider className="slider-banner-desktop" {...settings}>
         {BannerData.map((item) => (
-          <>
+          <div key={item.mainImageUrl}>
             {item.type === BannerType.LiveEvent && (
               <LiveEventBanner data={item} enterEvent={enterEvent} />
             )}
@@ -180,7 +180,7 @@ function Banner() {
             {item.type === BannerType.Custom2 && (
               <Custom2 data={item} goToRoute={goToRoute} />
             )}
-          </>
+          </div>
         ))}
       </Slider>
 

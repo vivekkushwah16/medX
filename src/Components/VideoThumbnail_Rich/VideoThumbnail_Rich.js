@@ -57,7 +57,7 @@ function VideoThumbnail_Rich(props) {
             // onClickCapture={() => {openVideoPop(videoInfo, videosData);handleOnItemClick()}}
             >
                 {/* <img className="contentBox__item-pic" src={videoInfo.thumnailUrl} alt="" /> */}
-                <a href="" style={{pointerEvents: "none"}} class="contentBox__item-play"><i class="icon-play"></i></a>
+                <a href="" style={{pointerEvents: "none"}} className="contentBox__item-play"><i className="icon-play"></i></a>
                 <a className={`contentBox__item-title ${bandClassName}`}>
                     {videoInfo.title}
                     <br></br>

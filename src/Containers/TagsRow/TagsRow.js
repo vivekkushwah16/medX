@@ -13,11 +13,18 @@ export default function TagsRow(props) {
   const [sticky, setSticky] = useState(false);
 
   function SampleNextArrow(props) {
+     console.log(props);
+    console.log(Math.round(props.slideCount / 2));
+    console.log(props.currentSlide);
     const { className, style, onClick } = props;
     return (
       <button
         style={{
-          display: className.includes("slick-disable") ? "none" : "block",
+          display: className.includes("slick-disable")
+            ? "none"
+            : Math.round(props.slideCount / 2) <= props.currentSlide
+            ? "none"
+            : "block",
         }}
         className={`slider-btn slider-btn-next `}
         onClick={onClick}
@@ -74,7 +81,7 @@ export default function TagsRow(props) {
       if (navBar.current) {
         window.addEventListener("scroll", handleScroll);
         // console.log(navBar.current.offsetTop)
-        return navBar.current.offsetTop < 0
+        return navBar.current.offsetTop <= 0
           ? window.innerHeight + navBar.current.offsetTop - 100
           : navBar.current.offsetTop;
       }

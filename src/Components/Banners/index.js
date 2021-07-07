@@ -14,7 +14,7 @@ export function Custom1(props) {
         className="bannerBox__slide"
         style={{ backgroundImage: `url(${data.mainImageUrl})` }}
       >
-        <div class="container">
+        <div className="container">
           <div
             className={
               isMobileOnly ? "bannerBox__left flexBoxC" : "bannerBox__left"
@@ -68,7 +68,7 @@ export function Custom2(props) {
         className="bannerBox__slide"
         style={{ backgroundImage: `url(${data.mainImageUrl})` }}
       >
-        <div class="container">
+        <div className="container">
           <div
             className={
               isMobileOnly ? "bannerSubLogo flexBoxC" : "bannerSubLogo"
@@ -100,8 +100,8 @@ export function LiveEventBanner(props) {
         className="bannerBox__slide"
         style={{ backgroundImage: "url(/assets/images/banner-bg2.jpg)" }}
       >
-        <div class="container">
-          <div class="d-flex">
+        <div className="container">
+          <div className="d-flex">
             <div className="bannerBox__left">
                ̰
               <h1 className="bannerBox__title mg-b30">{data.mainTitle}</h1>
@@ -139,7 +139,7 @@ export function ImageSingleButtonBanner(props) {
   return (
     <div className="bannerBox__inner gradient-bg2">
       <div className="bannerBox__slide">
-        <div class="container">
+        <div className="container">
           <div className="bannerBox__left">
             <h1
               className="bannerBox__featired-title mg-b50"
@@ -186,7 +186,7 @@ export function PromoVideoBanner(props) {
         className="bannerBox__slide"
         style={{ backgroundImage: `url(${data.mainImageUrl})` }}
       >
-        <div class="container">
+        <div className="container">
           <div className="bannerBox__left">
             <span
               className="bannerBox__subtitle mg-b0"
@@ -229,8 +229,8 @@ export function UpcompingEventBanner(props) {
         className="bannerBox__slide"
         style={{ backgroundImage: "url(/assets/images/banner-bg2.jpg)" }}
       >
-        <div class="container">
-          <div class="d-flex">
+        <div className="container">
+          <div className="d-flex">
             <div className="bannerBox__left">
               <h1 className="bannerBox__maintitle mg-b30">{data.mainTitle}</h1>
               <p className="bannerBox__subtitle mg-b30">

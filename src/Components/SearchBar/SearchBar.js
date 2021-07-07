@@ -12,11 +12,11 @@ const SearchBar = React.memo((props) => {
 
   return (
     <div
-      className="search-container"
-      style={{
-        top:
-          !sticky && history.location.pathname.includes("home") ? "77vh" : "",
-      }}
+      className={`search-container ${
+        !sticky &&
+        history.location.pathname.includes("home") &&
+        "search-container-top"
+      }`}
     >
       <form>
         <input

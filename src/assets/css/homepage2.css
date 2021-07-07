@@ -152,7 +152,7 @@
 }
 
 /* All Mobile Sizes (devices and browser) */
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
     .bannerBox__inner.bannerBox__inner--small { min-height: auto; }
     .bannerBox__center { margin-left: auto; margin-right: auto; bottom: -340px; width: 320px; max-width: 375px; left: 10%; }
     .bannerBox__slide { padding: 8rem 2rem 2rem; flex-direction: column; text-align: center; justify-content: center; }
@@ -167,7 +167,7 @@
     .contentBox__item { margin-right: 2rem; }
     .bannerBox__pic { margin: 0; }
     .tabBox { padding-top: 0; margin-top: 0; padding-bottom: 2rem; }
-    /* .tabBox__list { display: none; } */
+    .tabBox__list { margin: -6.25rem 0 0rem -1rem;padding: 2rem 1rem;}
     .slick-dotted.slick-slider { margin-bottom: 0; }
     .tabBox.tabBox--new { margin-top: -12rem; }
     .maincardBox__card.maincardBox__card--large .maincardBox__card-right { padding-right: 0; }
@@ -184,4 +184,11 @@
 
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 480px) {
+     .bannerSubLogo .btn{
+        margin-left: 0;
+    }
+}
+@media only screen and (max-width: 320px) {
+    .tabBox__list { margin: -11.25rem 0 2rem -1rem;}
+   
 }

@@ -2,6 +2,9 @@
   position: relative;
   left: -2vw;
 }
+.search-container-top {
+  top: 77vh;
+}
 
 .search-container input[type="text"] {
   font-size: 1rem;
@@ -31,4 +34,23 @@
 
 .search-container button:active {
   transform: scale(0.95);
+}
+@media only screen and (max-width: 1090px) {
+  .search-container-top {
+    top: 79vh;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .search-container-top {
+    top: 85vh;
+  }
+  .search-container {
+    left: -5vw;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .search-container {
+    display: none;
+  }
 }
