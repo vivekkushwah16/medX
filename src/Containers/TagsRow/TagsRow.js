@@ -28,7 +28,19 @@ export default function TagsRow(props) {
       width <= 1024
     ) {
       return "none";
-    } else if (props.slideCount - props.currentSlide === 8 && width > 1024) {
+    } else if (
+      props.slideCount - props.currentSlide === 6 &&
+      width > 1024 &&
+      width <= 1496
+    ) {
+      return "none";
+    } else if (
+      props.slideCount - props.currentSlide === 7 &&
+      width > 1496 &&
+      width <= 1600
+    ) {
+      return "none";
+    } else if (props.slideCount - props.currentSlide === 8 && width > 1600) {
       return "none";
     }
   };
