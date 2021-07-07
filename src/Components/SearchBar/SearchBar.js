@@ -13,9 +13,12 @@ const SearchBar = React.memo((props) => {
   return (
     <div
       className={`search-container ${
-        !sticky &&
-        history.location.pathname.includes("home") &&
-        "search-container-top"
+        !sticky && history.location.pathname.includes("home")
+          ? "search-container-top"
+          : sticky && history.location.pathname.includes("home")
+          ? "search-container-hide"
+          : history.location.pathname.includes("search") &&
+            "search-mobile-container"
       }`}
     >
       <form>

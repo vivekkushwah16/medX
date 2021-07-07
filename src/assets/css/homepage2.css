@@ -160,7 +160,7 @@
     .bannerBox__slide > .container > .d-flex { flex-direction: column; text-align: center; }
     .bannerBox__date, .bannerBox__subtitle { display: block; }
     .bannerBox__left { padding-bottom: 0rem; order: 2; text-align: center; width: 100%; }
-    .bannerBox__inner { min-height: 58rem; padding-bottom: 15rem; }
+    .bannerBox__inner { min-height: 53rem; padding-bottom: 15rem; }
     .bannerBox__inner::after { height: 12.5rem; }
     .bannerBox__right { padding-bottom: 2rem; order: 1; width: 100%; }
     .splide__slide img { max-width: 23rem; }
