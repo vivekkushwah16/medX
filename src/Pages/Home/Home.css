@@ -285,13 +285,13 @@ body {
   padding: 0.85rem;
   margin: 0;
   margin-top: 5.5rem;
-  background: black;
-  background: linear-gradient(
+  background: #242424;
+  /* background: linear-gradient(
     90deg,
     #000000cc 0%,
     rgb(0 0 0 / 93%) 72.82%,
     rgb(0 0 0 / 0%) 129.25%
-  ) !important;
+  ) !important; */
 }
 
 @media only screen and (max-width: 992px) {
