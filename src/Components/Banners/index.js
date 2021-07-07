@@ -119,7 +119,7 @@ export function LiveEventBanner(props) {
                 onClick={(e) => {
                   e.preventDefault();
                   // console.log(data.eventId);
-                  props.enterEvent(data.eventId);
+                  props.enterEvent(data.eventName);
                 }}
               >
                 ENTER EVENT

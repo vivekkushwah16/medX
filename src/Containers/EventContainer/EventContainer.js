@@ -380,7 +380,7 @@ export default function EventContainer(props) {
                         addClickAnalytics(FEEDBACK_CLICK);
                         showMediaModal(
                           MediaModalType.PDF,
-                          "/feedback/index.html"
+                          `/feedback/index.html?id=123&event=${props.event}&title=${props.eventTitle}`
                         );
                       }}
                     >

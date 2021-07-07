@@ -363,7 +363,7 @@ class Register extends Component {
             name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
               }`,
             isDoctor: this.state.profession === "Doctor",
-            event: this.props.event,
+            event: this.props.eventData.eventName,
             date: this.props.eventDate ? this.props.eventDate : `03 July 2021`,
           },
         });

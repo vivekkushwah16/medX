@@ -109,7 +109,7 @@ class Login extends Component {
 
   redirectToHome = () => {
     const { history } = this.props;
-    if (history) history.push(`/${this.props.event}`);
+    if (history) history.push(`/${this.props.eventData.eventName}`);
   };
 
   handleSubmit = (event) => {

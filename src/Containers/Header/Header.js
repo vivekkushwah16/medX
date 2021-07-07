@@ -60,9 +60,8 @@ export default function Header(props) {
 
   return (
     <div
-      className={` headerBox--full pd-r0 ${
-        sticky ? "headerBox_sticky" : "headerBox"
-      }`}
+      className={` headerBox--full pd-r0 ${sticky ? "headerBox_sticky" : "headerBox"
+        }`}
       ref={navBar}
       id="header"
     >
@@ -80,8 +79,8 @@ export default function Header(props) {
                   props.whiteLogo
                     ? CIPLAMEDXLOGO_WHITE
                     : props.eventPage
-                    ? props.eventAndCiplaLogo
-                    : CIPLAMEDXLOGO
+                      ? props.eventAndCiplaLogo
+                      : CIPLAMEDXLOGO
                 }
                 alt="CIPLAMEDXLOGO"
               />
@@ -135,6 +134,7 @@ export default function Header(props) {
               <InviteFriend
                 eventTitle={props.eventTitle}
                 event={props.event}
+                eventData={props.eventData}
                 toggleInviteFriendModal={toggleInviteFriendModal}
                 showInviteFriendModal={showInviteFriendModal}
               />
