@@ -12,19 +12,35 @@ export default function TagsRow(props) {
   const navBar = useRef(null);
   const [sticky, setSticky] = useState(false);
 
+  const checkArrowHide = (props) => {
+    let width = window.innerWidth;
+    if (props.slideCount - props.currentSlide === 2 && width <= 360) {
+      return "none";
+    } else if (
+      props.slideCount - props.currentSlide === 3 &&
+      width > 360 &&
+      width <= 414
+    ) {
+      return "none";
+    } else if (
+      props.slideCount - props.currentSlide === 5 &&
+      width > 414 &&
+      width <= 1024
+    ) {
+      return "none";
+    } else if (props.slideCount - props.currentSlide === 8 && width > 1024) {
+      return "none";
+    }
+  };
+
   function SampleNextArrow(props) {
-     console.log(props);
-    console.log(Math.round(props.slideCount / 2));
-    console.log(props.currentSlide);
     const { className, style, onClick } = props;
     return (
       <button
         style={{
           display: className.includes("slick-disable")
             ? "none"
-            : Math.round(props.slideCount / 2) <= props.currentSlide
-            ? "none"
-            : "block",
+            : checkArrowHide(props),
         }}
         className={`slider-btn slider-btn-next `}
         onClick={onClick}
@@ -54,7 +70,7 @@ export default function TagsRow(props) {
     arrows: true,
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
-    slidesToShow: 1,
+    // slidesToShow: 1,
     variableWidth: true,
     slidesToScroll: 1,
     rows: 1,
