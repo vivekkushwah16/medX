@@ -67,7 +67,7 @@ function PreEvent(props) {
           name: `${userInfo.firstName} ${userInfo.lastName ? userInfo.lastName : ""
             }`,
           isDoctor: userInfo.profession === "Doctor",
-          event: props.event,
+          event: props.eventData.eventName,
           date: props.eventDate ? props.eventDate : `03 July 2021`,
         },
       });
@@ -218,7 +218,7 @@ function PreEvent(props) {
   return (
     <>
       <div className="evolve__main__div preventPage">
-        <Header event={props.event} eventTitle={props.eventTitle} />
+        <Header event={props.event} eventTitle={props.eventTitle} eventData={props.eventData} />
         <div className="mobile__layout">
           <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preevent_mobile_Speaker.png?updated=${Math.random() * 100}`} alt="" className="evolve__logo" />
           {/* <img src={rightMobileTest} alt="" className="evolve__logo" /> */}
@@ -275,7 +275,7 @@ function PreEvent(props) {
                           Add to Calendar
                     </button> 
                     */}
-                    <AddToCalendar blueBtn={true} />
+                    <AddToCalendar blueBtn={true} calendatDetails={props.calendatDetails} eventId={props.event} eventData={props.eventData} />
                     {
                       !props.canEnterEvent &&
                       <button
@@ -294,7 +294,7 @@ function PreEvent(props) {
                         className="btn btn-secondary  explore-btn"
                         onClick={(e) => {
                           if (history) {
-                            history.push(`/${props.event}`);
+                            history.push(`/${props.eventData.eventName}`);
                           }
                         }}
                       >
@@ -384,7 +384,7 @@ function PreEvent(props) {
                   </div>
 
                   <div className="buttons">
-                    <AddToCalendar blueBtn={true} calendatDetails={props.calendatDetails} eventId={props.event} />
+                    <AddToCalendar blueBtn={true} calendatDetails={props.calendatDetails} eventId={props.event} eventData={props.eventData} />
                     {
                       !props.canEnterEvent &&
                       <button
@@ -403,7 +403,7 @@ function PreEvent(props) {
                         className="btn btn-secondary  explore-btn"
                         onClick={(e) => {
                           if (history) {
-                            history.push(`/${props.event}`);
+                            history.push(`/${props.eventData.eventName}`);
                           }
                         }}
                       >
@@ -447,7 +447,7 @@ function PreEvent(props) {
       <Switch>
         <Route path={`/:event/profile`}>
           {userInfo ? (
-            <Myprofile returnUrl={`/${props.event}`} />
+            <Myprofile returnUrl={`/${props.eventData.eventName}`} />
           ) : (
             <div className="loaderContainer">
               <div className="lds-dual-ring"></div>

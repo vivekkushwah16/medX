@@ -220,6 +220,8 @@ export default function Event(props) {
               <Header
                 event={props.event}
                 eventTitle={props.eventTitle}
+                addClickAnalytics={addClickAnalytics}
+                eventData={props.eventData}
                 showCertificate={false}
                 showFeedback={false}
                 disableFeedback={false}
@@ -232,6 +234,7 @@ export default function Event(props) {
                 event={props.event}
                 eventTitle={props.eventTitle}
                 addClickAnalytics={addClickAnalytics}
+                eventData={props.eventData}
                 showCertificate={true}
                 showFeedback={true}
                 disableFeedback={

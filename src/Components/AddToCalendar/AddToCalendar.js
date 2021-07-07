@@ -7,7 +7,7 @@ import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvid
 import { ADDTOCALENDAR_ANALYTICS_EVENT } from "../../AppConstants/AnalyticsEventName";
 
 export default function AddToCalendar(props) {
-  const { calendatDetails, eventId } = props
+  const { calendatDetails, eventId, eventData } = props
   const startDatetime = moment(calendatDetails ? calendatDetails.startTime : "2021-06-05 17:00:00").utc();
   const endDatetime = startDatetime.clone().add((calendatDetails ? calendatDetails.duration : 1), "hours");
   const duration = endDatetime.diff(startDatetime, "hours");
@@ -16,7 +16,7 @@ export default function AddToCalendar(props) {
       calendatDetails ? calendatDetails.description : "",
     duration,
     endDatetime: endDatetime.format("YYYYMMDDTHHmmssZ"),
-    location: `https://ciplamedx.com/${eventId}/register`,
+    location: `https://ciplamedx.com/${eventData.eventName}/register`,
     startDatetime: startDatetime.format("YYYYMMDDTHHmmssZ"),
     title: calendatDetails ? calendatDetails.title : eventId,
   };

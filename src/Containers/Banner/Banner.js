@@ -52,6 +52,7 @@ const BannerData = [
     mainTitle: "Covid Antibody Cocktail Therapy A ray of Hope for country to win over Covid-19",
     subTitle: "",
     eventId: "apicon",
+    eventName: "ronaprevewebcast",
     mainImageUrl: "",
     needCountDown: true,
     mainImageUrl: 'https://storage.googleapis.com/cipla-impact.appspot.com/apicon/preEventPage_right_speakers.png',

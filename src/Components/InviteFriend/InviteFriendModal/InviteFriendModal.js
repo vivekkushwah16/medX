@@ -10,6 +10,7 @@ import { AnalyticsContext } from "../../../Context/Analytics/AnalyticsContextPro
 import {
   INVITEYOURFRIEND_EVENT_EMAIL,
   INVITEYOURFRIEND_EVENT_FACEBOOK,
+  INVITEYOURFRIEND_EVENT_MOBILE_NATIVE_SHARE,
   INVITEYOURFRIEND_EVENT_TWITTER,
   INVITEYOURFRIEND_EVENT_WHATSAPP,
 } from "../../../AppConstants/AnalyticsEventName";
@@ -25,7 +26,7 @@ export default function InviteFriendModal(props) {
   const alert = useAlert();
   // const [url, setUrl] = useState(window.location.href);
   const [url, setUrl] = useState(
-    `https://ciplamedx.com/${props.event}/register`
+    `https://ciplamedx.com/${props.eventData.eventName}/register`
   );
   //   const [urlShare, setUrlShare] = useState(
   //     "I+invite+you+to+register+for+IMPACT+%2721+on+the+CiplaMedX+Platform.%0D%0A%0D%0AIMPACT+%2721+is+a+2+Day+Cutting-Edge+academic+feast+with+Experts+in+Respiratory+Medicine+being+organized+on+16-17th+April+2021.%0D%0A%0D%0Ahttps%3A%2F%2Fciplamedx.com%2Fregister%2Fimpact"
@@ -34,7 +35,7 @@ export default function InviteFriendModal(props) {
     window.encodeURI(
       props.message
         ? props.message
-        : `Join us for ${props.eventTitle} on the CiplaMedX platform by registering at the following link: https://ciplamedx.com/${props.event}/register`
+        : `Join us for ${props.eventTitle} on the CiplaMedX platform by registering at the following link: https://ciplamedx.com/${props.eventData.eventName}/register`
     )
   );
   const [textArea, setTextarea] = useState({});
@@ -56,10 +57,11 @@ export default function InviteFriendModal(props) {
   };
 
   const shareOnce = () => {
+    addAnalytics(INVITEYOURFRIEND_EVENT_MOBILE_NATIVE_SHARE);
     if (navigator.share) {
       navigator.share({
-        text: `Join us for ${props.eventTitle} on the CiplaMedX platform by registering at the following link:  https://ciplamedx.com/${props.event}/register`,
-        url: `https://ciplamedx.com/${props.event}/register`, //window.location.href,
+        text: `Join us for ${props.eventTitle} on the CiplaMedX platform by registering at the following link:  https://ciplamedx.com/${props.eventData.eventName}/register`,
+        url: `https://ciplamedx.com/${props.eventData.eventName}/register`, //window.location.href,
       });
     }
   };
@@ -92,7 +94,7 @@ export default function InviteFriendModal(props) {
             email: email.toLowerCase(),
             senderMail: userInfo.email,
             link,
-            event: props.event,
+            event: props.eventData.eventName,
             title: props.eventTitle,
           }
         )
