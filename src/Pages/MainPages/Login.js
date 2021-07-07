@@ -265,7 +265,7 @@ class Login extends Component {
                 <form onSubmit={this.handleSubmit}>
                   <div className="form-group mg-b30">
                     <p className=" mg-b10" style={{ color: "#015189",textAlign: 'justify' }}>
-                      If you have already registered, Please enter your Registered Mobile Number to singup for the event.
+                      If you have already registered, Please enter your Registered Mobile Number to Signup for the event.
                     </p>
                     <PhoneInput
                       international
