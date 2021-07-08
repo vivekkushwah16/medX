@@ -181,11 +181,19 @@
     .bannerBox.bannerBox--large .slider-banner-desktop .bannerBox__slide { padding-left: 0; }
     .slider-banner-desktop .slick-dots { bottom: 4rem; }
 }
+@media only screen and (max-width: 640px) {
+    .tabBox__list {
+        margin: -23.25rem 0 0rem -1rem;
+    }
+}
 
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 480px) {
      .bannerSubLogo .btn{
         margin-left: 0;
+    }
+    .tabBox__list {
+        margin: -8.25rem 0 0rem -1rem;
     }
 }
 @media only screen and (max-width: 320px) {

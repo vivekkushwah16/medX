@@ -63,11 +63,20 @@ export default function Header(props) {
       } else {
         setSticky(false);
       }
-        if (window.pageYOffset > window.innerHeight*0.8) {
-          setSearchBarSticky(true);
-        } else {
-          setSearchBarSticky(false);
-        }
+      if (
+        window.pageYOffset >
+          window.innerHeight + navBar.current.offsetTop + 100 &&
+        window.innerHeight <= 600
+      ) {
+        setSearchBarSticky(true);
+      } else if (
+        window.pageYOffset > window.innerHeight * 0.8 &&
+        window.innerHeight > 600
+      ) {
+        setSearchBarSticky(true);
+      } else {
+        setSearchBarSticky(false);
+      }
     } catch (error) {
       // console.log(error);
     }

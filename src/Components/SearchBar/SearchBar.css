@@ -44,8 +44,13 @@
 }
 @media only screen and (max-width: 1090px) {
   .search-container-top {
-    top: -11vh;
+    top: -12vh;
     left: 32vw;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .search-container-top {
+    top: -11vh;
   }
 }
 @media only screen and (max-width: 768px) {
@@ -53,8 +58,14 @@
     left: -5vw;
   }
   .search-container-top {
-    top: -8vh;
+    top: -10vh;
     left: 30vw;
+  }
+}
+@media only screen and (max-width: 670px) {
+  .search-container-top {
+    top: -20vh;
+    left: 23vw;
   }
 }
 
