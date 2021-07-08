@@ -39,6 +39,7 @@ export default function Header(props) {
 
   const navBar = useRef(null);
   const [sticky, setSticky] = useState(false);
+  const [searchBarSticky, setSearchBarSticky] = useState(false);
   const [yOffset, setyOffset] = useState(100);
   useEffect(() => {
     if (stickyOnScroll) {
@@ -62,6 +63,11 @@ export default function Header(props) {
       } else {
         setSticky(false);
       }
+        if (window.pageYOffset > window.innerHeight*0.8) {
+          setSearchBarSticky(true);
+        } else {
+          setSearchBarSticky(false);
+        }
     } catch (error) {
       // console.log(error);
     }
@@ -104,7 +110,7 @@ export default function Header(props) {
             <SearchBar
               doSearch={doSearch}
               initalSearchKeyword={initalSearchKeyword}
-              sticky={sticky}
+              sticky={searchBarSticky}
             />
           )}
 

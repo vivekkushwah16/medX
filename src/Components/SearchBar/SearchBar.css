@@ -1,9 +1,15 @@
 .search-container {
   position: relative;
   left: -2vw;
+  display: block;
+}
+.search-container-show {
+  display: none;
 }
 .search-container-top {
-  top: 77vh;
+  position: absolute;
+  top: -17vh;
+  left: 39vw;
 }
 
 .search-container input[type="text"] {
@@ -12,6 +18,7 @@
   border: 0.08rem solid white;
   border-radius: 0.45rem;
   min-width: 25rem;
+  outline: none;
   background: transparent;
   color: #ffffff;
 }
@@ -37,15 +44,17 @@
 }
 @media only screen and (max-width: 1090px) {
   .search-container-top {
-    top: 79vh;
+    top: -11vh;
+    left: 32vw;
   }
 }
 @media only screen and (max-width: 768px) {
-  .search-container-top {
-    top: 85vh;
-  }
   .search-container {
     left: -5vw;
+  }
+  .search-container-top {
+    top: -8vh;
+    left: 30vw;
   }
 }
 

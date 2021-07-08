@@ -49,6 +49,7 @@ import {
 import VideoManager from "../../Managers/VideoManager";
 import Myprofile from "../../Containers/myProfile/Myprofile";
 import Chatbot from "../../Components/chatbot/Chatbot";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
 
@@ -829,7 +830,11 @@ class Home extends Component {
                     "linear-gradient(to right, transparent , black)",
                 }}
               ></div>
-
+              <SearchBar
+                doSearch={this.doSearch}
+                initalSearchKeyword={""}
+                sticky={false}
+              />
               <TagsRow
                 tags={this.state.tags}
                 stickyOnScroll={true}
