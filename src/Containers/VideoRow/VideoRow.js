@@ -22,7 +22,10 @@ function SampleNextArrow(props) {
       }`}
       onClick={onClick}
     >
-      <i className="icon-angle-right"></i>
+      <i
+        style={{ fontWeight: 900, textShadow: "0 0 10px white" }}
+        className="icon-angle-right"
+      ></i>
     </button>
   );
 }
@@ -36,7 +39,10 @@ function SamplePrevArrow(props) {
       }`}
       onClick={onClick}
     >
-      <i className="icon-angle-left"></i>
+      <i
+        style={{ fontWeight: 900, textShadow: "0 0 10px white" }}
+        className="icon-angle-left"
+      ></i>
     </button>
   );
 }

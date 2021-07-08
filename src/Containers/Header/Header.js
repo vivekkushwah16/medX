@@ -12,6 +12,7 @@ import { RootRoute } from "../../AppConstants/Routes";
 import { MediaModalContext } from "../../Context/MedialModal/MediaModalContextProvider";
 import { MediaModalType } from "../../AppConstants/ModalType";
 import Certificate from "../../Components/Certificate/Certificate";
+import { useHistory } from "react-router-dom";
 import "./Header.css";
 import {
   CERTIFICATE_CLICK,
@@ -24,14 +25,21 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 
 //showCertificate, showFeedback
 export default function Header(props) {
+  let history = useHistory();
   // console.log(props);
-  const { stickyOnScroll, addClickAnalytics, showSearchBar, doSearch, initalSearchKeyword } = props;
+  const {
+    stickyOnScroll,
+    addClickAnalytics,
+    showSearchBar,
+    doSearch,
+    initalSearchKeyword,
+  } = props;
   const [showInviteFriendModal, toggleInviteFriendModal] = useState(false);
   const { showMediaModal } = useContext(MediaModalContext);
 
   const navBar = useRef(null);
   const [sticky, setSticky] = useState(false);
-  const [yOffset, setyOffset] = useState(0);
+  const [yOffset, setyOffset] = useState(100);
   useEffect(() => {
     if (stickyOnScroll) {
       // console.log(navBar.current)
@@ -148,7 +156,13 @@ export default function Header(props) {
                 showInviteFriendModal={showInviteFriendModal}
               />
             )}
-            <Link to="/search" className="mobile-search-btn">
+            <Link
+              to="/search"
+              style={{
+                display: history.location.pathname.includes("search") && "none",
+              }}
+              className="mobile-search-btn"
+            >
               <i className="icon-search"></i>
             </Link>
             <Notification
