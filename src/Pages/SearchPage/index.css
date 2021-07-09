@@ -25,6 +25,7 @@
   background: #0a0a0a;
   padding: 2rem 2.5rem;
   overflow: auto;
+  z-index: 2;
 }
 
 .searchPage_ResultContainer {
@@ -33,6 +34,7 @@
   background: #131313;
   padding: 1.125rem;
   overflow: auto;
+  z-index: 1;
 }
 
 .searchPage_Body .emptyMsg {
