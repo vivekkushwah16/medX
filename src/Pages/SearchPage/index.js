@@ -330,98 +330,99 @@ export default function SearchPage() {
     }, [])
 
     return (
-        <>
-            <div className="topicsBox__wrapper" id="searchPageConatiner">
-                <Header
-                    hideInviteFriend={true}
-                    whiteLogo={true}
-                    stickyOnScroll={true}
-
-                    showSearchBar={true}
-                    initalSearchKeyword={lastQuery.current}
-                    doSearch={implementSearch}
-                />
-                <div className="searchPage_Body">
-                    <div className="searchPage_SideBar">
-                        <form>
-                            <div className="searchOptionsCotainer">
-                                <p className="option_heading">Sort By</p>
-                                <RadioButton
-                                    name={"sort"}
-                                    label={"Views"}
-                                    value={SORTBY_VALUES.byViews}
-                                    onClick={handleRadioClick}
-                                    checked={sortBy === SORTBY_VALUES.byViews}
-                                />
-                                <RadioButton
-                                    name={"sort"}
-                                    label={"Likes"}
-                                    value={SORTBY_VALUES.byLikes}
-                                    onClick={handleRadioClick}
-                                    checked={sortBy === SORTBY_VALUES.byLikes}
-                                />
-                                <RadioButton
-                                    name={"sort"}
-                                    label={"UploadDate"}
-                                    value={SORTBY_VALUES.byUploadDate}
-                                    onClick={handleRadioClick}
-                                    checked={sortBy === SORTBY_VALUES.byUploadDate}
-                                />
-                            </div>
-
-                            <div className="searchOptionsCotainer">
-                                <p className="option_heading">Filter By</p>
-                                {
-                                    FILTERBY_VALUES.map(filter => (
-                                        <CheckBox
-                                            key={filter}
-                                            label={filter}
-                                            onChange={handleCheckboxChange}
-                                            checked={filterBy.indexOf(filter) !== -1}
-                                            disabled={showLoading}
-                                        />
-                                    ))
-                                }
-                            </div>
-
-                        </form>
-                    </div>
-                    <div className="searchPage_ResultContainer">
-                        {
-                            !searchResults &&
-                            <p className="emptyMsg">
-                                Please use search for exploring awesome content.
-                            </p>
-                        }
-                        {
-                            searchResults &&
-                            searchResults.map(video => (
-                                <SearchResultVideo
-                                    key={video.id}
-                                    currentVideoData={video}
-                                    openVideoPop={(currentVideoData) => {
-                                        let returnUrl = window.location.search
-                                        if (returnUrl) {
-                                            returnUrl = returnUrl.substring(1, returnUrl.length)
-                                            let pushURl = `/search/${currentVideoData.id}?return=${encodeURIComponent(returnUrl)}`
-                                            history.push(pushURl);
-                                        } else {
-                                            history.push(`/search/${currentVideoData.id}`)
-                                        }
-
-                                    }}
-                                />
-                            ))
-                        }
-                        {
-                            searchResults &&
-                            <hr />
-                        }
-                    </div>
+      <>
+        <div className="topicsBox__wrapper" id="searchPageConatiner">
+          <Header
+            hideInviteFriend={true}
+            whiteLogo={true}
+            stickyOnScroll={true}
+            showSearchBar={true}
+            initalSearchKeyword={lastQuery.current}
+            doSearch={implementSearch}
+          />
+          <div className="searchPage_Body">
+            <div className="searchPage_SideBar">
+              <form>
+                <div className="searchOptionsCotainer">
+                  <p className="option_heading">Sort By</p>
+                  <RadioButton
+                    name={"sort"}
+                    label={"Views"}
+                    value={SORTBY_VALUES.byViews}
+                    onClick={handleRadioClick}
+                    checked={sortBy === SORTBY_VALUES.byViews}
+                  />
+                  <RadioButton
+                    name={"sort"}
+                    label={"Likes"}
+                    value={SORTBY_VALUES.byLikes}
+                    onClick={handleRadioClick}
+                    checked={sortBy === SORTBY_VALUES.byLikes}
+                  />
+                  <RadioButton
+                    name={"sort"}
+                    label={"UploadDate"}
+                    value={SORTBY_VALUES.byUploadDate}
+                    onClick={handleRadioClick}
+                    checked={sortBy === SORTBY_VALUES.byUploadDate}
+                  />
                 </div>
-            </div>
 
-            <ScreenAddOns />
-        </>
-    )
+                <div className="searchOptionsCotainer">
+                  <p className="option_heading">Filter By</p>
+                  {FILTERBY_VALUES.map((filter) => (
+                    <CheckBox
+                      key={filter}
+                      label={filter}
+                      onChange={handleCheckboxChange}
+                      checked={filterBy.indexOf(filter) !== -1}
+                      disabled={showLoading}
+                    />
+                  ))}
+                </div>
+              </form>
+            </div>
+            <div
+              className="searchPage_ResultContainer"
+              style={{
+                marginTop:
+                  window.innerWidth <= 600 && window.innerHeight >= 320
+                    ? "8rem"
+                    : window.innerWidth <= 600 && window.innerHeight < 320
+                    ? "0rem"
+                    : "",
+              }}
+            >
+              {!searchResults && (
+                <p className="emptyMsg">
+                  Please use search for exploring awesome content.
+                </p>
+              )}
+              {searchResults &&
+                searchResults.map((video) => (
+                  <SearchResultVideo
+                    key={video.id}
+                    currentVideoData={video}
+                    openVideoPop={(currentVideoData) => {
+                      let returnUrl = window.location.search;
+                      if (returnUrl) {
+                        returnUrl = returnUrl.substring(1, returnUrl.length);
+                        let pushURl = `/search/${
+                          currentVideoData.id
+                        }?return=${encodeURIComponent(returnUrl)}`;
+                        history.push(pushURl);
+                      } else {
+                        history.push(`/search/${currentVideoData.id}`);
+                      }
+                    }}
+                  />
+                ))}
+              {searchResults && <hr />}
+            </div>
+          </div>
+        </div>
+
+        <ScreenAddOns />
+      </>
+    );
 }

@@ -56,6 +56,10 @@ function SearchResultVideo(props) {
                 style={{
                   display: "flex",
                   flexWrap: window.innerWidth <= 600 ? "nowrap" : "wrap",
+                  alignSelf:
+                    window.innerWidth <= 600 &&
+                    currentVideoData.speakers.length <= 2 &&
+                    "start",
                 }}
               >
                 {window.innerWidth <= 600 &&

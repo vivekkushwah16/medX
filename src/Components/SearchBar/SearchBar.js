@@ -17,9 +17,8 @@ const SearchBar = React.memo((props) => {
           ? "search-container search-container-hide"
           : !sticky && history.location.pathname.includes("home")
           ? "search-container search-container-top"
-          : history.location.pathname.includes("search")
-          ? "search-container search-mobile-container"
-          : "search-container-show"
+          : history.location.pathname.includes("search") &&
+            "search-container search-mobile-container"
       }`}
     >
       <form>

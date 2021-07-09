@@ -65,12 +65,12 @@ export default function Header(props) {
       }
       if (
         window.pageYOffset >
-          window.innerHeight + navBar.current.offsetTop + 100 &&
+          window.innerHeight + navBar.current.offsetTop + 130 &&
         window.innerHeight <= 600
       ) {
         setSearchBarSticky(true);
       } else if (
-        window.pageYOffset > window.innerHeight * 0.8 &&
+        window.pageYOffset > window.innerHeight * 0.9 &&
         window.innerHeight > 600
       ) {
         setSearchBarSticky(true);
@@ -88,6 +88,9 @@ export default function Header(props) {
         sticky ? "headerBox_sticky" : "headerBox"
       }`}
       ref={navBar}
+      style={{
+        paddingBottom: sticky&& history.location.pathname.includes("search") && "6rem",
+      }}
       id="header"
     >
       <div className="container">

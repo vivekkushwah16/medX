@@ -152,6 +152,7 @@
 }
 
 /* All Mobile Sizes (devices and browser) */
+
 @media only screen and (max-width: 768px) {
     .bannerBox__inner.bannerBox__inner--small { min-height: auto; }
     .bannerBox__center { margin-left: auto; margin-right: auto; bottom: -340px; width: 320px; max-width: 375px; left: 10%; }
@@ -181,9 +182,20 @@
     .bannerBox.bannerBox--large .slider-banner-desktop .bannerBox__slide { padding-left: 0; }
     .slider-banner-desktop .slick-dots { bottom: 4rem; }
 }
+@media only screen and (max-width: 823px) and (orientation: landscape) {
+.tabBox__list { margin: -8.25rem 0 0rem -1rem;padding: 2rem 1rem;}
+}
+@media only screen and (max-width: 768px) and (orientation: landscape) {
+.tabBox__list { margin: -8.25rem 0 0rem -1rem;padding: 2rem 1rem;}
+}
 @media only screen and (max-width: 640px) {
     .tabBox__list {
         margin: -23.25rem 0 0rem -1rem;
+    }
+}
+@media only screen and (max-width: 540px) {
+    .tabBox__list {
+        margin: -8rem 0 0rem -1rem;
     }
 }
 

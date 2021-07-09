@@ -62,7 +62,7 @@
 .searchResult_media_rightContainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .searchResult_media_rightContainer .maincardBox__card-profile {
@@ -96,3 +96,9 @@
     width: 100%;
   }
 }
+@media only screen and (max-width: 600px) {
+  .searchResult:last-child() {
+    padding-bottom: 4rem;
+  }
+}
+
