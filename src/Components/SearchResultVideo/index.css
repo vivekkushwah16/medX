@@ -88,8 +88,11 @@
     min-width: 45%;
   }
   .searchResult_media_rightContainer {
-    width: 50%;
+    width: 51%;
   }
+  .search_video_txt {
+  text-align: left;
+}
   .wrap-speakers,
   .maincardBox__card-profile {
     overflow: hidden;
