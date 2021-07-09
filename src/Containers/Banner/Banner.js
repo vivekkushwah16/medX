@@ -47,15 +47,18 @@ const BannerType = {
 };
 
 const BannerData = [
-  // {
-  //   type: BannerType.LiveEvent,
-  //   mainTitle: "Bronchodilators for COPD: When, where and which",
-  //   subTitle: "",
-  //   eventId: "copdmanagement",
-  //   mainImageUrl: "",
-  //   needCountDown: true,
-  //   mainImageUrl: 'https://storage.googleapis.com/cipla-impact.appspot.com/copdmanagement/BannerImage.png',
-  // },
+  {
+    type: BannerType.LiveEvent,
+    mainTitle:
+      "Covid Antibody Cocktail Therapy A ray of Hope for country to win over Covid-19",
+    subTitle: "",
+    eventId: "apicon",
+    eventName: "ronaprevewebcast",
+    mainImageUrl: "",
+    needCountDown: true,
+    mainImageUrl:
+      "https://storage.googleapis.com/cipla-impact.appspot.com/apicon/preEventPage_right_speakers.png",
+  },
   {
     type: BannerType.Custom2,
     buttonText: "Watch Now",

@@ -53,9 +53,8 @@ class Login extends Component {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -110,7 +109,7 @@ class Login extends Component {
 
   redirectToHome = () => {
     const { history } = this.props;
-    if (history) history.push(`/${this.props.event}`);
+    if (history) history.push(`/${this.props.eventData.eventName}`);
   };
 
   handleSubmit = (event) => {
@@ -242,11 +241,10 @@ class Login extends Component {
           tabsName={TABSName}
           ToggleTab={this.ToggleTab}
         /> */}
-        <EventPageStatic event={this.props.event}/>
+        <EventPageStatic event={this.props.event} />
         <article
-          className={`login2Box login2Box__small ${
-            this.state.currentTab === TABS.AgendaTab ? "" : ""
-          }`}
+          className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? "" : ""
+            }`}
         >
           {!this.state.showOtp && (
             <>
@@ -262,12 +260,12 @@ class Login extends Component {
                 </button>
               </div>
               <div class="login2Box__body pd-t80">
-                <h1 className="login2Box__title mg-b25">Log in</h1>
+                <h1 className="login2Box__title mg-b25">Sign up</h1>
 
                 <form onSubmit={this.handleSubmit}>
                   <div className="form-group mg-b30">
-                    <p className=" mg-b10" style={{ color: "#015189" }}>
-                      Please enter your Registered Mobile Number
+                    <p className=" mg-b10" style={{ color: "#015189",textAlign: 'justify' }}>
+                      If you have already registered, Please enter your Registered Mobile Number to Signup for the event.
                     </p>
                     <PhoneInput
                       international
@@ -303,7 +301,7 @@ class Login extends Component {
                           <img src="/assets/images/loader.gif" alt="loading" />
                         </>
                       ) : (
-                        " Log in"
+                        "Sign Up"
                       )}
                     </button>
                   </div>

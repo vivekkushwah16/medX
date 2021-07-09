@@ -31,15 +31,15 @@ export const EventChecker = (props) => {
 
   //Router hooks
   let { url } = useRouteMatch();
-  let { event } = useParams();
-  if(event){
-    event = event.toLowerCase()
+  let { eventName } = useParams();
+  if (eventName) {
+    eventName = eventName.toLowerCase()
   }
   const history = useHistory();
 
   useEffect(() => {
     getEventNameAndCrossCheck();
-  }, [event]);
+  }, [eventName]);
 
   const getEventNameAndCrossCheck = async () => {
     // console.log(event);
@@ -50,10 +50,17 @@ export const EventChecker = (props) => {
       (doc) => {
         if (!doc.exists) {
           history.push(`/home`);
+          return
         }
+        const eventNameList = doc.data().eventName
+        if (!eventNameList.hasOwnProperty(eventName.toLowerCase())) {
+          history.push(`/home`);
+          return
+        }
+        const event = eventNameList[eventName]
         const activeEventList = doc.data().activeEventList;
         if (activeEventList.hasOwnProperty(event.toLowerCase())) {
-          if (activeEventList[event.toLowerCase()].disabled) {
+          if (activeEventList[event.toLowerCase()].disabled && props.env !== "dev") {
             history.push(`/home`);
             return;
           }
@@ -81,25 +88,28 @@ export const EventChecker = (props) => {
   return (
     <>
       <Switch>
-        <NotLoggedInRoutes redirectTo={url} path={`${url}/login`}>
+        <NotLoggedInRoutes redirectTo={url} path={`${url}/signup`}>
           {props.login ? (
             <props.login
-              event={event.toLowerCase()}
+              event={eventDetails.id.toLowerCase()}
+              eventData={eventDetails}
               haveAgenda={eventDetails.agenda}
               registerUrl={`${url}/register`}
             />
           ) : (
-            "login"
+            "signup"
           )}
         </NotLoggedInRoutes>
 
         <NotLoggedInRoutes redirectTo={url} path={`${url}/register`}>
           {props.register ? (
             <props.register
-              event={event.toLowerCase()}
               haveAgenda={eventDetails.agenda}
-              loginUrl={`${url}/login`}
+              loginUrl={`${url}/signup`}
+              event={eventDetails.id.toLowerCase()}
               eventTitle={eventDetails.title}
+              eventDate={eventDetails.eventDate}
+              eventData={eventDetails}
             />
           ) : (
             "register"
@@ -107,11 +117,11 @@ export const EventChecker = (props) => {
         </NotLoggedInRoutes>
 
         <ProtectedRoute
-          redirectTo={`${url}/login`}
+          redirectTo={`${url}/signup`}
           path={`${url}/register-ott`}
         >
           <props.notLive
-            event={event.toLowerCase()}
+            event={eventDetails.id.toLowerCase()}
             calendatDetails={eventDetails.calendar}
             eventTitle={eventDetails.title}
             canEnterEvent={eventStatus === EventStausType.Live}
@@ -121,25 +131,26 @@ export const EventChecker = (props) => {
 
         <ProtectedRoute
           exact
-          redirectTo={`${url}/login`}
+          redirectTo={`${url}/signup`}
           path={`${url}/liveCount-kmp23`}
         >
-          <props.liveCount eventId={event} />
+          <props.liveCount eventId={eventDetails.id} />
         </ProtectedRoute>
         <ProtectedRoute
           exact
-          redirectTo={`${url}/login`}
+          redirectTo={`${url}/signup`}
           path={`${url}/qna-kmp23`}
         >
-          <props.qnaPage eventId={event} />
+          <props.qnaPage eventId={eventDetails.id} />
         </ProtectedRoute>
 
-        <ProtectedRoute redirectTo={`${url}/login`} path={url}>
+        <ProtectedRoute redirectTo={`${url}/signup`} path={url}>
           {eventStatus === EventStausType.NotLive && (
             <>
               {props.notLive ? (
                 <props.notLive
-                  event={event.toLowerCase()}
+                  event={eventDetails.id.toLowerCase()}
+                  eventDate={eventDetails.eventDate}
                   eventTitle={eventDetails.title}
                   calendatDetails={eventDetails.calendar}
                   eventData={eventDetails}
@@ -153,8 +164,9 @@ export const EventChecker = (props) => {
             <>
               {props.liveEvent ? (
                 <props.liveEvent
-                  event={event.toLowerCase()}
+                  event={eventDetails.id.toLowerCase()}
                   eventTitle={eventDetails.title}
+                  eventData={eventDetails}
                 />
               ) : (
                 "Live Event"
@@ -164,7 +176,7 @@ export const EventChecker = (props) => {
           {eventStatus === EventStausType.Finished && (
             <>
               {props.finishedEvent ? (
-                <props.finishedEvent event={event.toLowerCase()} />
+                <props.finishedEvent event={eventDetails.id.toLowerCase()} />
               ) : (
                 "Finished Event"
               )}
@@ -180,7 +192,7 @@ export const EventChecker = (props) => {
 export default function EventRoute(props) {
   return (
     <>
-      <Route path={"/:event"}>
+      <Route path={"/:eventName"}>
         <EventChecker
           login={props.login}
           register={props.register}

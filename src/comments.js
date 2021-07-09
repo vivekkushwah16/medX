@@ -121,7 +121,7 @@ EventManager.addEvent(
   "evolve"
 );
 EventManager.addPartnerWithUs(
-  "pedasthmamanagement",
+  "apicon",
   "Clinical Trial Participation 1",
   "LOREM_TEXT",
   "Clinical Trial Participation sub1",
@@ -138,7 +138,7 @@ EventManager.addEventTimeLine(
 );
 
 EventManager.addPartnerWithUs(
-  "pedasthmamanagement",
+  "apicon",
   "BreatheFree Services",
   "BreatheFree is a unique service For an efficient patient education, counselling and support. If you are interested in our BreatheFree services around clinic and/or BreatheFree digital educator, kindly share your contact details we will reach out shortly",
   "",
@@ -147,7 +147,7 @@ EventManager.addPartnerWithUs(
 );
 
 EventManager.addTrendingItem(
-  "pedasthmamanagement",
+  "apicon",
   TRENDING_ITEM_TYPE.URL,
   "ciplamedX – Expert Views. Watch Anywhere. Watch Anytime.",
   "A platform to access byte-sized expert views anytime, anywhere on a wide range of topics. Explore at your time and convenience.",
@@ -156,40 +156,16 @@ EventManager.addTrendingItem(
 );
 EventManager.addEventTimeLine(
   "pedasthmamanagement",
-  "‘New Frontiers in Paediatric Asthma Management’ A Case Guided Approach",
+  "Covid Antibody Cocktail Therapy A ray of Hope for country to win over Covid-19",
   "",
-  [],
-  1624737600000,
+  [
+    "speaker-kqw345ie",
+    "speaker-kqw345v2",
+    "speaker-kqw345wx",
+    "speaker-kqw345z7",
+    "speaker-kqw3460s",
+    "speaker-kqw3462c",
+  ],
+  1625927400000,
   "60"
-);
-
-// IMAGE LIST
-/**
- * eventPage -
- * certificate.jpg
- * eventPageBottomBg.png
- * eventPageHeaderBand.svg
- * eventPageInitalLoader.png
- * cipla_with_eventLogo.png
- *
- * preeventPage -
- * cipla_with_eventLogo.png
- * preEventPage_left_heading.svg
- * preEventPage_right_speakers.png
- * pre_event_bg.jpg
- * preevent_mobile_Speaker.png
- * prevent_mobile_info.png
- *
- * authPages -
- * bg.jpg
- * bg2.png
- * center-logo.png
- * eventLogo.png
- */
-
-PollManager.addPollQuestion(
-  "copdmanagement",
-  1,
-  "What is your preferred initial pharmacologic management for most of your patients?",
-  ["LAMA", "LABA-LAMA", "LABA-LAMA-ICS", "Others"]
 );

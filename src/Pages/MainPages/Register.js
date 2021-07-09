@@ -56,14 +56,83 @@ const defaultErr = {
   alreadyRegistered: false,
 };
 
+// const SPECIALITY = [
+//   "Chest Physician",
+//   "Consulting Physician",
+//   "General Physician",
+//   // "Cardiologist",
+//   "ENT",
+//   "Paediatrics",
+//   "Others",
+// ];
 const SPECIALITY = [
-  "Chest Physician",
-  "Consulting Physician",
-  "General Physician",
-  // "Cardiologist",
-  "ENT",
-  "Paediatrics",
-  "Others",
+  "CARDIOLOGIST",
+  "CLINICAL CARDIOLOGIST",
+  "ECHO CARDIOLOGIST",
+  "PEAD CARDIOLOGIST",
+  "PRACTICING CARDIOLOGIST",
+  "INTERVENTIONAL CARDIOLOGIST",
+  "MBBS CARDIOLOGIST D CARD",
+  "MBBS DIABETOLOGIST D DIAB",
+  "CTV SURGEON",
+  "CVTS",
+  "ELECTROPHYSIOLOGIST",
+  "CHEST PHYSICIAN",
+  "PULMONOLOGIST",
+  "DIABETOLOGIST",
+  "PRACTICING DIABETOLOGIST",
+  "ENDOCRINOLOGIST",
+  "GASTRO SURGEON",
+  "GASTROENTEROLOGIST",
+  "DENTIST",
+  "DERMATOLOGIST",
+  "COSMETIC DERMATOLOGIST",
+  "COSMETIC SURGEON",
+  "PAEDIATRIC DERMATOLOGIST",
+  "PLASTIC SURGEON",
+  "HAIR TRANSPLANT SURGEON",
+  "TRICHOLOGIST",
+  "OPHTHALMOLOGIST",
+  "OPTH CATARACT",
+  "OPTHAL CORNEA",
+  "OPTHAL GLAUCOMA",
+  "OPTHAL PHACO",
+  "OPTHAL RETINA",
+  "OPTOMETRIST",
+  "ORTHOPEDICIAN",
+  "ORTHO SURGEON",
+  "GYNAECOLOGIST",
+  "HAEMATOLOGIST",
+  "IVF",
+  "EMBRYOLOGIST",
+  "NEUROSURGEON",
+  "NEUROLOGIST",
+  "PAED NEUROLOGIST",
+  "PSYCHIATRIST",
+  "ID SPECIALIST",
+  "INTENSIVE CARE",
+  "PRACTICING ICU CCU",
+  "PAEDIATRICIAN",
+  "NEONATOLOGIST",
+  "ONCOLOGIST",
+  "RADIATION ONCOLOGIST",
+  "RHEUMATOLOGIST",
+  "NEPHROLOGIST",
+  "SURGEON",
+  "ORTHO SURGEON",
+  "PAEDIATRIC SURGEON",
+  "ENT SURGEON",
+  "URO ONCOLOGIST",
+  "UROLOGIST",
+  "VASCULAR SURGEON",
+  "MICROBIOLOGIST",
+  "GENERAL PHYSICIAN",
+  "CONSULTANT PHYSICIAN",
+  "GP NON MBBS",
+  "ANAESTHETIST",
+  "NON MBBS",
+  "PURCHASE PHARMACY",
+  "OTHERS",
 ];
 class Register extends Component {
   pagetop = React.createRef();
@@ -103,9 +172,8 @@ class Register extends Component {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -292,12 +360,11 @@ class Register extends Component {
             title: this.props.eventTitle,
             email: this.state.email,
             mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${
-              this.state.lastName ? this.state.lastName : ""
-            }`,
+            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
+              }`,
             isDoctor: this.state.profession === "Doctor",
-            event: this.props.event,
-            date: `03 July 2021`,
+            event: this.props.eventData.eventName,
+            date: this.props.eventDate ? this.props.eventDate : `03 July 2021`,
           },
         });
         await firestore
@@ -391,9 +458,8 @@ class Register extends Component {
             eventName: "Cipla Orient '21",
             email: this.state.email,
             mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${
-              this.state.lastName ? this.state.lastName : ""
-            }`,
+            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
+              }`,
             isDoctor: this.state.profession === "Doctor",
           },
         });
@@ -489,9 +555,8 @@ class Register extends Component {
         /> */}
         <EventPageStatic event={this.props.event} />
         <article
-          className={`login2Box login2Box__small ${
-            this.state.currentTab === TABS.AgendaTab ? "" : ""
-          }`}
+          className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? "" : ""
+            }`}
         >
           <div ref={this.pagetop} class="login2Box__header ">
             <h3
