@@ -817,8 +817,8 @@ class Home extends Component {
     let userName = this.context.user.displayName;
     let name = finalResult.length === 1 && finalResult[0].name;
 
-    console.log(userName);
-    console.log("res", finalResult);
+    // console.log(userName);
+    // console.log("res", finalResult);
 
     // in case of no result
     if (finalResult.length <= 0) {
@@ -829,17 +829,17 @@ class Home extends Component {
     }
 
     if (name?.length > userName?.length) {
-      let containsName = name.indexOf("Shailaja Vishwanath");
+      let containsName = name.indexOf(userName);
 
       if (containsName !== -1) {
-        console.log("conatins ", true);
+        // console.log("conatins ", true);
         this.setState({ doctorNameVerified: true, doctorResultLoading: false });
       } else {
         this.setState({
           doctorNameVerified: false,
           doctorResultLoading: false,
         });
-        console.log("conatins ", false);
+        // console.log("conatins ", false);
       }
     } else {
     }

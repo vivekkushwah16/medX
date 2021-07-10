@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 // import ReactDOM from "react-dom";
+import DownIcon from "../../assets/images/icons/down.svg";
+import UpIcon from "../../assets/images/icons/up.svg";
 import "./DoctorFormModal.css";
-
 const instituteValues = [
   "Andhra Pradesh Medical Council",
   "Arunachal Pradesh Medical Council",
@@ -46,9 +47,9 @@ const instituteValues = [
 ];
 
 const DoctorFormModal = (props) => {
-  const [regId, setRegId] = useState("3608");
+  const [regId, setRegId] = useState("");
   const [institute, setInstitute] = useState("");
-  const [year, setYear] = useState("1972");
+  const [year, setYear] = useState("");
   const [showInstitutes, setShowInstitutes] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [error, setError] = useState({
@@ -113,7 +114,7 @@ const DoctorFormModal = (props) => {
           {/* <div className="modal-header">
             <h4 className="modal-title">{"props.title"}</h4>
           </div> */}
-          {props.doctorError !== "" && (
+          {props.doctorError && (
             <div
               style={{
                 color: "#b51f5a",
@@ -125,18 +126,17 @@ const DoctorFormModal = (props) => {
               {props.doctorError}
             </div>
           )}
+
           {!props.verified ? (
             <div className="modal-body">
               <div className="form-group">
-                {/* <label htmlFor="regId">Browse By Registeration Number:</label> */}
                 <input
                   type="text"
                   value={regId}
                   autofocus
                   className="form-control"
-                  //   id="regId"
                   onChange={(e) => setRegId(e.target.value)}
-                  placeholder="Enter Registeration Number"
+                  placeholder="Registeration Number"
                   required
                 />
                 {error.regIdError && (
@@ -144,15 +144,13 @@ const DoctorFormModal = (props) => {
                 )}
               </div>
               <div className="form-group">
-                {/* <label htmlFor="year">Browse By Year of Registeration:</label> */}
                 <input
                   className="form-control"
                   type="tel"
                   value={year}
-                  //   id="year"
                   maxLength="4"
                   onChange={(e) => setYear(e.target.value)}
-                  placeholder="Enter Year of Registeration"
+                  placeholder="Year of Registeration"
                   required
                 />
                 {error.yearError && (
@@ -160,18 +158,36 @@ const DoctorFormModal = (props) => {
                 )}
               </div>
               <div className="form-group" style={{ marginBottom: 0 }}>
-                {/* <label htmlFor="institute">State Medical Council:</label> */}
+                {/* <div style={{ position: "relative" }}> */}
                 <input
                   style={{ cursor: "pointer" }}
                   type="text"
                   className="form-control"
                   value={institute}
-                  //   id="institute"
                   onClick={() => setShowInstitutes(!showInstitutes)}
                   readOnly
-                  placeholder="Enter State Medical Council"
+                  placeholder="State Medical Council"
                   required
                 />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    right: "5px",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setShowInstitutes(!showInstitutes)}
+                >
+                  <img
+                    src={showInstitutes ? UpIcon : DownIcon}
+                    height="16px"
+                    alt=""
+                  />
+                </div>
+                {/* </div> */}
                 {error.instituteError && (
                   <span className="input-error2">{error.instituteError}</span>
                 )}
@@ -212,7 +228,6 @@ const DoctorFormModal = (props) => {
                     ))}
                 </div>
               )}
-              {/* </div> */}
             </div>
           ) : (
             <div className="modal-body">Verified</div>
@@ -223,7 +238,6 @@ const DoctorFormModal = (props) => {
                 <button
                   id="close"
                   onClick={() => handleClose()}
-                  //   className="button"
                   className="btn btn-secondary"
                 >
                   Close
@@ -240,7 +254,6 @@ const DoctorFormModal = (props) => {
                       }
                     : null
                 }
-                // className="button"
               >
                 {props.doctorResultLoading ? "verifying..." : "Submit"}
               </button>

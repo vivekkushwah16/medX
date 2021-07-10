@@ -27,7 +27,7 @@
   width: 500px;
   background-color: #fff;
   transition: all 0.3s ease-in-out;
-  transform: translateY(-100px);
+  transform: translateY(0);
   border-radius: 5px;
 }
 
