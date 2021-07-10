@@ -388,9 +388,9 @@ body {
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
   .slider-video .slider-btn {
-    opacity: 0;
+    display: none !important;
   }
 }
 @media only screen and (max-width: 768px) {

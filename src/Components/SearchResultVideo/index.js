@@ -9,7 +9,7 @@ function SearchResultVideo(props) {
   return (
     <>
       <div
-        className="searchResult mg-b20"
+        className="searchResult mg-b30"
         onClick={() => {
           openVideoPop(currentVideoData);
         }}

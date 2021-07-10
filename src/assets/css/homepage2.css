@@ -89,7 +89,7 @@
 .contentBox__list-wrapper { margin-bottom: 2rem; overflow: auto; }
 .contentBox__list { white-space: nowrap; }
 .contentBox__item-wrapper { display: flex; }
-.contentBox__item { margin-bottom: 15px; height: 14rem; width: 20rem; transition: all 0.5s; display: block; cursor: pointer; position: relative; display: inline-block; white-space: normal; border-radius: 0.625rem; background-position: center center; background-size: cover}
+.contentBox__item {outline: none; margin-bottom: 15px; height: 14rem; width: 20rem; transition: all 0.5s; display: block; cursor: pointer; position: relative; display: inline-block; white-space: normal; border-radius: 0.625rem; background-position: center center; background-size: cover}
 .contentBox__item:after { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 100%; background: linear-gradient(360deg, rgba(0, 0, 0, 0.6) -10.09%, rgba(0, 0, 0, 0.15) 42.08%); border-radius: 0.625rem;}
 /* .contentBox__item-title { position: absolute; text-decoration: none; left: 0; bottom: 0; padding: 1rem; font-weight: 700; font-size: 1.125rem; line-height: 1.375rem; color: #fff; z-index: 1; }
 .contentBox__item-title:hover { text-decoration: underline; } */

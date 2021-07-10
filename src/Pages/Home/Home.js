@@ -47,9 +47,11 @@ import {
   VERIFY_OTP_COLUDFUNCTION,
 } from "../../AppConstants/CloudFunctionName";
 import VideoManager from "../../Managers/VideoManager";
+import { DoctorManager } from "../../Managers/DoctorManager";
 import Myprofile from "../../Containers/myProfile/Myprofile";
 import Chatbot from "../../Components/chatbot/Chatbot";
 import SearchBar from "../../Components/SearchBar/SearchBar";
+import DoctorFormModal from "../../Components/DoctorFormModal/DoctorFormModal";
 
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
 
@@ -186,6 +188,11 @@ class Home extends Component {
     lastPlayed: null,
     lastVideoMetadata: null,
     platformData: JSON.parse(localStorage.getItem("platformData")),
+    doctorFormModalShow: false,
+    doctorFormData: "",
+    doctorNameVerified: false,
+    doctorError: "",
+    doctorResultLoading: false,
   };
 
   contentBoXTop = createRef();
@@ -692,24 +699,24 @@ class Home extends Component {
       return;
     }
     //if user is verified play video
-    this.closeVideoPop(metadata);
-    setTimeout(() => {
-      this.setState(
-        {
-          currentVideosData: videosData,
-          videopopVisible: true,
-          videoPopupData: { ...videoData, tagSelectedFrom },
-          lastVideoMetadata: metadata,
-        },
-        () => {
-          if (updateUrl) {
-            const { history } = this.props;
-            if (history)
-              history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
-          }
-        }
-      );
-    }, 100);
+    // this.closeVideoPop(metadata);
+    // setTimeout(() => {
+    //   this.setState(
+    //     {
+    //       currentVideosData: videosData,
+    //       videopopVisible: true,
+    //       videoPopupData: { ...videoData, tagSelectedFrom },
+    //       lastVideoMetadata: metadata,
+    //     },
+    //     () => {
+    //       if (updateUrl) {
+    //         const { history } = this.props;
+    //         if (history)
+    //           history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
+    //       }
+    //     }
+    //   );
+    // }, 100);
   };
 
   closeVideoPop = (videoData) => {
@@ -719,6 +726,23 @@ class Home extends Component {
       videoPopupData: null,
       lastPlayed: videoData,
     });
+  };
+
+  openDoctorForm = async (
+    metadata,
+    videoData,
+    videosData,
+    tagSelectedFrom,
+    updateUrl = true
+  ) => {
+    document.getElementsByTagName("body")[0].style.overflow = "hidden";
+    // console.log(metadata, videoData, videosData, tagSelectedFrom);
+    //first check for verified user
+    let isVerified = await this.context.isVerifiedUser();
+    if (isVerified) {
+      this.setState({ doctorFormModalShow: true });
+      return;
+    }
   };
 
   componentDidMount() {
@@ -780,10 +804,71 @@ class Home extends Component {
       search: `?keyword=${searchText}`,
     });
   };
+  doctorFormModalClose = () => {
+    this.setState({ doctorFormModalShow: false });
+  };
+  handleDoctorFormData = async (data) => {
+    this.setState({ doctorFormData: data });
+    let result = await DoctorManager.getDoctor(data);
+    let finalResult = result.filter(
+      (res) => res.institute === data.institute
+      // res.institute.includes(data.institute)
+    );
+    let userName = this.context.user.displayName;
+    let name = finalResult.length === 1 && finalResult[0].name;
+
+    console.log(userName);
+    console.log("res", finalResult);
+
+    // in case of no result
+    if (finalResult.length <= 0) {
+      return this.setState({
+        doctorError: "No Match Found",
+        doctorResultLoading: false,
+      });
+    }
+
+    if (name?.length > userName?.length) {
+      let containsName = name.indexOf("Shailaja Vishwanath");
+
+      if (containsName !== -1) {
+        console.log("conatins ", true);
+        this.setState({ doctorNameVerified: true, doctorResultLoading: false });
+      } else {
+        this.setState({
+          doctorNameVerified: false,
+          doctorResultLoading: false,
+        });
+        console.log("conatins ", false);
+      }
+    } else {
+    }
+  };
+  handleVerificationState = () => {
+    this.setState({ doctorNameVerified: false });
+  };
+  handleDoctorError = () => {
+    this.setState({ doctorError: "" });
+  };
+  handledoctorResultLoading = (bool) => {
+    this.setState({ doctorResultLoading: bool });
+  };
+
   render() {
     return (
       // <section className="wrapper" id="root" style={{background: 'black'}}>
       <>
+        <DoctorFormModal
+          show={this.state.doctorFormModalShow}
+          onClose={this.doctorFormModalClose}
+          handleSubmit={this.handleDoctorFormData}
+          verified={this.state.doctorNameVerified}
+          handleVerificationState={this.handleVerificationState}
+          doctorError={this.state.doctorError}
+          handleDoctorError={this.handleDoctorError}
+          doctorResultLoading={this.doctorResultLoading}
+          handledoctorResultLoading={this.handledoctorResultLoading}
+        />
         <div
           id="scrollable"
           style={{ position: "absolute", top: "0", height: 1, width: 1 }}
@@ -850,6 +935,7 @@ class Home extends Component {
                     lastPlayed={this.state.lastPlayed}
                     tag={this.state.activeTag.tag}
                     openVideoPop={this.openVideoPop}
+                    openDoctorForm={this.openDoctorForm}
                     grid={false}
                     multipleTags={this.state.activeTag.multipleTags}
                   />
@@ -863,6 +949,7 @@ class Home extends Component {
                         lastPlayed={this.state.lastPlayed}
                         tag={row.tag}
                         openVideoPop={this.openVideoPop}
+                        openDoctorForm={this.openDoctorForm}
                         grid={false}
                         multipleTags={row.multipleTags}
                       />

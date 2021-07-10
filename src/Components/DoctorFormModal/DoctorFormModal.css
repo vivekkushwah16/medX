@@ -1,0 +1,137 @@
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  z-index: 12;
+  transition: all 0.3s ease-in-out;
+  /* pointer-events: none; */
+}
+
+.modal.enter-done {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.modal.exit {
+  opacity: 0;
+}
+
+.modal-content {
+  width: 500px;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+  transform: translateY(-100px);
+  border-radius: 5px;
+}
+
+.modal.enter-done .modal-content {
+  transform: translateY(0);
+}
+
+.modal.exit .modal-content {
+  transform: translateY(-200px);
+}
+
+.modal-header,
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  /* border-top: 1px solid #eee; */
+  border-bottom: 1px solid #eee;
+}
+/* .modal-body-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+} */
+/* .modal-body-field > label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+} */
+/* .modal-body-field > input[type="text"],
+input[type="tel"],
+.modal-body-field > .institute-values > input[type="text"] {
+  outline: none;
+  border: 1px solid #032240;
+  height: 2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  padding: 0 10px;
+} */
+.modal-body-field > #institute {
+  cursor: pointer;
+  background-color: beige;
+}
+/* .modal-body-field > .error {
+  padding-top: 3px;
+  color: red;
+} */
+.institute-values {
+  display: flex;
+  flex-direction: column;
+  height: 200px !important;
+  overflow: auto;
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 2px;
+  margin-bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.institute-values > .institute-values-item {
+  cursor: pointer;
+  margin: 2px 0;
+  padding: 5px 0;
+  padding-left: 2px;
+}
+.institute-values > .institute-values-item:hover {
+  background-color: #015189;
+  color: #fff;
+}
+/* .modal > .modal-content > .modal-footer > button {
+  padding: 5px 10px;
+  border: 1px solid #032240;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+} */
+.modal > .modal-content > .modal-footer > #close {
+  /* border-color: #032240; */
+  color: #015189;
+  background-color: #fff;
+}
+
+.modal > .modal-content > .modal-footer > #submit {
+  /* color: #fff; */
+  margin-left: 10px;
+  /* background-color: #032240; */
+}
+/* .modal > .modal-content > .modal-footer > button:hover {
+  box-shadow: 0 0 10px #032240;
+} */
+/* .modal > .modal-content > .modal-footer > #submit:hover {
+  color: #032240;
+  background-color: #015189;
+} */
+.modal > .modal-content > .modal-footer > #close:hover {
+  color: #fff;
+  background-color: #015189;
+}

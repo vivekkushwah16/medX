@@ -37,6 +37,7 @@
 
 .searchResult .maincardBox__card-title {
   color: #fff !important;
+  word-break: break-all;
 }
 
 .searchResult .maincardBox__card-desc {
@@ -91,8 +92,8 @@
     width: 51%;
   }
   .search_video_txt {
-  text-align: left;
-}
+    text-align: left;
+  }
   .wrap-speakers,
   .maincardBox__card-profile {
     overflow: hidden;
@@ -104,4 +105,3 @@
     padding-bottom: 4rem;
   }
 }
-

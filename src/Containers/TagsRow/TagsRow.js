@@ -50,7 +50,7 @@ export default function TagsRow(props) {
     return (
       <button
         style={{
-          display: className.includes("slick-disable")
+          display: className.includes("slick-disabled")
             ? "none"
             : checkArrowHide(props),
         }}
@@ -67,7 +67,7 @@ export default function TagsRow(props) {
     return (
       <button
         style={{
-          display: className.includes("slick-disable") ? "none" : "block",
+          display: className.includes("slick-disabled") ? "none" : "block",
         }}
         className={`slider-btn slider-btn-prev`}
         onClick={onClick}

@@ -9,17 +9,40 @@ import { UserContext } from "../../Context/Auth/UserContextProvider";
 import TagsRow from "../TagsRow/TagsRow";
 import { isMobileOnly } from "react-device-detect";
 
+const checkArrowHide = (props) => {
+  let width = window.innerWidth;
+  if (props.slideCount - props.currentSlide === 4 && width > 1700) {
+    return "none";
+  } else if (
+    props.slideCount - props.currentSlide === 3 &&
+    width > 850 &&
+    width <= 1700
+  ) {
+    return "none";
+  } else if (props.slideCount - props.currentSlide === 2 && width <= 820) {
+    return "none";
+  }
+};
+
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <button
       className={`slider-btn slider-btn-next  ${
-        className.includes("slick-disable")
-          ? "slick-disable"
-          : props.slideCount < 3
-          ? "slick-disable"
-          : ""
+        // className.includes("slick-disabled")
+        //   ? "slick-disabled"
+        //   // : props.slideCount < 3
+        //   // ? "slick-disabled"
+        //   : ""
+        ""
       }`}
+      style={{
+        display: className.includes("slick-disabled")
+          ? "none"
+          : checkArrowHide(props),
+        justifyContent: "flex-end",
+        width: "5vw",
+      }}
       onClick={onClick}
     >
       <i
@@ -35,9 +58,14 @@ function SamplePrevArrow(props) {
   return (
     <button
       className={`slider-btn slider-btn-prev ${
-        className.includes("slick-disable") ? "slick-disable" : ""
+        className.includes("slick-disabled") ? "slick-disabled" : ""
       }`}
       onClick={onClick}
+      style={{
+        display: "flex",
+        justifyContent: "flex-start",
+        width: "5vw",
+      }}
     >
       <i
         style={{ fontWeight: 900, textShadow: "0 0 10px white" }}
@@ -48,7 +76,7 @@ function SamplePrevArrow(props) {
 }
 
 function VideoRow(props) {
-  const { heading, tag, lastPlayed, openVideoPop, grid, multipleTags } = props;
+  const { heading, tag, lastPlayed, openVideoPop,  openDoctorForm, grid, multipleTags } = props;
   const [videosData, setData] = useState(null);
   const { mediaMetaData } = useContext(UserContext);
 
@@ -82,8 +110,8 @@ function VideoRow(props) {
     infinite: false,
     speed: 300,
     rows: 1,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+    // slidesToShow: 1,
+    // slidesToScroll: 1,
     variableWidth: true,
     arrows: true,
     prevArrow: <SamplePrevArrow />,
@@ -134,6 +162,7 @@ function VideoRow(props) {
                       videoInfo={vd}
                       videosData={videosData}
                       openVideoPop={openVideoPop}
+                      openDoctorForm={openDoctorForm}
                       grid={grid}
                       refresh={
                         _lastPlayed && vd.id == _lastPlayed.id
@@ -154,6 +183,7 @@ function VideoRow(props) {
                     videoInfo={vd}
                     videosData={videosData}
                     openVideoPop={openVideoPop}
+                    openDoctorForm={openDoctorForm}
                     grid={grid}
                     refresh={
                       _lastPlayed && vd.id == _lastPlayed.id
