@@ -76,7 +76,7 @@ function SamplePrevArrow(props) {
 }
 
 function VideoRow(props) {
-  const { heading, tag, lastPlayed, openVideoPop,  openDoctorForm, grid, multipleTags } = props;
+  const { heading, tag, lastPlayed, openVideoPop, grid, multipleTags } = props;
   const [videosData, setData] = useState(null);
   const { mediaMetaData } = useContext(UserContext);
 
@@ -162,7 +162,6 @@ function VideoRow(props) {
                       videoInfo={vd}
                       videosData={videosData}
                       openVideoPop={openVideoPop}
-                      openDoctorForm={openDoctorForm}
                       grid={grid}
                       refresh={
                         _lastPlayed && vd.id == _lastPlayed.id
@@ -183,7 +182,6 @@ function VideoRow(props) {
                     videoInfo={vd}
                     videosData={videosData}
                     openVideoPop={openVideoPop}
-                    openDoctorForm={openDoctorForm}
                     grid={grid}
                     refresh={
                       _lastPlayed && vd.id == _lastPlayed.id

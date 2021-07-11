@@ -690,6 +690,10 @@ class Home extends Component {
     tagSelectedFrom,
     updateUrl = true
   ) => {
+    let count = parseInt(sessionStorage.getItem("doctorFormCount"));
+    count = count ? count + 1 : 1;
+    // console.log(count);
+    sessionStorage.setItem("doctorFormCount", count);
     document.getElementsByTagName("body")[0].style.overflow = "hidden";
     // console.log(metadata, videoData, videosData, tagSelectedFrom);
     //first check for verified user
@@ -698,25 +702,30 @@ class Home extends Component {
       this.runNonVerifiedProcess();
       return;
     }
-    //if user is verified play video
-    // this.closeVideoPop(metadata);
-    // setTimeout(() => {
-    //   this.setState(
-    //     {
-    //       currentVideosData: videosData,
-    //       videopopVisible: true,
-    //       videoPopupData: { ...videoData, tagSelectedFrom },
-    //       lastVideoMetadata: metadata,
-    //     },
-    //     () => {
-    //       if (updateUrl) {
-    //         const { history } = this.props;
-    //         if (history)
-    //           history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
-    //       }
-    //     }
-    //   );
-    // }, 100);
+    if (count > 4) {
+      this.setState({ doctorFormModalShow: true });
+      sessionStorage.setItem("doctorFormCount", 1);
+    } else {
+      //if user is verified play video
+      this.closeVideoPop(metadata);
+      setTimeout(() => {
+        this.setState(
+          {
+            currentVideosData: videosData,
+            videopopVisible: true,
+            videoPopupData: { ...videoData, tagSelectedFrom },
+            lastVideoMetadata: metadata,
+          },
+          () => {
+            if (updateUrl) {
+              const { history } = this.props;
+              if (history)
+                history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
+            }
+          }
+        );
+      }, 100);
+    }
   };
 
   closeVideoPop = (videoData) => {
@@ -726,23 +735,6 @@ class Home extends Component {
       videoPopupData: null,
       lastPlayed: videoData,
     });
-  };
-
-  openDoctorForm = async (
-    metadata,
-    videoData,
-    videosData,
-    tagSelectedFrom,
-    updateUrl = true
-  ) => {
-    document.getElementsByTagName("body")[0].style.overflow = "hidden";
-    // console.log(metadata, videoData, videosData, tagSelectedFrom);
-    //first check for verified user
-    let isVerified = await this.context.isVerifiedUser();
-    if (isVerified) {
-      this.setState({ doctorFormModalShow: true });
-      return;
-    }
   };
 
   componentDidMount() {
@@ -836,6 +828,7 @@ class Home extends Component {
         this.setState({ doctorNameVerified: true, doctorResultLoading: false });
       } else {
         this.setState({
+          doctorError: "No Match Found",
           doctorNameVerified: false,
           doctorResultLoading: false,
         });
@@ -935,7 +928,6 @@ class Home extends Component {
                     lastPlayed={this.state.lastPlayed}
                     tag={this.state.activeTag.tag}
                     openVideoPop={this.openVideoPop}
-                    openDoctorForm={this.openDoctorForm}
                     grid={false}
                     multipleTags={this.state.activeTag.multipleTags}
                   />
@@ -949,7 +941,6 @@ class Home extends Component {
                         lastPlayed={this.state.lastPlayed}
                         tag={row.tag}
                         openVideoPop={this.openVideoPop}
-                        openDoctorForm={this.openDoctorForm}
                         grid={false}
                         multipleTags={row.multipleTags}
                       />

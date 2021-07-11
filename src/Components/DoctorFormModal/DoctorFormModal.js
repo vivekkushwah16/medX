@@ -158,9 +158,8 @@ const DoctorFormModal = (props) => {
                 )}
               </div>
               <div className="form-group" style={{ marginBottom: 0 }}>
-                {/* <div style={{ position: "relative" }}> */}
                 <input
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", backgroundColor: "beige" }}
                   type="text"
                   className="form-control"
                   value={institute}
@@ -187,7 +186,6 @@ const DoctorFormModal = (props) => {
                     alt=""
                   />
                 </div>
-                {/* </div> */}
                 {error.instituteError && (
                   <span className="input-error2">{error.instituteError}</span>
                 )}
@@ -230,7 +228,16 @@ const DoctorFormModal = (props) => {
               )}
             </div>
           ) : (
-            <div className="modal-body">Verified</div>
+            <div className="modal-body doc-verified">
+              <div class="success-positioning d-flex">
+                <div class="success-icon">
+                  <div class="success-icon__tip"></div>
+                  <div class="success-icon__long"></div>
+                </div>
+              </div>
+              <h2>Verified</h2>
+              <h4>Congratulations! Account is verified.</h4>
+            </div>
           )}
           {!props.verified ? (
             <div className="modal-footer">

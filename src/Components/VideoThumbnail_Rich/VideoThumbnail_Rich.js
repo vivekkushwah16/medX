@@ -21,15 +21,7 @@ const bandColor = {
 };
 
 function VideoThumbnail_Rich(props) {
-  const {
-    videosData,
-    videoInfo,
-    openVideoPop,
-    openDoctorForm,
-    grid,
-    refresh,
-    tag,
-  } = props;
+  const { videosData, videoInfo, openVideoPop, grid, refresh, tag } = props;
   const [metadata, setMetadata] = useState(null);
   const { user, getVideoMetaData } = useContext(UserContext);
   const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext);
@@ -62,9 +54,6 @@ function VideoThumbnail_Rich(props) {
     );
   };
 
-  const showDoctorFormhandle = () =>{
-openDoctorForm(metadata, videoInfo, videosData, tag);
-  }
   return (
     <div
       className={"col-25 col-md-50 col-sm-100"}
@@ -78,7 +67,6 @@ openDoctorForm(metadata, videoInfo, videosData, tag);
         onClick={() => {
           addAnalytics();
           openVideoPop(metadata, videoInfo, videosData, tag);
-          showDoctorFormhandle();
         }}
         style={{ backgroundImage: `url(${videoInfo.thumnailUrl})` }}
         // onClickCapture={() => {openVideoPop(videoInfo, videosData);handleOnItemClick()}}
