@@ -382,17 +382,7 @@ export default function SearchPage() {
               </div>
             </form>
           </div>
-          <div
-            className="searchPage_ResultContainer"
-            style={{
-              marginTop:
-                window.innerWidth <= 600 && window.innerHeight >= 320
-                  ? "8rem"
-                  : window.innerWidth <= 600 && window.innerHeight < 320
-                  ? "0rem"
-                  : "",
-            }}
-          >
+          <div className="searchPage_ResultContainer">
             {showLoading && (
               <div className="loaderContainer">
                 <div className="lds-dual-ring"></div>

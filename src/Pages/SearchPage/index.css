@@ -192,10 +192,7 @@
 
 @media only screen and (max-width: 600px) {
   .searchPage_ResultContainer {
-    margin-top: 4rem;
-  }
-  .searchPage_ResultContainer {
-    padding-bottom: 4.5rem;
+    margin-top: 3rem;
   }
   #searchPageConatiner #header .container {
     max-width: calc(100vw - 1rem);

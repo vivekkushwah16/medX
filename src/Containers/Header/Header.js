@@ -89,7 +89,8 @@ export default function Header(props) {
       }`}
       ref={navBar}
       style={{
-        paddingBottom: sticky&& history.location.pathname.includes("search") && "6rem",
+        paddingBottom:
+          sticky && history.location.pathname.includes("search") && "6rem",
       }}
       id="header"
     >

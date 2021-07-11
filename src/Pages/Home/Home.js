@@ -690,10 +690,6 @@ class Home extends Component {
     tagSelectedFrom,
     updateUrl = true
   ) => {
-    let count = parseInt(sessionStorage.getItem("doctorFormCount"));
-    count = count ? count + 1 : 1;
-    // console.log(count);
-    sessionStorage.setItem("doctorFormCount", count);
     document.getElementsByTagName("body")[0].style.overflow = "hidden";
     // console.log(metadata, videoData, videosData, tagSelectedFrom);
     //first check for verified user
@@ -702,6 +698,9 @@ class Home extends Component {
       this.runNonVerifiedProcess();
       return;
     }
+    let count = parseInt(sessionStorage.getItem("doctorFormCount"));
+    count = count ? count + 1 : 1;
+    sessionStorage.setItem("doctorFormCount", count);
     if (count > 4) {
       this.setState({ doctorFormModalShow: true });
       sessionStorage.setItem("doctorFormCount", 1);
