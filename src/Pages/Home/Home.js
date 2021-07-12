@@ -701,7 +701,7 @@ class Home extends Component {
     let count = parseInt(localStorage.getItem("doctorFormCount"));
     count = count ? count + 1 : 1;
     localStorage.setItem("doctorFormCount", count);
-    if (count === 5) {
+    if (count >= 5 && !this.state.doctorNameVerified) {
       this.setState({ doctorFormModalShow: true });
       // localStorage.setItem("doctorFormCount", 1);
     } else {
@@ -805,8 +805,8 @@ class Home extends Component {
       (res) => res.institute === data.institute
       // res.institute.includes(data.institute)
     );
-    let userName = this.context.user.displayName;
-    let name = finalResult.length === 1 && finalResult[0].name;
+    let userName = this.context.user.displayName.toLowerCase();
+    let name = finalResult.length === 1 && finalResult[0].name.toLowerCase();
 
     // console.log(userName);
     // console.log("res", finalResult);
@@ -827,7 +827,7 @@ class Home extends Component {
         this.setState({ doctorNameVerified: true, doctorResultLoading: false });
       } else {
         this.setState({
-          doctorError: "No Match Found",
+          doctorError: "Registered name not matching",
           doctorNameVerified: false,
           doctorResultLoading: false,
         });
@@ -837,7 +837,7 @@ class Home extends Component {
     }
   };
   handleVerificationState = () => {
-    this.setState({ doctorNameVerified: false });
+    // this.setState({ doctorNameVerified: false });
   };
   handleDoctorError = () => {
     this.setState({ doctorError: "" });

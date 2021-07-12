@@ -108,7 +108,6 @@ function Myprofile(props) {
               }${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ""} `}
             </a>
             <h3 className="modalBox__title" style={{ color: "#F5F5F5" }}>
-              {" "}
               My Profile
             </h3>
           </div>

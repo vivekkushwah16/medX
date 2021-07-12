@@ -5,7 +5,8 @@
 .search-container-top {
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -170%);
+  margin-bottom: 50px;
+  transform: translate(-50%, -136%);
 }
 
 .search-container input[type="text"] {
