@@ -83,7 +83,7 @@ const DoctorFormModal = (props) => {
     if (year === "") {
       return setError({ yearError: "Registeration year is required" });
     }
-    if (institute === "" || institute === "None") {
+    if (institute === "") {
       return setError({ instituteError: "Institute is required" });
     }
     setError({});
@@ -169,15 +169,7 @@ const DoctorFormModal = (props) => {
                   required
                 />
                 <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: "5px",
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    cursor: "pointer",
-                  }}
+                  className="institute-arrow-icon"
                   onClick={() => setShowInstitutes(!showInstitutes)}
                 >
                   <img
@@ -200,7 +192,7 @@ const DoctorFormModal = (props) => {
                   />
                   <div
                     className="institute-values-item"
-                    onClick={() => handleInstituteValues("None")}
+                    onClick={() => handleInstituteValues("")}
                   >
                     None
                   </div>
