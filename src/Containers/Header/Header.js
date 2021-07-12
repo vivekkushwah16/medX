@@ -89,8 +89,12 @@ export default function Header(props) {
       }`}
       ref={navBar}
       style={{
-        paddingBottom:
-          sticky && history.location.pathname.includes("search") && "6rem",
+        padding:
+          history.location.pathname.includes("search") && "1.325rem 0 5rem 0",
+        backgroundColor:
+          window.innerWidth <= 768 &&
+          history.location.pathname.includes("search") &&
+          "#000",
       }}
       id="header"
     >

@@ -698,12 +698,12 @@ class Home extends Component {
       this.runNonVerifiedProcess();
       return;
     }
-    let count = parseInt(sessionStorage.getItem("doctorFormCount"));
+    let count = parseInt(localStorage.getItem("doctorFormCount"));
     count = count ? count + 1 : 1;
-    sessionStorage.setItem("doctorFormCount", count);
-    if (count > 4) {
+    localStorage.setItem("doctorFormCount", count);
+    if (count === 5) {
       this.setState({ doctorFormModalShow: true });
-      sessionStorage.setItem("doctorFormCount", 1);
+      // localStorage.setItem("doctorFormCount", 1);
     } else {
       //if user is verified play video
       this.closeVideoPop(metadata);

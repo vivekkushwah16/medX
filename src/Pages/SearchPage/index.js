@@ -185,7 +185,7 @@ export default function SearchPage() {
     if (!lastQuery.current || lastQuery.current == null) {
       return;
     }
-    console.log(lastQuery.current, filterBy, sortBy);
+    // console.log(lastQuery.current, filterBy, sortBy);
     let query = {
       keyword: lastQuery.current,
       doSorting: false,

@@ -92,7 +92,8 @@ export default function TagsRow(props) {
     try {
       if (yOffset > 0) {
         // console.log(window.pageYOffset >= yOffset, yOffset)
-        if (window.pageYOffset >= yOffset) {
+        // window.pageYOffset >= yOffset;
+        if (window.pageYOffset >= window.innerHeight * 0.9) {
           setSticky(true);
         } else {
           setSticky(false);

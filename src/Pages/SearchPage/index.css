@@ -181,19 +181,26 @@
 }
 
 /*  */
+
 @media only screen and (max-width: 768px) {
+  .searchPage_Body {
+    padding-top: 0rem;
+  }
   .searchPage_SideBar {
     display: none;
   }
   .searchPage_ResultContainer {
     width: 100vw;
+    padding-bottom: 8rem;
+    transform: translateY(117px);
   }
 }
-
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) and (orientation: landscape) {
   .searchPage_ResultContainer {
-    margin-top: 3rem;
+    transform: translateY(-10px);
   }
+}
+@media only screen and (max-width: 600px) {
   #searchPageConatiner #header .container {
     max-width: calc(100vw - 1rem);
   }

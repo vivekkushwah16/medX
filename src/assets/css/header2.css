@@ -78,7 +78,6 @@
     .headerBox__right {  padding-right: 1rem!important;}
     .headerBox__left { justify-content: space-between; width: 100%; }
     .headerBox.headerBox--full .headerBox__right { display: flex; }
-    .headerBox.headerBox--full { padding: 1.325rem 0; }
     .headerBox__right .btn-secondary span { display: none; }
     .headerBox--full .container{
         padding-left: 15px;
