@@ -7,6 +7,7 @@ import React, {
 } from "react";
 // import { Splide, SplideSlide } from '@splidejs/react-splide';
 import VideoPopup from "../../Containers/VideoPopup/VideoPopup";
+import stringSimilarity from "string-similarity";
 // import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import "./Home.css";
 import top from "./top.svg";
@@ -190,7 +191,7 @@ class Home extends Component {
     platformData: JSON.parse(localStorage.getItem("platformData")),
     doctorFormModalShow: false,
     doctorFormData: "",
-    doctorNameVerified: false,
+    doctorNameVerified: localStorage.getItem("doctorVerified") ? true : false,
     doctorError: "",
     doctorResultLoading: false,
   };
@@ -701,9 +702,9 @@ class Home extends Component {
     let count = parseInt(localStorage.getItem("doctorFormCount"));
     count = count ? count + 1 : 1;
     localStorage.setItem("doctorFormCount", count);
+
     if (count >= 5 && !this.state.doctorNameVerified) {
       this.setState({ doctorFormModalShow: true });
-      // localStorage.setItem("doctorFormCount", 1);
     } else {
       //if user is verified play video
       this.closeVideoPop(metadata);
@@ -808,9 +809,6 @@ class Home extends Component {
     let userName = this.context.user.displayName.toLowerCase();
     let name = finalResult.length === 1 && finalResult[0].name.toLowerCase();
 
-    // console.log(userName);
-    // console.log("res", finalResult);
-
     // in case of no result
     if (finalResult.length <= 0) {
       return this.setState({
@@ -819,21 +817,17 @@ class Home extends Component {
       });
     }
 
-    if (name?.length > userName?.length) {
-      let containsName = name.indexOf(userName);
-
-      if (containsName !== -1) {
-        // console.log("conatins ", true);
-        this.setState({ doctorNameVerified: true, doctorResultLoading: false });
-      } else {
-        this.setState({
-          doctorError: "Registered name not matching",
-          doctorNameVerified: false,
-          doctorResultLoading: false,
-        });
-        // console.log("conatins ", false);
-      }
+    let containsName = stringSimilarity.compareTwoStrings(name, userName);
+    // let containsName = name.includes(userName);
+    if (containsName > 0.6) {
+      localStorage.setItem("doctorVerified", "true");
+      this.setState({ doctorNameVerified: true, doctorResultLoading: false });
     } else {
+      this.setState({
+        doctorError: "Registered name not matching",
+        doctorNameVerified: false,
+        doctorResultLoading: false,
+      });
     }
   };
   handleVerificationState = () => {

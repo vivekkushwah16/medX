@@ -101,6 +101,7 @@ const DoctorFormModal = (props) => {
     setSearchText("");
   };
   const handleClose = () => {
+        document.getElementsByTagName("body")[0].style.overflow = "auto";
     props.handledoctorResultLoading(false);
     props.handleDoctorError();
     props.onClose();
@@ -258,12 +259,14 @@ const DoctorFormModal = (props) => {
                     backgroundColor: props.doctorResultLoading && "#fff",
                   }}
                   onClick={
-                    !props.doctorResultLoading
-                      ? () => {
-                          props.handleDoctorError();
-                          handleSubmit();
-                        }
-                      : null
+                    // !props.doctorResultLoading
+                    //   ? () => {
+                    //       props.handleDoctorError();
+                    //       handleSubmit();
+                    //     }
+                    //   : null
+                     ()=>{props.handleDoctorError();
+                     handleSubmit();}
                   }
                 >
                   {props.doctorResultLoading ? (
