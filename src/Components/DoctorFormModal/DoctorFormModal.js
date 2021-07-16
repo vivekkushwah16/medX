@@ -101,7 +101,7 @@ const DoctorFormModal = (props) => {
     setSearchText("");
   };
   const handleClose = () => {
-        document.getElementsByTagName("body")[0].style.overflow = "auto";
+    document.getElementsByTagName("body")[0].style.overflow = "auto";
     props.handledoctorResultLoading(false);
     props.handleDoctorError();
     props.onClose();
@@ -227,10 +227,10 @@ const DoctorFormModal = (props) => {
             </>
           ) : (
             <div className="modal-body doc-verified">
-              <div class="success-positioning d-flex">
-                <div class="success-icon">
-                  <div class="success-icon__tip"></div>
-                  <div class="success-icon__long"></div>
+              <div className="success-positioning d-flex">
+                <div className="success-icon">
+                  <div className="success-icon__tip"></div>
+                  <div className="success-icon__long"></div>
                 </div>
               </div>
               <h2>Verified</h2>
@@ -265,8 +265,10 @@ const DoctorFormModal = (props) => {
                     //       handleSubmit();
                     //     }
                     //   : null
-                     ()=>{props.handleDoctorError();
-                     handleSubmit();}
+                    () => {
+                      props.handleDoctorError();
+                      handleSubmit();
+                    }
                   }
                 >
                   {props.doctorResultLoading ? (
@@ -299,7 +301,6 @@ const DoctorFormModal = (props) => {
                 id="submit"
                 onClick={() => {
                   handleClose();
-                  props.handleVerificationState();
                 }}
                 className="btn btn-secondary"
               >

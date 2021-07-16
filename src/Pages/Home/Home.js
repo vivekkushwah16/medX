@@ -191,7 +191,8 @@ class Home extends Component {
     platformData: JSON.parse(localStorage.getItem("platformData")),
     doctorFormModalShow: false,
     doctorFormData: "",
-    doctorNameVerified: localStorage.getItem("doctorVerified") ? true : false,
+    // doctorNameVerified: localStorage.getItem("doctorVerified") ? true : false,
+    doctorNameVerified: this.context.userInfo.doctorVerified ? true : false,
     doctorError: "",
     doctorResultLoading: false,
   };
@@ -699,11 +700,12 @@ class Home extends Component {
       this.runNonVerifiedProcess();
       return;
     }
+    let isVerifiedDoctor = await this.context.isVerifiedDoctor();
     let count = parseInt(localStorage.getItem("doctorFormCount"));
     count = count ? count + 1 : 1;
     localStorage.setItem("doctorFormCount", count);
 
-    if (count >= 5 && !this.state.doctorNameVerified) {
+    if (count >= 5 && !isVerifiedDoctor) {
       this.setState({ doctorFormModalShow: true });
     } else {
       //if user is verified play video
@@ -820,8 +822,8 @@ class Home extends Component {
     let containsName = stringSimilarity.compareTwoStrings(name, userName);
     // let containsName = name.includes(userName);
     if (containsName > 0.6) {
-      localStorage.setItem("doctorVerified", "true");
       this.setState({ doctorNameVerified: true, doctorResultLoading: false });
+      this.context.updateVerifiedDoctor({ doctorVerified: true });
     } else {
       this.setState({
         doctorError: "Registered name not matching",
@@ -830,9 +832,7 @@ class Home extends Component {
       });
     }
   };
-  handleVerificationState = () => {
-    // this.setState({ doctorNameVerified: false });
-  };
+
   handleDoctorError = () => {
     this.setState({ doctorError: "" });
   };
@@ -849,7 +849,6 @@ class Home extends Component {
           onClose={this.doctorFormModalClose}
           handleSubmit={this.handleDoctorFormData}
           verified={this.state.doctorNameVerified}
-          handleVerificationState={this.handleVerificationState}
           doctorError={this.state.doctorError}
           handleDoctorError={this.handleDoctorError}
           doctorResultLoading={this.doctorResultLoading}
