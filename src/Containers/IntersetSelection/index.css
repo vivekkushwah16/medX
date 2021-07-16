@@ -23,7 +23,9 @@
     top: 0;
     content: "";
     height: 100%;
-    width: 100%;
+    /* width: 100%; */
+    pointer-events: none;
+    width: calc(100% - 12px);
     background: linear-gradient(180deg, #000000 -6.25%, rgba(0, 0, 0, 0) 14.34%, rgba(62, 62, 62, 0) 73.33%, rgba(24, 24, 24, 0.877281) 85.12%, #000000 94.52%), linear-gradient(0deg, rgba(26, 82, 141, 0.5), rgba(26, 82, 141, 0.5));
 }
 
