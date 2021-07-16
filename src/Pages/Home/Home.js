@@ -158,23 +158,29 @@ class Home extends Component {
       { tag: "nebulization", header: "Videos of Nebulization" },
       { tag: "Asthma", header: "Videos on Asthma" },
       { tag: "ILD/IPF", header: "Videos on ILD/IPF" },
-      { tag: "anti fungal", header: "Videos of Anti Fungal" },
+      // { tag: "anti fungal", header: "Videos of Anti Fungal" },
       { tag: "Telemedicine", header: "Videos on Telemedicine" },
       { tag: "Impact Sessions", header: "Videos of Impact session" },
       { tag: "covid19", header: "Videos on COVID-19" },
       { tag: "HeartFailure", header: "Videos of Heart Failure" },
-      {
-        tag: [
-          "Inhalation Devices",
-          "Diagnosis",
-          "Pulmonary Hypertension",
-          "Pediatric asthma",
-          "Bronchiectasis",
-          "Allergic Rhinitis",
-        ],
-        header: "Videos on Other Respiratory Diseases",
-        multipleTags: true,
-      },
+      { tag: "Inhalation Devices", header: "Videos of Inhalation Devices" },
+      { tag: "Diagnosis", header: "Videos of Diagnosis" },
+      { tag: "Pulmonary Hypertension", header: "Videos of Pulmonary Hypertension" },
+      { tag: "Pediatric asthma", header: "Videos of Pediatric asthma" },
+      { tag: "Bronchiectasis", header: "Videos of Bronchiectasis" },
+      { tag: "Allergic Rhinitis", header: "Videos of Allergic Rhinitis" },
+      // {
+      //   tag: [
+      //     "Inhalation Devices",
+      //     "Diagnosis",
+      //     "Pulmonary Hypertension",
+      //     "Pediatric asthma",
+      //     "Bronchiectasis",
+      //     "Allergic Rhinitis",
+      //   ],
+      //   header: "Videos on Other Respiratory Diseases",
+      //   multipleTags: true,
+      // },
     ],
 
     tags: [
@@ -192,7 +198,7 @@ class Home extends Component {
       { tag: "covid19", header: "COVID-19" },
       { tag: "HeartFailure", header: "Heart Failure" },
       { tag: "nebulization", header: "Nebulization" },
-      { tag: "anti fungal", header: "Anti Fungal" },
+      // { tag: "anti fungal", header: "Anti Fungal" },
       // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
     ],
     activeTag: { tag: "Impact Sessions", header: "Videos of Impact session" },
@@ -716,27 +722,27 @@ class Home extends Component {
     // localStorage.setItem("doctorFormCount", count);
 
     // if (count >= 5 && !isVerifiedDoctor) {
-      // this.setState({ doctorFormModalShow: true });
+    // this.setState({ doctorFormModalShow: true });
     // } else {
-      //if user is verified play video
-      this.closeVideoPop(metadata);
-      setTimeout(() => {
-        this.setState(
-          {
-            currentVideosData: videosData,
-            videopopVisible: true,
-            videoPopupData: { ...videoData, tagSelectedFrom },
-            lastVideoMetadata: metadata,
-          },
-          () => {
-            if (updateUrl) {
-              const { history } = this.props;
-              if (history)
-                history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
-            }
+    //if user is verified play video
+    this.closeVideoPop(metadata);
+    setTimeout(() => {
+      this.setState(
+        {
+          currentVideosData: videosData,
+          videopopVisible: true,
+          videoPopupData: { ...videoData, tagSelectedFrom },
+          lastVideoMetadata: metadata,
+        },
+        () => {
+          if (updateUrl) {
+            const { history } = this.props;
+            if (history)
+              history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
           }
-        );
-      }, 100);
+        }
+      );
+    }, 100);
     // }
   };
 
@@ -899,7 +905,7 @@ class Home extends Component {
             stickyOnScroll={true}
             showSearchBar={true}
             doSearch={this.doSearch}
-            // scrollIntoView={scrollIntoViewHead}
+          // scrollIntoView={scrollIntoViewHead}
           />
           <Banner />
 
