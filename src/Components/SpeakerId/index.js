@@ -4,14 +4,16 @@ import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvid
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 
 export function BannerSpeaker(props) {
-  const { profile } = props;
+  const { profile, multiple } = props;
   return (
     <div className="bannerBox__profile mg-b50">
       <img className="bannerBox__profile-pic" src={profile.photoURL} alt="" />
-      <div className="bannerBox__profile-text">
-        <p className="bannerBox__profile-title">{profile.name}</p>
-        <p className="bannerBox__profile-subtitle">{profile.designation}</p>
-      </div>
+      {!multiple && (
+        <div className="bannerBox__profile-text">
+          <p className="bannerBox__profile-title">{profile.name}</p>
+          <p className="bannerBox__profile-subtitle">{profile.designation}</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -21,7 +23,7 @@ const TWITTERLink = "https://twitter.com/";
 const LINKEDINLink = "https://www.linkedin.com/";
 
 export function CardSpeaker(props) {
-  const { profile } = props;
+  const { profile, nonClickable, multiple } = props;
   const [isProfileActive, setIsProfileActive] = useState(false);
   const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext);
   const { user } = useContext(UserContext);
@@ -45,7 +47,7 @@ export function CardSpeaker(props) {
       id={`${props.fromTitle ? "" : profile.id}`}
       className={`maincardBox__card-profile`}
       style={{
-        marginRight: "2rem",
+        marginRight: !multiple && "2rem",
         pointerEvents: `${props.fromTitle ? "none" : ""}`,
       }}
     >
@@ -118,36 +120,46 @@ export function CardSpeaker(props) {
         src={profile.photoURL}
         alt=""
         onClick={() => {
-          setIsProfileActive(true);
+          if (!nonClickable) {
+            setIsProfileActive(true);
+          }
         }}
       />
       <div
         className="maincardBox__card-profile-text"
         onClick={() => {
-          setIsProfileActive(true);
-          if (user) {
-            addGAWithUserInfo(SPEAKER_PROFILE_CLICK_EVENT, { id: profile.id });
-            addCAWithUserInfo(
-              `/${SPEAKER_PROFILE_CLICK_EVENT}/${user.uid}_${profile.id}`,
-              false,
-              { id: profile.id },
-              true
-            );
+          if (!nonClickable) {
+            setIsProfileActive(true);
+            if (user) {
+              addGAWithUserInfo(SPEAKER_PROFILE_CLICK_EVENT, {
+                id: profile.id,
+              });
+              addCAWithUserInfo(
+                `/${SPEAKER_PROFILE_CLICK_EVENT}/${user.uid}_${profile.id}`,
+                false,
+                { id: profile.id },
+                true
+              );
+            }
           }
         }}
       >
-        <p
-          className="maincardBox__card-profile-title"
-          style={{ textDecoration: "none" }}
-        >
-          {profile.name}
-        </p>
-        <p
-          className="maincardBox__card-profile-subtitle"
-          // style={{color:'#ffffff96'}}
-        >
-          {profile.designation}
-        </p>
+        {!multiple && (
+          <p
+            className="maincardBox__card-profile-title"
+            style={{ textDecoration: "none" }}
+          >
+            {profile.name}
+          </p>
+        )}
+        {!multiple && (
+          <p
+            className="maincardBox__card-profile-subtitle"
+            // style={{color:'#ffffff96'}}
+          >
+            {profile.designation}
+          </p>
+        )}
       </div>
     </div>
   );

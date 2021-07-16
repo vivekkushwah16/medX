@@ -23,10 +23,15 @@ export default function SpeakerProfile(props) {
   return (
     <>
       {profile && props.type === SpeakerProfileType.CARD_PROFILE && (
-        <CardSpeaker profile={profile} fromTitle={props.fromTitle} />
+        <CardSpeaker
+          profile={profile}
+          fromTitle={props.fromTitle}
+          nonClickable={props.nonClickable}
+          multiple={props.multiple}
+        />
       )}
       {profile && props.type === SpeakerProfileType.BANNER_PROFILE && (
-        <BannerSpeaker profile={profile} />
+        <BannerSpeaker profile={profile} multiple={props.multiple} />
       )}
     </>
   );

@@ -18,6 +18,7 @@ import { MediaModalType } from "../../AppConstants/ModalType";
 import { isMobileOnly } from "react-device-detect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 let scroll = Scroll.animateScroll;
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -161,7 +162,7 @@ function Banner() {
     >
       <Slider className="slider-banner-desktop" {...settings}>
         {BannerData.map((item) => (
-          <>
+          <div key={item.mainImageUrl}>
             {item.type === BannerType.LiveEvent && (
               <LiveEventBanner
                 data={item}
@@ -187,9 +188,10 @@ function Banner() {
             {item.type === BannerType.Custom2 && (
               <Custom2 data={item} goToRoute={goToRoute} />
             )}
-          </>
+          </div>
         ))}
       </Slider>
+
       {isMobileOnly && (
         <div class="arrow bounce">
           {/* <i className="icon-play whiteColor"></i> */}

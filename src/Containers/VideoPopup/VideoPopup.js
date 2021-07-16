@@ -75,7 +75,8 @@ function VideoPopup(props) {
   }, [props.videoData]);
 
   useEffect(() => {
-    if (playerRef.current) {
+    if (playerRef.current && metadata) {
+      
       seekTo(metadata.lastKnownTimestamp);
       currenttimeWatched = 0;
     }

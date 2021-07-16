@@ -11,6 +11,7 @@ import {
   RootRoute,
   EVENT_ROUTE,
   INTEREST_ROUTE,
+  SEARCH_ROUTE,
 } from "./AppConstants/Routes";
 
 // import css
@@ -31,6 +32,7 @@ import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
 import Myprofile from "./Containers/myProfile/Myprofile";
 import IntersetSelection from "./Containers/IntersetSelection";
 import EventManager from "./Managers/EventManager";
+import SearchPage from "./Pages/SearchPage";
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 // import Upload from './Components/Upload/upload';
@@ -139,7 +141,7 @@ export default function App() {
     }
   }, [initalCheck, user]);
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const updateUserMetaData = async () => {
     const query = await firestore.collection(PROFILE_COLLECTION).get();
@@ -207,16 +209,24 @@ export default function App() {
             <NotLoggedInRoutes redirectTo={HOME_ROUTE} path={LOGIN_ROUTE}>
               <LoginLazy />
             </NotLoggedInRoutes>
+
             <ProtectedRoute redirectTo={LOGIN_ROUTE} path={INTEREST_ROUTE}>
               <UserContext.Consumer>
                 {(value) => <IntersetSelection value={value.userInfo} />}
               </UserContext.Consumer>
             </ProtectedRoute>
 
+            {/* Search Route */}
+            <ProtectedRoute redirectTo={LOGIN_ROUTE} path={SEARCH_ROUTE}>
+              <SearchPage />
+            </ProtectedRoute>
+
             {/* Home Route */}
             <ProtectedRoute redirectTo={LOGIN_ROUTE} path={HOME_ROUTE}>
               <HomeLazy />
+              {/* <Redirect to={"/event/event-kmde59n5"}></Redirect> */}
             </ProtectedRoute>
+
 
             {/* UPLOAD */}
             <ProtectedRoute
