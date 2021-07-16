@@ -12,6 +12,7 @@ import { RootRoute } from "../../AppConstants/Routes";
 import { MediaModalContext } from "../../Context/MedialModal/MediaModalContextProvider";
 import { MediaModalType } from "../../AppConstants/ModalType";
 import Certificate from "../../Components/Certificate/Certificate";
+import { useHistory } from "react-router-dom";
 import "./Header.css";
 import {
   CERTIFICATE_CLICK,
@@ -20,17 +21,26 @@ import {
 } from "../../AppConstants/AnalyticsEventName";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 //showCertificate, showFeedback
 export default function Header(props) {
+  let history = useHistory();
   // console.log(props);
-  const { stickyOnScroll, addClickAnalytics } = props;
+  const {
+    stickyOnScroll,
+    addClickAnalytics,
+    showSearchBar,
+    doSearch,
+    initalSearchKeyword,
+  } = props;
   const [showInviteFriendModal, toggleInviteFriendModal] = useState(false);
   const { showMediaModal } = useContext(MediaModalContext);
 
   const navBar = useRef(null);
   const [sticky, setSticky] = useState(false);
-  const [yOffset, setyOffset] = useState(0);
+  const [searchBarSticky, setSearchBarSticky] = useState(false);
+  const [yOffset, setyOffset] = useState(100);
   useEffect(() => {
     if (stickyOnScroll) {
       // console.log(navBar.current)
@@ -53,6 +63,20 @@ export default function Header(props) {
       } else {
         setSticky(false);
       }
+      if (
+        window.pageYOffset >
+          window.innerHeight + navBar.current.offsetTop + 130 &&
+        window.innerHeight <= 600
+      ) {
+        setSearchBarSticky(true);
+      } else if (
+        window.pageYOffset > window.innerHeight * 0.9 &&
+        window.innerHeight > 600
+      ) {
+        setSearchBarSticky(true);
+      } else {
+        setSearchBarSticky(false);
+      }
     } catch (error) {
       // console.log(error);
     }
@@ -63,6 +87,14 @@ export default function Header(props) {
       className={` headerBox--full pd-r0 ${sticky ? "headerBox_sticky" : "headerBox"
         }`}
       ref={navBar}
+      style={{
+        padding:
+          history.location.pathname.includes("search") && "1.325rem 0 5rem 0",
+        backgroundColor:
+          window.innerWidth <= 768 &&
+          history.location.pathname.includes("search") &&
+          "#000",
+      }}
       id="header"
     >
       <div className="container">
@@ -89,6 +121,15 @@ export default function Header(props) {
                             <img src={props.whiteLogo ? CIPLAMEDXLOGO_WHITE : CIPLAMEDXLOGO} alt="CIPLAMEDXLOGO" />
                         </a> */}
           </div>
+
+          {showSearchBar && (
+            <SearchBar
+              doSearch={doSearch}
+              initalSearchKeyword={initalSearchKeyword}
+              sticky={searchBarSticky}
+            />
+          )}
+
           <div className="headerBox__right headerBox__right--nogap">
             {props.showCertificate && (
               <button
@@ -139,6 +180,15 @@ export default function Header(props) {
                 showInviteFriendModal={showInviteFriendModal}
               />
             )}
+            <Link
+              to="/search"
+              style={{
+                display: history.location.pathname.includes("search") && "none",
+              }}
+              className="mobile-search-btn"
+            >
+              <i className="icon-search"></i>
+            </Link>
             <Notification
               handleClick={() => {
                 // showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fimages%2Fnewflyer.pdf')

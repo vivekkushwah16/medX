@@ -23,7 +23,7 @@ body {
   position: absolute;
   bottom: 15%;
   left: 47%;
-  z-index: 1;
+  z-index: 2;
   font-size: 2rem;
 }
 
@@ -116,6 +116,10 @@ body {
 .slider-video .slider-btn.slider-btn-next {
   left: auto;
   right: -1rem;
+  opacity: 0;
+}
+.slider-video .slider-btn.slider-btn-next:hover {
+  opacity: 1;
 }
 
 .slider-video .slider-btn.slick-disabled {
@@ -173,12 +177,13 @@ body {
 }
 
 #homePageConatiner .headerBox_sticky {
-  background: linear-gradient(
+  /* background: linear-gradient(
     90deg,
     #000000cc 0%,
     rgb(0 0 0 / 73%) 72.82%,
     rgb(0 0 0 / 0%) 129.25%
-  ) !important;
+  ) !important; */
+  background-color: #000 !important;
 }
 
 .videoModalBox .maincardBox__card-profile-popover {
@@ -279,14 +284,17 @@ body {
   width: 100%;
   padding: 0.85rem;
   margin: 0;
+  padding-right: 2rem;
+  padding-left: 2rem;
   margin-top: 5.5rem;
-  background: black;
-  background: linear-gradient(
+  box-shadow: 0px 0px 8px 3px #4a4a4a85;
+  background: #242424;
+  /* background: linear-gradient(
     90deg,
     #000000cc 0%,
-    rgb(0 0 0 / 73%) 72.82%,
+    rgb(0 0 0 / 93%) 72.82%,
     rgb(0 0 0 / 0%) 129.25%
-  ) !important;
+  ) !important; */
 }
 
 @media only screen and (max-width: 992px) {
@@ -377,5 +385,19 @@ body {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .slider-video .slider-btn {
+    display: none !important;
+  }
+}
+@media only screen and (max-width: 768px) {
+  #homePageConatiner .headerBox--full .container {
+    padding: 0 3rem;
+  }
+  #homeVideoContainer .container {
+    padding-right: 1rem;
   }
 }

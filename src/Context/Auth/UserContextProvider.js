@@ -148,11 +148,46 @@ const UserContextProvider = (props) => {
       try {
         if (!userInfo) {
           const __userInfo = await getUserProfile(user.uid);
+
           setuserInfo(__userInfo);
           res(__userInfo.verified);
         } else {
           res(userInfo.verified);
         }
+      } catch (error) {
+        rej(error);
+      }
+    });
+  };
+  const isVerifiedDoctor = () => {
+    return new Promise(async (res, rej) => {
+      try {
+        if (!userInfo) {
+          const __userInfo = await getUserProfile(user.uid);
+
+          setuserInfo(__userInfo);
+          res(__userInfo.doctorVerified);
+        } else {
+          res(userInfo.doctorVerified);
+        }
+      } catch (error) {
+        rej(error);
+      }
+    });
+  };
+  const updateVerifiedDoctor = async (data) => {
+    return new Promise(async (res, rej) => {
+      try {
+        await firestore
+          .collection("profiles")
+          .doc(user.uid)
+          .update({
+            ...data,
+            docorVerifiedTime: firebase.firestore.Timestamp.now(),
+          });
+        setuserInfo({...userInfo,  doctorVerified: true});
+        res(userInfo.doctorVerified);
+
       } catch (error) {
         rej(error);
       }
@@ -182,6 +217,8 @@ const UserContextProvider = (props) => {
           setVideoMetaData,
           mediaMetaData,
           isVerifiedUser,
+          isVerifiedDoctor,
+          updateVerifiedDoctor,
           forceUpdateUserInfo,
         }}
       >

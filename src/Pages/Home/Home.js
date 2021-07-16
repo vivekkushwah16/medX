@@ -7,6 +7,7 @@ import React, {
 } from "react";
 // import { Splide, SplideSlide } from '@splidejs/react-splide';
 import VideoPopup from "../../Containers/VideoPopup/VideoPopup";
+import stringSimilarity from "string-similarity";
 // import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import "./Home.css";
 import top from "./top.svg";
@@ -47,10 +48,13 @@ import {
   VERIFY_OTP_COLUDFUNCTION,
 } from "../../AppConstants/CloudFunctionName";
 import VideoManager from "../../Managers/VideoManager";
+import { DoctorManager } from "../../Managers/DoctorManager";
 import Myprofile from "../../Containers/myProfile/Myprofile";
 import Chatbot from "../../Components/chatbot/Chatbot";
 import IntersetSelection from "../../Containers/IntersetSelection";
 import { INTEREST_ROUTE } from "../../AppConstants/Routes";
+import SearchBar from "../../Components/SearchBar/SearchBar";
+import DoctorFormModal from "../../Components/DoctorFormModal/DoctorFormModal";
 
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
 
@@ -195,6 +199,12 @@ class Home extends Component {
     lastPlayed: null,
     lastVideoMetadata: null,
     platformData: JSON.parse(localStorage.getItem("platformData")),
+    doctorFormModalShow: false,
+    doctorFormData: "",
+    // doctorNameVerified: localStorage.getItem("doctorVerified") ? true : false,
+    doctorNameVerified: this.context.userInfo.doctorVerified ? true : false,
+    doctorError: "",
+    doctorResultLoading: false,
   };
 
   contentBoXTop = createRef();
@@ -202,7 +212,7 @@ class Home extends Component {
   scrollToTargetAdjusted = () => {
     if (this.contentBoXTop.current) {
       var element = this.contentBoXTop.current;
-      var headerOffset = 100;
+      var headerOffset = 150;
       var elementPosition = element.getBoundingClientRect().top;
       var offsetPosition =
         elementPosition - headerOffset + (window.scrollY ? window.scrollY : 0);
@@ -700,25 +710,34 @@ class Home extends Component {
       this.runNonVerifiedProcess();
       return;
     }
-    //if user is verified play video
-    this.closeVideoPop(metadata);
-    setTimeout(() => {
-      this.setState(
-        {
-          currentVideosData: videosData,
-          videopopVisible: true,
-          videoPopupData: { ...videoData, tagSelectedFrom },
-          lastVideoMetadata: metadata,
-        },
-        () => {
-          if (updateUrl) {
-            const { history } = this.props;
-            if (history)
-              history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
+    // let isVerifiedDoctor = await this.context.isVerifiedDoctor();
+    // let count = parseInt(localStorage.getItem("doctorFormCount"));
+    // count = count ? count + 1 : 1;
+    // localStorage.setItem("doctorFormCount", count);
+
+    // if (count >= 5 && !isVerifiedDoctor) {
+      // this.setState({ doctorFormModalShow: true });
+    // } else {
+      //if user is verified play video
+      this.closeVideoPop(metadata);
+      setTimeout(() => {
+        this.setState(
+          {
+            currentVideosData: videosData,
+            videopopVisible: true,
+            videoPopupData: { ...videoData, tagSelectedFrom },
+            lastVideoMetadata: metadata,
+          },
+          () => {
+            if (updateUrl) {
+              const { history } = this.props;
+              if (history)
+                history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
+            }
           }
-        }
-      );
-    }, 100);
+        );
+      }, 100);
+    // }
   };
 
   closeVideoPop = (videoData) => {
@@ -786,10 +805,72 @@ class Home extends Component {
     });
     // window.scrollTo({ top: 0 });
   };
+  doSearch = (searchText) => {
+    this.props.history.push({
+      pathname: "/search",
+      search: `?keyword=${searchText}`,
+    });
+  };
+  doctorFormModalClose = () => {
+    this.setState({ doctorFormModalShow: false });
+  };
+  handleDoctorFormData = async (data) => {
+    this.setState({ doctorFormData: data });
+    let result = await DoctorManager.getDoctor(data);
+    let finalResult = result.filter(
+      (res) => res.institute === data.institute
+      // res.institute.includes(data.institute)
+    );
+    let userName = this.context.user.displayName.toLowerCase();
+    let name = finalResult.length === 1 && finalResult[0].name.toLowerCase();
+
+    // in case of no result
+    if (finalResult.length <= 0) {
+      return this.setState({
+        doctorError: "No Match Found",
+        doctorResultLoading: false,
+      });
+    }
+    this.setState({ doctorNameVerified: true, doctorResultLoading: false });
+    this.context.updateVerifiedDoctor({ doctorVerified: true });
+
+    // for name matching
+
+    // let containsName = stringSimilarity.compareTwoStrings(name, userName);
+
+    // if (containsName > 0.6) {
+    //   this.setState({ doctorNameVerified: true, doctorResultLoading: false });
+    //   this.context.updateVerifiedDoctor({ doctorVerified: true });
+    // } else {
+    //   this.setState({
+    //     doctorError: "Registered name not matching",
+    //     doctorNameVerified: false,
+    //     doctorResultLoading: false,
+    //   });
+    // }
+  };
+
+  handleDoctorError = () => {
+    this.setState({ doctorError: "" });
+  };
+  handledoctorResultLoading = (bool) => {
+    this.setState({ doctorResultLoading: bool });
+  };
+
   render() {
     return (
       // <section className="wrapper" id="root" style={{background: 'black'}}>
       <>
+        {/* <DoctorFormModal
+          show={this.state.doctorFormModalShow}
+          onClose={this.doctorFormModalClose}
+          handleSubmit={this.handleDoctorFormData}
+          verified={this.state.doctorNameVerified}
+          doctorError={this.state.doctorError}
+          handleDoctorError={this.handleDoctorError}
+          doctorResultLoading={this.doctorResultLoading}
+          handledoctorResultLoading={this.handledoctorResultLoading}
+        /> */}
         <div
           id="scrollable"
           style={{ position: "absolute", top: "0", height: 1, width: 1 }}
@@ -816,12 +897,14 @@ class Home extends Component {
             hideInviteFriend={true}
             whiteLogo={true}
             stickyOnScroll={true}
+            showSearchBar={true}
+            doSearch={this.doSearch}
             // scrollIntoView={scrollIntoViewHead}
           />
           <Banner />
 
           <div className="tabBox" id="homeVideoContainer">
-            <div class="container" id="ottContent">
+            <div className="container" id="ottContent">
               <div
                 style={{
                   zIndex: "1",
@@ -834,10 +917,14 @@ class Home extends Component {
                     "linear-gradient(to right, transparent , black)",
                 }}
               ></div>
-
+              <SearchBar
+                doSearch={this.doSearch}
+                initalSearchKeyword={""}
+                sticky={false}
+              />
               <TagsRow
                 tags={this.state.tags}
-                stickyOnScroll={false}
+                stickyOnScroll={true}
                 onTagSelect={this.onTagSelect}
                 activeTag={this.state.activeTag}
               />
@@ -882,7 +969,7 @@ class Home extends Component {
                 ))}
 
                 {this.state.rows.map((row) => (
-                  <>
+                  <div key={row.header}>
                     {row.tag !== this.state.activeTag.tag && (
                       <VideoRow
                         key={row.tag}
@@ -894,7 +981,7 @@ class Home extends Component {
                         multipleTags={row.multipleTags}
                       />
                     )}
-                  </>
+                  </div>
                 ))}
               </div>
             </div>

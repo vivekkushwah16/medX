@@ -1,20 +1,20 @@
-import React from 'react'
-import './footer.css'
+import React from "react";
+import "./footer.css";
 
 export default function Footer() {
-    return (
-        <footer class="footerBox" style={{ zIndex: 5 }}>
-            {/* <div className="">
+  return (
+    <footer className="footerBox" style={{ zIndex: 5 }}>
+      {/* <div className="">
                 <img src="/assets/images/ciplamed-logo2.png"></img>
                 <div>
 
                 </div>
             </div> */}
-            <div className="copyright">
-                <img src="/assets/images/logo.png" alt="" />
-                <span>© Copyright 2021 -- All rights reserved</span>
-            </div>
-            {/* <ul>
+      <div className="copyright">
+        <img src="/assets/images/logo.png" alt="" />
+        <span>© Copyright 2021 -- All rights reserved</span>
+      </div>
+      {/* <ul>
                 <li class="active"><a href="#">
                     <i class="icon-home"></i>
                    Home</a>
@@ -32,6 +32,6 @@ export default function Footer() {
                     Profile</a>
                 </li>
             </ul> */}
-        </footer>
-    )
+    </footer>
+  );
 }
