@@ -700,14 +700,14 @@ class Home extends Component {
       this.runNonVerifiedProcess();
       return;
     }
-    let isVerifiedDoctor = await this.context.isVerifiedDoctor();
-    let count = parseInt(localStorage.getItem("doctorFormCount"));
-    count = count ? count + 1 : 1;
-    localStorage.setItem("doctorFormCount", count);
+    // let isVerifiedDoctor = await this.context.isVerifiedDoctor();
+    // let count = parseInt(localStorage.getItem("doctorFormCount"));
+    // count = count ? count + 1 : 1;
+    // localStorage.setItem("doctorFormCount", count);
 
-    if (count >= 5 && !isVerifiedDoctor) {
-      this.setState({ doctorFormModalShow: true });
-    } else {
+    // if (count >= 5 && !isVerifiedDoctor) {
+      // this.setState({ doctorFormModalShow: true });
+    // } else {
       //if user is verified play video
       this.closeVideoPop(metadata);
       setTimeout(() => {
@@ -727,7 +727,7 @@ class Home extends Component {
           }
         );
       }, 100);
-    }
+    // }
   };
 
   closeVideoPop = (videoData) => {
@@ -818,19 +818,23 @@ class Home extends Component {
         doctorResultLoading: false,
       });
     }
+    this.setState({ doctorNameVerified: true, doctorResultLoading: false });
+    this.context.updateVerifiedDoctor({ doctorVerified: true });
 
-    let containsName = stringSimilarity.compareTwoStrings(name, userName);
-    // let containsName = name.includes(userName);
-    if (containsName > 0.6) {
-      this.setState({ doctorNameVerified: true, doctorResultLoading: false });
-      this.context.updateVerifiedDoctor({ doctorVerified: true });
-    } else {
-      this.setState({
-        doctorError: "Registered name not matching",
-        doctorNameVerified: false,
-        doctorResultLoading: false,
-      });
-    }
+    // for name matching
+
+    // let containsName = stringSimilarity.compareTwoStrings(name, userName);
+
+    // if (containsName > 0.6) {
+    //   this.setState({ doctorNameVerified: true, doctorResultLoading: false });
+    //   this.context.updateVerifiedDoctor({ doctorVerified: true });
+    // } else {
+    //   this.setState({
+    //     doctorError: "Registered name not matching",
+    //     doctorNameVerified: false,
+    //     doctorResultLoading: false,
+    //   });
+    // }
   };
 
   handleDoctorError = () => {
@@ -844,7 +848,7 @@ class Home extends Component {
     return (
       // <section className="wrapper" id="root" style={{background: 'black'}}>
       <>
-        <DoctorFormModal
+        {/* <DoctorFormModal
           show={this.state.doctorFormModalShow}
           onClose={this.doctorFormModalClose}
           handleSubmit={this.handleDoctorFormData}
@@ -853,7 +857,7 @@ class Home extends Component {
           handleDoctorError={this.handleDoctorError}
           doctorResultLoading={this.doctorResultLoading}
           handledoctorResultLoading={this.handledoctorResultLoading}
-        />
+        /> */}
         <div
           id="scrollable"
           style={{ position: "absolute", top: "0", height: 1, width: 1 }}
