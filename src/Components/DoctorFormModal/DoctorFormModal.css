@@ -139,6 +139,12 @@
   color: #fff;
   background-color: #015189;
 }
+.doctor-modal-cls-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
 
 /* success icon */
 .success-positioning {

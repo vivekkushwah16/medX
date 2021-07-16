@@ -130,7 +130,7 @@ const DoctorFormModal = (props) => {
                   <input
                     type="text"
                     value={regId}
-                    autofocus
+                    autoFocus
                     className="form-control"
                     onChange={(e) => setRegId(e.target.value)}
                     placeholder="Registeration Number"
@@ -312,12 +312,8 @@ const DoctorFormModal = (props) => {
             onClick={() => {
               handleClose();
             }}
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              cursor: "pointer",
-            }}
+            className="doctor-modal-cls-btn"
+            style={{}}
           >
             <img src={CloseIcon} alt="" />
           </div>
