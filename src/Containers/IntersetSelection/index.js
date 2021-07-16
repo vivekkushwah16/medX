@@ -19,6 +19,7 @@ const values = {
         "Covid19",
         "Nebulization",
         "Pediatric asthma",
+        "Telemedicine",
     ],
     "Critical Care": [
         "Anti fungal",
@@ -28,10 +29,9 @@ const values = {
         "Cardiovascular",
         "Heart Failure"
     ],
-    "Others": [
-        "Telemedicine",
+    "Events": [
         "Impact Sessions",
-        "Impact Panel Discussion"
+        // "Impact Panel Discussion"
     ]
 }
 
@@ -41,7 +41,7 @@ class IntersetSelection extends Component {
         "Respiratory": [],
         "Critical Care": [],
         "Cardiology": [],
-        "Others": [],
+        "Events": [],
         loading: false
     }
 
@@ -82,7 +82,7 @@ class IntersetSelection extends Component {
         return !(this.state.Respiratory.length > 0 ||
             this.state["Critical Care"].length > 0 ||
             this.state["Cardiology"].length > 0 ||
-            this.state["Others"].length > 0)
+            this.state["Events"].length > 0)
     }
 
     handleSubmit = async (event) => {
