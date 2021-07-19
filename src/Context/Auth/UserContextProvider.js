@@ -170,6 +170,10 @@ const UserContextProvider = (props) => {
           setuserInfo(__userInfo);
           res(__userInfo.doctorVerified);
         } else {
+          setuserInfo({
+            ...userInfo,
+            doctorVerified: userInfo.doctorVerified ? true : false,
+          });
           res(userInfo.doctorVerified);
         }
       } catch (error) {
@@ -202,6 +206,11 @@ const UserContextProvider = (props) => {
           .doc(user.uid)
           .get();
         if (doc.exists) {
+          setuserInfo({
+            ...userInfo,
+            doctorVerificationClickCount:
+              doc.data().doctorVerificationClickCount,
+          });
           res(doc.data().doctorVerificationClickCount);
         } else {
           res(1);

@@ -200,6 +200,7 @@ class Home extends Component {
     lastVideoMetadata: null,
     platformData: JSON.parse(localStorage.getItem("platformData")),
     doctorFormModalShow: false,
+    doctorFormModalText: "Please validate your credentials to proceed further.",
     doctorFormData: "",
     // doctorNameVerified: localStorage.getItem("doctorVerified") ? true : false,
     doctorNameVerified: this.context.userInfo.doctorVerified ? true : false,
@@ -693,17 +694,28 @@ class Home extends Component {
   };
 
   //#endregion
-
+  openVideoPopafterClose = () => {
+    this.openVideoPop(
+      this.lastMetadata,
+      this.lastVideoData,
+      this.lastVideosData,
+      this.lastTagSelectedFrom,
+      true,
+      true
+    );
+  };
   //function to open the videoPop
   openVideoPop = async (
     metadata,
     videoData,
     videosData,
     tagSelectedFrom,
-    updateUrl = true
+    updateUrl = true,
+    skipDoctorVerification = false
   ) => {
     document.getElementsByTagName("body")[0].style.overflow = "hidden";
     // console.log(metadata, videoData, videosData, tagSelectedFrom);
+
     //first check for verified user
     let isVerified = await this.context.isVerifiedUser();
     if (!isVerified) {
@@ -711,41 +723,59 @@ class Home extends Component {
       return;
     }
 
-    let isVerifiedDoctor = await this.context.isVerifiedDoctor();
-    let count = await this.context.getDoctorVerificationClickCount();
-    count = count ? count + 1 : 1;
+    if (!skipDoctorVerification) {
+      let newCount = parseInt(localStorage.getItem("count"));
+      let count = this.context.userInfo.doctorVerificationClickCount;
+      if (!newCount) {
+        newCount = count ? count : 1;
+      }
+      if (newCount && count) {
+        newCount = newCount >= count ? newCount : count;
+      }
+      newCount = newCount && newCount <= 5 ? newCount + 1 : newCount;
 
-    if (count <= 5) {
-      await this.context.updateDoctorVerificationClickCount({
-        doctorVerificationClickCount: count,
-      });
+      this.lastMetadata = metadata;
+      this.lastVideoData = videoData;
+      this.lastVideosData = videosData;
+      this.lastTagSelectedFrom = tagSelectedFrom;
+
+      localStorage.setItem("count", newCount);
+
+      if (newCount && !this.context.userInfo.doctorVerified) {
+        this.setState({ doctorFormModalShow: true });
+        if (newCount >= 5) {
+          this.setState({
+            doctorFormModalText: "You have to verify form first.",
+          });
+          return;
+        } else {
+          this.setState({
+            doctorFormModalText:
+              "Please validate your credentials to proceed further.",
+          });
+          return;
+        }
+      }
     }
-    
-    if (count >= 5 && !isVerifiedDoctor) {
-      this.setState({ doctorFormModalShow: true });
-    } else {
-      //if user is verified play video
-      this.closeVideoPop(metadata);
-      setTimeout(() => {
-        this.setState(
-          {
-            currentVideosData: videosData,
-            videopopVisible: true,
-            videoPopupData: { ...videoData, tagSelectedFrom },
-            lastVideoMetadata: metadata,
-          },
-          () => {
-            if (updateUrl) {
-              const { history } = this.props;
-              if (history)
-                history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
-            }
+    this.closeVideoPop(metadata);
+    setTimeout(() => {
+      this.setState(
+        {
+          currentVideosData: videosData,
+          videopopVisible: true,
+          videoPopupData: { ...videoData, tagSelectedFrom },
+          lastVideoMetadata: metadata,
+        },
+        () => {
+          if (updateUrl) {
+            const { history } = this.props;
+            if (history)
+              history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
           }
-        );
-      }, 100);
-    }
+        }
+      );
+    }, 100);
   };
-
   closeVideoPop = (videoData) => {
     this.setState({
       currentVideosData: null,
@@ -756,8 +786,7 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    console.log(this.context.userInfo);
-
+    // console.log(this.context.userInfo);
     if (this.context.userInfo) {
     }
 
@@ -770,6 +799,8 @@ class Home extends Component {
         }
         const data = doc.data();
         localStorage.setItem("platformData", JSON.stringify(data));
+        this.context.getDoctorVerificationClickCount();
+        this.context.isVerifiedDoctor();
         this.setState({
           platformData: data,
         });
@@ -874,7 +905,12 @@ class Home extends Component {
           doctorError={this.state.doctorError}
           handleDoctorError={this.handleDoctorError}
           doctorResultLoading={this.doctorResultLoading}
+          doctorFormModalText={this.state.doctorFormModalText}
           handledoctorResultLoading={this.handledoctorResultLoading}
+          updateDoctorVerificationClickCount={
+            this.context.updateDoctorVerificationClickCount
+          }
+          openVideoPopafterClose={this.openVideoPopafterClose}
         />
         <div
           id="scrollable"
