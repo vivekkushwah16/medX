@@ -4,6 +4,8 @@ import {
   MEDIAMETADATA_COLLECTION,
   NOTICEBOARD_COLLECTION,
   PLATFORM_BACKSTAGE_DOC,
+  PROFILE_COLLECTION,
+  USERMETADATA_COLLECTION,
 } from "../../AppConstants/CollectionConstants";
 import { MediaType } from "../../AppConstants/TypeConstant";
 import firebase, {
@@ -179,21 +181,49 @@ const UserContextProvider = (props) => {
     return new Promise(async (res, rej) => {
       try {
         await firestore
-          .collection("profiles")
+          .collection(PROFILE_COLLECTION)
           .doc(user.uid)
           .update({
             ...data,
             docorVerifiedTime: firebase.firestore.Timestamp.now(),
           });
-        setuserInfo({...userInfo,  doctorVerified: true});
+        setuserInfo({ ...userInfo, doctorVerified: true });
         res(userInfo.doctorVerified);
-
       } catch (error) {
         rej(error);
       }
     });
   };
-
+  const getDoctorVerificationClickCount = async () => {
+    return new Promise(async (res, rej) => {
+      try {
+        const doc = await firestore
+          .collection(USERMETADATA_COLLECTION)
+          .doc(user.uid)
+          .get();
+        if (doc.exists) {
+          res(doc.data().doctorVerificationClickCount);
+        } else {
+          res(1);
+        }
+      } catch (error) {
+        rej(error);
+      }
+    });
+  };
+  const updateDoctorVerificationClickCount = async (data) => {
+    return new Promise(async (res, rej) => {
+      try {
+        await firestore
+          .collection(USERMETADATA_COLLECTION)
+          .doc(user.uid)
+          .update(data);
+        res();
+      } catch (error) {
+        rej(error);
+      }
+    });
+  };
   const forceUpdateUserInfo = async () => {
     return new Promise(async (res, rej) => {
       try {
@@ -220,6 +250,8 @@ const UserContextProvider = (props) => {
           isVerifiedDoctor,
           updateVerifiedDoctor,
           forceUpdateUserInfo,
+          getDoctorVerificationClickCount,
+          updateDoctorVerificationClickCount,
         }}
       >
         {props.children}
