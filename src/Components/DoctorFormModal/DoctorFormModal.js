@@ -113,7 +113,7 @@ const DoctorFormModal = (props) => {
     // props.updateDoctorVerificationClickCount({
     //   doctorVerificationClickCount: count ? count : 1,
     // });
-    updateClickCount();
+    // updateClickCount();
 
     setShowForm(false);
     props.handledoctorResultLoading(false);
@@ -126,12 +126,12 @@ const DoctorFormModal = (props) => {
     setRegId("");
     setYear("");
   };
-  const updateClickCount = () => {
-    let count = parseInt(localStorage.getItem("count"));
-    props.updateDoctorVerificationClickCount({
-      doctorVerificationClickCount: count ? count : 1,
-    });
-  };
+  // const updateClickCount = () => {
+  //   let count = parseInt(localStorage.getItem("count"));
+  //   props.updateDoctorVerificationClickCount({
+  //     doctorVerificationClickCount: count ? count : 1,
+  //   });
+  // };
   return (
     props.show && (
       <div className="modal" onClick={() => handleClose()}>
@@ -346,7 +346,7 @@ const DoctorFormModal = (props) => {
                       id="submit"
                       className="btn btn-secondary save__btn"
                       onClick={() => {
-                        updateClickCount();
+                        // updateClickCount();
                         setShowForm(true);
                       }}
                     >

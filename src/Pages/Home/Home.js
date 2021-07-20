@@ -723,24 +723,30 @@ class Home extends Component {
       return;
     }
 
-    if (!skipDoctorVerification) {
-      let newCount = parseInt(localStorage.getItem("count"));
-      let count = this.context.userInfo.doctorVerificationClickCount;
-      if (!newCount) {
-        newCount = count ? count : 1;
-      }
-      if (newCount && count) {
-        newCount = newCount >= count ? newCount : count;
-      }
-      newCount = newCount && newCount <= 5 ? newCount + 1 : newCount;
+    let newCount = parseInt(localStorage.getItem("count"));
+    let count = this.context.userInfo.doctorVerificationClickCount;
+    if (!newCount) {
+      newCount = count ? count : 1;
+    }
+    if (newCount && count) {
+      newCount = newCount >= count ? newCount : count;
+    }
+    newCount = newCount && newCount <= 13 ? newCount + 1 : newCount;
 
-      this.lastMetadata = metadata;
-      this.lastVideoData = videoData;
-      this.lastVideosData = videosData;
-      this.lastTagSelectedFrom = tagSelectedFrom;
+    this.lastMetadata = metadata;
+    this.lastVideoData = videoData;
+    this.lastVideosData = videosData;
+    this.lastTagSelectedFrom = tagSelectedFrom;
 
-      localStorage.setItem("count", newCount);
+    localStorage.setItem("count", newCount);
 
+    this.context.updateDoctorVerificationClickCount({
+      doctorVerificationClickCount: newCount ? newCount : 1,
+    });
+    if (
+      !skipDoctorVerification &&
+      (newCount === 1 || newCount === 4 || newCount === 8 || newCount === 12)
+    ) {
       if (newCount && !this.context.userInfo.doctorVerified) {
         this.setState({ doctorFormModalShow: true });
         if (newCount >= 5) {
