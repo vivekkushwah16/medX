@@ -738,18 +738,22 @@ class Home extends Component {
     this.lastVideosData = videosData;
     this.lastTagSelectedFrom = tagSelectedFrom;
 
-    localStorage.setItem("count", newCount);
+    !this.context.userInfo.doctorVerified &&
+      localStorage.setItem("count", newCount);
 
-    this.context.updateDoctorVerificationClickCount({
-      doctorVerificationClickCount: newCount ? newCount : 1,
-    });
+    if (newCount <= 13 && !this.context.userInfo.doctorVerified) {
+      this.context.updateDoctorVerificationClickCount({
+        doctorVerificationClickCount: newCount ? newCount : 1,
+      });
+    }
+
     if (
       !skipDoctorVerification &&
-      (newCount === 1 || newCount === 4 || newCount === 8 || newCount === 12)
+      (newCount === 1 || newCount === 5 || newCount === 9 || newCount >= 13)
     ) {
       if (newCount && !this.context.userInfo.doctorVerified) {
         this.setState({ doctorFormModalShow: true });
-        if (newCount >= 5) {
+        if (newCount >= 13) {
           this.setState({
             doctorFormModalText: "You have to verify form first.",
           });
@@ -977,6 +981,17 @@ class Home extends Component {
               />
 
               <div className="contentBox" ref={this.contentBoXTop}>
+                {this.state.activeTag !== "" && (
+                  <VideoRow
+                    key={this.state.activeTag}
+                    heading={`${this.state.activeTag.header}`}
+                    lastPlayed={this.state.lastPlayed}
+                    tag={this.state.activeTag.tag}
+                    openVideoPop={this.openVideoPop}
+                    grid={false}
+                    multipleTags={this.state.activeTag.multipleTags}
+                  />
+                )}
                 {RecommendedRow.map((row) => (
                   <VideoRow
                     key={row.tag}
@@ -990,17 +1005,7 @@ class Home extends Component {
                     rowData={row}
                   />
                 ))}
-                {this.state.activeTag !== "" && (
-                  <VideoRow
-                    key={this.state.activeTag}
-                    heading={`${this.state.activeTag.header}`}
-                    lastPlayed={this.state.lastPlayed}
-                    tag={this.state.activeTag.tag}
-                    openVideoPop={this.openVideoPop}
-                    grid={false}
-                    multipleTags={this.state.activeTag.multipleTags}
-                  />
-                )}
+
                 {preDefinedRows.map((row) => (
                   <VideoRow
                     key={row.tag}

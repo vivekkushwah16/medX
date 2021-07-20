@@ -105,7 +105,7 @@ const DoctorFormModal = (props) => {
     document.getElementsByTagName("body")[0].style.overflow = "auto";
 
     let count = parseInt(localStorage.getItem("count"));
-    if (count <= 4) {
+    if (count <= 13) {
       props.openVideoPopafterClose();
     }
 
