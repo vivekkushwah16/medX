@@ -934,7 +934,17 @@ class Home extends Component {
                 onTagSelect={this.onTagSelect}
                 activeTag={this.state.activeTag}
               />
-
+              {this.state.activeTag !== "" && (
+                <VideoRow
+                  key={this.state.activeTag}
+                  heading={`${this.state.activeTag.header}`}
+                  lastPlayed={this.state.lastPlayed}
+                  tag={this.state.activeTag.tag}
+                  openVideoPop={this.openVideoPop}
+                  grid={false}
+                  multipleTags={this.state.activeTag.multipleTags}
+                />
+              )}
               <div className="contentBox" ref={this.contentBoXTop}>
                 {RecommendedRow.map((row) => (
                   <VideoRow
@@ -949,17 +959,7 @@ class Home extends Component {
                     rowData={row}
                   />
                 ))}
-                {this.state.activeTag !== "" && (
-                  <VideoRow
-                    key={this.state.activeTag}
-                    heading={`${this.state.activeTag.header}`}
-                    lastPlayed={this.state.lastPlayed}
-                    tag={this.state.activeTag.tag}
-                    openVideoPop={this.openVideoPop}
-                    grid={false}
-                    multipleTags={this.state.activeTag.multipleTags}
-                  />
-                )}
+
                 {preDefinedRows.map((row) => (
                   <VideoRow
                     key={row.tag}
