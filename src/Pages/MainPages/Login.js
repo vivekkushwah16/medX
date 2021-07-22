@@ -137,12 +137,19 @@ class Login extends Component {
         let errors = this.state.errors;
 
         if (error.code === "auth/user-not-found") {
-          errors.phoneNumber = "Please enter a Registered Mobile Number.";
+          console.log(error)
+          // errors.phoneNumber = "Please enter a Registered Mobile Number.";
+          // errors.phoneNumber = "Seems like we don't have your details. Redirecting to Registeration page";
+          const { history } = this.props;
+          if (history) history.push({
+            pathname: this.props.registerUrl,
+            state: { phoneNumber: this.state.phoneNumber }
+          });
         } else {
           errors.phoneNumber = error.message;
+          this.setState({ isLoading: false });
+          this.setState({ errors: errors });
         }
-        this.setState({ errors: errors });
-        this.setState({ isLoading: false });
       });
   };
 
@@ -173,11 +180,14 @@ class Login extends Component {
 
   validateForm = () => {
     let errors = this.state.errors;
-
-    errors.phoneNumber =
-      this.state.phoneNumber.length > 0
-        ? ""
-        : "Please enter a valid phone number.";
+    if (this.state.phoneNumber) {
+      errors.phoneNumber =
+        this.state.phoneNumber.length > 0
+          ? ""
+          : "Please enter a valid phone number.";
+    } else {
+      errors.phoneNumber = "Please enter a valid phone number.";
+    }
 
     this.setState({ errors: errors });
   };
@@ -248,7 +258,8 @@ class Login extends Component {
         >
           {!this.state.showOtp && (
             <>
-              <div class="login2Box__header ">
+
+              {/* <div class="login2Box__header ">
                 <h3 class="login2Box__header-title mg-r10">
                   Not Registered for the Event?
                 </h3>
@@ -258,15 +269,20 @@ class Login extends Component {
                 >
                   Register
                 </button>
-              </div>
-              <div class="login2Box__body pd-t80">
+              </div> */}
+
+              <div className="login2Box__body pd-t80">
                 <h1 className="login2Box__title mg-b25">Sign up</h1>
+
+                <div className="form-group mg-b30">
+                  <p className=" mg-b10" style={{ color: "#015189", textAlign: 'justify' }}>
+                    {/* If you have already registered, Please enter your Registered Mobile Number to Signup for the event. */}
+                    Please enter your Mobile Number to proceed further
+                  </p>
+                </div>
 
                 <form onSubmit={this.handleSubmit}>
                   <div className="form-group mg-b30">
-                    <p className=" mg-b10" style={{ color: "#015189",textAlign: 'justify' }}>
-                      If you have already registered, Please enter your Registered Mobile Number to Signup for the event.
-                    </p>
                     <PhoneInput
                       international
                       countryCallingCodeEditable={false}
@@ -301,7 +317,7 @@ class Login extends Component {
                           <img src="/assets/images/loader.gif" alt="loading" />
                         </>
                       ) : (
-                        "Sign Up"
+                        "Continue"
                       )}
                     </button>
                   </div>
