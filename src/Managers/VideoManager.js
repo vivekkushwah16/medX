@@ -362,7 +362,7 @@ const VideoManager = {
   },
   getVideoWithTag: (
     tag = [],
-    limit = 20,
+    limit = 50,
     docRefToStartFrom = null,
     filter = videoSortFilter.date,
     filterWithViews = false
