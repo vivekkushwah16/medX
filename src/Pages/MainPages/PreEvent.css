@@ -49,7 +49,7 @@
 }
 
 .preventPage .headerBox.headerBox--full{
-  background: #dddddd8a;
+  /* background: #dddddd8a; */
 }
 
 .preventPage  .left__div .buttons .addToCalendar #addToCal, .preventPage .mobile__layout .buttons .addToCalendar #addToCal{
