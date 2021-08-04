@@ -278,6 +278,7 @@ class Register extends Component {
         pincode: this.state.pincode,
         termsAndConditions: this.state.termsAndConditions,
         date: new Date().getTime(),
+        userMetaData: { registeration: "ott" },
       })
     )
       .then(async (res) => {
@@ -322,15 +323,14 @@ class Register extends Component {
             eventName: "CiplaMedX",
             email: this.state.email,
             mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${
-              this.state.lastName ? this.state.lastName : ""
-            }`,
+            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
+              }`,
             isDoctor: this.state.profession === "Doctor",
           },
         });
-        await firestore.collection("userMetaData").doc(res.data.userId).set({
-          registeration: "ott",
-        });
+        // await firestore.collection("userMetaData").doc(res.data.userId).set({
+        //   registeration: "ott",
+        // });
         this.siginIn(_data);
       })
       .catch((error) => {
@@ -415,9 +415,8 @@ class Register extends Component {
             eventName: "Cipla Impact 2021",
             email: this.state.email,
             mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${
-              this.state.lastName ? this.state.lastName : ""
-            }`,
+            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
+              }`,
             isDoctor: this.state.profession === "Doctor",
           },
         });

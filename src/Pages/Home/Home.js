@@ -120,70 +120,32 @@ function HandleUrlParam(props) {
   }, []);
   return <>{props.children}</>;
 }
-// const FeaturedRow = [
-//   {
-//     tag: "RecommendedVideos",
-//     header: "Featured Videos",
-//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
-//   },
-// ];
-// const RecommendedRow = [
-//   {
-//     tag: "RecommendedVideos",
-//     header: "Recommended Videos",
-//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
-//   },
-// ];
-// const WhatsNewRow = [
-//   {
-//     tag: "RecommendedVideos",
-//     header: "What's New",
-//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
-//   },
-// ];
-// const CopidRow = [
-//   {
-//     tag: "RecommendedVideos",
-//     header: "Videos on COPD",
-//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
-//   },
-// ];
 
-const preDefinedRows = [
-  {
-    tag: "LatestVideos",
-    header: "Featured Videos",
-    videoFetchFunction: VideoManager.getLatestVideos,
-    fetchParameters: { limit: 10 },
-    type: "featured",
-  },
+const RecommendedRow = [
   {
     tag: "RecommendedVideos",
     header: "Recommended Videos",
     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
-    type: "recommended",
   },
+];
+
+const preDefinedRows = [
+  // {
+  //   tag: "RecommendedVideos",
+  //   header: "Recommended Videos",
+  //   videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+  // },
   {
     tag: "TrendingVideos",
-    header: "What's New",
+    header: "Trending Videos",
     videoFetchFunction: VideoManager.getTrendingVideos,
     fetchParameters: { limit: 10 },
-    type: "whatsnew",
   },
-
-  // {
-  //   tag: "TrendingVideos",
-  //   header: "Trending Videos",
-  //   videoFetchFunction: VideoManager.getTrendingVideos,
-  //   fetchParameters: { limit: 10 },
-  //   type: "",
-  // },
   {
     tag: "LatestVideos",
     header: "Latest Videos",
     videoFetchFunction: VideoManager.getLatestVideos,
     fetchParameters: { limit: 10 },
-    type: "",
   },
 ];
 
@@ -1075,7 +1037,7 @@ class Home extends Component {
               />
 
               <div className="contentBox" ref={this.contentBoXTop}>
-                {this.state.activeTag !== "" && (
+                {/* {this.state.activeTag !== "" && (
                   <VideoRow
                     key={this.state.activeTag}
                     heading={`${this.state.activeTag.header}`}
@@ -1085,7 +1047,33 @@ class Home extends Component {
                     grid={false}
                     multipleTags={this.state.activeTag.multipleTags}
                   />
-                )}
+                )} */}
+                {
+                  this.state.activeTag !== "" && (
+                    <VideoRow
+                      key={this.state.activeTag}
+                      heading={`${this.state.activeTag.header}`}
+                      lastPlayed={this.state.lastPlayed}
+                      tag={this.state.activeTag.tag}
+                      openVideoPop={this.openVideoPop}
+                      grid={false}
+                      multipleTags={this.state.activeTag.multipleTags}
+                    />)
+                }
+                {RecommendedRow.map((row) => (
+                  <VideoRow
+                    key={row.tag}
+                    heading={row.header}
+                    lastPlayed={this.state.lastPlayed}
+                    tag={row.tag}
+                    openVideoPop={this.openVideoPop}
+                    grid={false}
+                    multipleTags={row.multipleTags}
+                    systemTags
+                    rowData={row}
+                  />
+                ))}
+
                 {preDefinedRows.map((row) => (
                   <VideoRow
                     key={row.header}
