@@ -18,3 +18,16 @@
 .event .login2Box__body {
   padding-top: 2rem;
 }
+
+.searchButton_Pincode{
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1.35rem 1.5rem;
+  font-size: -0.5rem;
+  background: #efefef00;
+  border: none;
+  color: #015189;
+  font-size: 1.15rem;
+  cursor: pointer;
+}

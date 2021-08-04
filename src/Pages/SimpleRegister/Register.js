@@ -104,7 +104,6 @@ const SPECIALITY = [
   "RHEUMATOLOGIST",
   "NEPHROLOGIST",
   "SURGEON",
-  "ORTHO SURGEON",
   "PAEDIATRIC SURGEON",
   "ENT SURGEON",
   "URO ONCOLOGIST",
@@ -355,128 +354,6 @@ class Register extends Component {
           this.setState({ errors: errors });
         }
       });
-    return;
-    console.log("/accounts", this.state);
-    axios
-      .post("/accountsTest", {
-        email: this.state.email,
-        phoneNumber: this.state.phoneNumber,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        profession: this.state.profession,
-        speciality: this.state.speciality,
-        country: this.state.country,
-        state: this.state.state,
-        city: this.state.city,
-        pincode: this.state.pincode,
-        termsAndConditions: this.state.termsAndConditions,
-        date: new Date().getTime(),
-      })
-      .then(async (res) => {
-        console.log(res);
-        console.log(res.data);
-        console.log(res.data.userId);
-        if (!res.data.userId) {
-          window.alert("Please Try Again Later");
-          this.setState({ isLoading: false });
-          return;
-        }
-        analytics.logEvent("user_registered", {
-          userId: res.data.userId,
-          event: "ott",
-          country: this.state.country,
-          state: this.state.state,
-          city: this.state.city,
-          profession: this.state.profession,
-          speciality: this.state.speciality,
-          pincode: this.state.pincode,
-          date: new Date().getTime(),
-        });
-        let _data = {
-          userId: res.data.userId,
-          email: this.state.email,
-          phoneNumber: this.state.phoneNumber,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          profession: this.state.profession,
-          speciality: this.state.speciality,
-          country: this.state.country,
-          state: this.state.state,
-          city: this.state.city,
-          pincode: this.state.pincode,
-          date: new Date().getTime(),
-          event: "ott",
-        };
-        await database.ref(`/user_registered/${res.data.userId}`).update(_data);
-        const confirmationMailResponse = await axios({
-          method: "post",
-          url: CONFIRMATIONENDPOINT,
-          data: {
-            eventName: "Cipla Impact 2021",
-            email: this.state.email,
-            mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
-              }`,
-            isDoctor: this.state.profession === "Doctor",
-          },
-        });
-        await firestore.collection("userMetaData").doc(res.data.userId).set({
-          registeration: "ott",
-        });
-        // this.setState({ isLoading: false })
-        this.siginIn(_data);
-        // this.redirectToLogin();
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response) {
-          let data = error.response.data;
-          console.log(data);
-          if (
-            data.message &&
-            data.message.code === "auth/email-already-exists"
-          ) {
-            this.setState((prev) => ({
-              errors: { ...prev.errors, alreadyRegistered: true },
-            }));
-            console.log(this.pagetop.current);
-            if (this.pagetop.current) {
-              this.pagetop.current.scrollIntoView();
-            }
-            // let errors = this.state.errors;
-            // errors.email = data.message.message;
-            // this.setState({ errors: errors });
-          }
-          if (
-            data.message &&
-            data.message.code === "auth/invalid-phone-number"
-          ) {
-            let errors = this.state.errors;
-            errors.phoneNumber = "Please enter valid phone number.";
-            this.setState({ errors: errors });
-          }
-          if (
-            data.code &&
-            (data.code === "PhoneNumberInUser" || data.code === "EmailInUser")
-          ) {
-            this.setState((prev) => ({
-              errors: { ...prev.errors, alreadyRegistered: true },
-            }));
-            console.log(this.pagetop.current);
-            if (this.pagetop.current) {
-              this.pagetop.current.scrollIntoView();
-            }
-          }
-        } else if (error.request) {
-          console.log(error.request);
-          alert(error.request);
-        } else {
-          console.log(error.message);
-          alert("Error " + error.message);
-        }
-        console.log(error.config);
-        this.setState({ isLoading: false });
-      });
   };
 
   setValue = (number) => {
@@ -617,31 +494,8 @@ class Register extends Component {
                   >
                     <option>Your Speciality</option>
                     {SPECIALITY.map((sp) => (
-                      <option value={sp}>{sp}</option>
+                      <option key={sp} value={sp}>{sp}</option>
                     ))}
-
-                    {/* <option value="CRITICAL CARE MEDICINE">CRITICAL CARE MEDICINE</option>
-                                        <option value="INFECTIOUS DISEASES">INFECTIOUS DISEASES</option>
-                                        <option value="INFECTIOUS DISEASES">NEPHROLOGY</option>
-                                        <option value="GASTROENTEROLOGY &mp; HEPATOLOGY">GASTROENTEROLOGY &amp; HEPATOLOGY</option>
-                                        <option value="HIV / AIDS">HIV / AIDS</option>
-                                        <option value="ONCOLOGY">ONCOLOGY</option>
-                                        <option value="ONCOLOGY">PULMONOLOGIST</option>
-                                        <option value="GENERAL MEDICINE">GENERAL MEDICINE</option>
-                                        <option value="CARDIOLOGY">CARDIOLOGY</option>
-                                        <option value="DERMATOLOGY">DERMATOLOGY</option>
-                                        <option value="DENTISTRY">DENTISTRY</option>
-                                        <option value="DIABETOLOGY">DIABETOLOGY</option>
-                                        <option value="ENT">ENT</option>
-                                        <option value="MUSCULOSKELETAL DISEASES">MUSCULOSKELETAL DISEASES</option>
-                                        <option value="NEUROPSYCHIATRY">NEUROPSYCHIATRY</option>
-                                        <option value="OBSTETRICS &amp; GYNAECOLOGY">OBSTETRICS &amp; GYNAECOLOGY</option>
-                                        <option value="OPHTHALMOLOGY">OPHTHALMOLOGY</option>
-                                        <option value="PEDIATRICS">PEDIATRICS</option>
-                                        <option value="RESPIRATORY MEDICINE">RESPIRATORY MEDICINE</option>
-                                        <option value="SURGERY">SURGERY</option>
-                                        <option value="UROLOGY">UROLOGY</option>
-                                        <option value="OTHER">OTHER</option> */}
                   </select>
                   {this.state.errors.speciality && (
                     <span className="input-error2">

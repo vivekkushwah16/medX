@@ -22,7 +22,7 @@ import {
   EVENT_CONFIRMATION_ENDPOINT,
 } from "../../AppConstants/APIEndpoints";
 import EventPageStatic from "../../Containers/mainPageStatic/EventPageStatic";
-import { UserCreation_Cloufunction } from "../../AppConstants/CloudFunctionName";
+import { GET_LOCATION_DATA, UserCreation_Cloufunction } from "../../AppConstants/CloudFunctionName";
 var uniqid = require("uniqid");
 
 const validEmailRegex = RegExp(
@@ -119,7 +119,6 @@ const SPECIALITY = [
   "RHEUMATOLOGIST",
   "NEPHROLOGIST",
   "SURGEON",
-  "ORTHO SURGEON",
   "PAEDIATRIC SURGEON",
   "ENT SURGEON",
   "URO ONCOLOGIST",
@@ -140,7 +139,7 @@ class Register extends Component {
   state = {
     isLoading: false,
     email: "",
-    phoneNumber: "",
+    phoneNumber: this.props.history?.location?.state?.phoneNumber ? this.props.history.location.state.phoneNumber : "",
     firstName: "",
     lastName: "",
     // hospitalName: "",
@@ -159,6 +158,37 @@ class Register extends Component {
     currentTab: !isMobileOnly ? TABS.bothTab : TABS.Register,
   };
   firstTime = true;
+
+  getLocationName = () => {
+    let pincode = this.state.pincode;
+    const cloudRef = cloudFunction.httpsCallable(GET_LOCATION_DATA);
+    cloudRef(
+      JSON.stringify({
+        pincode: pincode,
+      })
+    )
+      .then(async (res) => {
+        let returnedData = res.data;
+        console.log(returnedData);
+        if (returnedData.code === "ok") {
+          let locationResult = returnedData.result;
+          if (locationResult.state) {
+            this.setState({ state: locationResult.state });
+          }
+          if (locationResult.city) {
+            this.setState({ city: locationResult.city });
+          }
+          if (locationResult.country) {
+            this.setState({ country: locationResult.country });
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+
   componentDidMount = async () => {
     // const agendaData = await EventManager.getAgenda("event-kmde59n5");
     // this.processAgendaData(agendaData);
@@ -389,129 +419,29 @@ class Register extends Component {
         console.log(code, message, details);
         console.log("xxxxxxxxxxxxxxxx");
         if (code === "already-exists") {
-          this.setState((prev) => ({
-            errors: { ...prev.errors, alreadyRegistered: true },
-          }));
-          console.log(this.pagetop.current);
-          if (this.pagetop.current) {
-            this.pagetop.current.scrollIntoView();
+          if (message === "Already registered with same Phone Number") {
+            this.siginIn({
+              phoneNumber: this.state.phoneNumber
+            });
+          } else if (message === "Already registered with same emailId") {
+            // this.setState((prev) => ({
+            //   errors: { ...prev.errors, alreadyRegistered: true },
+            // }));
+            // console.log(this.pagetop.current);
+            // if (this.pagetop.current) {
+            //   this.pagetop.current.scrollIntoView();
+            // }
+            let errors = this.state.errors;
+            errors.email = "Email Id is already in use by other account.";
+            this.setState({ errors: errors });
           }
+
         }
         if (code === "failed-precondition") {
           let errors = this.state.errors;
           errors.phoneNumber = "Please enter valid phone number.";
           this.setState({ errors: errors });
         }
-      });
-
-    return;
-    axios
-      .post(`/accounts`, {
-        email: this.state.email,
-        phoneNumber: this.state.phoneNumber,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        profession: this.state.profession,
-        speciality: this.state.speciality,
-        country: this.state.country,
-        state: this.state.state,
-        city: this.state.city,
-        pincode: this.state.pincode,
-        termsAndConditions: this.state.termsAndConditions,
-        date: new Date().getTime(),
-      })
-      .then(async (res) => {
-        console.log(res);
-        console.log(res.data.userId);
-
-        analytics.logEvent("user_registered", {
-          eventId: this.props.event,
-          userId: res.data.userId,
-          country: this.state.country,
-          state: this.state.state,
-          city: this.state.city,
-          profession: this.state.profession,
-          speciality: this.state.speciality,
-          pincode: this.state.pincode,
-          date: new Date().getTime(),
-        });
-
-        let _data = {
-          userId: res.data.userId,
-          email: this.state.email,
-          phoneNumber: this.state.phoneNumber,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          profession: this.state.profession,
-          speciality: this.state.speciality,
-          country: this.state.country,
-          state: this.state.state,
-          city: this.state.city,
-          pincode: this.state.pincode,
-          date: new Date().getTime(),
-          eventId: this.props.event,
-        };
-        await database
-          .ref(`/user_registered/${uniqid("user_registered_")}`)
-          .update(_data);
-
-        const confirmationMailResponse = await axios({
-          method: "post",
-          url: EVENT_CONFIRMATION_ENDPOINT,
-          data: {
-            eventName: "Cipla Orient '21",
-            email: this.state.email,
-            mobileNumber: this.state.phoneNumber,
-            name: `${this.state.firstName} ${this.state.lastName ? this.state.lastName : ""
-              }`,
-            isDoctor: this.state.profession === "Doctor",
-          },
-        });
-        await firestore
-          .collection("userMetaData")
-          .doc(res.data.userId)
-          .set({
-            registeration: this.props.event,
-            events: [this.props.event],
-          });
-
-        // this.setState({ isLoading: false })
-        this.siginIn(_data);
-        // this.redirectToLogin();
-      })
-      .catch((error) => {
-        if (error.response) {
-          let data = error.response.data;
-          if (
-            data.message &&
-            data.message.code === "auth/email-already-exists"
-          ) {
-            this.setState((prev) => ({
-              errors: { ...prev.errors, alreadyRegistered: true },
-            }));
-            console.log(this.pagetop.current);
-            if (this.pagetop.current) {
-              this.pagetop.current.scrollIntoView();
-            }
-            // let errors = this.state.errors;
-            // errors.email = data.message.message;
-            // this.setState({ errors: errors });
-          }
-          if (
-            data.message &&
-            data.message.code === "auth/invalid-phone-number"
-          ) {
-            let errors = this.state.errors;
-            errors.phoneNumber = "Please enter valid phone number.";
-            this.setState({ errors: errors });
-          }
-        } else if (error.request) {
-          alert(error.request);
-        } else {
-          alert("Error " + error.message);
-        }
-        console.log(error.config);
-        this.setState({ isLoading: false });
       });
   };
 
@@ -562,9 +492,9 @@ class Register extends Component {
           className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? "" : ""
             }`}
         >
-          <div ref={this.pagetop} class="login2Box__header ">
+          {/* <div ref={this.pagetop} className="login2Box__header ">
             <h3
-              class="login2Box__header-title mg-r10"
+              className="login2Box__header-title mg-r10"
               style={
                 this.state.errors.alreadyRegistered ? { color: "red" } : {}
               }
@@ -576,14 +506,21 @@ class Register extends Component {
                 <>Have you registered already?</>
               )}
             </h3>
-            <button class="btn btn-secondary" onClick={this.redirectToLogin}>
+            <button className="btn btn-secondary" onClick={this.redirectToLogin}>
               Log in
             </button>
-          </div>
+          </div> */}
 
           {/* <a className="btn btn-link" href="/login">Already Registered? Login</a> */}
           <div className="login2Box__body">
-            <h1 className="login2Box__title mg-b40">Register Yourself</h1>
+            <h1 className="login2Box__title mg-b25">Register Yourself</h1>
+
+            <div className="form-group mg-b30">
+              <p className=" mg-b10" style={{ color: "#015189", textAlign: 'justify' }}>
+                Please enter the below details to complete your registration
+              </p>
+            </div>
+
             <form onSubmit={this.handleSubmit}>
               <div className="row">
                 <div className="col-50">
@@ -682,31 +619,8 @@ class Register extends Component {
                   >
                     <option>Your Speciality</option>
                     {SPECIALITY.map((sp) => (
-                      <option value={sp}>{sp}</option>
+                      <option key={sp} value={sp}>{sp}</option>
                     ))}
-
-                    {/* <option value="CRITICAL CARE MEDICINE">CRITICAL CARE MEDICINE</option>
-                                        <option value="INFECTIOUS DISEASES">INFECTIOUS DISEASES</option>
-                                        <option value="INFECTIOUS DISEASES">NEPHROLOGY</option>
-                                        <option value="GASTROENTEROLOGY &mp; HEPATOLOGY">GASTROENTEROLOGY &amp; HEPATOLOGY</option>
-                                        <option value="HIV / AIDS">HIV / AIDS</option>
-                                        <option value="ONCOLOGY">ONCOLOGY</option>
-                                        <option value="ONCOLOGY">PULMONOLOGIST</option>
-                                        <option value="GENERAL MEDICINE">GENERAL MEDICINE</option>
-                                        <option value="CARDIOLOGY">CARDIOLOGY</option>
-                                        <option value="DERMATOLOGY">DERMATOLOGY</option>
-                                        <option value="DENTISTRY">DENTISTRY</option>
-                                        <option value="DIABETOLOGY">DIABETOLOGY</option>
-                                        <option value="ENT">ENT</option>
-                                        <option value="MUSCULOSKELETAL DISEASES">MUSCULOSKELETAL DISEASES</option>
-                                        <option value="NEUROPSYCHIATRY">NEUROPSYCHIATRY</option>
-                                        <option value="OBSTETRICS &amp; GYNAECOLOGY">OBSTETRICS &amp; GYNAECOLOGY</option>
-                                        <option value="OPHTHALMOLOGY">OPHTHALMOLOGY</option>
-                                        <option value="PEDIATRICS">PEDIATRICS</option>
-                                        <option value="RESPIRATORY MEDICINE">RESPIRATORY MEDICINE</option>
-                                        <option value="SURGERY">SURGERY</option>
-                                        <option value="UROLOGY">UROLOGY</option>
-                                        <option value="OTHER">OTHER</option> */}
                   </select>
                   {this.state.errors.speciality && (
                     <span className="input-error2">
@@ -715,6 +629,63 @@ class Register extends Component {
                   )}
                 </div>
               </div>
+
+              <div className="form-group mg-b30">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Pincode"
+                  name="pincode"
+                  value={this.state.pincode}
+                  onChange={this.handleInputChange}
+                  maxLength={6}
+                />
+                <div
+                  href="#"
+                  className="searchButton_Pincode"
+                  onClick={this.getLocationName}
+                >
+                  <i className="icon-search"></i>
+                </div>
+                {this.state.errors.pincode && (
+                  <span className="input-error2">
+                    {this.state.errors.pincode}
+                  </span>
+                )}
+              </div>
+
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="City"
+                  name="city"
+                  value={this.state.city}
+                  onChange={this.handleInputChange}
+                />
+                {this.state.errors.city && (
+                  <span className="input-error2">{this.state.errors.city}</span>
+                )}
+              </div>
+
+              <div className="form-group">
+                <div className="custom-select">
+                  <RegionDropdown
+                    defaultOptionLabel="Select State"
+                    name="state"
+                    className="form-control"
+                    country={this.state.country}
+                    value={this.state.state}
+                    onChange={(val) => this.setState({ state: val })}
+                  />
+                  {this.state.errors.state && (
+                    <span className="input-error2">
+                      {this.state.errors.state}
+                    </span>
+                  )}
+                </div>
+              </div>
+
               <div className="form-group">
                 <div className="custom-select">
                   <CountryDropdown
@@ -733,52 +704,7 @@ class Register extends Component {
                   )}
                 </div>
               </div>
-              <div className="form-group">
-                <div className="custom-select">
-                  <RegionDropdown
-                    defaultOptionLabel="Select State"
-                    name="state"
-                    className="form-control"
-                    country={this.state.country}
-                    value={this.state.state}
-                    onChange={(val) => this.setState({ state: val })}
-                  />
-                  {this.state.errors.state && (
-                    <span className="input-error2">
-                      {this.state.errors.state}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="City"
-                  name="city"
-                  value={this.state.city}
-                  onChange={this.handleInputChange}
-                />
-                {this.state.errors.city && (
-                  <span className="input-error2">{this.state.errors.city}</span>
-                )}
-              </div>
-              <div className="form-group mg-b30">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Pincode"
-                  name="pincode"
-                  value={this.state.pincode}
-                  onChange={this.handleInputChange}
-                  maxLength={6}
-                />
-                {this.state.errors.pincode && (
-                  <span className="input-error2">
-                    {this.state.errors.pincode}
-                  </span>
-                )}
-              </div>
+
               <label
                 className="custom-checkbox mg-b30"
                 style={{ display: "flex" }}
