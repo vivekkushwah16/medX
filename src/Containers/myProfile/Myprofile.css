@@ -83,3 +83,70 @@
   display: flex;
   justify-content: center;
 }
+.profile-selector {
+  display: none;
+  justify-content: space-evenly;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+.profile-selector > :first-child,
+.profile-selector > :last-child {
+  cursor: pointer;
+}
+.profile-selector > .profile-selected {
+  border-bottom: 3px solid #fff;
+  border-radius: 3px;
+  padding-bottom: 5px;
+}
+.doctor-profile-container {
+  position: relative;
+  padding: 2rem 1rem;
+  border: 1px solid #c4c4c4;
+  border-radius: 0.625rem;
+}
+.doctor-profile-container > .doctor-profile-verify-text {
+  position: absolute;
+  top: -10px;
+  left: 1rem;
+  padding: 0 0.3rem;
+  user-select: none;
+  color: #015189;
+  border-radius: 2px;
+  background-color: #f7f7f8;
+}
+.doctor-profile-container > .doctor-profile-verify-btn {
+  position: absolute;
+  top: 0.4rem;
+  right: 1rem;
+  color: #015189;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.doctor-profile-container > .doctor-profile-verify-btn:hover {
+  text-decoration: none;
+}
+/* @media only screen and (max-width: 768px) {
+  .profile-selector {
+    display: flex;
+  }
+  .myprofile .modalBox__body {
+    padding-top: 1rem !important;
+  }
+  .background-black {
+    background-color: #000 !important;
+    color: #fff !important;
+  }
+  .background-black select {
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+  }
+  .background-black input[type="tel"] {
+    color: #fff;
+    background-color: #000;
+  }
+  .background-black::after {
+    display: none;
+  }
+} */

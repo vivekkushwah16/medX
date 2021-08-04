@@ -120,30 +120,70 @@ function HandleUrlParam(props) {
   }, []);
   return <>{props.children}</>;
 }
-const RecommendedRow = [
+// const FeaturedRow = [
+//   {
+//     tag: "RecommendedVideos",
+//     header: "Featured Videos",
+//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+//   },
+// ];
+// const RecommendedRow = [
+//   {
+//     tag: "RecommendedVideos",
+//     header: "Recommended Videos",
+//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+//   },
+// ];
+// const WhatsNewRow = [
+//   {
+//     tag: "RecommendedVideos",
+//     header: "What's New",
+//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+//   },
+// ];
+// const CopidRow = [
+//   {
+//     tag: "RecommendedVideos",
+//     header: "Videos on COPD",
+//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+//   },
+// ];
+
+const preDefinedRows = [
+  {
+    tag: "LatestVideos",
+    header: "Featured Videos",
+    videoFetchFunction: VideoManager.getLatestVideos,
+    fetchParameters: { limit: 10 },
+    type: "featured",
+  },
   {
     tag: "RecommendedVideos",
     header: "Recommended Videos",
     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+    type: "recommended",
   },
-];
-const preDefinedRows = [
-  // {
-  //   tag: "RecommendedVideos",
-  //   header: "Recommended Videos",
-  //   videoFetchFunction: VideoManager.getBasicRecommendedVideos,
-  // },
   {
     tag: "TrendingVideos",
-    header: "Trending Videos",
+    header: "What's New",
     videoFetchFunction: VideoManager.getTrendingVideos,
     fetchParameters: { limit: 10 },
+    type: "whatsnew",
   },
+
+  // {
+  //   tag: "TrendingVideos",
+  //   header: "Trending Videos",
+  //   videoFetchFunction: VideoManager.getTrendingVideos,
+  //   fetchParameters: { limit: 10 },
+  //   type: "",
+  // },
   {
     tag: "LatestVideos",
     header: "Latest Videos",
     videoFetchFunction: VideoManager.getLatestVideos,
     fetchParameters: { limit: 10 },
+    type: "",
   },
 ];
 
@@ -206,6 +246,7 @@ class Home extends Component {
     lastVideoMetadata: null,
     platformData: JSON.parse(localStorage.getItem("platformData")),
     doctorFormModalShow: false,
+    doctorFormModalText: "Please validate your credentials to proceed further.",
     doctorFormData: "",
     // doctorNameVerified: localStorage.getItem("doctorVerified") ? true : false,
     doctorNameVerified: this.context.userInfo.doctorVerified ? true : false,
@@ -235,6 +276,11 @@ class Home extends Component {
     // if (this.contentBoXTop.current) {
     //     this.contentBoXTop.current.scrollIntoView();
     // }
+    // if tag is already selected
+    if (tag.tag === this.state.activeTag.tag) {
+      this.setState({ activeTag: { tag: "", header: "" } });
+      return;
+    }
     this.scrollToTargetAdjusted();
     let _tag = this.state.rows.filter((r) =>
       !r.multipleTags ? r.tag === tag.tag : r.tag.indexOf(tag.tag) !== -1
@@ -699,32 +745,86 @@ class Home extends Component {
   };
 
   //#endregion
-
+  openVideoPopafterClose = () => {
+    this.openVideoPop(
+      this.lastMetadata,
+      this.lastVideoData,
+      this.lastVideosData,
+      this.lastTagSelectedFrom,
+      true,
+      true
+    );
+  };
   //function to open the videoPop
   openVideoPop = async (
     metadata,
     videoData,
     videosData,
     tagSelectedFrom,
-    updateUrl = true
+    updateUrl = true,
+    skipDoctorVerification = false
   ) => {
     document.getElementsByTagName("body")[0].style.overflow = "hidden";
     // console.log(metadata, videoData, videosData, tagSelectedFrom);
+
     //first check for verified user
     let isVerified = await this.context.isVerifiedUser();
     if (!isVerified) {
       this.runNonVerifiedProcess();
       return;
     }
-    // let isVerifiedDoctor = await this.context.isVerifiedDoctor();
-    // let count = parseInt(localStorage.getItem("doctorFormCount"));
-    // count = count ? count + 1 : 1;
-    // localStorage.setItem("doctorFormCount", count);
 
     // if (count >= 5 && !isVerifiedDoctor) {
     // this.setState({ doctorFormModalShow: true });
     // } else {
     //if user is verified play video
+    let newCount = parseInt(localStorage.getItem("count"));
+    let count = this.context.userInfo.doctorVerificationClickCount;
+    if (!newCount) {
+      newCount = count ? count : 1;
+    }
+    if (newCount && count) {
+      newCount = newCount >= count ? newCount : count;
+    }
+    newCount =
+      newCount && newCount <= 14 && !skipDoctorVerification
+        ? newCount + 1
+        : newCount;
+
+    this.lastMetadata = metadata;
+    this.lastVideoData = videoData;
+    this.lastVideosData = videosData;
+    this.lastTagSelectedFrom = tagSelectedFrom;
+
+    !this.context.userInfo.doctorVerified &&
+      localStorage.setItem("count", newCount);
+
+    if (newCount <= 14 && !this.context.userInfo.doctorVerified) {
+      this.context.updateDoctorVerificationClickCount({
+        doctorVerificationClickCount: newCount ? newCount : 1,
+      });
+    }
+
+    if (
+      !skipDoctorVerification &&
+      (newCount === 1 || newCount === 6 || newCount === 10 || newCount >= 14)
+    ) {
+      if (newCount && !this.context.userInfo.doctorVerified) {
+        this.showDoctorForm();
+        if (newCount >= 14) {
+          this.setState({
+            doctorFormModalText: "You have to verify form first.",
+          });
+          return;
+        } else {
+          this.setState({
+            doctorFormModalText:
+              "Please validate your credentials to proceed further.",
+          });
+          return;
+        }
+      }
+    }
     this.closeVideoPop(metadata);
     setTimeout(() => {
       this.setState(
@@ -745,7 +845,6 @@ class Home extends Component {
     }, 100);
     // }
   };
-
   closeVideoPop = (videoData) => {
     this.setState({
       currentVideosData: null,
@@ -756,8 +855,7 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    console.log(this.context.userInfo);
-
+    // console.log(this.context.userInfo);
     if (this.context.userInfo) {
     }
 
@@ -770,10 +868,12 @@ class Home extends Component {
         }
         const data = doc.data();
         localStorage.setItem("platformData", JSON.stringify(data));
+        this.context.getDoctorVerificationClickCount();
+        this.context.isVerifiedDoctor();
         this.setState({
           platformData: data,
         });
-        if (data.liveEventCTA) {
+        if (data?.liveEventCTA) {
           if (data.liveEventCTA.active) {
             swal({
               title: data.liveEventCTA.title,
@@ -820,28 +920,60 @@ class Home extends Component {
   doctorFormModalClose = () => {
     this.setState({ doctorFormModalShow: false });
   };
-  handleDoctorFormData = async (data) => {
+  handleDoctorFormData = async (data, instituteIndex) => {
+    this.setState({ doctorResultLoading: true });
+    var URL = `https://www.nmc.org.in/MCIRest/open/getPaginatedData?service=getPaginatedDoctor&draw=1&columns%5B0%5D%5Bdata%5D=0&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&colum	ns%5B1%5D%5Bdata%5D=1&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=2&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=3&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=4&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=true&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=5&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=true&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B6%5D%5Bdata%5D=6&columns%5B6%5D%5Bname%5D=&columns%5B6%5D%5Bsearchable%5D=true&columns%5B6%5D%5Borderable%5D=true&columns%5B6%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B6%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=1000&search%5Bvalue%5D=&search%5Bregex%5D=false&name=&registrationNo=${data.regId}&smcId=${instituteIndex}&year=${data.year}&_=1623734232536`;
+
     this.setState({ doctorFormData: data });
     let result = await DoctorManager.getDoctor(data);
     let finalResult = result.filter(
       (res) => res.institute === data.institute
       // res.institute.includes(data.institute)
     );
-    let userName = this.context.user.displayName.toLowerCase();
-    let name = finalResult.length === 1 && finalResult[0].name.toLowerCase();
+    // let userName = this.context.user.displayName.toLowerCase();
+    // let name = finalResult.length === 1 && finalResult[0].name.toLowerCase();
 
     // in case of no result
     if (finalResult.length <= 0) {
-      return this.setState({
-        doctorError: "No Match Found",
-        doctorResultLoading: false,
+      try {
+        const response = await axios.get(URL);
+        if (response.status === 200) {
+          if (response.data.recordsFiltered <= 0) {
+            return this.setState({
+              doctorError: "No Match Found",
+              doctorResultLoading: false,
+            });
+          } else {
+            this.setState({
+              doctorNameVerified: true,
+              doctorResultLoading: false,
+            });
+
+            await this.context.updateVerifiedDoctor({
+              ...data,
+              doctorVerified: true,
+            });
+            await this.context.forceUpdateUserInfo();
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        return this.setState({
+          doctorError: "No Match Found",
+          doctorResultLoading: false,
+        });
+      }
+    } else {
+      this.setState({ doctorNameVerified: true, doctorResultLoading: false });
+
+      await this.context.updateVerifiedDoctor({
+        ...data,
+        doctorVerified: true,
       });
+      await this.context.forceUpdateUserInfo();
     }
-    this.setState({ doctorNameVerified: true, doctorResultLoading: false });
-    this.context.updateVerifiedDoctor({ doctorVerified: true });
 
     // for name matching
-
     // let containsName = stringSimilarity.compareTwoStrings(name, userName);
 
     // if (containsName > 0.6) {
@@ -856,6 +988,9 @@ class Home extends Component {
     // }
   };
 
+  showDoctorForm = () => {
+    this.setState({ doctorFormModalShow: true });
+  };
   handleDoctorError = () => {
     this.setState({ doctorError: "" });
   };
@@ -867,16 +1002,21 @@ class Home extends Component {
     return (
       // <section className="wrapper" id="root" style={{background: 'black'}}>
       <>
-        {/* <DoctorFormModal
+        <DoctorFormModal
           show={this.state.doctorFormModalShow}
           onClose={this.doctorFormModalClose}
           handleSubmit={this.handleDoctorFormData}
           verified={this.state.doctorNameVerified}
           doctorError={this.state.doctorError}
           handleDoctorError={this.handleDoctorError}
-          doctorResultLoading={this.doctorResultLoading}
+          doctorResultLoading={this.state.doctorResultLoading}
+          doctorFormModalText={this.state.doctorFormModalText}
           handledoctorResultLoading={this.handledoctorResultLoading}
-        /> */}
+          updateDoctorVerificationClickCount={
+            this.context.updateDoctorVerificationClickCount
+          }
+          openVideoPopafterClose={this.openVideoPopafterClose}
+        />
         <div
           id="scrollable"
           style={{ position: "absolute", top: "0", height: 1, width: 1 }}
@@ -908,7 +1048,6 @@ class Home extends Component {
           // scrollIntoView={scrollIntoViewHead}
           />
           <Banner />
-
           <div className="tabBox" id="homeVideoContainer">
             <div className="container" id="ottContent">
               <div
@@ -936,19 +1075,6 @@ class Home extends Component {
               />
 
               <div className="contentBox" ref={this.contentBoXTop}>
-                {RecommendedRow.map((row) => (
-                  <VideoRow
-                    key={row.tag}
-                    heading={row.header}
-                    lastPlayed={this.state.lastPlayed}
-                    tag={row.tag}
-                    openVideoPop={this.openVideoPop}
-                    grid={false}
-                    multipleTags={row.multipleTags}
-                    systemTags
-                    rowData={row}
-                  />
-                ))}
                 {this.state.activeTag !== "" && (
                   <VideoRow
                     key={this.state.activeTag}
@@ -962,7 +1088,7 @@ class Home extends Component {
                 )}
                 {preDefinedRows.map((row) => (
                   <VideoRow
-                    key={row.tag}
+                    key={row.header}
                     heading={row.header}
                     lastPlayed={this.state.lastPlayed}
                     tag={row.tag}
@@ -971,6 +1097,7 @@ class Home extends Component {
                     multipleTags={row.multipleTags}
                     systemTags
                     rowData={row}
+                    type={row.type}
                   />
                 ))}
 
@@ -992,14 +1119,16 @@ class Home extends Component {
               </div>
             </div>
           </div>
-
           <Footer />
         </div>
-
         <Switch>
           <Route path={`/home/profile`}>
             {this.context.userInfo ? (
-              <Myprofile />
+              <Myprofile
+                // show={this.state.doctorFormModalShow}
+                // onClose={this.doctorFormModalClose}
+                showForm={this.showDoctorForm}
+              />
             ) : (
               <div className="loaderContainer">
                 <div className="lds-dual-ring"></div>

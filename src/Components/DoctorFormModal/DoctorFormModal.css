@@ -26,6 +26,8 @@
 .modal-content {
   margin: 0 10px;
   width: 500px;
+  max-height: 648px;
+  overflow-y: auto;
   background-color: #fff;
   transition: all 0.3s ease-in-out;
   transform: translateY(0);
@@ -44,7 +46,7 @@
   display: flex;
   justify-content: center;
   flex-direction: row-reverse;
-  padding: 10px;
+  padding: 15px;
 }
 .doc-error {
   display: flex;
@@ -138,6 +140,20 @@
 .modal > .modal-content > .modal-footer > #close:hover {
   color: #fff;
   background-color: #015189;
+}
+.doctor-modal-cls-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+.success-icon > .info-icon {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 4em;
+  color: #015189;
 }
 
 /* success icon */

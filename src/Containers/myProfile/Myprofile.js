@@ -96,8 +96,12 @@ function Myprofile(props) {
   const [state, setstate] = useState(userInfo.state);
   const [city, setcity] = useState(userInfo.city);
   const [pincode, setpincode] = useState(userInfo.pincode);
+  const [year, setYear] = useState(userInfo.year);
+  const [regId, setRegId] = useState(userInfo.regId);
+  const [institute, setInstitute] = useState(userInfo.institute);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
+
   const history = useHistory();
   const updateUserDeatils = async (e) => {
     e.preventDefault();
@@ -157,15 +161,14 @@ function Myprofile(props) {
       id="videoPopupDiv"
     >
       <span
-        class="modalBox__overlay"
+        className="modalBox__overlay"
         onClick={() => {
-          console.log(props);
           if (history)
             history.push(props.returnUrl ? props.returnUrl : "/home");
         }}
       ></span>
       <div className="modalBox__inner myprofile">
-        <div className="modalBox__header">
+        <div className="modalBox__header background-black">
           <div className="left__part">
             <a
               className="profile__user"
@@ -190,17 +193,42 @@ function Myprofile(props) {
             CLOSE
           </button>
         </div>
-        <div className="modalBox__body">
+
+        <div className="modalBox__body background-black">
           <div className="profile__cont">
+            <div className="profile-selector">
+              <div
+                className={` ${
+                  history?.location.pathname.includes("/home/profile") &&
+                  "profile-selected"
+                }`}
+                onClick={() => {
+                  if (history) history.push("/home/profile");
+                }}
+              >
+                My Profile
+              </div>
+              <div
+                className={` ${
+                  history?.location.pathname.includes("/interest") &&
+                  "profile-selected"
+                }`}
+                onClick={() => {
+                  if (history) history.push("/interest");
+                }}
+              >
+                My Interests
+              </div>
+            </div>
             <div className="login2Box__body">
               <form>
                 <div className="row">
                   <div className="col-50">
                     <div className="form-group">
-                      <label for="firstName">First Name</label>
+                      <label htmlFor="firstName">First Name</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className="form-control background-black"
                         placeholder="First Name"
                         name="firstName"
                         id="firstName"
@@ -216,10 +244,10 @@ function Myprofile(props) {
                   </div>
                   <div className="col-50">
                     <div className="form-group">
-                      <label for="lastName">Last Name</label>
+                      <label htmlFor="lastName">Last Name</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className="form-control background-black"
                         placeholder="Last Name"
                         name="lastName"
                         id="lastName"
@@ -236,16 +264,16 @@ function Myprofile(props) {
                 </div>
 
                 <div className="form-group">
-                  <label for="email">Email</label>
+                  <label htmlFor="email">Email</label>
                   <input
                     type="text"
-                    className="form-control"
                     placeholder="Email"
                     name="email"
                     id="email"
                     value={email}
                     disabled={true}
-                    style={{ background: "lightgrey", cursor: "not-allowed" }}
+                    style={{ cursor: "not-allowed" }}
+                    className="form-control background-black"
 
                     // onChange={this.handleInputChange}
                   />
@@ -254,18 +282,18 @@ function Myprofile(props) {
                 )} */}
                 </div>
                 <div className="form-group">
-                  <label for="mobile">Phone Number</label>
+                  <label htmlFor="mobile">Phone Number</label>
                   <PhoneInput
                     international
                     countryCallingCodeEditable={false}
                     defaultCountry={"IN"}
-                    className="form-control "
+                    className="form-control background-black"
                     name="phoneNumber"
                     placeholder="Enter phone number"
                     id="mobile"
                     value={mobile}
                     disabled={true}
-                    style={{ background: "lightgrey", cursor: "not-allowed" }}
+                    style={{ cursor: "not-allowed" }}
                     //   onChange={this.setValue}
                   />
                   {/* {this.state.errors.phoneNumber && (
@@ -275,8 +303,8 @@ function Myprofile(props) {
                 )} */}
                 </div>
                 <div className="form-group">
-                  <label for="Profession">Profession</label>
-                  <div className="custom-select">
+                  <label htmlFor="Profession">Profession</label>
+                  <div className="custom-select  background-black">
                     <select
                       className="form-control"
                       name="profession"
@@ -297,9 +325,10 @@ function Myprofile(props) {
                     )}
                   </div>
                 </div>
+
                 <div className="form-group">
-                  <label for="speciality">Speciality</label>
-                  <div className="custom-select">
+                  <label htmlFor="speciality">Speciality</label>
+                  <div className="custom-select background-black">
                     <select
                       className="form-control"
                       name="speciality"
@@ -313,8 +342,10 @@ function Myprofile(props) {
                         Your Speciality
                       </option>
 
-                      {SPECIALITY.map((sp) => (
-                        <option value={sp}>{sp}</option>
+                      {SPECIALITY.map((sp, index) => (
+                        <option key={index} value={sp}>
+                          {sp}
+                        </option>
                       ))}
 
                       {/* <option value="CRITICAL CARE MEDICINE">CRITICAL CARE MEDICINE</option>
@@ -346,14 +377,13 @@ function Myprofile(props) {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label for="country">Country</label>
+                  <label htmlFor="country">Country</label>
 
-                  <div className="custom-select">
+                  <div className="custom-select  background-black">
                     <CountryDropdown
                       defaultOptionLabel="Select country"
                       name="country"
                       id="country"
-                      name="country"
                       className="form-control"
                       value={country}
                       onChange={(e) => {
@@ -366,9 +396,9 @@ function Myprofile(props) {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label for="region">Region</label>
+                  <label htmlFor="region">Region</label>
 
-                  <div className="custom-select">
+                  <div className="custom-select background-black">
                     <RegionDropdown
                       defaultOptionLabel="Select State"
                       name="state"
@@ -386,10 +416,10 @@ function Myprofile(props) {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label for="city">City</label>
+                  <label htmlFor="city">City</label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control background-black"
                     placeholder="City"
                     name="city"
                     id="city"
@@ -402,12 +432,12 @@ function Myprofile(props) {
                     <span className="input-error2">* Enter City</span>
                   )}
                 </div>
-                <div className="form-group mg-b30">
-                  <label for="pincode">Pincode</label>
+                <div className="form-group mg-b35">
+                  <label htmlFor="pincode">Pincode</label>
 
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control background-black"
                     placeholder="Pincode"
                     name="pincode"
                     id="pincode"
@@ -449,7 +479,99 @@ function Myprofile(props) {
                   {this.state.errors.termsAndConditions}
                   </span>
                 )} */}
+                <div
+                  className="form-group doctor-profile-container"
+                  // style={{ border: !userInfo.doctorVerified && "none" }}
+                >
+                  <div className="doctor-profile-verify-text">
+                    Your Medical Registration Details
+                  </div>
 
+                  <div
+                    onClick={() => {
+                      if (history)
+                        history.push(
+                          props.returnUrl ? props.returnUrl : "/home"
+                        );
+                      props.showForm();
+                    }}
+                    className="doctor-profile-verify-btn"
+                    style={{
+                      right: !userInfo.doctorVerified && "50%",
+                      transform: !userInfo.doctorVerified && "translateX(50%)",
+                      top: !userInfo.doctorVerified && "1.3rem",
+                    }}
+                  >
+                    {!userInfo.doctorVerified ? "Verify Details" : "Edit"}
+                  </div>
+
+                  {year !== undefined && (
+                    <div className="form-group">
+                      <label htmlFor="year" style={{ color: "grey" }}>
+                        Year of Registeration
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Year"
+                        name="year"
+                        id="year"
+                        value={year}
+                        disabled={true}
+                        style={{ cursor: "not-allowed" }}
+                        className="form-control background-black"
+
+                        // onChange={this.handleInputChange}
+                      />
+                      {/* {this.state.errors.email && (
+                    <span className="input-error2">{this.state.errors.email}</span>
+                )} */}
+                    </div>
+                  )}
+                  {institute !== undefined && (
+                    <div className="form-group">
+                      <label htmlFor="institute" style={{ color: "grey" }}>
+                        State Medical Council
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="State Medical Council"
+                        name="institute"
+                        id="institute"
+                        value={institute}
+                        disabled={true}
+                        style={{ cursor: "not-allowed" }}
+                        className="form-control background-black"
+
+                        // onChange={this.handleInputChange}
+                      />
+                      {/* {this.state.errors.email && (
+                    <span className="input-error2">{this.state.errors.email}</span>
+                )} */}
+                    </div>
+                  )}
+                  {regId !== undefined && (
+                    <div className="form-group" style={{ marginBottom: 0 }}>
+                      <label htmlFor="regId" style={{ color: "grey" }}>
+                        Registeration Number
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Registeration Number"
+                        name="regId"
+                        id="regId"
+                        value={regId}
+                        disabled={true}
+                        style={{ cursor: "not-allowed" }}
+                        className="form-control background-black"
+
+                        // onChange={this.handleInputChange}
+                      />
+                      {/* {this.state.errors.email && (
+                    <span className="input-error2">{this.state.errors.email}</span>
+                )} */}
+                    </div>
+                  )}
+                </div>
                 <div className="mg-b30 d-flex justify-content-between">
                   <button
                     onClick={updateUserDeatils}
