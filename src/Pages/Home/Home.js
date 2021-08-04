@@ -1071,7 +1071,7 @@ class Home extends Component {
                     lastPlayed={this.state.lastPlayed}
                     tag={this.state.activeTag.tag}
                     openVideoPop={this.openVideoPop}
-                    grid={true}
+                    grid={false}
                     multipleTags={this.state.activeTag.multipleTags}
                   />
                 )}
