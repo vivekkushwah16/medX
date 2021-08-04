@@ -120,30 +120,70 @@ function HandleUrlParam(props) {
   }, []);
   return <>{props.children}</>;
 }
-const RecommendedRow = [
+// const FeaturedRow = [
+//   {
+//     tag: "RecommendedVideos",
+//     header: "Featured Videos",
+//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+//   },
+// ];
+// const RecommendedRow = [
+//   {
+//     tag: "RecommendedVideos",
+//     header: "Recommended Videos",
+//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+//   },
+// ];
+// const WhatsNewRow = [
+//   {
+//     tag: "RecommendedVideos",
+//     header: "What's New",
+//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+//   },
+// ];
+// const CopidRow = [
+//   {
+//     tag: "RecommendedVideos",
+//     header: "Videos on COPD",
+//     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+//   },
+// ];
+
+const preDefinedRows = [
+  {
+    tag: "LatestVideos",
+    header: "Featured Videos",
+    videoFetchFunction: VideoManager.getLatestVideos,
+    fetchParameters: { limit: 10 },
+    type: "featured",
+  },
   {
     tag: "RecommendedVideos",
     header: "Recommended Videos",
     videoFetchFunction: VideoManager.getBasicRecommendedVideos,
+    type: "recommended",
   },
-];
-const preDefinedRows = [
-  // {
-  //   tag: "RecommendedVideos",
-  //   header: "Recommended Videos",
-  //   videoFetchFunction: VideoManager.getBasicRecommendedVideos,
-  // },
   {
     tag: "TrendingVideos",
-    header: "Trending Videos",
+    header: "What's New",
     videoFetchFunction: VideoManager.getTrendingVideos,
     fetchParameters: { limit: 10 },
+    type: "whatsnew",
   },
+
+  // {
+  //   tag: "TrendingVideos",
+  //   header: "Trending Videos",
+  //   videoFetchFunction: VideoManager.getTrendingVideos,
+  //   fetchParameters: { limit: 10 },
+  //   type: "",
+  // },
   {
     tag: "LatestVideos",
     header: "Latest Videos",
     videoFetchFunction: VideoManager.getLatestVideos,
     fetchParameters: { limit: 10 },
+    type: "",
   },
 ];
 
@@ -230,6 +270,11 @@ class Home extends Component {
     // if (this.contentBoXTop.current) {
     //     this.contentBoXTop.current.scrollIntoView();
     // }
+    // if tag is already selected
+    if (tag.tag === this.state.activeTag.tag) {
+      this.setState({ activeTag: { tag: "", header: "" } });
+      return;
+    }
     this.scrollToTargetAdjusted();
     let _tag = this.state.rows.filter((r) =>
       !r.multipleTags ? r.tag === tag.tag : r.tag.indexOf(tag.tag) !== -1
@@ -731,7 +776,10 @@ class Home extends Component {
     if (newCount && count) {
       newCount = newCount >= count ? newCount : count;
     }
-    newCount = newCount && newCount <= 13 ? newCount + 1 : newCount;
+    newCount =
+      newCount && newCount <= 14 && !skipDoctorVerification
+        ? newCount + 1
+        : newCount;
 
     this.lastMetadata = metadata;
     this.lastVideoData = videoData;
@@ -741,7 +789,7 @@ class Home extends Component {
     !this.context.userInfo.doctorVerified &&
       localStorage.setItem("count", newCount);
 
-    if (newCount <= 13 && !this.context.userInfo.doctorVerified) {
+    if (newCount <= 14 && !this.context.userInfo.doctorVerified) {
       this.context.updateDoctorVerificationClickCount({
         doctorVerificationClickCount: newCount ? newCount : 1,
       });
@@ -749,11 +797,11 @@ class Home extends Component {
 
     if (
       !skipDoctorVerification &&
-      (newCount === 1 || newCount === 5 || newCount === 9 || newCount >= 13)
+      (newCount === 1 || newCount === 6 || newCount === 10 || newCount >= 14)
     ) {
       if (newCount && !this.context.userInfo.doctorVerified) {
-        this.setState({ doctorFormModalShow: true });
-        if (newCount >= 13) {
+        this.showDoctorForm();
+        if (newCount >= 14) {
           this.setState({
             doctorFormModalText: "You have to verify form first.",
           });
@@ -814,7 +862,7 @@ class Home extends Component {
         this.setState({
           platformData: data,
         });
-        if (data.liveEventCTA) {
+        if (data?.liveEventCTA) {
           if (data.liveEventCTA.active) {
             swal({
               title: data.liveEventCTA.title,
@@ -861,25 +909,58 @@ class Home extends Component {
   doctorFormModalClose = () => {
     this.setState({ doctorFormModalShow: false });
   };
-  handleDoctorFormData = async (data) => {
+  handleDoctorFormData = async (data, instituteIndex) => {
+    this.setState({ doctorResultLoading: true });
+    var URL = `https://www.nmc.org.in/MCIRest/open/getPaginatedData?service=getPaginatedDoctor&draw=1&columns%5B0%5D%5Bdata%5D=0&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&colum	ns%5B1%5D%5Bdata%5D=1&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=2&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=3&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=4&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=true&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=5&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=true&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B6%5D%5Bdata%5D=6&columns%5B6%5D%5Bname%5D=&columns%5B6%5D%5Bsearchable%5D=true&columns%5B6%5D%5Borderable%5D=true&columns%5B6%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B6%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=0&order%5B0%5D%5Bdir%5D=asc&start=0&length=1000&search%5Bvalue%5D=&search%5Bregex%5D=false&name=&registrationNo=${data.regId}&smcId=${instituteIndex}&year=${data.year}&_=1623734232536`;
+
     this.setState({ doctorFormData: data });
     let result = await DoctorManager.getDoctor(data);
     let finalResult = result.filter(
       (res) => res.institute === data.institute
       // res.institute.includes(data.institute)
     );
-    let userName = this.context.user.displayName.toLowerCase();
-    let name = finalResult.length === 1 && finalResult[0].name.toLowerCase();
+    // let userName = this.context.user.displayName.toLowerCase();
+    // let name = finalResult.length === 1 && finalResult[0].name.toLowerCase();
 
     // in case of no result
     if (finalResult.length <= 0) {
-      return this.setState({
-        doctorError: "No Match Found",
-        doctorResultLoading: false,
+      try {
+        const response = await axios.get(URL);
+        if (response.status === 200) {
+          if (response.data.recordsFiltered <= 0) {
+            return this.setState({
+              doctorError: "No Match Found",
+              doctorResultLoading: false,
+            });
+          } else {
+            this.setState({
+              doctorNameVerified: true,
+              doctorResultLoading: false,
+            });
+
+            await this.context.updateVerifiedDoctor({
+              ...data,
+              doctorVerified: true,
+            });
+            await this.context.forceUpdateUserInfo();
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        return this.setState({
+          doctorError: "No Match Found",
+          doctorResultLoading: false,
+        });
+      }
+    } else {
+      this.setState({ doctorNameVerified: true, doctorResultLoading: false });
+
+      await this.context.updateVerifiedDoctor({
+        ...data,
+        doctorVerified: true,
       });
+      await this.context.forceUpdateUserInfo();
     }
-    this.setState({ doctorNameVerified: true, doctorResultLoading: false });
-    this.context.updateVerifiedDoctor({ doctorVerified: true });
 
     // for name matching
     // let containsName = stringSimilarity.compareTwoStrings(name, userName);
@@ -896,6 +977,9 @@ class Home extends Component {
     // }
   };
 
+  showDoctorForm = () => {
+    this.setState({ doctorFormModalShow: true });
+  };
   handleDoctorError = () => {
     this.setState({ doctorError: "" });
   };
@@ -914,7 +998,7 @@ class Home extends Component {
           verified={this.state.doctorNameVerified}
           doctorError={this.state.doctorError}
           handleDoctorError={this.handleDoctorError}
-          doctorResultLoading={this.doctorResultLoading}
+          doctorResultLoading={this.state.doctorResultLoading}
           doctorFormModalText={this.state.doctorFormModalText}
           handledoctorResultLoading={this.handledoctorResultLoading}
           updateDoctorVerificationClickCount={
@@ -953,7 +1037,6 @@ class Home extends Component {
             // scrollIntoView={scrollIntoViewHead}
           />
           <Banner />
-
           <div className="tabBox" id="homeVideoContainer">
             <div className="container" id="ottContent">
               <div
@@ -988,27 +1071,13 @@ class Home extends Component {
                     lastPlayed={this.state.lastPlayed}
                     tag={this.state.activeTag.tag}
                     openVideoPop={this.openVideoPop}
-                    grid={false}
+                    grid={true}
                     multipleTags={this.state.activeTag.multipleTags}
                   />
                 )}
-                {RecommendedRow.map((row) => (
-                  <VideoRow
-                    key={row.tag}
-                    heading={row.header}
-                    lastPlayed={this.state.lastPlayed}
-                    tag={row.tag}
-                    openVideoPop={this.openVideoPop}
-                    grid={false}
-                    multipleTags={row.multipleTags}
-                    systemTags
-                    rowData={row}
-                  />
-                ))}
-
                 {preDefinedRows.map((row) => (
                   <VideoRow
-                    key={row.tag}
+                    key={row.header}
                     heading={row.header}
                     lastPlayed={this.state.lastPlayed}
                     tag={row.tag}
@@ -1017,6 +1086,7 @@ class Home extends Component {
                     multipleTags={row.multipleTags}
                     systemTags
                     rowData={row}
+                    type={row.type}
                   />
                 ))}
 
@@ -1038,14 +1108,16 @@ class Home extends Component {
               </div>
             </div>
           </div>
-
           <Footer />
         </div>
-
         <Switch>
           <Route path={`/home/profile`}>
             {this.context.userInfo ? (
-              <Myprofile />
+              <Myprofile
+                // show={this.state.doctorFormModalShow}
+                // onClose={this.doctorFormModalClose}
+                showForm={this.showDoctorForm}
+              />
             ) : (
               <div className="loaderContainer">
                 <div className="lds-dual-ring"></div>
