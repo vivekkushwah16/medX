@@ -8,46 +8,46 @@ import ErrorIcon from "../../assets/images/icons/error.svg";
 import CloseIcon from "../../assets/images/icons/close.svg";
 import "./DoctorFormModal.css";
 const instituteValues = [
-  "Andhra Pradesh Medical Council",
-  "Arunachal Pradesh Medical Council",
-  "Assam Medical Council",
-  "Bhopal Medical Council",
-  "Bihar Medical Council",
-  "Bombay Medical Council",
-  "Chandigarh Medical Council",
-  "Chattisgarh Medical Council",
-  "Delhi Medical Council",
-  "Goa Medical Council",
-  "Gujarat Medical Council",
-  "Haryana Medical Council",
-  "Himachal Pradesh Medical Council",
-  "Hyderabad Medical Council",
-  "Jammu & Kashmir Medical Council",
-  "Jharkhand Medical Council",
-  "Karnataka Medical Council",
-  "Madhya Pradesh Medical Council",
-  "Madras Medical Council",
-  "Mahakoshal Medical Council",
-  "Maharashtra Medical Council",
-  "Manipur Medical Council",
-  "Medical Council of India",
-  "Medical Council of Tanganyika",
-  "Mizoram Medical Council",
-  "Mysore Medical Council",
-  "Nagaland Medical Council",
-  "Orissa Council of Medical Registration",
-  "Pondicherry Medical Council",
-  "Punjab Medical Council",
-  "Rajasthan Medical Council",
-  "Sikkim Medical Council",
-  "Tamil Nadu Medical Council",
-  "Telangana State Medical Council",
-  "Travancore Cochin Medical Council, Trivandrum",
-  "Tripura State Medical Council",
-  "Uttar Pradesh Medical Council",
-  "Uttarakhand Medical Council",
-  "Vidharba Medical Council",
-  "West Bengal Medical Council",
+  { smcId: "1", name: "Andhra Pradesh Medical Council" },
+  { smcId: "2", name: "Arunachal Pradesh Medical Council" },
+  { smcId: "3", name: "Assam Medical Council" },
+  { smcId: "28", name: "Bhopal Medical Council" },
+  { smcId: "4", name: "Bihar Medical Council" },
+  { smcId: "29", name: "Bombay Medical Council" },
+  { smcId: "30", name: "Chandigarh Medical Council" },
+  { smcId: "5", name: "Chattisgarh Medical Council" },
+  { smcId: "6", name: "Delhi Medical Council" },
+  { smcId: "7", name: "Goa Medical Council" },
+  { smcId: "8", name: "Gujarat Medical Council" },
+  { smcId: "9", name: "Haryana Medical Council" },
+  { smcId: "10", name: "Himachal Pradesh Medical Council" },
+  { smcId: "45", name: "Hyderabad Medical Council" },
+  { smcId: "11", name: "Jammu & Kashmir Medical Council" },
+  { smcId: "12", name: "Jharkhand Medical Council" },
+  { smcId: "13", name: "Karnataka Medical Council" },
+  { smcId: "15", name: "Madhya Pradesh Medical Council" },
+  { smcId: "36", name: "Madras Medical Council" },
+  { smcId: "35", name: "Mahakoshal Medical Council" },
+  { smcId: "16", name: "Maharashtra Medical Council" },
+  { smcId: "26", name: "Manipur Medical Council" },
+  { smcId: "46", name: "Medical Council of India" },
+  { smcId: "47", name: "Medical Council of Tanganyika" },
+  { smcId: "42", name: "Mizoram Medical Council" },
+  { smcId: "37", name: "Mysore Medical Council" },
+  { smcId: "41", name: "Nagaland Medical Council" },
+  { smcId: "17", name: "Orissa Council of Medical Registration" },
+  { smcId: "38", name: "Pondicherry Medical Council" },
+  { smcId: "18", name: "Punjab Medical Council" },
+  { smcId: "19", name: "Rajasthan Medical Council" },
+  { smcId: "20", name: "Sikkim Medical Council" },
+  { smcId: "21", name: "Tamil Nadu Medical Council" },
+  { smcId: "43", name: "Telangana State Medical Council" },
+  { smcId: "50", name: "Travancore Cochin Medical Council, Trivandrum" },
+  { smcId: "22", name: "Tripura State Medical Council" },
+  { smcId: "23", name: "Uttar Pradesh Medical Council" },
+  { smcId: "24", name: "Uttarakhand Medical Council" },
+  { smcId: "40", name: "Vidharba Medical Council" },
+  { smcId: "25", name: "West Bengal Medical Council" },
 ];
 const years = [
   "2021",
@@ -209,9 +209,9 @@ const DoctorFormModal = (props) => {
     // props.handledoctorResultLoading(true);
   };
 
-  const handleInstituteValues = (value, index) => {
-    setInstituteIndex(index);
-    setInstitute(value);
+  const handleInstituteValues = (value) => {
+    setInstituteIndex(value.smcId);
+    setInstitute(value.name);
     setShowInstitutes(false);
     setSearchText("");
   };
@@ -402,7 +402,7 @@ const DoctorFormModal = (props) => {
                         />
                         <div
                           className="institute-values-item"
-                          onClick={() => handleInstituteValues("", "")}
+                          onClick={() => handleInstituteValues("")}
                         >
                           None
                         </div>
@@ -411,7 +411,7 @@ const DoctorFormModal = (props) => {
                             if (searchText === "") {
                               return val;
                             } else if (
-                              val
+                              val.name
                                 .toLowerCase()
                                 .includes(searchText.toLowerCase())
                             ) {
@@ -419,15 +419,13 @@ const DoctorFormModal = (props) => {
                             }
                             return "";
                           })
-                          .map((value, index) => (
+                          .map((value) => (
                             <div
                               className="institute-values-item"
-                              onClick={() =>
-                                handleInstituteValues(value, index + 1)
-                              }
-                              key={value}
+                              onClick={() => handleInstituteValues(value)}
+                              key={value.smcId}
                             >
-                              {value}
+                              {value.name}
                             </div>
                           ))}
                       </div>
