@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import { logout } from "../../Firebase/firebase";
 import verified from "../../assets/images/UI/verified.png";
+import verifiedDoctor from "../../assets/images/UI/verifiedDoctor.png";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { INTEREST_ROUTE } from "../../AppConstants/Routes";
 
@@ -18,9 +19,16 @@ export default function Profile() {
         {`${userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ""}${
           userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ""
         } `}
-        {userInfo.verified && (
+        {userInfo.doctorVerified ? (
+          <img className="profile_verified_badge" src={verifiedDoctor} alt="" />
+        ) : userInfo.verified ? (
           <img className="profile_verified_badge" src={verified} alt="" />
+        ) : (
+          ""
         )}
+        {/* {userInfo.verified && (
+          <img className="profile_verified_badge" src={verified} alt="" />
+        )} */}
       </a>
       <ul className="profile__dropdown">
         <a href="#" className="profile__dropdown-profile">
