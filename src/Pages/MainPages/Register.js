@@ -316,6 +316,10 @@ class Register extends Component {
         pincode: this.state.pincode,
         termsAndConditions: this.state.termsAndConditions,
         date: new Date().getTime(),
+        userMetaData: {
+          registeration: this.props.event,
+          events: [this.props.event],
+        }
       })
     )
       .then(async (res) => {
@@ -367,13 +371,13 @@ class Register extends Component {
             date: this.props.eventDate ? this.props.eventDate : `03 July 2021`,
           },
         });
-        await firestore
-          .collection("userMetaData")
-          .doc(res.data.userId)
-          .set({
-            registeration: this.props.event,
-            events: [this.props.event],
-          });
+        // await firestore
+        //   .collection("userMetaData")
+        //   .doc(res.data.userId)
+        //   .set({
+        //     registeration: this.props.event,
+        //     events: [this.props.event],
+        //   });
         this.siginIn(_data);
       })
       .catch((error) => {
