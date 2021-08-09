@@ -4,6 +4,7 @@ import {
   Route,
   Switch,
   useHistory,
+  useLocation,
   useParams,
   useRouteMatch,
 } from "react-router-dom";
@@ -23,11 +24,26 @@ export const EventStausType = {
   Finished: "finished",
 };
 
+export const PREVIEW_OPTIONS = {
+  registration: "registration",
+  event: "event",
+}
+
+export const ADMIN_TYPE = {
+  Master: "master",
+  Simple: "simple"
+}
+
+//https://ciplamedx.com/ronaprevewebcast?admin=true&preview=registration
+
 export const EventChecker = (props) => {
   //to wait till we reead values from firesbase
   const [doneCheck, setCheckDonw] = useState(false);
   const [eventStatus, setEventStatus] = useState(false);
   const [eventDetails, setEventDetails] = useState(false);
+  const [dashboardPreview, setDashboardPreview] = useState({});
+
+  const { user } = useContext(UserContext)
 
   //Router hooks
   let { url } = useRouteMatch();
@@ -36,18 +52,25 @@ export const EventChecker = (props) => {
     eventName = eventName.toLowerCase()
   }
   const history = useHistory();
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+  let urlQuery = useQuery();
 
   useEffect(() => {
     getEventNameAndCrossCheck();
   }, [eventName]);
 
   const getEventNameAndCrossCheck = async () => {
+    let url_admin = urlQuery.get("admin") === "true" ? true : false
+    let url_preview = urlQuery.get("preview")
+
     // console.log(event);
     let ref = firestore
       .collection(BACKSTAGE_COLLECTION)
       .doc(PLATFORM_BACKSTAGE_DOC);
     const doc = await ref.onSnapshot(
-      (doc) => {
+      async (doc) => {
         if (!doc.exists) {
           history.push(`/home`);
           return
@@ -60,7 +83,37 @@ export const EventChecker = (props) => {
         const event = eventNameList[eventName]
         const activeEventList = doc.data().activeEventList;
         if (activeEventList.hasOwnProperty(event.toLowerCase())) {
-          if (activeEventList[event.toLowerCase()].disabled && props.env !== "dev") {
+          if (url_admin && user && Object.values(PREVIEW_OPTIONS).indexOf(url_preview) !== -1) {
+            let uid = user.uid
+            let _dashboardAdminDoc = await firestore.collection("dashboardAdmin").doc(uid).get()
+            if (_dashboardAdminDoc.exists) {
+              //check admin type 
+              let eventPermissions = null
+              if (_dashboardAdminDoc.data().type === ADMIN_TYPE.Simple) {
+                let permissions = _dashboardAdminDoc.data().permissions
+                eventPermissions = permissions.filter(item => item.event === eventName.toLowerCase())[0]
+                console.log(eventPermissions)
+              }
+              if (_dashboardAdminDoc.data().type === ADMIN_TYPE.Master || (_dashboardAdminDoc.data().type === ADMIN_TYPE.Simple && eventPermissions !== null)) {
+                setDashboardPreview({
+                  permission: eventPermissions,
+                  adminType: _dashboardAdminDoc.data().type,
+                  page: url_preview,
+                  currentPage: url_preview,
+                })
+                if (url_preview === PREVIEW_OPTIONS.registration) {
+                  setEventStatus(EventStausType.NotLive);
+                } else {
+                  setEventStatus(EventStausType.Live);
+                }
+                setEventDetails(activeEventList[event.toLowerCase()]);
+                setCheckDonw(true);
+                return
+              }
+            }
+          }
+
+          if (activeEventList[event.toLowerCase()].disabled && (props.env !== "dev")) {
             history.push(`/home`);
             return;
           }
@@ -69,8 +122,8 @@ export const EventChecker = (props) => {
           }
           setEventStatus(activeEventList[event.toLowerCase()].status);
           setEventDetails(activeEventList[event.toLowerCase()]);
-
           setCheckDonw(true);
+
         } else {
           history.push(`/home`);
         }
@@ -145,21 +198,45 @@ export const EventChecker = (props) => {
         </ProtectedRoute>
 
         <ProtectedRoute redirectTo={`${url}/signup`} path={url}>
-          {eventStatus === EventStausType.NotLive && (
-            <>
-              {props.notLive ? (
-                <props.notLive
-                  event={eventDetails.id.toLowerCase()}
-                  eventDate={eventDetails.eventDate}
-                  eventTitle={eventDetails.title}
-                  calendatDetails={eventDetails.calendar}
-                  eventData={eventDetails}
-                />
-              ) : (
-                "NotLive Event"
-              )}
-            </>
-          )}
+          {
+            eventStatus === EventStausType.NotLive ?
+              (dashboardPreview.currentPage === PREVIEW_OPTIONS.registration ?
+                <>
+                  {props.login ? (
+                    <props.login
+                      event={eventDetails.id.toLowerCase()}
+                      eventData={eventDetails}
+                      haveAgenda={eventDetails.agenda}
+                      registerUrl={`${url}/register`}
+                      dummyPage={true}
+                      goToPreviewPage={() => {
+                        setDashboardPreview(oldVal => ({
+                          ...oldVal,
+                          currentPage: "preEvent"
+                        })
+                        )
+                      }}
+                    />
+                  ) : (
+                    "signup"
+                  )}
+                </>
+                :
+                <>
+                  {props.notLive ? (
+                    <props.notLive
+                      event={eventDetails.id.toLowerCase()}
+                      eventDate={eventDetails.eventDate}
+                      eventTitle={eventDetails.title}
+                      calendatDetails={eventDetails.calendar}
+                      eventData={eventDetails}
+                    />
+                  ) : (
+                    "NotLive Event"
+                  )}
+                </>) : null
+          }
+
           {eventStatus === EventStausType.Live && (
             <>
               {props.liveEvent ? (

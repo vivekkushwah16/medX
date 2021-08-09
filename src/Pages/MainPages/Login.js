@@ -114,6 +114,10 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    if (this.props.dummyPage) {
+      this.props.goToPreviewPage()
+      return
+    }
     this.setState({ isLoading: true });
     this.validateForm();
 
