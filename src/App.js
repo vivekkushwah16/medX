@@ -25,8 +25,8 @@ import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 import EventRoute, { EventStausType } from "./Components/EventRoute";
 // import EventManager from "./Managers/EventManager";
 // import { LOREM_TEXT } from "./AppConstants/Lorem";
-import { firestore } from "./Firebase/firebase";
-import { PROFILE_COLLECTION } from "./AppConstants/CollectionConstants";
+import firebase, { firestore } from "./Firebase/firebase";
+import { PROFILE_COLLECTION, USERMETADATA_COLLECTION } from "./AppConstants/CollectionConstants";
 import { PollManager } from "./Managers/PollManager";
 import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
 import Myprofile from "./Containers/myProfile/Myprofile";
@@ -247,7 +247,7 @@ export default function App() {
               // finishedEvent={''}//for finished component
               qnaPage={QnaPageLazy}
               liveCount={LiveCountLazy}
-              env={"prod"} //dev or prod
+              env={"dev"} //dev or prod
               forceState={EventStausType.Live}
             />
             <ProtectedRoute exact redirectTo={LOGIN_ROUTE} path={"*"}>
@@ -263,3 +263,60 @@ export default function App() {
 
 //include lazy loading of componenets
 //make speaker context, video context
+
+async function ReadUser() {
+  let lastUID = null
+  try {
+    console.log("start")
+    let startTime = firebase.firestore.Timestamp.fromMillis(1626912000000)
+    let endTime = firebase.firestore.Timestamp.fromMillis(1628121600000)
+    let queryRef = firestore.collection(PROFILE_COLLECTION)
+      .where("timestamp", ">=", startTime)
+      .where("timestamp", "<=", endTime)
+    // .limit(5)
+
+    let queryResult = await queryRef.get()
+    if (!queryResult.empty) {
+      let docs = queryResult.docs
+      for (let i = 0; i < docs.length; i++) {
+        lastUID = docs[i].id
+        await checkForUserMetaData(docs[i].id)
+      }
+    } else {
+      console.log("not Found")
+    }
+    console.log("end")
+  } catch (error) {
+    console.log("last uid :" + lastUID)
+    console.error(error)
+  }
+}
+
+async function checkForUserMetaData(uid) {
+  return new Promise(async (response, reject) => {
+    try {
+      if (!uid) {
+        throw ({ code: "invalid UID" })
+      }
+      console.log("start checking userMetaData", uid)
+      let userMetaef = firestore.collection(USERMETADATA_COLLECTION).doc(uid)
+      await firestore.runTransaction(async trans => {
+        let document = await trans.get(userMetaef)
+        if (!document.exists) {
+          console.log("No userMeta found for ", uid)
+          return trans.set(userMetaef, {
+            registeration: "copdupdate",
+            events: ["copdupdate"]
+          })
+        } else {
+          console.log("userMeta already exits for ", uid)
+          return true
+        }
+      })
+      response()
+    } catch (error) {
+      console.error(error)
+      reject(error)
+    }
+  })
+}
