@@ -6,3 +6,7 @@ export const LikeType = {
 export const MediaType = {
     VIDEO_MEDIA: 'video',
 }
+export const RegistrationType = {
+    WithAgenda: "WithAgenda",
+    WithOutAgenda: "WithOutAgenda"
+}

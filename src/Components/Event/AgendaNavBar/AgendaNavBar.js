@@ -45,9 +45,8 @@ export default function AgendaNavBar(props) {
 
   return (
     <nav
-      className={`navigarion-bar ${sticky ? "navigarion-bar_sticky" : ""} ${
-        className ? className : ""
-      }`}
+      className={`navigarion-bar ${sticky ? "navigarion-bar_sticky" : ""} ${className ? className : ""
+        }`}
       style={
         forceAgendaVisibleMobile ? { borderBottom: "1px solid #005188" } : {}
       }
@@ -81,9 +80,8 @@ export default function AgendaNavBar(props) {
                   onClick={(event) => handleClick(date, event)}
                 >
                   <button
-                    className={`btn btn-sm btn-secondary ${
-                      currentDate === date ? "active" : ""
-                    }`}
+                    className={`btn btn-sm btn-secondary ${currentDate === date ? "active" : ""
+                      }`}
                   >
                     {date}
                   </button>

@@ -7,6 +7,9 @@ import { isMobileOnly } from "react-device-detect";
 import { MonthName } from "../../AppConstants/Months";
 import "react-phone-number-input/style.css";
 import EventPageStatic from "../../Containers/mainPageStatic/EventPageStatic";
+import SideAgendaNoUser from "../../Containers/SideAgendaNoUser/SideAgendaNoUser";
+import EventManager from "../../Managers/EventManager";
+import { RegistrationType } from "../../AppConstants/TypeConstant";
 const TABS = {
   bothTab: 2,
   LoginTab: 0,
@@ -41,14 +44,19 @@ class Login extends Component {
 
   componentDidMount = async () => {
     window.eventNameForLoginAnalytics = this.props.event;
-    // const agendaData = await EventManager.getAgenda("event-kmde59n5");
-    // this.processAgendaData(agendaData);
+
+    if (this.props.eventData.registrationType === RegistrationType.WithAgenda) {
+      const agendaData = await EventManager.getAgenda(this.props.event);
+      this.processAgendaData(agendaData);
+    }
     // this.setState({ agendaData })
+
     this.handleResize();
     window.addEventListener("resize", this.handleResize);
   };
   processAgendaData = (data) => {
     let newData = {};
+
     data.sort(function (a, b) {
       return a.startTime - b.startTime;
     });
@@ -67,6 +75,9 @@ class Login extends Component {
         };
       }
     });
+
+    // console.log(newData)
+
     let dates = Object.keys(newData);
     if (this.firstTime) {
       this.setState({
@@ -245,19 +256,30 @@ class Login extends Component {
         <div ref={this.captcha}>
           <div id={"recaptcha-container"}></div>
         </div>
-        {/* <SideAgendaNoUser
-          agendaData={this.state.agendaData}
-          agendaDates={this.state.agendaDates}
-          currentDate={this.state.currentDate}
-          handleDateChange={this.handleDateChange}
-          tabs={TABS}
-          currentTab={this.state.currentTab}
-          tabsName={TABSName}
-          ToggleTab={this.ToggleTab}
-        /> */}
-        <EventPageStatic event={this.props.event} />
+        {
+          this.props.eventData.registrationType === RegistrationType.WithAgenda ?
+            (
+              <SideAgendaNoUser
+                agendaData={this.state.agendaData}
+                agendaDates={this.state.agendaDates}
+                currentDate={this.state.currentDate}
+                handleDateChange={this.handleDateChange}
+                tabs={TABS}
+                currentTab={this.state.currentTab}
+                tabsName={TABSName}
+                ToggleTab={this.ToggleTab}
+                event={this.props.event}
+              />
+            )
+            :
+            (
+              <EventPageStatic event={this.props.event} />
+            )
+        }
+
         <article
-          className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? "" : ""
+          className={`login2Box login2Box__small ${this.props.eventData.registrationType === RegistrationType.WithAgenda &&
+            this.state.currentTab === TABS.AgendaTab ? "d-none" : ""
             }`}
         >
           {!this.state.showOtp && (

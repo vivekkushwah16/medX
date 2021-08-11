@@ -23,6 +23,8 @@ import {
 } from "../../AppConstants/APIEndpoints";
 import EventPageStatic from "../../Containers/mainPageStatic/EventPageStatic";
 import { GET_LOCATION_DATA, UserCreation_Cloufunction } from "../../AppConstants/CloudFunctionName";
+import { RegistrationType } from "../../AppConstants/TypeConstant";
+
 var uniqid = require("uniqid");
 
 const validEmailRegex = RegExp(
@@ -190,9 +192,10 @@ class Register extends Component {
 
 
   componentDidMount = async () => {
-    // const agendaData = await EventManager.getAgenda("event-kmde59n5");
-    // this.processAgendaData(agendaData);
-    // this.setState({ agendaData })
+    if (this.props.eventData.registrationType === RegistrationType.WithAgenda) {
+      const agendaData = await EventManager.getAgenda(this.props.event);
+      this.processAgendaData(agendaData);
+    }
     window.addEventListener("resize", this.handleResize);
   };
 
@@ -477,19 +480,31 @@ class Register extends Component {
   render() {
     return (
       <div className="login2Box__wrapper min-height-full gradient-bg3 event">
-        {/* <SideAgendaNoUser
-          agendaData={this.state.agendaData}
-          agendaDates={this.state.agendaDates}
-          currentDate={this.state.currentDate}
-          handleDateChange={this.handleDateChange}
-          tabs={TABS}
-          currentTab={this.state.currentTab}
-          tabsName={TABSName}
-          ToggleTab={this.ToggleTab}
-        /> */}
-        <EventPageStatic event={this.props.event} />
+        {
+          this.props.eventData.registrationType === RegistrationType.WithAgenda ?
+            (
+              <SideAgendaNoUser
+                agendaData={this.state.agendaData}
+                agendaDates={this.state.agendaDates}
+                currentDate={this.state.currentDate}
+                handleDateChange={this.handleDateChange}
+                tabs={TABS}
+                currentTab={this.state.currentTab}
+                tabsName={TABSName}
+                event={this.props.event}
+                ToggleTab={this.ToggleTab}
+              />
+            )
+            :
+            (
+              <EventPageStatic event={this.props.event} />
+            )
+        }
+
+        {/* <EventPageStatic event={this.props.event} /> */}
         <article
-          className={`login2Box login2Box__small ${this.state.currentTab === TABS.AgendaTab ? "" : ""
+          className={`login2Box login2Box__small ${this.props.eventData.registrationType === RegistrationType.WithAgenda &&
+            this.state.currentTab === TABS.AgendaTab ? "d-none" : ""
             }`}
         >
           {/* <div ref={this.pagetop} className="login2Box__header ">

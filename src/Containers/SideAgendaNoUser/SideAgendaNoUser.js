@@ -24,36 +24,47 @@ export default function SideAgendaNoUser(props) {
                 </div>
             </header>
 
-            <div className="login2Box__left">
+            <div className="login2Box__left" style={{
+                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?updated=${Math.random() * 100}")`,
+                backgroundPosition: 'top',
+                backgroundSize: "contain",
+                backgroundRepeat: "repeat-x",
+            }}>
                 <div className="bannerBox">
                     <div className="bannerBox__inner bannerBox__inner--small bannerBox__inner4 gradient-bg1">
                         <div className="bannerBox__slide">
                             <div className="container-small">
                                 <div className="d-flex justify-content-between">
                                     <div className="bannerBox__left">
-                                        <h1 className="bannerBox__subtitle mg-b10">A State-of-the-Art Academic Feast</h1>
-                                        <p className="bannerBox__desc mg-b35">with the Leaders in Respiratory Medicine</p>
-                                        <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-b20" style={{fontSize: "1.1rem"}}
-                                                        onClick={(e) => {
-                                                            // showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/536876068')
-                                                            // addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: 'evolve' })
-                                                            // addCAWithUserInfo(`/${WATCHTRAILER_ANALYTICS_EVENT}`, true, { eventId: 'evolve' }, true)
-                                                        }}>
+                                        <img className="bannerBox__pic mg-b35"
+                                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_Registeration_heading_left.png?updated=${Math.random() * 100}`}
+                                            alt="header_left" />
+                                        {/* <h1 className="bannerBox__subtitle mg-b10">A State-of-the-Art Academic Feast</h1> */}
+                                        {/* <p className="bannerBox__desc mg-b35">with the Leaders in Respiratory Medicine</p> */}
 
-                                                        {
-                                                            // isMobileOnly ? 'Trailer' : 
-                                                             <>Watch Trailer&nbsp;<i className="icon-play" style={{fontSize: "1rem"}}></i></>
-                                                        }
-                                                    </a>
+                                        <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-b20" style={{ fontSize: "1.1rem" }}
+                                            onClick={(e) => {
+                                                // showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/536876068')
+                                                // addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: 'evolve' })
+                                                // addCAWithUserInfo(`/${WATCHTRAILER_ANALYTICS_EVENT}`, true, { eventId: 'evolve' }, true)
+                                            }}>
+
+                                            {
+                                                // isMobileOnly ? 'Trailer' : 
+                                                <>Watch Trailer&nbsp;<i className="icon-play" style={{ fontSize: "1rem" }}></i></>
+                                            }
+                                        </a>
                                         <div className="d-flex d-sm-block justify-content-between">
-                              
+
                                             <a href="#" className="btn btn-secondary bannerBox__btn d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fpdf%2FKNOW_YOUR_SPEAKERS.pdf')}>Know Your Faculty </a>
                                             {/* <a href="#" className="btn btn-secondary bannerBox__btn mg-r20 d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/528854507')}>Watch Trailer <i className="icon-play mg-l10"></i></a> */}
                                         </div>
                                     </div>
                                     <div className="bannerBox__right">
 
-                                        <img className="bannerBox__pic" src="/assets/images/impact-logo3.png" alt="" />
+                                        <img className="bannerBox__pic"
+                                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_Registeration_heading_right.png?updated=${Math.random() * 100}`}
+                                            alt="" />
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +81,7 @@ export default function SideAgendaNoUser(props) {
                     }
                 </ul>
                 {
-                    agendaData && currentTab !== 0 &&
+                    agendaData && currentTab !== 0 && currentDate && agendaDates &&
                     <Agenda dates={agendaDates} currentDate={currentDate} data={agendaData} haveVideo={false} haveLikeButton={false} handleDateChange={handleDateChange} ></Agenda>
                 }
             </div>

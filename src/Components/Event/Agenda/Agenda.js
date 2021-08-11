@@ -9,7 +9,7 @@ class Agenda extends Component {
             <div className={`maincardBox`} style={{ display: 'flex', flexDirection: 'column' }}>
 
                 {/* <h2 className="maincardBox__title mg-b25">AGENDA</h2> */}
-                <AgendaNavBar className={"show-on-tablet show-on-tablet--flex"} currentDate={currentDate} dates={dates} handleClick={handleDateChange}  stickyOnScroll={true} />
+                <AgendaNavBar className={"show-on-tablet show-on-tablet--flex"} currentDate={currentDate} dates={dates} handleClick={handleDateChange} stickyOnScroll={true} />
 
                 <div className="maincardBox__card-wrapper">
                     <div className={`${containerClass ? containerClass : "container-small"}`}>
