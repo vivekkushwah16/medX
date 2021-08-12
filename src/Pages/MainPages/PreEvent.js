@@ -224,11 +224,11 @@ function PreEvent(props) {
         props.eventData.registrationType === RegistrationType.WithAgenda ?
           (
             <>
-              <div class="min-height-full gradient-bg3 ">
+              <div class="preventPage min-height-full gradient-bg3 ">
                 {/* Header */}
-                <Header />
+                <Header event={props.event} eventTitle={props.eventTitle} eventData={props.eventData} />
                 <div class="login2Box__left" style={{
-                  backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?updated=${Math.random() * 100}")`,
+                  backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg")`,
                   backgroundPosition: 'top',
                   backgroundSize: "contain",
                   backgroundRepeat: "repeat-x",
@@ -241,7 +241,7 @@ function PreEvent(props) {
                           <div class="d-flex justify-content-between pd-b100 pd-t60 pd-l60 pd-md-b0 pd-md-t0 pd-md-l0">
                             <div class="bannerBox__left">
                               <img className="bannerBox__pic mg-b35"
-                                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_Preevent_heading_left.png?updated=${Math.random() * 100}`}
+                                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/${isMobileOnly ? 'WithAgenda_Mobile_Preevent_heading_left.png' : 'WithAgenda_Preevent_heading_left.png'}?updated=${Math.random() * 100}`}
                                 alt="header_left" />
 
                               {/* <h1 class="bannerBox__maintitle"> </h1> */}
@@ -253,30 +253,36 @@ function PreEvent(props) {
                               <p class="bannerBox__date mg-b30">
                                 16<sup>th</sup> - 17<sup>th</sup> April 2021
                               </p> */}
-                              <a
-                                href="#"
-                                class="btn btn-secondary--outline bannerBox__btn mg-b20"
-                                style={{ fontSize: "1.1rem" }}
-                                onClick={(e) => {
-                                  showMediaModal(
-                                    MediaModalType.Videos,
-                                    "https://player.vimeo.com/video/536876068"
-                                  );
-                                  addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: props.event })
-                                  addCAWithUserInfo(`/${WATCHTRAILER_ANALYTICS_EVENT}`, true, { eventId: props.event }, true)
-                                }}
-                              >
-                                {
-                                  // isMobileOnly ? 'Trailer' :
-                                  <>
-                                    Watch Trailer&nbsp;
-                                    <i
-                                      className="icon-play"
-                                      style={{ fontSize: "1rem" }}
-                                    ></i>
-                                  </>
-                                }
-                              </a>
+                              {
+                                props.eventData.watchTrailer &&
+                                props.eventData.watchTrailer.enabled &&
+                                props.eventData.watchTrailer.link &&
+                                <a
+                                  href="#"
+                                  class="btn btn-secondary--outline bannerBox__btn mg-b20"
+                                  style={{ fontSize: "1.1rem" }}
+                                  onClick={(e) => {
+                                    showMediaModal(
+                                      MediaModalType.Videos,
+                                      props.eventData.watchTrailer.link
+                                    );
+                                    addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: props.event })
+                                    addCAWithUserInfo(`/${WATCHTRAILER_ANALYTICS_EVENT}`, true, { eventId: props.event }, true)
+                                  }}
+                                >
+                                  {
+                                    // isMobileOnly ? 'Trailer' :
+                                    <>
+                                      Watch Trailer&nbsp;
+                                      <i
+                                        className="icon-play"
+                                        style={{ fontSize: "1rem" }}
+                                      ></i>
+                                    </>
+                                  }
+                                </a>
+                              }
+
                               {!showRegisterForOldUser.status && (
                                 <>
                                   <div className="lds-dual-ring-lazy"></div>
@@ -286,27 +292,33 @@ function PreEvent(props) {
                                 <>
                                   <div class="d-flex middle-In-mobile">
                                     <AddToCalendar blueBtn={true} calendatDetails={props.calendatDetails} eventId={props.event} eventData={props.eventData} />
-                                    <a
-                                      href="#"
-                                      class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
-                                      onClick={(e) => {
-                                        showMediaModal(
-                                          MediaModalType.PDF,
-                                          "/web/viewer.html?file=%2Fassets%2Fpdf%2FKNOW_YOUR_SPEAKERS.pdf"
-                                        );
-                                        addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, {
-                                          eventId: props.event,
-                                        });
-                                        addCAWithUserInfo(
-                                          `/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`,
-                                          true,
-                                          { eventId: props.event },
-                                          true
-                                        );
-                                      }}
-                                    >
-                                      {isMobileOnly ? "Faculty" : "Know Your Faculty"}
-                                    </a>
+                                    {
+                                      props.eventData.faculty &&
+                                      props.eventData.faculty.enabled &&
+                                      props.eventData.faculty.link &&
+                                      <a
+                                        href="#"
+                                        class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
+                                        onClick={(e) => {
+                                          showMediaModal(
+                                            MediaModalType.PDF,
+                                            `/web/viewer.html?file=${encodeURIComponent(props.eventData.faculty.link)}`
+                                          );
+                                          addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, {
+                                            eventId: props.event,
+                                          });
+                                          addCAWithUserInfo(
+                                            `/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`,
+                                            true,
+                                            { eventId: props.event },
+                                            true
+                                          );
+                                        }}
+                                      >
+                                        {isMobileOnly ? "Faculty" : "Know Your Faculty"}
+                                      </a>
+                                    }
+
                                   </div>
                                 </>
                               )}
@@ -341,14 +353,17 @@ function PreEvent(props) {
                     forceAgendaVisibleMobile={true}
                     stickyOnScroll={true}
                   />
-                  <div class="maincardBox maincardBox--large maincardBox--mobile-visible">
+
+
+                  <div
+                    class="maincardBox maincardBox--large maincardBox--mobile-visible">
                     <div class="maincardBox__card-wrapper">
                       <div class="container">
                         {agendaData &&
                           agendaData[cureentAgendaDate].map((timeline, index) => (
                             <AgendaCard
                               timeline={timeline}
-                              haveVideo={true}
+                              haveVideo={false}
                               haveLikeButton={true}
                               handleClick={startVideo}
                               wantHeaderFooter={true}
@@ -357,6 +372,7 @@ function PreEvent(props) {
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
             </>

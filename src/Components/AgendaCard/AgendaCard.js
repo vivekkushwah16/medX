@@ -108,12 +108,11 @@ function AgendaCard(props) {
   const getMainRender = () => {
     return (
       <div
-        style={{ maxWidth: `${props.fromTitle ? "100%" : ""}` }}
+        style={{ maxWidth: `${props.fromTitle ? "100%" : ""}`, paddingLeft: "none" }}
         key={`AgendaCard-${timeline.id}`}
         id={`AgendaCard-${timeline.id}`}
-        className={`maincardBox__card ${
-          timeline.videoUrl.length > 0 ? "maincardBox__card-video_canPlay" : ""
-        } ${props.fromTitle ? "from__title" : ""}`}
+        className={`maincardBox__card ${timeline.videoUrl.length > 0 ? "maincardBox__card-video_canPlay" : ""
+          } ${props.fromTitle ? "from__title" : ""}`}
       >
         {haveVideo && (
           <div
@@ -194,14 +193,12 @@ function AgendaCard(props) {
           </div>
           {haveLikeButton && (
             <div
-              className={`rating-block ${
-                props.fromTitle ? "from__title__rating" : ""
-              }`}
+              className={`rating-block ${props.fromTitle ? "from__title__rating" : ""
+                }`}
             >
               <button
-                className={`mg-b40 mg-sm-b20 like-btn ${
-                  like ? "like-btn--active" : ""
-                } `}
+                className={`mg-b40 mg-sm-b20 like-btn ${like ? "like-btn--active" : ""
+                  } `}
                 onClick={() => toggleLikeToTarget()}
               >
                 <i className="icon-like"></i>
@@ -284,14 +281,13 @@ function AgendaCard(props) {
   return (
     <div
       key={timeline.id}
-      className={`maincardBox__card ${
-        haveVideo ? "maincardBox__card--large" : ""
-      } ${animate ? "maincardBox__card_animate" : ""}`}
+      className={`maincardBox__card ${haveVideo ? "maincardBox__card--large" : ""
+        } ${animate ? "maincardBox__card_animate" : ""}`}
       style={
         animate
           ? {
-              animationDelay: `${placeIndex ? placeIndex * 0.25 : 0}s`,
-            }
+            animationDelay: `${placeIndex ? placeIndex * 0.25 : 0}s`,
+          }
           : {}
       }
     >
@@ -311,11 +307,10 @@ function AgendaCard(props) {
         )}
         {!haveVideo && (
           <>
-            <h2 className="maincardBox__card-date mg-b10">{`${
-              MonthName[new Date(timeline.startTime).getMonth()]
-            } ${new Date(timeline.startTime).getDate()}, ${new Date(
-              timeline.startTime
-            ).getFullYear()} `}</h2>
+            <h2 className="maincardBox__card-date mg-b10">{`${MonthName[new Date(timeline.startTime).getMonth()]
+              } ${new Date(timeline.startTime).getDate()}, ${new Date(
+                timeline.startTime
+              ).getFullYear()} `}</h2>
             <p className="maincardBox__card-time">
               {new Date(timeline.startTime).toLocaleTimeString([], {
                 hour: "2-digit",
@@ -371,9 +366,8 @@ function AgendaCard(props) {
         {haveLikeButton && !forEventPage && (
           <div className="rating-block">
             <button
-              className={` mg-b40 mg-sm - b20 like-btn ${
-                like ? "like-btn--active" : ""
-              } `}
+              className={` mg-b40 mg-sm - b20 like-btn ${like ? "like-btn--active" : ""
+                } `}
               onClick={() => toggleLikeToTarget()}
             >
               <i className="icon-like"></i>
@@ -394,9 +388,8 @@ function AgendaCard(props) {
       {forEventPage && (
         <div className="rating-block">
           <button
-            className={` mg-b40 mg-sm - b20 like-btn ${
-              like ? "like-btn--active" : ""
-            } `}
+            className={` mg-b40 mg-sm - b20 like-btn ${like ? "like-btn--active" : ""
+              } `}
             onClick={() => toggleLikeToTarget()}
           >
             <i className="icon-like"></i>

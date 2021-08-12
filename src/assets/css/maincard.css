@@ -9,6 +9,9 @@
   padding-left: 20rem;
   max-width: 100%;
 }
+.preventPage .maincardBox.maincardBox--large .maincardBox__card {
+  padding-left: 0rem;
+}
 .maincardBox.maincardBox--large .text-block {
   max-width: 480px;
 }

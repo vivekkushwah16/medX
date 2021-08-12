@@ -493,6 +493,7 @@ class Register extends Component {
                 tabsName={TABSName}
                 event={this.props.event}
                 ToggleTab={this.ToggleTab}
+                eventData={this.props.eventData}
               />
             )
             :

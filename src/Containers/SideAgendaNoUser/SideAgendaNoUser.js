@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { isMobileOnly } from 'react-device-detect'
 import { WATCHTRAILER_ANALYTICS_EVENT } from '../../AppConstants/AnalyticsEventName'
 import { MediaModalType } from '../../AppConstants/ModalType'
 import Agenda from '../../Components/Event/Agenda/Agenda'
@@ -25,7 +26,7 @@ export default function SideAgendaNoUser(props) {
             </header>
 
             <div className="login2Box__left" style={{
-                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?updated=${Math.random() * 100}")`,
+                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg")`,
                 backgroundPosition: 'top',
                 backgroundSize: "contain",
                 backgroundRepeat: "repeat-x",
@@ -37,26 +38,36 @@ export default function SideAgendaNoUser(props) {
                                 <div className="d-flex justify-content-between">
                                     <div className="bannerBox__left">
                                         <img className="bannerBox__pic mg-b35"
-                                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_Registeration_heading_left.png?updated=${Math.random() * 100}`}
+                                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/${isMobileOnly ? 'WithAgenda_Mobile_Registration_heading_left.png' : 'WithAgenda_Registeration_heading_left.png'}?updated=${Math.random() * 100}`}
                                             alt="header_left" />
                                         {/* <h1 className="bannerBox__subtitle mg-b10">A State-of-the-Art Academic Feast</h1> */}
                                         {/* <p className="bannerBox__desc mg-b35">with the Leaders in Respiratory Medicine</p> */}
 
-                                        <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-b20" style={{ fontSize: "1.1rem" }}
-                                            onClick={(e) => {
-                                                // showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/536876068')
-                                                // addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: 'evolve' })
-                                                // addCAWithUserInfo(`/${WATCHTRAILER_ANALYTICS_EVENT}`, true, { eventId: 'evolve' }, true)
-                                            }}>
+                                        {
+                                            props.eventData.watchTrailer &&
+                                            props.eventData.watchTrailer.enabled &&
+                                            props.eventData.watchTrailer.link &&
+                                            <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-b20" style={{ fontSize: "1.1rem" }}
+                                                onClick={(e) => {
+                                                    showMediaModal(MediaModalType.Videos, props.eventData.watchTrailer.link)
+                                                    // addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: props.event })
+                                                    // addCAWithUserInfo(`/${WATCHTRAILER_ANALYTICS_EVENT}`, true, { eventId: props.event }, true)
+                                                }}>
 
-                                            {
-                                                // isMobileOnly ? 'Trailer' : 
-                                                <>Watch Trailer&nbsp;<i className="icon-play" style={{ fontSize: "1rem" }}></i></>
-                                            }
-                                        </a>
+                                                {
+                                                    // isMobileOnly ? 'Trailer' : 
+                                                    <>Watch Trailer&nbsp;<i className="icon-play" style={{ fontSize: "1rem" }}></i></>
+                                                }
+                                            </a>
+                                        }
+
                                         <div className="d-flex d-sm-block justify-content-between">
-
-                                            <a href="#" className="btn btn-secondary bannerBox__btn d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fpdf%2FKNOW_YOUR_SPEAKERS.pdf')}>Know Your Faculty </a>
+                                            {
+                                                props.eventData.faculty &&
+                                                props.eventData.faculty.enabled &&
+                                                props.eventData.faculty.link &&
+                                                <a href="#" className="btn btn-secondary bannerBox__btn d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.PDF, `/web/viewer.html?file=${encodeURIComponent(props.eventData.faculty.link)}`)}>Know Your Faculty </a>
+                                            }
                                             {/* <a href="#" className="btn btn-secondary bannerBox__btn mg-r20 d-flex align-items-center" onClick={(e) => showMediaModal(MediaModalType.Videos, 'https://player.vimeo.com/video/528854507')}>Watch Trailer <i className="icon-play mg-l10"></i></a> */}
                                         </div>
                                     </div>

@@ -269,6 +269,7 @@ class Login extends Component {
                 tabsName={TABSName}
                 ToggleTab={this.ToggleTab}
                 event={this.props.event}
+                eventData={this.props.eventData}
               />
             )
             :

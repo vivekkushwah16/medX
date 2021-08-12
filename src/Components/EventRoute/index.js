@@ -290,3 +290,7 @@ export default function EventRoute(props) {
     </>
   );
 }
+
+// include registrationType = "WithAgenda" and
+//faculty = { enabled: false, link:"" }
+//watchTrailer = { enabled: false, link:"" }
