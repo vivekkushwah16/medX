@@ -318,7 +318,33 @@ function PreEvent(props) {
                                         {isMobileOnly ? "Faculty" : "Know Your Faculty"}
                                       </a>
                                     }
-
+                                    {
+                                      !props.canEnterEvent &&
+                                      <a
+                                        href="#"
+                                        class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
+                                        onClick={(e) => {
+                                          if (history) {
+                                            history.push(HOME_ROUTE);
+                                          }
+                                        }}
+                                      >
+                                        Explore Informative videos
+                                      </a>
+                                    }
+                                    {props.canEnterEvent && props.event && (
+                                      <a
+                                        href="#"
+                                        class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
+                                        onClick={(e) => {
+                                          if (history) {
+                                            history.push(`/${props.eventData.eventName}`);
+                                          }
+                                        }}
+                                      >
+                                        Enter Event
+                                      </a>
+                                    )}
                                   </div>
                                 </>
                               )}

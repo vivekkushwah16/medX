@@ -39,33 +39,33 @@
   padding-top: 6.86rem;
 }
 
-.preventPage  .left__div .buttons .addToCalendar{
-  margin-bottom: 0!important;
+.preventPage .left__div .buttons .addToCalendar {
+  margin-bottom: 0 !important;
 }
 
-.preventPage .left__div .buttons  .explore-btn{
-  margin-bottom: 0!important;
+.preventPage .left__div .buttons .explore-btn {
+  margin-bottom: 0 !important;
   margin-top: 2rem;
 }
 
-.preventPage .headerBox.headerBox--full{
+.preventPage .headerBox.headerBox--full {
   /* background: #dddddd8a; */
 }
 
-.preventPage  .left__div .buttons .addToCalendar #addToCal, .preventPage .mobile__layout .buttons .addToCalendar #addToCal{
+.preventPage .left__div .buttons .addToCalendar #addToCal,
+.preventPage .mobile__layout .buttons .addToCalendar #addToCal {
   background: var(--preeventButtonBg);
   border-color: var(--preeventButtonBg);
   color: var(--preeventButtonColor);
   box-shadow: 4px 4px 6px 0px var(--preeventButtonShadow);
 }
 
-.preventPage  .left__div .buttons .addToCalendar #addToCal:hover{
+.preventPage .left__div .buttons .addToCalendar #addToCal:hover {
   color: var(--preeventButtonBg);
   border-color: var(--preeventButtonBg);
   background: var(--preeventButtonColor);
   box-shadow: 4px 4px 6px 0px var(--preeventButtonShadow);
 }
-
 
 @media (min-width: 1200px) {
   .thanks img {
@@ -164,12 +164,12 @@
   font-weight: 500;
 }
 
-.bottom_right_eventLogo{
+.bottom_right_eventLogo {
   position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 2rem;
-    max-width: 11rem;
+  bottom: 0;
+  right: 0;
+  margin: 2rem;
+  max-width: 11rem;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -179,9 +179,9 @@
 }
 
 @media only screen and (max-width: 1024px) {
-  .bottom_right_eventLogo{
+  .bottom_right_eventLogo {
     display: none;
-      right: auto;
+    right: auto;
   }
 
   .left__div {
@@ -270,10 +270,10 @@
     flex-wrap: wrap;
     max-width: 25rem;
   }
-  
-.preventPage .mobile__layout .buttons  .explore-btn{
-  margin: 0;
-}
+
+  .preventPage .mobile__layout .buttons .explore-btn {
+    margin: 0;
+  }
   .buttons button:nth-child(1) {
     /* margin-right: 2rem; */
     margin-top: 2rem;
@@ -283,5 +283,13 @@
     background-color: #fff;
     border-color: #015189;
     margin-top: 4rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .preventPage .bannerBox__left .middle-In-mobile {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
   }
 }

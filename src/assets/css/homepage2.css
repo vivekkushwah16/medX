@@ -217,6 +217,7 @@
 .bannerBox__btn {
   font-weight: 700;
   font-size: 1.1875rem;
+  min-width: auto;
 }
 .bannerBox__pic {
   margin: 0 auto;
