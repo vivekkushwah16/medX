@@ -233,7 +233,7 @@ function AgendaCard(props) {
             <div className="maincardBox__card-footer">
               {timeline.speakers.length === 1 ? (
                 <>
-                  <h4 className="maincardBox__card-footer-title">Speaker</h4>
+                  <h4 className="maincardBox__card-footer-title">Faculties</h4>
                   {timeline.speakers.map((id) => (
                     <SpeakerProfile
                       fromTitle={props.fromTitle}
@@ -244,7 +244,7 @@ function AgendaCard(props) {
                 </>
               ) : (
                 <>
-                  <h4 className="maincardBox__card-footer-title">Speakers</h4>
+                  <h4 className="maincardBox__card-footer-title">Faculties</h4>
                   <div
                     className="wrap-speakers"
                     style={{ display: "flex", flexWrap: "wrap" }}
