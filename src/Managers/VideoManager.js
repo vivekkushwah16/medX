@@ -362,7 +362,7 @@ const VideoManager = {
   },
   getVideoWithTag: (
     tag = [],
-    limit = 60,
+    limit = 75,
     docRefToStartFrom = null,
     filter = videoSortFilter.date,
     filterWithViews = false
@@ -371,11 +371,12 @@ const VideoManager = {
       try {
         let docRef = firestore.collection(VIDEO_COLLECTION);
         const lowerCasedTag = tag.map((t) => t.toLowerCase());
+        console.log("xxxxxxxx", lowerCasedTag)
         if (lowerCasedTag.length > 0) {
-          docRef = docRef.where("tags", "array-contains-any", lowerCasedTag);
+          docRef = docRef.where("tags", "array-contains-any", lowerCasedTag).orderBy("timestamp");
           //.orderBy('tags');
         } else {
-          // console.log(filter)
+          console.log(filter)
           switch (filter) {
             case videoSortFilter.date:
               docRef = docRef.orderBy("timestamp");

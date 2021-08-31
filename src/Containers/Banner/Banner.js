@@ -51,14 +51,14 @@ const BannerData = [
   // {
   //   type: BannerType.LiveEvent,
   //   mainTitle:
-  //     "Covid Antibody Cocktail Therapy A ray of Hope for country to win over Covid-19",
-  //   subTitle: "",
-  //   eventId: "apicon",
-  //   eventName: "ronaprevewebcast",
+  //     "2 Days of Cutting-Edge Academic Feast",
+  //   subTitle: "With The Leaders In Respiratory Medicine",
+  //   eventId: "inspire21",
+  //   eventName: "inspire21",
   //   mainImageUrl: "",
   //   needCountDown: true,
   //   mainImageUrl:
-  //     "https://storage.googleapis.com/cipla-impact.appspot.com/apicon/preEventPage_right_speakers.png",
+  //     "https://storage.googleapis.com/cipla-impact.appspot.com/inspire21/inspore_white.png",
   // },
   {
     type: BannerType.Custom2,
