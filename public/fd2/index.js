@@ -69,14 +69,13 @@ $(document).ready(function () {
       // console.log(your_email);
       firebase
         .firestore()
-        .collection("userLogged")
-        .doc(your_id)
+        .collection("userFeedback")
+        .doc(currentUser.uid)
         .get()
         .then((doc) => {
           const urlQuery = new URLSearchParams(window.location.href);
           eventId = urlQuery.get("event");
-          // eventTitle = urlQuery.get("title");
-          eventTitle = "testing";
+          eventTitle = urlQuery.get("title");
           // document.getElementById("q3-title").innerHTML =
           //   document.getElementById("q3-title").innerHTML +
           //   " " +
@@ -91,20 +90,24 @@ $(document).ready(function () {
           if (eventId === null) {
             return;
           }
-          document.querySelector("#mainForm").style.display = "block";
-          document.querySelector("#loader").style.display = "none";
-          document.querySelector("#finalMessage").style.display = "none";
+          // document.querySelector("#mainForm").style.display = "block";
+          // document.querySelector("#loader").style.display = "none";
+          // document.querySelector("#finalMessage").style.display = "none";
           feedbackExists = doc.exists;
 
-          // if (doc.exists) {
-          //     // document.querySelector('#mainForm').style.display = 'none';
-          //     // document.querySelector('#loader').style.display = 'none';
-          //     // document.querySelector('#finalMessage').style.display = 'block';
-          // } else {
-          //     document.querySelector('#mainForm').style.display = 'block';
-          //     document.querySelector('#loader').style.display = 'none';
-          //     document.querySelector('#finalMessage').style.display = 'none';
-          // }
+          if (feedbackExists) {
+            document.querySelector("#finalMessage").innerHTML =
+              "Your feedback already recevied";
+            successfulFeedback();
+            return;
+            // document.querySelector('#mainForm').style.display = 'none';
+            // document.querySelector('#loader').style.display = 'none';
+            // document.querySelector('#finalMessage').style.display = 'block';
+          } else {
+            document.querySelector("#mainForm").style.display = "block";
+            document.querySelector("#loader").style.display = "none";
+            document.querySelector("#finalMessage").style.display = "none";
+          }
         });
       // getDataIfExist();
     } else {
@@ -200,6 +203,20 @@ $(document).ready(function () {
   //   console.log("Checkbox is not checked..", this.length);
   // }
   // });
+
+  // check for disclaimer
+  var checkbox = document.querySelector("#disclaimer");
+
+  checkbox.addEventListener("change", function () {
+    if (this.checked) {
+      document.querySelector("#submitwhatNext").disabled = false;
+      // console.log("Checkbox is checked..");
+    } else {
+      document.querySelector("#submitwhatNext").disabled = true;
+      // console.log("Checkbox is not checked..");
+    }
+  });
+
   $("#mainForm").on("submit", async function (event) {
     // console.log(event);
     event.preventDefault();
@@ -269,37 +286,19 @@ $(document).ready(function () {
       .firestore()
       .collection("userFeedback")
       .doc(currentUser.uid)
-      .get()
-      .then((doc) => {
-        if (!doc.exists) {
-          firebase
-            .firestore()
-            .collection("userFeedback")
-            .doc(currentUser.uid)
-            .set({
-              ...survey1,
-              name: currentUser.displayName,
-              email: currentUser.email,
-              eventId: eventId,
-            })
-            .then(() => {
-              successfulFeedback();
-            })
-            .catch((err) => {
-              // console.log(err);
-              failedFeedback(err);
-            });
-        } else {
-          document.querySelector("#finalMessage").innerHTML =
-            "Your feedback already recevied";
-          successfulFeedback();
-          // console.log("already responded");
-        }
+      .set({
+        ...survey1,
+        name: currentUser.displayName,
+        email: currentUser.email,
+        eventId: eventId,
+        eventTitle: eventTitle,
+      })
+      .then(() => {
         successfulFeedback();
       })
       .catch((err) => {
-        console.log(err);
-        // failedFeedback(err);
+        // console.log(err);
+        failedFeedback(err);
       });
 
     // if (currentUser) {

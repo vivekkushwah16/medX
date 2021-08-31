@@ -58,8 +58,8 @@ export default function AgendaNavBar(props) {
             className="navigarion-bar__title"
             style={
               forceAgendaVisibleMobile
-                ? { display: "initial", "margin-left": "2rem" }
-                : { "margin-left": "2rem" }
+                ? { display: "initial", "marginLeft": "2rem" }
+                : { "marginLeft": "2rem" }
             }
           >
             AGENDA |{" "}

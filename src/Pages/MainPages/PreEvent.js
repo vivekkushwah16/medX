@@ -24,7 +24,6 @@ import blur__img from "./pre_event_blur.svg";
 // import leftMobileTest from "./prevent_mobile_info.png";
 // import rightMobileTest from "./preevent_mobile_Speaker.png";
 
-
 import firebase, { firestore } from "../../Firebase/firebase";
 import { USERMETADATA_COLLECTION } from "../../AppConstants/CollectionConstants";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
@@ -65,8 +64,9 @@ function PreEvent(props) {
           title: props.eventTitle,
           email: userInfo.email,
           mobileNumber: userInfo.phoneNumber,
-          name: `${userInfo.firstName} ${userInfo.lastName ? userInfo.lastName : ""
-            }`,
+          name: `${userInfo.firstName} ${
+            userInfo.lastName ? userInfo.lastName : ""
+          }`,
           isDoctor: userInfo.profession === "Doctor",
           event: props.eventData.eventName,
           date: props.eventDate ? props.eventDate : `03 July 2021`,
@@ -112,13 +112,15 @@ function PreEvent(props) {
           const data = doc.data();
           if (data.events) {
             if (data.events.indexOf(props.event) === -1) {
-              regeristerUser()
+              regeristerUser();
             } else {
-              setToggleForRegisterationForOldUser({ status: true, value: false });
+              setToggleForRegisterationForOldUser({
+                status: true,
+                value: false,
+              });
             }
           } else {
-            regeristerUser()
-
+            regeristerUser();
           }
         })
         .catch((err) => {
@@ -126,7 +128,7 @@ function PreEvent(props) {
           setToggleForRegisterationForOldUser({ status: true, value: false });
         });
     }
-  }, [userInfo])
+  }, [userInfo]);
 
   useEffect(() => {
     if (props.eventData.registrationType === RegistrationType.WithAgenda) {
@@ -154,8 +156,9 @@ function PreEvent(props) {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
-        } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${
+        MonthName[new Date(timeline.startTime).getMonth()]
+      } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -189,264 +192,328 @@ function PreEvent(props) {
     setCureentAgendaDate(date);
   };
 
-  let initalCSSValues = useRef({})
+  let initalCSSValues = useRef({});
   useEffect(() => {
     if (props.eventData) {
       if (props.eventData.preventStyle) {
-        let root = document.querySelector(':root');
+        let root = document.querySelector(":root");
         let computedStyle = getComputedStyle(root);
-        let preeventStyle = props.eventData.preventStyle
+        let preeventStyle = props.eventData.preventStyle;
 
-        Object.keys(preeventStyle).forEach(varName => {
-          let initalValue = computedStyle.getPropertyValue(`--${varName}`)
+        Object.keys(preeventStyle).forEach((varName) => {
+          let initalValue = computedStyle.getPropertyValue(`--${varName}`);
           if (initalValue) {
-            initalCSSValues.current[varName] = initalValue
+            initalCSSValues.current[varName] = initalValue;
           }
           root.style.setProperty(`--${varName}`, preeventStyle[varName]);
-        })
-
+        });
       }
-
     }
     return () => {
       if (initalCSSValues.current) {
-        let root = document.querySelector(':root');
-        Object.keys(initalCSSValues.current).forEach(varName => {
-          root.style.setProperty(`--${varName}`, initalCSSValues.current[varName]);
-        })
+        let root = document.querySelector(":root");
+        Object.keys(initalCSSValues.current).forEach((varName) => {
+          root.style.setProperty(
+            `--${varName}`,
+            initalCSSValues.current[varName]
+          );
+        });
       }
-    }
-  }, [props.eventData])
+    };
+  }, [props.eventData]);
 
   return (
     <>
-      {
-        props.eventData.registrationType === RegistrationType.WithAgenda ?
-          (
-            <>
-              <div class="preventPage min-height-full gradient-bg3 ">
-                {/* Header */}
-                <Header event={props.event} eventTitle={props.eventTitle} eventData={props.eventData} />
-                <div class="login2Box__left" style={{
-                  backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg")`,
-                  backgroundPosition: 'top',
-                  backgroundSize: "contain",
-                  backgroundRepeat: "repeat-x",
-                }}>
-                  {/* BannerBox */}
-                  <div class="bannerBox">
-                    <div class="bannerBox__inner bannerBox__inner--small bannerBox__inner4 gradient-bg1">
-                      <div class="bannerBox__slide">
-                        <div class="container">
-                          <div class="d-flex justify-content-between pd-b100 pd-t60 pd-l60 pd-md-b0 pd-md-t0 pd-md-l0">
-                            <div class="bannerBox__left">
-                              <img className="bannerBox__pic mg-b35"
-                                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/${isMobileOnly ? 'WithAgenda_Mobile_Preevent_heading_left.png' : 'WithAgenda_Preevent_heading_left.png'}?updated=${Math.random() * 100}`}
-                                alt="header_left" />
+      {props.eventData.registrationType === RegistrationType.WithAgenda ? (
+        <>
+          <div className="preventPage min-height-full gradient-bg3 ">
+            {/* Header */}
+            <Header
+              event={props.event}
+              eventTitle={props.eventTitle}
+              eventData={props.eventData}
+            />
+            <div
+              className="login2Box__left"
+              style={{
+                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg")`,
+                backgroundPosition: "top",
+                backgroundSize: "contain",
+                backgroundRepeat: "repeat-x",
+              }}
+            >
+              {/* BannerBox */}
+              <div className="bannerBox">
+                <div className="bannerBox__inner bannerBox__inner--small bannerBox__inner4 gradient-bg1">
+                  <div className="bannerBox__slide">
+                    <div className="container">
+                      <div className="d-flex justify-content-between pd-b100 pd-t60 pd-l60 pd-md-b0 pd-md-t0 pd-md-l0">
+                        <div className="bannerBox__left">
+                          <img
+                            className="bannerBox__pic mg-b35"
+                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                              props.event
+                            }/${
+                              isMobileOnly
+                                ? "WithAgenda_Mobile_Preevent_heading_left.png"
+                                : "WithAgenda_Preevent_heading_left.png"
+                            }?updated=${Math.random() * 100}`}
+                            alt="header_left"
+                          />
 
-                              {/* <h1 class="bannerBox__maintitle"> </h1> */}
-                              {/* <p class="bannerBox__subtitle mg-b40">Do tune in on 16th April 2021 for 2 days of cutting-edge academic feast with experts in Respiratory Medicine</p> */}
-                              {/* <p class="bannerBox__subtitle mg-b40">
+                          {/* <h1 class="bannerBox__maintitle"> </h1> */}
+                          {/* <p class="bannerBox__subtitle mg-b40">Do tune in on 16th April 2021 for 2 days of cutting-edge academic feast with experts in Respiratory Medicine</p> */}
+                          {/* <p class="bannerBox__subtitle mg-b40">
                                 Tune in for a State-of-the-Art Academic Feast with the
                                 Leaders in Respiratory Medicine.
                               </p>
                               <p class="bannerBox__date mg-b30">
                                 16<sup>th</sup> - 17<sup>th</sup> April 2021
                               </p> */}
-                              {
-                                props.eventData.watchTrailer &&
-                                props.eventData.watchTrailer.enabled &&
-                                props.eventData.watchTrailer.link &&
-                                <a
-                                  href="#"
-                                  class="btn btn-secondary--outline bannerBox__btn mg-b20"
-                                  style={{ fontSize: "1.1rem" }}
-                                  onClick={(e) => {
-                                    showMediaModal(
-                                      MediaModalType.Videos,
-                                      props.eventData.watchTrailer.link
-                                    );
-                                    addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: props.event })
-                                    addCAWithUserInfo(`/${WATCHTRAILER_ANALYTICS_EVENT}`, true, { eventId: props.event }, true)
-                                  }}
-                                >
-                                  {
-                                    // isMobileOnly ? 'Trailer' :
-                                    <>
-                                      Watch Trailer&nbsp;
-                                      <i
-                                        className="icon-play"
-                                        style={{ fontSize: "1rem" }}
-                                      ></i>
-                                    </>
-                                  }
-                                </a>
-                              }
+                          {props.eventData.watchTrailer &&
+                            props.eventData.watchTrailer.enabled &&
+                            props.eventData.watchTrailer.link && (
+                              <a
+                                href="#"
+                                className="btn btn-secondary--outline bannerBox__btn mg-b20"
+                                style={{ fontSize: "1.1rem" }}
+                                onClick={(e) => {
+                                  showMediaModal(
+                                    MediaModalType.Videos,
+                                    props.eventData.watchTrailer.link
+                                  );
+                                  addGAWithUserInfo(
+                                    WATCHTRAILER_ANALYTICS_EVENT,
+                                    { eventId: props.event }
+                                  );
+                                  addCAWithUserInfo(
+                                    `/${WATCHTRAILER_ANALYTICS_EVENT}`,
+                                    true,
+                                    { eventId: props.event },
+                                    true
+                                  );
+                                }}
+                              >
+                                {
+                                  // isMobileOnly ? 'Trailer' :
+                                  <>
+                                    Watch Trailer&nbsp;
+                                    <i
+                                      className="icon-play"
+                                      style={{ fontSize: "1rem" }}
+                                    ></i>
+                                  </>
+                                }
+                              </a>
+                            )}
 
-                              {!showRegisterForOldUser.status && (
-                                <>
-                                  <div className="lds-dual-ring-lazy"></div>
-                                </>
-                              )}
-                              {showRegisterForOldUser.status && (
-                                <>
-                                  <div class="d-flex middle-In-mobile">
-                                    <AddToCalendar blueBtn={true} calendatDetails={props.calendatDetails} eventId={props.event} eventData={props.eventData} />
-                                    {
-                                      props.eventData.faculty &&
-                                      props.eventData.faculty.enabled &&
-                                      props.eventData.faculty.link &&
-                                      <a
-                                        href="#"
-                                        class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
-                                        onClick={(e) => {
-                                          showMediaModal(
-                                            MediaModalType.PDF,
-                                            `/web/viewer.html?file=${encodeURIComponent(props.eventData.faculty.link)}`
-                                          );
-                                          addGAWithUserInfo(KNOW_YOUR_SPEAKER_CLICK_EVENT, {
+                          {!showRegisterForOldUser.status && (
+                            <>
+                              <div className="lds-dual-ring-lazy"></div>
+                            </>
+                          )}
+                          {showRegisterForOldUser.status && (
+                            <>
+                              <div className="d-flex middle-In-mobile">
+                                <AddToCalendar
+                                  blueBtn={true}
+                                  calendatDetails={props.calendatDetails}
+                                  eventId={props.event}
+                                  eventData={props.eventData}
+                                />
+                                {props.eventData.faculty &&
+                                  props.eventData.faculty.enabled &&
+                                  props.eventData.faculty.link && (
+                                    <a
+                                      href="#"
+                                      className="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
+                                      onClick={(e) => {
+                                        showMediaModal(
+                                          MediaModalType.PDF,
+                                          `/web/viewer.html?file=${encodeURIComponent(
+                                            props.eventData.faculty.link
+                                          )}`
+                                        );
+                                        addGAWithUserInfo(
+                                          KNOW_YOUR_SPEAKER_CLICK_EVENT,
+                                          {
                                             eventId: props.event,
-                                          });
-                                          addCAWithUserInfo(
-                                            `/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`,
-                                            true,
-                                            { eventId: props.event },
-                                            true
-                                          );
-                                        }}
-                                      >
-                                        {isMobileOnly ? "Faculty" : "Know Your Faculty"}
-                                      </a>
-                                    }
-                                    {
-                                      !props.canEnterEvent &&
-                                      <a
-                                        href="#"
-                                        class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
-                                        onClick={(e) => {
-                                          if (history) {
-                                            history.push(HOME_ROUTE);
                                           }
-                                        }}
-                                      >
-                                        Explore Informative videos
-                                      </a>
-                                    }
-                                    {props.canEnterEvent && props.event && (
-                                      <a
-                                        href="#"
-                                        class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
-                                        onClick={(e) => {
-                                          if (history) {
-                                            history.push(`/${props.eventData.eventName}`);
-                                          }
-                                        }}
-                                      >
-                                        Enter Event
-                                      </a>
-                                    )}
-                                  </div>
-                                </>
-                              )}
-
-                            </div>
-                            <div class="bannerBox__right">
-                              <img
-                                class="bannerBox__pic"
-                                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_Preevent_heading_right.png?updated=${Math.random() * 100}`}
-                                alt=""
-                              />
-                            </div>
-                          </div>
+                                        );
+                                        addCAWithUserInfo(
+                                          `/${KNOW_YOUR_SPEAKER_CLICK_EVENT}`,
+                                          true,
+                                          { eventId: props.event },
+                                          true
+                                        );
+                                      }}
+                                    >
+                                      {isMobileOnly
+                                        ? "Faculty"
+                                        : "Know Your Faculty"}
+                                    </a>
+                                  )}
+                                {!props.canEnterEvent &&
+                                props.eventData?.feedback.enabled ? (
+                                  <a
+                                    href="#"
+                                    className="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30 event-feedback"
+                                    onClick={(e) => {
+                                      showMediaModal(
+                                        MediaModalType.PDF,
+                                        `${props.eventData.feedback.link}?id=123&event=${props.event}&title=${props.eventTitle}`
+                                      );
+                                    }}
+                                  >
+                                    Feedback
+                                  </a>
+                                ) : (
+                                  <a
+                                    href="#"
+                                    class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
+                                    onClick={(e) => {
+                                      if (history) {
+                                        history.push(HOME_ROUTE);
+                                      }
+                                    }}
+                                  >
+                                    Explore Informative videos
+                                  </a>
+                                )}
+                                {props.canEnterEvent && props.event && (
+                                  <a
+                                    href="#"
+                                    className="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
+                                    onClick={(e) => {
+                                      if (history) {
+                                        history.push(
+                                          `/${props.eventData.eventName}`
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    Enter Event
+                                  </a>
+                                )}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                        <div className="bannerBox__right">
+                          <img
+                            className="bannerBox__pic"
+                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                              props.event
+                            }/WithAgenda_Preevent_heading_right.png?updated=${
+                              Math.random() * 100
+                            }`}
+                            alt=""
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
-                  <AgendaNavBar
-                    containerClass="container"
-                    className={"hide-on-tablet"}
-                    dates={agendaDates}
-                    currentDate={cureentAgendaDate}
-                    handleClick={handleDateChange}
-                    stickyOnScroll={true}
-                  />
-                  <AgendaNavBar
-                    containerClass="container"
-                    className={"show-on-tablet show-on-tablet--flex "}
-                    dates={agendaDates}
-                    currentDate={cureentAgendaDate}
-                    handleClick={handleDateChange}
-                    forceAgendaVisibleMobile={true}
-                    stickyOnScroll={true}
-                  />
-
-
-                  <div
-                    class="maincardBox maincardBox--large maincardBox--mobile-visible">
-                    <div class="maincardBox__card-wrapper">
-                      <div class="container">
-                        {agendaData &&
-                          agendaData[cureentAgendaDate].map((timeline, index) => (
-                            <AgendaCard
-                              timeline={timeline}
-                              haveVideo={false}
-                              haveLikeButton={true}
-                              handleClick={startVideo}
-                              wantHeaderFooter={true}
-                            />
-                          ))}
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
               </div>
-            </>
-          )
-          :
-          (
-            <>
-              <div className="evolve__main__div preventPage">
-                <Header event={props.event} eventTitle={props.eventTitle} eventData={props.eventData} />
-                <div className="mobile__layout">
-                  <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preevent_mobile_Speaker.png?updated=${Math.random() * 100}`} alt="" className="evolve__logo" />
-                  {/* <img src={rightMobileTest} alt="" className="evolve__logo" /> */}
-                  {!showRegisterForOldUser.status && (
+              <AgendaNavBar
+                containerClass="container"
+                className={"hide-on-tablet"}
+                dates={agendaDates}
+                currentDate={cureentAgendaDate}
+                handleClick={handleDateChange}
+                stickyOnScroll={true}
+              />
+              <AgendaNavBar
+                containerClass="container"
+                className={"show-on-tablet show-on-tablet--flex "}
+                dates={agendaDates}
+                currentDate={cureentAgendaDate}
+                handleClick={handleDateChange}
+                forceAgendaVisibleMobile={true}
+                stickyOnScroll={true}
+              />
+
+              <div className="maincardBox maincardBox--large maincardBox--mobile-visible">
+                <div className="maincardBox__card-wrapper">
+                  <div className="container">
+                    {agendaData &&
+                      agendaData[cureentAgendaDate].map((timeline, index) => (
+                        <AgendaCard
+                          timeline={timeline}
+                          haveVideo={false}
+                          haveLikeButton={true}
+                          handleClick={startVideo}
+                          wantHeaderFooter={true}
+                          key={index}
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="evolve__main__div preventPage">
+            <Header
+              event={props.event}
+              eventTitle={props.eventTitle}
+              eventData={props.eventData}
+            />
+            <div className="mobile__layout">
+              <img
+                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                  props.event
+                }/preevent_mobile_Speaker.png?updated=${Math.random() * 100}`}
+                alt=""
+                className="evolve__logo"
+              />
+              {/* <img src={rightMobileTest} alt="" className="evolve__logo" /> */}
+              {!showRegisterForOldUser.status && (
+                <>
+                  <LoadableFallback tranparentBg />
+                </>
+              )}
+              {showRegisterForOldUser.status && (
+                <>
+                  {showRegisterForOldUser.value ? (
                     <>
-                      <LoadableFallback tranparentBg />
+                      <div className="thanks">
+                        {/* <img src={leftMobileTest} alt="" className="thank__you" /> */}
+                        <img
+                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                            props.event
+                          }/prevent_mobile_info.png?updated=${
+                            Math.random() * 100
+                          }`}
+                          alt=""
+                          className="thank__you"
+                        />
+                      </div>
+                      <div className="buttons">
+                        <button
+                          className="btn btn-secondary"
+                          onClick={(e) => {
+                            regeristerUser();
+                            addGAWithUserInfo(OLD_USER_REGISTER_EVENT, {
+                              eventId: props.event,
+                            });
+                            addCAWithUserInfo(
+                              `/${OLD_USER_REGISTER_EVENT}`,
+                              true,
+                              { eventId: props.event },
+                              true
+                            );
+                          }}
+                        >
+                          SignUp
+                        </button>
+                      </div>
                     </>
-                  )}
-                  {showRegisterForOldUser.status && (
+                  ) : (
                     <>
-                      {showRegisterForOldUser.value ? (
-                        <>
-                          <div className="thanks">
-                            {/* <img src={leftMobileTest} alt="" className="thank__you" /> */}
-                            <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/prevent_mobile_info.png?updated=${Math.random() * 100}`} alt="" className="thank__you" />
-                          </div>
-                          <div className="buttons">
-                            <button
-                              className="btn btn-secondary"
-                              onClick={(e) => {
-                                regeristerUser();
-                                addGAWithUserInfo(OLD_USER_REGISTER_EVENT, {
-                                  eventId: props.event,
-                                });
-                                addCAWithUserInfo(
-                                  `/${OLD_USER_REGISTER_EVENT}`,
-                                  true,
-                                  { eventId: props.event },
-                                  true
-                                );
-                              }}
-                            >
-                              SignUp
-                            </button>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          {/* <div className="thanks_text">
+                      {/* <div className="thanks_text">
                       Mucormycosis -<br></br>
                       What lies beneath
                     </div>
@@ -454,43 +521,55 @@ function PreEvent(props) {
                       26th May, 2021 | <strong>7:00 PM - 8:00 PM</strong>
                     </div> */}
 
-                          <div className="thanks">
-                            {/* <img src={leftMobileTest} alt="" className="thank__you" /> */}
-                            <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/prevent_mobile_info.png?updated=${Math.random() * 100}`} alt="" className="thank__you" />
-                          </div>
+                      <div className="thanks">
+                        {/* <img src={leftMobileTest} alt="" className="thank__you" /> */}
+                        <img
+                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                            props.event
+                          }/prevent_mobile_info.png?updated=${
+                            Math.random() * 100
+                          }`}
+                          alt=""
+                          className="thank__you"
+                        />
+                      </div>
 
-                          <div className="buttons">
-                            {/* <button className="btn btn-secondary evolve-btn">
+                      <div className="buttons">
+                        {/* <button className="btn btn-secondary evolve-btn">
                             Add to Calendar
                       </button> 
                       */}
-                            <AddToCalendar blueBtn={true} calendatDetails={props.calendatDetails} eventId={props.event} eventData={props.eventData} />
-                            {
-                              !props.canEnterEvent &&
-                              <button
-                                className="btn btn-secondary  explore-btn"
-                                onClick={(e) => {
-                                  if (history) {
-                                    history.push(HOME_ROUTE);
-                                  }
-                                }}
-                              >
-                                Explore Informative videos
-                              </button>
-                            }
-                            {props.canEnterEvent && props.event && (
-                              <button
-                                className="btn btn-secondary  explore-btn"
-                                onClick={(e) => {
-                                  if (history) {
-                                    history.push(`/${props.eventData.eventName}`);
-                                  }
-                                }}
-                              >
-                                Enter Event
-                              </button>
-                            )}
-                            {/* 
+                        <AddToCalendar
+                          blueBtn={true}
+                          calendatDetails={props.calendatDetails}
+                          eventId={props.event}
+                          eventData={props.eventData}
+                        />
+                        {!props.canEnterEvent && (
+                          <button
+                            className="btn btn-secondary  explore-btn"
+                            onClick={(e) => {
+                              if (history) {
+                                history.push(HOME_ROUTE);
+                              }
+                            }}
+                          >
+                            Explore Informative videos
+                          </button>
+                        )}
+                        {props.canEnterEvent && props.event && (
+                          <button
+                            className="btn btn-secondary  explore-btn"
+                            onClick={(e) => {
+                              if (history) {
+                                history.push(`/${props.eventData.eventName}`);
+                              }
+                            }}
+                          >
+                            Enter Event
+                          </button>
+                        )}
+                        {/* 
                           <button
                           className="btn btn-secondary"
                           disabled
@@ -506,60 +585,83 @@ function PreEvent(props) {
                           Watch Trailer
                         </button> 
                         */}
-                          </div>
-                        </>
-                      )}
+                      </div>
                     </>
                   )}
-                  <div className="bottom_right_eventLogo" style={{ position: 'unset', display: 'block' }}>
-                    <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/eventLogo.png?updated=${Math.random() * 100}`} alt="" className="eventLogo" />
-                  </div>
-                </div>
-                {/* <img src={mobile__blur} alt="" className="mobile__blur" /> */}
-                {/* <img src={blur__img} alt="" className="blur__img" /> */}
-                <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/pre_event_bg.jpg?updated=${Math.random() * 100}`} alt="" className="spider__img" />
-                {/* <img src={right__wing} alt="" className="right__wing" /> */}
-                <div className="left__div">
-                  {!showRegisterForOldUser.status && (
+                </>
+              )}
+              <div
+                className="bottom_right_eventLogo"
+                style={{ position: "unset", display: "block" }}
+              >
+                <img
+                  src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                    props.event
+                  }/eventLogo.png?updated=${Math.random() * 100}`}
+                  alt=""
+                  className="eventLogo"
+                />
+              </div>
+            </div>
+            {/* <img src={mobile__blur} alt="" className="mobile__blur" /> */}
+            {/* <img src={blur__img} alt="" className="blur__img" /> */}
+            <img
+              src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                props.event
+              }/pre_event_bg.jpg?updated=${Math.random() * 100}`}
+              alt=""
+              className="spider__img"
+            />
+            {/* <img src={right__wing} alt="" className="right__wing" /> */}
+            <div className="left__div">
+              {!showRegisterForOldUser.status && (
+                <>
+                  <LoadableFallback tranparentBg />
+                </>
+              )}
+              {showRegisterForOldUser.status && (
+                <>
+                  {showRegisterForOldUser.value ? (
                     <>
-                      <LoadableFallback tranparentBg />
-                    </>
-                  )}
-                  {showRegisterForOldUser.status && (
-                    <>
-                      {showRegisterForOldUser.value ? (
-                        <>
-                          {/* <div className="thanks_text">
+                      {/* <div className="thanks_text">
                       Sign Up To Explore Newer Paradigms In Respiratory Medicine
                     </div>
                     <div className="timing--">Date: 05 June 2021</div> */}
-                          <div className="thanks">
-                            {/* <img src={leftTest} alt="" className="thank__you" /> */}
-                            <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg?updated=${Math.random() * 100}`} alt="" className="thank__you" />
-                          </div>
-                          <div className="buttons">
-                            <button
-                              className="btn btn-secondary "
-                              onClick={(e) => {
-                                regeristerUser();
-                                addGAWithUserInfo(OLD_USER_REGISTER_EVENT, {
-                                  eventId: props.event,
-                                });
-                                addCAWithUserInfo(
-                                  `/${OLD_USER_REGISTER_EVENT}`,
-                                  true,
-                                  { eventId: props.event },
-                                  true
-                                );
-                              }}
-                            >
-                              SignUp
-                            </button>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          {/* <div className="thanks_text">
+                      <div className="thanks">
+                        {/* <img src={leftTest} alt="" className="thank__you" /> */}
+                        <img
+                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                            props.event
+                          }/preEventPage_left_heading.svg?updated=${
+                            Math.random() * 100
+                          }`}
+                          alt=""
+                          className="thank__you"
+                        />
+                      </div>
+                      <div className="buttons">
+                        <button
+                          className="btn btn-secondary "
+                          onClick={(e) => {
+                            regeristerUser();
+                            addGAWithUserInfo(OLD_USER_REGISTER_EVENT, {
+                              eventId: props.event,
+                            });
+                            addCAWithUserInfo(
+                              `/${OLD_USER_REGISTER_EVENT}`,
+                              true,
+                              { eventId: props.event },
+                              true
+                            );
+                          }}
+                        >
+                          SignUp
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* <div className="thanks_text">
                       Mucormycosis - <br></br>
                       What lies beneath
                     </div>
@@ -567,43 +669,55 @@ function PreEvent(props) {
                       26th May, 2021 | <strong>7:00 PM - 8:00 PM</strong>
                     </div> */}
 
-                          <div className="thanks">
-                            {/* <img src={leftTest} alt="" className="thank__you" /> */}
-                            <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_left_heading.svg?updated=${Math.random() * 100}`} alt="" className="thank__you" />
-                          </div>
+                      <div className="thanks">
+                        {/* <img src={leftTest} alt="" className="thank__you" /> */}
+                        <img
+                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                            props.event
+                          }/preEventPage_left_heading.svg?updated=${
+                            Math.random() * 100
+                          }`}
+                          alt=""
+                          className="thank__you"
+                        />
+                      </div>
 
-                          <div className="buttons">
-                            <AddToCalendar blueBtn={true} calendatDetails={props.calendatDetails} eventId={props.event} eventData={props.eventData} />
-                            {
-                              !props.canEnterEvent &&
-                              <button
-                                className="btn btn-secondary explore-btn"
-                                onClick={(e) => {
-                                  if (history) {
-                                    history.push(HOME_ROUTE);
-                                  }
-                                }}
-                              >
-                                Explore Informative videos
-                              </button>
-                            }
-                            {props.canEnterEvent && props.event && (
-                              <button
-                                className="btn btn-secondary  explore-btn"
-                                onClick={(e) => {
-                                  if (history) {
-                                    history.push(`/${props.eventData.eventName}`);
-                                  }
-                                }}
-                              >
-                                Enter Event
-                              </button>
-                            )}
-                            {/* <button className="btn btn-secondary evolve-btn">
+                      <div className="buttons">
+                        <AddToCalendar
+                          blueBtn={true}
+                          calendatDetails={props.calendatDetails}
+                          eventId={props.event}
+                          eventData={props.eventData}
+                        />
+                        {!props.canEnterEvent && (
+                          <button
+                            className="btn btn-secondary explore-btn"
+                            onClick={(e) => {
+                              if (history) {
+                                history.push(HOME_ROUTE);
+                              }
+                            }}
+                          >
+                            Explore Informative videos
+                          </button>
+                        )}
+                        {props.canEnterEvent && props.event && (
+                          <button
+                            className="btn btn-secondary  explore-btn"
+                            onClick={(e) => {
+                              if (history) {
+                                history.push(`/${props.eventData.eventName}`);
+                              }
+                            }}
+                          >
+                            Enter Event
+                          </button>
+                        )}
+                        {/* <button className="btn btn-secondary evolve-btn">
                               Add to Calendar
                             </button>
                         */}
-                            {/* <button
+                        {/* <button
                               className="btn btn-secondary "
                               disabled
                               onClick={(e) => {
@@ -618,24 +732,37 @@ function PreEvent(props) {
                               Watch Trailer
                             </button> 
                             */}
-                          </div>
-                        </>
-                      )}
+                      </div>
                     </>
                   )}
-                </div>
-                <div className="right__div">
-                  <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/preEventPage_right_speakers.png?updated=${Math.random() * 100}`} alt="" className="speakerAreas" />
-                  {/* <img src={RightTest} alt="" className="speakerAreas" /> */}
-                </div>
+                </>
+              )}
+            </div>
+            <div className="right__div">
+              <img
+                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                  props.event
+                }/preEventPage_right_speakers.png?updated=${
+                  Math.random() * 100
+                }`}
+                alt=""
+                className="speakerAreas"
+              />
+              {/* <img src={RightTest} alt="" className="speakerAreas" /> */}
+            </div>
 
-                <div className="bottom_right_eventLogo">
-                  <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/eventLogo.png?updated=${Math.random() * 100}`} alt="" className="eventLogo" />
-                </div>
-              </div>
-            </>
-          )
-      }
+            <div className="bottom_right_eventLogo">
+              <img
+                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
+                  props.event
+                }/eventLogo.png?updated=${Math.random() * 100}`}
+                alt=""
+                className="eventLogo"
+              />
+            </div>
+          </div>
+        </>
+      )}
 
       <Switch>
         <Route path={`/:event/profile`}>

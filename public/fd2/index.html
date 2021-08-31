@@ -144,7 +144,10 @@
             color: #00953f !important;
     /* color: #0d98d0!important; */
 }
-
+#submitwhatNext:disabled{
+    background-color: gray;
+    cursor: not-allowed;
+}
 #error{
     color: red;
 }
@@ -166,12 +169,12 @@ h5{
 </head>
 
 <body>
-    <div class="container mt-5 cus-container">
+    <div class="container mt-5 mb-5 cus-container">
         <div class="d-flex justify-content-center row" id="surveyContainer">
             <div class="col-md-10 col-lg-10" >
-                 <div style="width: 100%;">
+                 <!-- <div style="width: 100%;">
                     <img src="./assets/img/header.png" alt="" height="100%" width="100%"/>
-                </div>
+                </div> -->
                 <div class="border">
                     <div class="question bg-white p-3 border-bottom" style="
                         /* background:linear-gradient(to right bottom, #0869a8, #0d96d4); */
@@ -179,7 +182,7 @@ h5{
                         ">
                         <div class="d-flex flex-row justify-content-between align-items-center mcq">
                             <h4 style="color: white ;text-align: center; width: 100%;">
-                                CME FEEDBACK FORM 
+                                FEEDBACK FORM 
                             </h4>
                         </div>
                     </div>
@@ -204,7 +207,7 @@ h5{
 
 
                     <form id="mainForm" style="display: none;">
-                        <div class="question bg-white p-3 border-bottom">
+                        <!-- <div class="question bg-white p-3 border-bottom">
                             <div class="">
                                 <h6 class="mb-3" style="text-align: center;">
                                     In compliance to MMC Regulation, kindly fill in the feedback form and return after completion of the CME.
@@ -217,13 +220,13 @@ h5{
                                     
                                 </h6>
                                   
-                                <!-- <h6 class="mb-2">
+                                <h6 class="mb-2">
                                     Dear Member,<br>
                                     Your feedback is valuable for us. Please provide your feedback to the questions
                                     below:
-                                </h6> -->
+                                </h6>
                             </div>
-                        </div>
+                        </div> -->
 
                    
 
@@ -1280,12 +1283,29 @@ h5{
                             </div>
                         </div> -->
 
+                        <div class="question bg-white p-3 border-bottom">
+                    
+                            <div class="container">
+                                <div class="d-flex" style="flex-direction: column;">
+
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        <input type="checkbox" id="disclaimer" name="disclaimer"
+                                            class="custom-control-input disclaimer" value="agreed">
+                                        <label class="custom-control-label" for="disclaimer"
+                                            style="width: 100%;">I agree to the terms and conditions</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
                        <div id="error" class="p-3 bg-white" style="display: none;"></div>
                         <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
                            
                             <!-- <button class="btn btn-primary d-flex align-items-center btn-danger" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous</button> -->
                             <button id="submitwhatNext"
                                 class="mybtn"
+                                disabled="true"
                                 type="submit">Submit<i class="fa fa-angle-right ml-2"></i></button>
                         </div>
                     </form>

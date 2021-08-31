@@ -108,11 +108,15 @@ function AgendaCard(props) {
   const getMainRender = () => {
     return (
       <div
-        style={{ maxWidth: `${props.fromTitle ? "100%" : ""}`, paddingLeft: "none" }}
+        style={{
+          maxWidth: `${props.fromTitle ? "100%" : ""}`,
+          paddingLeft: "none",
+        }}
         key={`AgendaCard-${timeline.id}`}
         id={`AgendaCard-${timeline.id}`}
-        className={`maincardBox__card ${timeline.videoUrl.length > 0 ? "maincardBox__card-video_canPlay" : ""
-          } ${props.fromTitle ? "from__title" : ""}`}
+        className={`maincardBox__card ${
+          timeline.videoUrl.length > 0 ? "maincardBox__card-video_canPlay" : ""
+        } ${props.fromTitle ? "from__title" : ""}`}
       >
         {haveVideo && (
           <div
@@ -193,12 +197,14 @@ function AgendaCard(props) {
           </div>
           {haveLikeButton && (
             <div
-              className={`rating-block ${props.fromTitle ? "from__title__rating" : ""
-                }`}
+              className={`rating-block ${
+                props.fromTitle ? "from__title__rating" : ""
+              }`}
             >
               <button
-                className={`mg-b40 mg-sm-b20 like-btn ${like ? "like-btn--active" : ""
-                  } `}
+                className={`mg-b40 mg-sm-b20 like-btn ${
+                  like ? "like-btn--active" : ""
+                } `}
                 onClick={() => toggleLikeToTarget()}
               >
                 <i className="icon-like"></i>
@@ -239,6 +245,7 @@ function AgendaCard(props) {
                       fromTitle={props.fromTitle}
                       type={SpeakerProfileType.CARD_PROFILE}
                       id={id}
+                      key={id}
                     />
                   ))}
                 </>
@@ -254,6 +261,7 @@ function AgendaCard(props) {
                         fromTitle={props.fromTitle}
                         type={SpeakerProfileType.CARD_PROFILE}
                         id={id}
+                        key={id}
                       />
                     ))}
                   </div>
@@ -357,6 +365,7 @@ function AgendaCard(props) {
                 <SpeakerProfile
                   type={SpeakerProfileType.CARD_PROFILE}
                   id={id}
+                  key={id}
                 />
               ))}
             </div>
