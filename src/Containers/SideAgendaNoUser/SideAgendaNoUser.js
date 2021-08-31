@@ -28,7 +28,7 @@ export default function SideAgendaNoUser(props) {
             <div className="login2Box__left" style={{
                 backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg")`,
                 backgroundPosition: 'top',
-                backgroundSize: "contain",
+                backgroundSize: "cover",
                 backgroundRepeat: "repeat-x",
             }}>
                 <div className="bannerBox">

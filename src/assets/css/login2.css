@@ -123,10 +123,10 @@
   height: 473px;
   width: 100%;
   content: "";
-  background: url(../images/login-content-bg.png) center bottom no-repeat;
+  /* background: url(../images/login-content-bg.png) center bottom no-repeat;
   background-size: 100% auto;
   background-size: cover;
-  background-position-y: inherit;
+  background-position-y: inherit; */
 }
 .login2Box-text {
   display: flex;
