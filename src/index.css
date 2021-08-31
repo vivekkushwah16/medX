@@ -1,7 +1,12 @@
 :root {
-    --eventPageHeaderBand: url();
-    --eventPageBg: url();
-    --preeventButtonColor: #fff;
-    --preeventButtonBg: #015189;
-    --preeventButtonShadow: #015189b0;
-  }  
+  --eventPageHeaderBand: url();
+  --eventPageBg: url();
+  --preeventButtonColor: #fff;
+  --preeventButtonBg: #015189;
+  --preeventButtonShadow: #015189b0;
+}
+.feedback-fullpage {
+  border: 0;
+  width: 100vw;
+  height: 100vh;
+}

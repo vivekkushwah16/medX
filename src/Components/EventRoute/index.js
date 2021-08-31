@@ -169,6 +169,21 @@ export const EventChecker = (props) => {
           )}
         </NotLoggedInRoutes>
 
+
+        <ProtectedRoute
+          redirectTo={`${url}/signup`}
+          path={`${url}/feedback`}
+        >
+          {
+            eventDetails.feedback &&
+              eventDetails.feedback.enabled ?
+              <iframe className="feedback-fullpage" src={`${eventDetails.feedback.link}?id=123&event=${eventDetails.id.toLowerCase()}&title=${eventDetails.title}`} title="feedback" />
+              :
+              <Redirect to={`${url}/signup`}></Redirect>
+          }
+        </ProtectedRoute>
+
+
         <ProtectedRoute
           redirectTo={`${url}/signup`}
           path={`${url}/register-ott`}
