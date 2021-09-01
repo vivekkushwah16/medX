@@ -236,7 +236,8 @@ $(document).ready(function () {
     firebase
       .firestore()
       .collection("userFeedback")
-      .doc(currentUser.uid)
+      .doc(`${eventId}_${currentUser.uid}`)
+      // .doc(currentUser.uid)
       .set({
         ...survey1,
         name: currentUser.displayName,

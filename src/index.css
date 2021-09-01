@@ -4,6 +4,8 @@
   --preeventButtonColor: #fff;
   --preeventButtonBg: #015189;
   --preeventButtonShadow: #015189b0;
+  --preeventBGColor: #fff;
+  --registerationBGColor: #fff;
 }
 .feedback-fullpage {
   border: 0;
