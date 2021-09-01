@@ -351,7 +351,7 @@ function PreEvent(props) {
                                     </a>
                                   )}
                                 {!props.canEnterEvent &&
-                                  props.eventData?.feedback.enabled ? (
+                                  props.eventData?.feedback?.enabled ? (
                                   <a
                                     href="#"
                                     className="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30 event-feedback"
@@ -362,7 +362,9 @@ function PreEvent(props) {
                                       );
                                     }}
                                   >
-                                    Feedback
+                                    {
+                                      props.eventData?.feedback.btnName ? props.eventData?.feedback.btnName : 'Take Poll'
+                                    }
                                   </a>
                                 ) : (
                                   <a
@@ -536,16 +538,35 @@ function PreEvent(props) {
                           eventData={props.eventData}
                         />
                         {!props.canEnterEvent && (
-                          <button
-                            className="btn btn-secondary  explore-btn"
-                            onClick={(e) => {
-                              if (history) {
-                                history.push(HOME_ROUTE);
-                              }
-                            }}
-                          >
-                            Explore Informative videos
-                          </button>
+                          <>
+                            {
+                              props.eventData?.feedback?.enabled ?
+                                <a
+                                  href="#"
+                                  className="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30 event-feedback"
+                                  onClick={(e) => {
+                                    showMediaModal(
+                                      MediaModalType.PDF,
+                                      `${props.eventData.feedback.link}?id=123&event=${props.event}&title=${props.eventTitle}`
+                                    );
+                                  }}
+                                >
+                                  {
+                                    props.eventData?.feedback.btnName ? props.eventData?.feedback.btnName : 'Take Poll'
+                                  }
+                                </a> :
+                                <button
+                                  className="btn btn-secondary  explore-btn"
+                                  onClick={(e) => {
+                                    if (history) {
+                                      history.push(HOME_ROUTE);
+                                    }
+                                  }}
+                                >
+                                  Explore Informative videos
+                                </button>
+                            }
+                          </>
                         )}
                         {props.canEnterEvent && props.event && (
                           <button
@@ -674,17 +695,38 @@ function PreEvent(props) {
                           eventData={props.eventData}
                         />
                         {!props.canEnterEvent && (
-                          <button
-                            className="btn btn-secondary explore-btn"
-                            onClick={(e) => {
-                              if (history) {
-                                history.push(HOME_ROUTE);
-                              }
-                            }}
-                          >
-                            Explore Informative videos
-                          </button>
+                          <>
+
+                            {
+                              props.eventData?.feedback?.enabled ?
+                                <button
+                                  className="btn btn-secondary explore-btn event-feedback"
+                                  onClick={(e) => {
+                                    showMediaModal(
+                                      MediaModalType.PDF,
+                                      `${props.eventData.feedback.link}?id=123&event=${props.event}&title=${props.eventTitle}`
+                                    );
+                                  }}
+                                >
+                                  {
+                                    props.eventData?.feedback.btnName ? props.eventData?.feedback.btnName : 'Take Poll'
+                                  }
+                                </button>
+                                :
+                                <button
+                                  className="btn btn-secondary explore-btn"
+                                  onClick={(e) => {
+                                    if (history) {
+                                      history.push(HOME_ROUTE);
+                                    }
+                                  }}
+                                >
+                                  Explore Informative videos
+                                </button>
+                            }
+                          </>
                         )}
+
                         {props.canEnterEvent && props.event && (
                           <button
                             className="btn btn-secondary  explore-btn"
