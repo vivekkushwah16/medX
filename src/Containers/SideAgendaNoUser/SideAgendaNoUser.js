@@ -28,8 +28,9 @@ export default function SideAgendaNoUser(props) {
             <div className="login2Box__left" style={{
                 backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg")`,
                 backgroundPosition: 'top',
-                backgroundSize: "cover",
+                backgroundSize: "contain",
                 backgroundRepeat: "repeat-x",
+                backgroundColor: `${props.eventData?.regStyle?.registerationBGColor ? props.eventData.regStyle.registerationBGColor : 'inherit'}`
             }}>
                 <div className="bannerBox">
                     <div className="bannerBox__inner bannerBox__inner--small bannerBox__inner4 gradient-bg1">

@@ -236,8 +236,9 @@ function PreEvent(props) {
               style={{
                 backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg")`,
                 backgroundPosition: "top",
-                backgroundSize: "cover",
+                backgroundSize: "contain",
                 backgroundRepeat: "repeat-x",
+                backgroundColor: `${props.eventData?.preventStyle?.preeventBGColor ? props.eventData.preventStyle.preeventBGColor : 'inherit'}`
               }}
             >
               {/* BannerBox */}

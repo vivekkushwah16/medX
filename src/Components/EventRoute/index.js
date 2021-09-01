@@ -36,6 +36,32 @@ export const ADMIN_TYPE = {
 
 //https://ciplamedx.com/ronaprevewebcast?admin=true&preview=registration
 
+function updateStyles(eventData) {
+  console.log(eventData)
+  if (eventData) {
+    var r = document.querySelector(':root');
+    // var rs = getComputedStyle(r);
+    // rs.getPropertyValue('--eventPageHeaderBand')
+
+    //check for reg style
+    if (eventData.regStyle) {
+      if (eventData.regStyle.registerationBGColor) {
+        console.log(eventData.regStyle.registerationBGColor)
+
+        r.style.setProperty('--registerationBGColor', eventData.regStyle.registerationBGColor);
+      }
+    }
+    console.log(eventData.preventStyle)
+
+    //check for prevent Style
+    if (eventData.preventStyle) {
+      if (eventData.preventStyle.preeventBGColor) {
+        r.style.setProperty('--preeventBGColor', eventData.preventStyle.preeventBGColor);
+      }
+    }
+  }
+}
+
 export const EventChecker = (props) => {
   //to wait till we reead values from firesbase
   const [doneCheck, setCheckDonw] = useState(false);
@@ -80,6 +106,7 @@ export const EventChecker = (props) => {
           history.push(`/home`);
           return
         }
+
         const event = eventNameList[eventName]
         const activeEventList = doc.data().activeEventList;
         if (activeEventList.hasOwnProperty(event.toLowerCase())) {
@@ -120,6 +147,8 @@ export const EventChecker = (props) => {
           if (props.env === "dev") {
             activeEventList[event.toLowerCase()].status = props.forceState;
           }
+          // updateStyles(activeEventList[event.toLowerCase()])
+
           setEventStatus(activeEventList[event.toLowerCase()].status);
           setEventDetails(activeEventList[event.toLowerCase()]);
           setCheckDonw(true);
