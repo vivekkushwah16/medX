@@ -371,7 +371,7 @@ const VideoManager = {
       try {
         let docRef = firestore.collection(VIDEO_COLLECTION);
         const lowerCasedTag = tag.map((t) => t.toLowerCase());
-        console.log("xxxxxxxx", lowerCasedTag)
+        // console.log("xxxxxxxx", lowerCasedTag)
         if (lowerCasedTag.length > 0) {
           docRef = docRef.where("tags", "array-contains-any", lowerCasedTag).orderBy("timestamp");
           //.orderBy('tags');

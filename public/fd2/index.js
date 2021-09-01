@@ -60,6 +60,10 @@ $(document).ready(function () {
   let your_email = "";
   let feedbackExists = false;
 
+  const urlQuery = new URLSearchParams(window.location.href);
+  eventId = urlQuery.get("event");
+  eventTitle = urlQuery.get("title");
+
   auth.onAuthStateChanged(function (user) {
     if (user) {
       currentUser = user;
@@ -70,12 +74,11 @@ $(document).ready(function () {
       firebase
         .firestore()
         .collection("userFeedback")
-        .doc(currentUser.uid)
+        // .doc(currentUser.uid)
+        .doc(`${eventId}_${currentUser.uid}`)
         .get()
         .then((doc) => {
-          const urlQuery = new URLSearchParams(window.location.href);
-          eventId = urlQuery.get("event");
-          eventTitle = urlQuery.get("title");
+
           // document.getElementById("q3-title").innerHTML =
           //   document.getElementById("q3-title").innerHTML +
           //   " " +
@@ -285,7 +288,8 @@ $(document).ready(function () {
     firebase
       .firestore()
       .collection("userFeedback")
-      .doc(currentUser.uid)
+      // .doc(currentUser.uid)
+      .doc(`${eventId}_${currentUser.uid}`)
       .set({
         ...survey1,
         name: currentUser.displayName,

@@ -67,15 +67,18 @@ $(document).ready(function () {
       your_email = user.email;
       your_id = user.uid;
       // console.log(your_email);
+      const urlQuery = new URLSearchParams(window.location.href);
+      eventId = urlQuery.get("event");
+      eventTitle = urlQuery.get("title");
+
       firebase
         .firestore()
         .collection("userLogged")
-        .doc(your_id)
+        // .doc(your_id)
+        .doc(`${eventId}_${currentUser.uid}`)
         .get()
         .then((doc) => {
-          const urlQuery = new URLSearchParams(window.location.href);
-          eventId = urlQuery.get("event");
-          eventTitle = urlQuery.get("title");
+
           document.getElementById("q3-title").innerHTML =
             document.getElementById("q3-title").innerHTML +
             " " +

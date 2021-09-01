@@ -66,16 +66,18 @@ $(document).ready(function () {
       your_name = user.displayName;
       your_email = user.email;
       your_id = user.uid;
+      const urlQuery = new URLSearchParams(window.location.href);
+      eventId = urlQuery.get("event");
+      eventTitle = urlQuery.get("title");
+
       // console.log(your_email);
       firebase
         .firestore()
         .collection("userFeedback")
-        .doc(currentUser.uid)
+        .doc(`${eventId}_${currentUser.uid}`)
         .get()
         .then((doc) => {
-          const urlQuery = new URLSearchParams(window.location.href);
-          eventId = urlQuery.get("event");
-          eventTitle = urlQuery.get("title");
+
           // document.getElementById("q3-title").innerHTML =
           //   document.getElementById("q3-title").innerHTML +
           //   " " +
@@ -240,7 +242,8 @@ $(document).ready(function () {
     firebase
       .firestore()
       .collection("userFeedback")
-      .doc(currentUser.uid)
+      // .doc(currentUser.uid)
+      .doc(`${eventId}_${currentUser.uid}`)
       .set({
         ...survey1,
         name: currentUser.displayName,
