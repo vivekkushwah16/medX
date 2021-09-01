@@ -151,9 +151,55 @@
 #error{
     color: red;
 }
+.disclaimer-link{
+    color: blue;
+    cursor: pointer;
+}
 h5{
     font-size: 1.1rem;
 }
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  transition: all .3s ease-in-out;
+}
+
+/* Modal Content */
+.modal-content {
+  margin: auto;
+  border: 1px solid #888;
+  width: 65%;
+}
+
+/* The Close Button */
+.close {
+  color: #000;
+  position: absolute;
+  right: -3rem;
+  top:-1rem;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /* @media screen and(max-width: 600 orientation: portrait) { */
     
     @media screen and (max-width: 600px) {
@@ -1283,6 +1329,17 @@ h5{
                             </div>
                         </div> -->
 
+                        <!-- The PDF Modal -->
+                        <div id="myModal" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <iframe id="myFrame" title="Disclaimer" style="height: 60vh;"></iframe>
+                        </div>
+
+                        </div>
+                   
                         <div class="question bg-white p-3 border-bottom">
                     
                             <div class="container">
@@ -1291,8 +1348,8 @@ h5{
                                     <div class="custom-control custom-checkbox custom-control-inline">
                                         <input type="checkbox" id="disclaimer" name="disclaimer"
                                             class="custom-control-input disclaimer" value="agreed">
-                                        <label class="custom-control-label" for="disclaimer"
-                                            style="width: 100%;">I agree to the terms and conditions</label>
+                                        <label class="custom-control-label" for="disclaimerp"
+                                            style="width: 100%; cursor: default;">I agree to the following <span class="disclaimer-link" onclick="openPdf1()">Survey Protocol</span> & <span class="disclaimer-link" onclick="openPdf()">Consent</span></label>
                                     </div>
 
                                 </div>
@@ -1329,9 +1386,11 @@ h5{
         </div>
     </div>
 
+    
+
     <script src="./assets/js/library/jquery.min.js"></script>
     <!-- <script src="./assets/js/library/jquery.mobile-1.5.0-alpha.1.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>

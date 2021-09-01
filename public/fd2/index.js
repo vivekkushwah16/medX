@@ -51,6 +51,33 @@ let eventTitle = null;
 //   response2 = i;
 // });
 
+// open pdf function
+
+// Get the <span> element that closes the modal
+var omyFrame = document.getElementById("myFrame");
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+  modal.style.display = "none";
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
+function openPdf() {
+  modal.style.display = "block";
+  omyFrame.src = "/web/viewer.html?file=%2Fassets%2Fpdf%2FConsent.pdf";
+}
+function openPdf1() {
+  modal.style.display = "block";
+  omyFrame.src = "/web/viewer.html?file=%2Fassets%2Fpdf%2FSurvey.pdf";
+}
+
 $(document).ready(function () {
   const auth = firebase.auth();
   var db = firebase.firestore();
@@ -78,7 +105,6 @@ $(document).ready(function () {
         .doc(`${eventId}_${currentUser.uid}`)
         .get()
         .then((doc) => {
-
           // document.getElementById("q3-title").innerHTML =
           //   document.getElementById("q3-title").innerHTML +
           //   " " +
@@ -90,9 +116,9 @@ $(document).ready(function () {
           //   eventTitle.split(`'`)[0].toUpperCase() +
           //   " program ?";
           // console.log(eventId, eventTitle);
-          if (eventId === null) {
-            return;
-          }
+          // if (eventId === null) {
+          //   return;
+          // }
           // document.querySelector("#mainForm").style.display = "block";
           // document.querySelector("#loader").style.display = "none";
           // document.querySelector("#finalMessage").style.display = "none";
