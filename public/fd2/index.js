@@ -254,8 +254,30 @@ $(document).ready(function () {
     errorText.style.display = "none";
     errorText.innerHTML = "";
 
+    var checkboxes3 = $(".questions3:checkbox:checked").length;
+    var checkboxes5 = $(".questions5:checkbox:checked").length;
+    var checkboxes6 = $(".questions6:checkbox:checked").length;
+
     var checkboxes10 = $(".questions10:checkbox:checked").length;
     var checkboxes13 = $(".questions13:checkbox:checked").length;
+
+    if (checkboxes3 <= 0 || checkboxes3 > 2) {
+      errorText.style.display = "block";
+      errorText.innerHTML = "Maximum 2 option allowed in question number 3";
+      return;
+    }
+
+    if (checkboxes5 <= 0 || checkboxes5 > 2) {
+      errorText.style.display = "block";
+      errorText.innerHTML = "Maximum 2 option allowed in question number 5";
+      return;
+    }
+
+    if (checkboxes6 <= 0 || checkboxes6 > 2) {
+      errorText.style.display = "block";
+      errorText.innerHTML = "Maximum 2 option allowed in question number 6";
+      return;
+    }
 
     if (checkboxes10 < 1) {
       errorText.style.display = "block";
@@ -263,7 +285,7 @@ $(document).ready(function () {
         "Please select at least one option in question nnumber 10";
       return;
     }
-    if (checkboxes13 > 2) {
+    if (checkboxes13 <= 0 || checkboxes13 > 2) {
       errorText.style.display = "block";
       errorText.innerHTML = "Maximum 2 option allowed in question number 13";
       return;

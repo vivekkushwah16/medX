@@ -224,11 +224,11 @@ h5{
                 <div class="border">
                     <div class="question bg-white p-3 border-bottom" style="
                         /* background:linear-gradient(to right bottom, #0869a8, #0d96d4); */
-                        background-color: #00953f !important;
+                        background-color: #80d8c2 !important;
                         ">
                         <div class="d-flex flex-row justify-content-between align-items-center mcq">
                             <h4 style="color: white ;text-align: center; width: 100%;">
-                                FEEDBACK FORM 
+                                OMICIP Study 
                             </h4>
                         </div>
                     </div>
@@ -253,27 +253,49 @@ h5{
 
 
                     <form id="mainForm" style="display: none;">
-                        <!-- <div class="question bg-white p-3 border-bottom">
+                        <div class="question bg-white p-3 border-bottom">
                             <div class="">
-                                <h6 class="mb-3" style="text-align: center;">
-                                    In compliance to MMC Regulation, kindly fill in the feedback form and return after completion of the CME.
-                                    <div style="text-decoration: underline; font-weight: 700;">Grade Performance on scale 1-3 (1-Satisfactory, 2-Good, 3-Excellent).</div>
-
-                                </h6>
-                                <h6 class="mb-2">
+                                <h5 class="mb-3">
+                                    Acute Otitis Media in Children: An Indian Pediatricians’ Perspective on its Diagnosis and Management
+                                    <!-- <div style="text-decoration: underline; font-weight: 700;">Grade Performance on scale 1-3 (1-Satisfactory, 2-Good, 3-Excellent).</div> -->
+                                </h5>
+                                <h5 class="mb-3" style="text-align: center;"><b>(Survey code:</b> MA/12/21<b>)</b></h5>
+                                <!-- <h6 class="mb-2">
                                     <div><b>Subject:</b> COVID 19: Beginning of a New Era</div><br>
                                     <div><b>Date:</b> 21<sup>st</sup> and 22<sup>nd</sup> August 2021</div><br>
                                     
-                                </h6>
+                                </h6> -->
                                   
+                                
                                 <h6 class="mb-2">
+                                   <i>(Please choose <u>only one</u> appropriate option per question, unless choosing of more than one option is mentioned in an individual question.)</i>
+                                </h6>
+                                <!-- <h6 class="mb-2">
                                     Dear Member,<br>
                                     Your feedback is valuable for us. Please provide your feedback to the questions
                                     below:
-                                </h6>
+                                </h6> -->
                             </div>
-                        </div> -->
+                        </div>
 
+
+                        <div class="question bg-white p-3 border-bottom">
+                    
+                            <div class="container">
+                                <div class="d-flex" style="flex-direction: column;">
+
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        <input type="checkbox" id="disclaimer" name="disclaimer"
+                                            class="custom-control-input disclaimer" value="agreed">
+                                        <label class="custom-control-label" for="disclaimer"
+                                            style="width: 100%; cursor: default;">
+                                            I, hereby acknowledge, that I have read and fully understood the contents of the <span class="disclaimer-link" onclick="openPdf1()">Survey Protocol</span> and the <span class="disclaimer-link" onclick="openPdf()">Consent
+                                            </span> document and I, agree to participate in this survey.</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                    
 
                         <!-- <div class="question bg-white p-3 border-bottom">
@@ -483,56 +505,56 @@ h5{
                             <div class="container">
                                 <div class="ans ml-2" style="display: flex;flex-direction: column;">
 
-                                    <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions3-1" name="questions3"
+                                    <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-1" name="questions3"
                                             class="custom-control-input questions3"
-                                            value="Prematurity and low birthweight" required>
+                                            value="Prematurity and low birthweight" >
                                         <label class="custom-control-label" for="questions3-1"
                                             style="width: 100%;">Prematurity and low birthweight</label>
                                     </div>
-                                    <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions3-2" name="questions3"
+                                    <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-2" name="questions3"
                                             class="custom-control-input questions3"
-                                            value="Family history" required>
+                                            value="Family history" >
                                         <label class="custom-control-label" for="questions3-2"
                                             style="width: 100%;">Family history</label>
                                     </div>
 
-                                     <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions3-3" name="questions3"
+                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-3" name="questions3"
                                             class="custom-control-input questions3"
-                                            value="Early cessation of breastfeeding/bottle feeding" required>
+                                            value="Early cessation of breastfeeding/bottle feeding" >
                                         <label class="custom-control-label" for="questions3-3"
                                             style="width: 100%;">Early cessation of breastfeeding/bottle feeding</label>
                                     </div>
 
-                                     <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions3-4" name="questions3"
+                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-4" name="questions3"
                                             class="custom-control-input questions3"
-                                            value="Crowded living/Low socioeconomic status" required>
+                                            value="Crowded living/Low socioeconomic status" >
                                         <label class="custom-control-label" for="questions3-4"
                                             style="width: 100%;">Crowded living/Low socioeconomic status</label>
                                     </div>
 
-                                     <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions3-5" name="questions3"
+                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-5" name="questions3"
                                             class="custom-control-input questions3"
-                                            value="Day care attendance" required>
+                                            value="Day care attendance" >
                                         <label class="custom-control-label" for="questions3-5"
                                             style="width: 100%;">Day care attendance</label>
                                     </div>
 
-                                     <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions3-6" name="questions3"
+                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-6" name="questions3"
                                             class="custom-control-input questions3"
-                                            value="Parents' smoking habits" required>
+                                            value="Parents' smoking habits" >
                                         <label class="custom-control-label" for="questions3-6"
                                             style="width: 100%;">Parents' smoking habits</label>
                                     </div>
 
-                                     <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions3-7" name="questions3"
-                                            class="custom-control-input questions3" value="Other" required>
+                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions3-7" name="questions3"
+                                            class="custom-control-input questions3" value="Other" >
                                         <label class="custom-control-label" for="questions3-7"
                                             style="width: 100%;">Other
                                             <input type="text" style="display: block;" name="questions3"
@@ -668,41 +690,41 @@ h5{
                             <div class="container">
                                 <div class="ans ml-2" style="display: flex;flex-direction: column;">
 
-                                    <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions5-1" name="questions5"
+                                    <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions5-1" name="questions5"
                                             class="custom-control-input questions5"
-                                            value="Irritability/Fussiness" required>
+                                            value="Irritability/Fussiness" >
                                         <label class="custom-control-label" for="questions5-1"
                                             style="width: 100%;">Irritability/Fussiness</label>
                                     </div>
-                                    <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions5-2" name="questions5"
+                                    <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions5-2" name="questions5"
                                             class="custom-control-input questions5"
-                                            value="Feeding difficulties" required>
+                                            value="Feeding difficulties" >
                                         <label class="custom-control-label" for="questions5-2"
                                             style="width: 100%;">Feeding difficulties</label>
                                     </div>
 
-                                     <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions5-3" name="questions5"
+                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions5-3" name="questions5"
                                             class="custom-control-input questions5"
-                                            value="Disturbed or restless sleep" required>
+                                            value="Disturbed or restless sleep" >
                                         <label class="custom-control-label" for="questions5-3"
                                             style="width: 100%;">Disturbed or restless sleep</label>
                                     </div>
 
-                                     <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions5-4" name="questions5"
+                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions5-4" name="questions5"
                                             class="custom-control-input questions5"
-                                            value="Ear tugging/Ear pulling" required>
+                                            value="Ear tugging/Ear pulling" >
                                         <label class="custom-control-label" for="questions5-4"
                                             style="width: 100%;">Ear tugging/Ear pulling</label>
                                     </div>
 
-                                     <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions5-5" name="questions5"
+                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions5-5" name="questions5"
                                             class="custom-control-input questions5"
-                                            value="Diarrhoea and vomiting" required>
+                                            value="Diarrhoea and vomiting" >
                                         <label class="custom-control-label" for="questions5-5"
                                             style="width: 100%;">Diarrhoea and vomiting</label>
                                     </div>
@@ -728,33 +750,33 @@ h5{
                             <div class="container">
                                 <div class="ans ml-2" style="display: flex;flex-direction: column;">
 
-                                    <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions6-1" name="questions6"
+                                    <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions6-1" name="questions6"
                                             class="custom-control-input questions6"
-                                            value="Otalgia/Ear pain" required>
+                                            value="Otalgia/Ear pain">
                                         <label class="custom-control-label" for="questions6-1"
                                             style="width: 100%;">Otalgia/Ear pain</label>
                                     </div>
-                                    <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions6-2" name="questions6"
+                                    <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions6-2" name="questions6"
                                             class="custom-control-input questions6"
-                                            value="Fever" required>
+                                            value="Fever">
                                         <label class="custom-control-label" for="questions6-2"
                                             style="width: 100%;">Fever</label>
                                     </div>
 
-                                     <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions6-3" name="questions6"
+                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions6-3" name="questions6"
                                             class="custom-control-input questions6"
-                                            value="Vomiting and dizziness" required>
+                                            value="Vomiting and dizziness">
                                         <label class="custom-control-label" for="questions6-3"
                                             style="width: 100%;">Vomiting and dizziness</label>
                                     </div>
 
-                                     <div class="custom-control custom-radio custom-control-inline input-space">
-                                        <input type="radio" id="questions6-4" name="questions6"
+                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
+                                        <input type="checkbox" id="questions6-4" name="questions6"
                                             class="custom-control-input questions6"
-                                            value="Ear discharge" required>
+                                            value="Ear discharge">
                                         <label class="custom-control-label" for="questions6-4"
                                             style="width: 100%;">Ear discharge</label>
                                     </div>
@@ -1340,21 +1362,7 @@ h5{
 
                         </div>
                    
-                        <div class="question bg-white p-3 border-bottom">
-                    
-                            <div class="container">
-                                <div class="d-flex" style="flex-direction: column;">
-
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" id="disclaimer" name="disclaimer"
-                                            class="custom-control-input disclaimer" value="agreed">
-                                        <label class="custom-control-label" for="disclaimer"
-                                            style="width: 100%; cursor: default;">I agree to the following <span class="disclaimer-link" onclick="openPdf1()">Survey Protocol</span> & <span class="disclaimer-link" onclick="openPdf()">Consent</span></label>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
+               
 
                        <div id="error" class="p-3 bg-white" style="display: none;"></div>
                         <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
