@@ -16,7 +16,10 @@ export default function EventPageStatic({ event }) {
     <>
       <div
         className="login2Box__Simple_Left event"
-        style={{ backgroundImage: `url(https://storage.googleapis.com/cipla-impact.appspot.com/${event}/bg.jpg?updated=1)` }}
+        style={{
+          backgroundImage: `url(https://storage.googleapis.com/cipla-impact.appspot.com/${event}/bg.jpg?updated=1)`,
+          backgroundPosition: 'top',
+        }}
       >
         <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${event}/bg2.png?updated=1`} alt="" className="bg2" />
         <Link to={RootRoute} className={"headerBox__logo5"}>

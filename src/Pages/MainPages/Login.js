@@ -384,7 +384,7 @@ class Login extends Component {
               </form>
             </>
           )}
-          <img
+          {/* <img
             src="assets/images/login-bg-top.png"
             alt=""
             className="login-bg-top"
@@ -394,7 +394,7 @@ class Login extends Component {
             src="assets/images/login-bg-bottom.png"
             alt=""
             className="login-bg-bottom"
-          />
+          /> */}
         </article>
       </div>
     );
