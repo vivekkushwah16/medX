@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   UpcompingEventBanner,
   LiveEventBanner,
@@ -19,6 +19,8 @@ import { isMobileOnly } from "react-device-detect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../../Components/SearchBar/SearchBar";
+import { firestore } from "../../Firebase/firebase";
+import { BACKSTAGE_COLLECTION } from "../../AppConstants/CollectionConstants";
 let scroll = Scroll.animateScroll;
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -51,14 +53,14 @@ const BannerData = [
   // {
   //   type: BannerType.LiveEvent,
   //   mainTitle:
-  //     "2 Days of Cutting-Edge Academic Feast",
-  //   subTitle: "With The Leaders In Respiratory Medicine",
-  //   eventId: "inspire21",
-  //   eventName: "inspire21",
+  //     "2 Days of Bronchiectasis Extravaganza",
+  //   subTitle: `Don't miss out the interesting Live Workshops!`,
+  //   eventId: "schoolofbrx",
+  //   eventName: "schoolofbrx",
   //   mainImageUrl: "",
   //   needCountDown: true,
   //   mainImageUrl:
-  //     "https://storage.googleapis.com/cipla-impact.appspot.com/inspire21/inspore_white.png",
+  //     "https://storage.googleapis.com/cipla-impact.appspot.com/schoolofbrx/WithAgenda_Preevent_heading_right.png",
   // },
   {
     type: BannerType.Custom2,
@@ -102,6 +104,7 @@ const BannerData = [
 ];
 
 function Banner() {
+  const [banners, setBanners] = useState(BannerData)
   let history = useHistory();
   const { showMediaModal } = useContext(MediaModalContext);
 
@@ -134,6 +137,18 @@ function Banner() {
     );
   };
 
+  useEffect(() => {
+    firestore.collection(BACKSTAGE_COLLECTION).doc("banners").onSnapshot(data => {
+      if (data.exists) {
+        let newBannerData = data.data().bannersData
+        setBanners(prev => ([
+          ...newBannerData,
+          ...BannerData,
+        ]))
+      }
+    })
+  }, [])
+
   var settings = {
     dots: true,
     infinite: true,
@@ -161,7 +176,7 @@ function Banner() {
       style={{ position: "relative" }}
     >
       <Slider className="slider-banner-desktop" {...settings}>
-        {BannerData.map((item) => (
+        {banners.map((item) => (
           <div key={item.mainImageUrl}>
             {item.type === BannerType.LiveEvent && (
               <LiveEventBanner

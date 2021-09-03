@@ -20,7 +20,7 @@ export default function SideAgendaNoUser(props) {
                                 <img src="/assets/images/logos/ciplamed-logo.png" alt="" />
                             </a>
                         </div>
-
+                        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/eventLogo.png?updated=1`} alt="" className="cipla-res" />
                     </div>
                 </div>
             </header>
