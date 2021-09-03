@@ -186,7 +186,7 @@ export default function Header(props) {
               style={{
                 display:
                   (history.location.pathname.includes("search") ||
-                    history.location.pathname.includes("ipaedia")) &&
+                    !props.showMobileSearchBtn) &&
                   "none",
               }}
               className="mobile-search-btn"
