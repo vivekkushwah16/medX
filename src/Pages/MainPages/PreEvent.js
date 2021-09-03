@@ -542,6 +542,9 @@ function PreEvent(props) {
                             {
                               props.eventData?.feedback?.enabled ?
                                 <a
+                                  style={{
+                                    marginTop: '2rem'
+                                  }}
                                   href="#"
                                   className="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30 event-feedback"
                                   onClick={(e) => {
