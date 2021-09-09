@@ -160,7 +160,7 @@ h5{
 }
 
 
-/* The Modal (background) */
+/* The Modal (backgroun<b>d)</b> */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -181,6 +181,7 @@ h5{
   margin: auto;
   border: 1px solid #888;
   width: 65%;
+  height: 65vh;
 }
 
 /* The Close Button */
@@ -205,8 +206,24 @@ h5{
     @media screen and (max-width: 600px) {
     .cus-container{
         padding: 0;
-        width: 100%;
+        width: 96%;
         margin-top: 0 !important;
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .ans{
+        margin-left: .5rem !important;
+    }
+    .custom-control{
+        padding-left: 0;
+    }
+    .modal-content{
+        width: 80%;
+        height: 70vh;
+    }
+    .close{
+        right: -1.5rem;
+        top: -3rem;
     }
 /* } */
 }
@@ -217,7 +234,7 @@ h5{
 <body>
     <div class="container mt-5 mb-5 cus-container">
         <div class="d-flex justify-content-center row" id="surveyContainer">
-            <div class="col-md-10 col-lg-10" >
+            <div class="col-sm-10 col-md-10 col-lg-10 pr-0" >
                  <!-- <div style="width: 100%;">
                     <img src="./assets/img/header.png" alt="" height="100%" width="100%"/>
                 </div> -->
@@ -255,8 +272,8 @@ h5{
                     <form id="mainForm" style="display: none;">
                         <div class="question bg-white p-3 border-bottom">
                             <div class="">
-                                <h5 class="mb-3">
-                                    Acute Otitis Media in Children: An Indian Pediatricians’ Perspective on its Diagnosis and Management
+                                <h5 class="mb-3" style="font-weight: 700;">
+                                    Acute <u>O</u>titis <u>M</u>edia <u>i</u>n <u>C</u>hildren: An <u>I</u>ndian <u>P</u>ediatricians’ Perspective on its Diagnosis and Management
                                     <!-- <div style="text-decoration: underline; font-weight: 700;">Grade Performance on scale 1-3 (1-Satisfactory, 2-Good, 3-Excellent).</div> -->
                                 </h5>
                                 <h5 class="mb-3" style="text-align: center;"><b>(Survey code:</b> MA/12/21<b>)</b></h5>
@@ -412,14 +429,14 @@ h5{
                                             class="custom-control-input questions1"
                                             value="0 – 5%" required>
                                         <label class="custom-control-label" for="questions1-1"
-                                            style="width: 100%;">0 – 5%</label>
+                                            style="width: 100%;"><b>a)</b> 0 – 5%</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline input-space">
                                         <input type="radio" id="questions1-2" name="questions1"
                                             class="custom-control-input questions1"
                                             value="6 – 10%" required>
                                         <label class="custom-control-label" for="questions1-2"
-                                            style="width: 100%;">6 – 10%</label>
+                                            style="width: 100%;"><b>b)</b> 6 – 10%</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -427,7 +444,7 @@ h5{
                                             class="custom-control-input questions1"
                                             value="11 – 15%" required>
                                         <label class="custom-control-label" for="questions1-3"
-                                            style="width: 100%;">11 – 15%</label>
+                                            style="width: 100%;"><b>c)</b> 11 – 15%</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -435,7 +452,7 @@ h5{
                                             class="custom-control-input questions1"
                                             value="16 – 20%" required>
                                         <label class="custom-control-label" for="questions1-4"
-                                            style="width: 100%;">16 – 20%</label>
+                                            style="width: 100%;"><b>d)</b> 16 – 20%</label>
                                     </div>
                                    
                                     <!-- <div class="question bg-white p-3 border-bottom" >
@@ -461,14 +478,14 @@ h5{
                                             class="custom-control-input questions2"
                                             value="0 - 2 years" required>
                                         <label class="custom-control-label" for="questions2-1"
-                                            style="width: 100%;">0 - 2 years</label>
+                                            style="width: 100%;"><b>a)</b> 0 - 2 years</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline input-space">
                                         <input type="radio" id="questions2-2" name="questions2"
                                             class="custom-control-input questions2"
                                             value="2 - 5 years" required>
                                         <label class="custom-control-label" for="questions2-2"
-                                            style="width: 100%;">2 - 5 years</label>
+                                            style="width: 100%;"><b>b)</b> 2 - 5 years</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -476,7 +493,7 @@ h5{
                                             class="custom-control-input questions2"
                                             value="5 - 7 years" required>
                                         <label class="custom-control-label" for="questions2-3"
-                                            style="width: 100%;">5 - 7 years</label>
+                                            style="width: 100%;"><b>c)</b> 5 - 7 years</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -484,7 +501,7 @@ h5{
                                             class="custom-control-input questions2"
                                             value="7 - 12 years" required>
                                         <label class="custom-control-label" for="questions2-4"
-                                            style="width: 100%;">7 - 12 years</label>
+                                            style="width: 100%;"><b>d)</b> 7 - 12 years</label>
                                     </div>
                                    
                                     <!-- <div class="question bg-white p-3 border-bottom" >
@@ -510,14 +527,14 @@ h5{
                                             class="custom-control-input questions3"
                                             value="Prematurity and low birthweight" >
                                         <label class="custom-control-label" for="questions3-1"
-                                            style="width: 100%;">Prematurity and low birthweight</label>
+                                            style="width: 100%;"><b>a)</b> Prematurity and low birthweight</label>
                                     </div>
                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
                                         <input type="checkbox" id="questions3-2" name="questions3"
                                             class="custom-control-input questions3"
                                             value="Family history" >
                                         <label class="custom-control-label" for="questions3-2"
-                                            style="width: 100%;">Family history</label>
+                                            style="width: 100%;"><b>b)</b> Family history</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -525,7 +542,7 @@ h5{
                                             class="custom-control-input questions3"
                                             value="Early cessation of breastfeeding/bottle feeding" >
                                         <label class="custom-control-label" for="questions3-3"
-                                            style="width: 100%;">Early cessation of breastfeeding/bottle feeding</label>
+                                            style="width: 100%;"><b>c)</b> Early cessation of breastfeeding/bottle feeding</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -533,7 +550,7 @@ h5{
                                             class="custom-control-input questions3"
                                             value="Crowded living/Low socioeconomic status" >
                                         <label class="custom-control-label" for="questions3-4"
-                                            style="width: 100%;">Crowded living/Low socioeconomic status</label>
+                                            style="width: 100%;"><b>d)</b> Crowded living/Low socioeconomic status</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -541,7 +558,7 @@ h5{
                                             class="custom-control-input questions3"
                                             value="Day care attendance" >
                                         <label class="custom-control-label" for="questions3-5"
-                                            style="width: 100%;">Day care attendance</label>
+                                            style="width: 100%;"><b>e)</b> Day care attendance</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -549,14 +566,14 @@ h5{
                                             class="custom-control-input questions3"
                                             value="Parents' smoking habits" >
                                         <label class="custom-control-label" for="questions3-6"
-                                            style="width: 100%;">Parents' smoking habits</label>
+                                            style="width: 100%;"><b>f)</b> Parents' smoking habits</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
                                         <input type="checkbox" id="questions3-7" name="questions3"
                                             class="custom-control-input questions3" value="Other" >
                                         <label class="custom-control-label" for="questions3-7"
-                                            style="width: 100%;">Other
+                                            style="width: 100%;"><b>g)</b> Other
                                             <input type="text" style="display: block;" name="questions3"
                                                 class="form-control" id="questions3-7-input"> </label>
                                     </div>
@@ -576,8 +593,8 @@ h5{
                                 <h3 class="text-danger">Q</h3>
                                 <h5 class="mt-1 ml-2">4. i) In your opinion, which of the following bacterial pathogens are predominant in AOM?</h5>
                             </div>
-                            <div class="d-flex flex-row align-items-center justify-content-center question-title">
-                                <table>
+                            <div class="d-flex flex-row align-items-center question-title" style="overflow-x:auto;">
+                                <table style="width: 100%;">
                                     <tr>
                                         <!-- <th>Please indicate your overall satisfaction with the following aspects of the conference:</th> -->
                                         <th></th>
@@ -590,7 +607,7 @@ h5{
                                     </tr>
 
                                     <tr>
-                                        <td>S. pneumoniae</td>
+                                        <td><b>a)</b> <i>S. pneumoniae</i></td>
 
                                         <td> <input type="radio" id="questions4_1" name="questions4_1"
                                                 value="Most Common" required></td>
@@ -607,7 +624,7 @@ h5{
                                     </tr>
 
                                     <tr>
-                                        <td>Non typeable H. influenzae (NTHi)</td>
+                                        <td><b>b)</b> Non typeable <i>H. influenzae</i> (NTHi)</td>
                                         <td> <input type="radio" id="questions4_2" name="questions4_2"
                                                 value="Most Common" required></td>
                                         <td> <input type="radio" id="questions4_2" name="questions4_2" value="Common"
@@ -623,7 +640,7 @@ h5{
                                     </tr>
 
                                     <tr>
-                                        <td>M. catarrhalis</td>
+                                        <td><b>c)</b> <i>M. catarrhalis</i></td>
 
                                         <td> <input type="radio" id="questions4_3" name="questions4_3"
                                                 value="Most Common" required></td>
@@ -640,7 +657,7 @@ h5{
                                     </tr>
 
                                     <tr>
-                                        <td>Group A Streptococcus</td>
+                                        <td><b>d)</b> Group A Streptococcus</td>
 
                                         <td> <input type="radio" id="questions4_4" name="questions4_4"
                                                 value="Most Common" required></td>
@@ -670,11 +687,11 @@ h5{
                                     <h5 class="mt-1 ml-2">4. ii) What percentage of the following pathogens cause AOM?</h5>
                                 </div>
                                 <div class="ans ml-2">
-                                    <label for="question4_ii_a">a) S. pneumoniae</label>
+                                    <label for="question4_ii_a"><b>a)</b> <i>S. pneumoniae</i></label>
                                     <input type="text" class="form-control" style="display: inline; width: max-content;" id="question4_ii_a" name="4_ii_a" required>
                                 </div>
                                   <div class="ans ml-2">
-                                    <label for="question4_ii_b">b) H. influenzae</label>
+                                    <label for="question4_ii_b"><b>b)</b> <i>H. influenzae</i></label>
                                     <input type="text" class="form-control" style="display: inline; width: max-content;" id="question4_ii_b" name="4_ii_b" required>
                                 </div>
                             </div>
@@ -695,14 +712,14 @@ h5{
                                             class="custom-control-input questions5"
                                             value="Irritability/Fussiness" >
                                         <label class="custom-control-label" for="questions5-1"
-                                            style="width: 100%;">Irritability/Fussiness</label>
+                                            style="width: 100%;"><b>a)</b> Irritability/Fussiness</label>
                                     </div>
                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
                                         <input type="checkbox" id="questions5-2" name="questions5"
                                             class="custom-control-input questions5"
                                             value="Feeding difficulties" >
                                         <label class="custom-control-label" for="questions5-2"
-                                            style="width: 100%;">Feeding difficulties</label>
+                                            style="width: 100%;"><b>b)</b> Feeding difficulties</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -710,7 +727,7 @@ h5{
                                             class="custom-control-input questions5"
                                             value="Disturbed or restless sleep" >
                                         <label class="custom-control-label" for="questions5-3"
-                                            style="width: 100%;">Disturbed or restless sleep</label>
+                                            style="width: 100%;"><b>c)</b> Disturbed or restless sleep</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -718,7 +735,7 @@ h5{
                                             class="custom-control-input questions5"
                                             value="Ear tugging/Ear pulling" >
                                         <label class="custom-control-label" for="questions5-4"
-                                            style="width: 100%;">Ear tugging/Ear pulling</label>
+                                            style="width: 100%;"><b>d)</b> Ear tugging/Ear pulling</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -726,7 +743,7 @@ h5{
                                             class="custom-control-input questions5"
                                             value="Diarrhoea and vomiting" >
                                         <label class="custom-control-label" for="questions5-5"
-                                            style="width: 100%;">Diarrhoea and vomiting</label>
+                                            style="width: 100%;"><b>e)</b> Diarrhoea and vomiting</label>
                                     </div>
 
                                    
@@ -755,14 +772,14 @@ h5{
                                             class="custom-control-input questions6"
                                             value="Otalgia/Ear pain">
                                         <label class="custom-control-label" for="questions6-1"
-                                            style="width: 100%;">Otalgia/Ear pain</label>
+                                            style="width: 100%;"><b>a)</b> Otalgia/Ear pain</label>
                                     </div>
                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
                                         <input type="checkbox" id="questions6-2" name="questions6"
                                             class="custom-control-input questions6"
                                             value="Fever">
                                         <label class="custom-control-label" for="questions6-2"
-                                            style="width: 100%;">Fever</label>
+                                            style="width: 100%;"><b>b)</b> Fever</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -770,7 +787,7 @@ h5{
                                             class="custom-control-input questions6"
                                             value="Vomiting and dizziness">
                                         <label class="custom-control-label" for="questions6-3"
-                                            style="width: 100%;">Vomiting and dizziness</label>
+                                            style="width: 100%;"><b>c)</b> Vomiting and dizziness</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -778,7 +795,7 @@ h5{
                                             class="custom-control-input questions6"
                                             value="Ear discharge">
                                         <label class="custom-control-label" for="questions6-4"
-                                            style="width: 100%;">Ear discharge</label>
+                                            style="width: 100%;"><b>d)</b> Ear discharge</label>
                                     </div>
 
                                     <!-- <div class="question bg-white p-3 border-bottom" >
@@ -805,14 +822,14 @@ h5{
                                             class="custom-control-input questions7"
                                             value="For all cases" required>
                                         <label class="custom-control-label" for="questions7-1"
-                                            style="width: 100%;">For all cases</label>
+                                            style="width: 100%;"><b>a)</b> For all cases</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline input-space">
                                         <input type="radio" id="questions7-2" name="questions7"
                                             class="custom-control-input questions7"
                                             value="Often" required>
                                         <label class="custom-control-label" for="questions7-2"
-                                            style="width: 100%;">Often</label>
+                                            style="width: 100%;"><b>b)</b> Often</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -820,7 +837,7 @@ h5{
                                             class="custom-control-input questions7"
                                             value="Rarely" required>
                                         <label class="custom-control-label" for="questions7-3"
-                                            style="width: 100%;">Rarely</label>
+                                            style="width: 100%;"><b>c)</b> Rarely</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -828,7 +845,7 @@ h5{
                                             class="custom-control-input questions7"
                                             value="Not at all" required>
                                         <label class="custom-control-label" for="questions7-4"
-                                            style="width: 100%;">Not at all</label>
+                                            style="width: 100%;"><b>d)</b> Not at all</label>
                                     </div>
 
                                     <!-- <div class="question bg-white p-3 border-bottom" >
@@ -854,14 +871,14 @@ h5{
                                             class="custom-control-input questions8"
                                             value="Amoxicillin 45 mg/kg BID" required>
                                         <label class="custom-control-label" for="questions8-1"
-                                            style="width: 100%;">Amoxicillin 45 mg/kg BID</label>
+                                            style="width: 100%;"><b>a)</b> Amoxicillin 45 mg/kg BID</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline input-space">
                                         <input type="radio" id="questions8-2" name="questions8"
                                             class="custom-control-input questions8"
                                             value="Amoxicillin 90 mg/kg BID" required>
                                         <label class="custom-control-label" for="questions8-2"
-                                            style="width: 100%;">Amoxicillin 90 mg/kg BID</label>
+                                            style="width: 100%;"><b>b)</b> Amoxicillin 90 mg/kg BID</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -869,7 +886,7 @@ h5{
                                             class="custom-control-input questions8"
                                             value="Amoxicillin clavulanic acid 45/6.4mg/kg BID" required>
                                         <label class="custom-control-label" for="questions8-3"
-                                            style="width: 100%;">Amoxicillin clavulanic acid 45/6.4mg/kg BID</label>
+                                            style="width: 100%;"><b>c)</b> Amoxicillin clavulanic acid 45/6.4mg/kg BID</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -877,7 +894,7 @@ h5{
                                             class="custom-control-input questions8"
                                             value="Amoxicillin clavulanic acid 90/6.4mg/kg BID" required>
                                         <label class="custom-control-label" for="questions8-4"
-                                            style="width: 100%;">Amoxicillin clavulanic acid 90/6.4mg/kg BID</label>
+                                            style="width: 100%;"><b>d)</b> Amoxicillin clavulanic acid 90/6.4mg/kg BID</label>
                                     </div>
 
 
@@ -886,7 +903,7 @@ h5{
                                             class="custom-control-input questions8"
                                             value="Cefpodoxime/Cefuroxime/Cefdinir" required>
                                         <label class="custom-control-label" for="questions8-5"
-                                            style="width: 100%;">Cefpodoxime/Cefuroxime/Cefdinir</label>
+                                            style="width: 100%;"><b>e)</b> Cefpodoxime/Cefuroxime/Cefdinir</label>
                                     </div>
 
 
@@ -895,7 +912,7 @@ h5{
                                             class="custom-control-input questions8"
                                             value="Azithromycin/Clarithromycin" required>
                                         <label class="custom-control-label" for="questions8-6"
-                                            style="width: 100%;">Azithromycin/Clarithromycin</label>
+                                            style="width: 100%;"><b>f)</b> Azithromycin/Clarithromycin</label>
                                     </div>
 
                                     <!-- <div class="question bg-white p-3 border-bottom" >
@@ -922,14 +939,14 @@ h5{
                                             class="custom-control-input questions9"
                                             value="5 days" required>
                                         <label class="custom-control-label" for="questions9-1"
-                                            style="width: 100%;">5 days</label>
+                                            style="width: 100%;"><b>a)</b> 5 days</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline input-space">
                                         <input type="radio" id="questions9-2" name="questions9"
                                             class="custom-control-input questions9"
                                             value="7 days" required>
                                         <label class="custom-control-label" for="questions9-2"
-                                            style="width: 100%;">7 days</label>
+                                            style="width: 100%;"><b>b)</b> 7 days</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -937,7 +954,7 @@ h5{
                                             class="custom-control-input questions9"
                                             value="10 days" required>
                                         <label class="custom-control-label" for="questions9-3"
-                                            style="width: 100%;">10 days</label>
+                                            style="width: 100%;"><b>c)</b> 10 days</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -945,7 +962,7 @@ h5{
                                             class="custom-control-input questions9"
                                             value=">10 days" required>
                                         <label class="custom-control-label" for="questions9-4"
-                                            style="width: 100%;">>10 days</label>
+                                            style="width: 100%;"><b>d)</b> >10 days</label>
                                     </div>
 
                                     <!-- <div class="question bg-white p-3 border-bottom" >
@@ -963,7 +980,7 @@ h5{
                             <div class="d-flex flex-row align-items-center question-title">
                                 <h3 class="text-danger">Q</h3>
                                 <h5 class="mt-1 ml-2">
-                                    10. Apart from paracetamol/ ibuprofen, which other symptomatic therapies do you frequently recommend to your patients? (More than one option can be selected)</h5>
+                                    10. Apart from paracetamol/ ibuprofen, which other symptomatic therapies do you frequently recommend to your patients? (More than one option can be selecte<b>d)</b></h5>
                             </div>
                             <div class="container">
                                 <div class="ans ml-2" style="display: flex;flex-direction: column;">
@@ -973,14 +990,14 @@ h5{
                                             class="custom-control-input questions10"
                                             value="Antihistamines">
                                         <label class="custom-control-label" for="questions10-1"
-                                            style="width: 100%;">Antihistamines</label>
+                                            style="width: 100%;"><b>a)</b> Antihistamines</label>
                                     </div>
                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
                                         <input type="checkbox" id="questions10-2" name="questions10-2"
                                             class="custom-control-input questions10"
                                             value="Nasal decongestants">
                                         <label class="custom-control-label" for="questions10-2"
-                                            style="width: 100%;">Nasal decongestants</label>
+                                            style="width: 100%;"><b>b)</b> Nasal decongestants</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -988,7 +1005,7 @@ h5{
                                             class="custom-control-input questions10"
                                             value="Topical antibiotics">
                                         <label class="custom-control-label" for="questions10-3"
-                                            style="width: 100%;">Topical antibiotics</label>
+                                            style="width: 100%;"><b>c)</b> Topical antibiotics</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -996,7 +1013,7 @@ h5{
                                             class="custom-control-input questions10"
                                             value="Nasal glucocorticoids">
                                         <label class="custom-control-label" for="questions10-4"
-                                            style="width: 100%;">Nasal glucocorticoids</label>
+                                            style="width: 100%;"><b>d)</b> Nasal glucocorticoids</label>
                                     </div>
 
 
@@ -1005,7 +1022,7 @@ h5{
                                             class="custom-control-input questions10"
                                             value="Analgesics ear drops">
                                         <label class="custom-control-label" for="questions10-5"
-                                            style="width: 100%;">Analgesics ear drops</label>
+                                            style="width: 100%;"><b>e)</b> Analgesics ear drops</label>
                                     </div>
 
 
@@ -1014,7 +1031,7 @@ h5{
                                             class="custom-control-input questions10"
                                             value="None of the above">
                                         <label class="custom-control-label" for="questions10-6"
-                                            style="width: 100%;">None of the above</label>
+                                            style="width: 100%;"><b>f)</b> None of the above</label>
                                     </div>
 
                                     <!-- <div class="question bg-white p-3 border-bottom" >
@@ -1042,14 +1059,14 @@ h5{
                                             class="custom-control-input questions11"
                                             value="Watchful waiting with symptomatic treatment; antibiotic only in deterioration" required>
                                         <label class="custom-control-label" for="questions11-1"
-                                            style="width: 100%;">Watchful waiting with symptomatic treatment; antibiotic only in deterioration</label>
+                                            style="width: 100%;"><b>a)</b> Watchful waiting with symptomatic treatment; antibiotic only in deterioration</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline input-space">
                                         <input type="radio" id="questions11-2" name="questions11"
                                             class="custom-control-input questions11"
                                             value="Oral antibiotic for a shorter duration of 5 – 7 days with symptomatic treatment" required>
                                         <label class="custom-control-label" for="questions11-2"
-                                            style="width: 100%;">Oral antibiotic for a shorter duration of 5 – 7 days with symptomatic treatment</label>
+                                            style="width: 100%;"><b>b)</b> Oral antibiotic for a shorter duration of 5 – 7 days with symptomatic treatment</label>
                                     </div>
 
 
@@ -1076,14 +1093,14 @@ h5{
                                             class="custom-control-input questions12"
                                             value="0 – 5%" required>
                                         <label class="custom-control-label" for="questions12-1"
-                                            style="width: 100%;">0 – 5%</label>
+                                            style="width: 100%;"><b>a)</b> 0 – 5%</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline input-space">
                                         <input type="radio" id="questions12-2" name="questions12"
                                             class="custom-control-input questions12"
                                             value="6 – 10%" required>
                                         <label class="custom-control-label" for="questions12-2"
-                                            style="width: 100%;">6 – 10%</label>
+                                            style="width: 100%;"><b>b)</b> 6 – 10%</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -1091,7 +1108,7 @@ h5{
                                             class="custom-control-input questions12"
                                             value="11 – 15%" required>
                                         <label class="custom-control-label" for="questions12-3"
-                                            style="width: 100%;">11 – 15%</label>
+                                            style="width: 100%;"><b>c)</b> 11 – 15%</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -1099,7 +1116,7 @@ h5{
                                             class="custom-control-input questions12"
                                             value="16 – 20%" required>
                                         <label class="custom-control-label" for="questions12-4"
-                                            style="width: 100%;">16 – 20%</label>
+                                            style="width: 100%;"><b>d)</b> 16 – 20%</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -1107,7 +1124,7 @@ h5{
                                             class="custom-control-input questions12"
                                             value=">20" required>
                                         <label class="custom-control-label" for="questions12-5"
-                                            style="width: 100%;">>20</label>
+                                            style="width: 100%;"><b>e)</b> >20</label>
                                     </div>
 
 
@@ -1135,14 +1152,14 @@ h5{
                                             class="custom-control-input questions13"
                                             value="48 – 72 hours">
                                         <label class="custom-control-label" for="questions13-1"
-                                            style="width: 100%;">48 – 72 hours</label>
+                                            style="width: 100%;"><b>a)</b> 48 – 72 hours</label>
                                     </div>
                                     <div class="custom-control custom-checkbox custom-control-inline input-space">
                                         <input type="checkbox" id="questions13-2" name="questions13"
                                             class="custom-control-input questions13"
                                             value="5 days">
                                         <label class="custom-control-label" for="questions13-2"
-                                            style="width: 100%;">5 days</label>
+                                            style="width: 100%;"><b>b)</b> 5 days</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -1150,7 +1167,7 @@ h5{
                                             class="custom-control-input questions13"
                                             value="7 days">
                                         <label class="custom-control-label" for="questions13-3"
-                                            style="width: 100%;">7 days</label>
+                                            style="width: 100%;"><b>c)</b> 7 days</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -1158,7 +1175,7 @@ h5{
                                             class="custom-control-input questions13"
                                             value="10 days">
                                         <label class="custom-control-label" for="questions13-4"
-                                            style="width: 100%;">10 days</label>
+                                            style="width: 100%;"><b>d)</b> 10 days</label>
                                     </div>
 
                                      <div class="custom-control custom-checkbox custom-control-inline input-space">
@@ -1166,7 +1183,7 @@ h5{
                                             class="custom-control-input questions13"
                                             value="14 days">
                                         <label class="custom-control-label" for="questions13-5"
-                                            style="width: 100%;">14 days</label>
+                                            style="width: 100%;"><b>e)</b> 14 days</label>
                                     </div>
 
 
@@ -1194,14 +1211,14 @@ h5{
                                             class="custom-control-input questions14"
                                             value="< 5 %" required>
                                         <label class="custom-control-label" for="questions14-1"
-                                            style="width: 100%;">< 5 %</label>
+                                            style="width: 100%;"><b>a)</b> < 5 %</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline input-space">
                                         <input type="radio" id="questions14-2" name="questions14"
                                             class="custom-control-input questions14"
                                             value="6 - 10%" required>
                                         <label class="custom-control-label" for="questions14-2"
-                                            style="width: 100%;">6 - 10%</label>
+                                            style="width: 100%;"><b>b)</b> 6 - 10%</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -1209,7 +1226,7 @@ h5{
                                             class="custom-control-input questions14"
                                             value="11 - 15%" required>
                                         <label class="custom-control-label" for="questions14-3"
-                                            style="width: 100%;">11 - 15%</label>
+                                            style="width: 100%;"><b>c)</b> 11 - 15%</label>
                                     </div>
 
                                      <div class="custom-control custom-radio custom-control-inline input-space">
@@ -1217,7 +1234,7 @@ h5{
                                             class="custom-control-input questions14"
                                             value="15 - 20%" required>
                                         <label class="custom-control-label" for="questions14-4"
-                                            style="width: 100%;">15 - 20%</label>
+                                            style="width: 100%;"><b>d)</b> 15 - 20%</label>
                                     </div>
 
 
@@ -1237,8 +1254,8 @@ h5{
                                 <h3 class="text-danger">Q</h3>
                                 <h5 class="mt-1 ml-2">15. With respect to the knowledge and awareness of parents on AOM, which of the following statement do they associate with the disease?</h5>
                             </div>
-                            <div class="d-flex flex-row align-items-center justify-content-center question-title">
-                                <table>
+                            <div class="d-flex flex-row align-items-center question-title" style="overflow-x:auto;">
+                                <table style="width: 100%;">
                                     <tr>
                                         <!-- <th>Please indicate your overall satisfaction with the following aspects of the conference:</th> -->
                                         <th></th>
@@ -1251,7 +1268,7 @@ h5{
                                     </tr>
 
                                     <tr>
-                                        <td>Hearing loss is potential outcome of AOM</td>
+                                        <td><b><b>a)</b></b> Hearing loss is potential outcome of AOM</td>
 
                                         <td> <input type="radio" id="questions15_1" name="questions15_1"
                                                 value="Most Common" required></td>
@@ -1268,7 +1285,7 @@ h5{
                                     </tr>
 
                                     <tr>
-                                        <td>Position of baby while breastfeeding is important to reduce risk of AOM</td>
+                                        <td><b><b>b)</b></b> Position of baby while breastfeeding is important to reduce risk of AOM</td>
                                         <td> <input type="radio" id="questions15_2" name="questions15_2"
                                                 value="Most Common" required></td>
                                         <td> <input type="radio" id="questions15_2" name="questions15_2" value="Common"
@@ -1284,7 +1301,7 @@ h5{
                                     </tr>
 
                                     <tr>
-                                        <td>Vaccination has the potential to reduce occurrence of AOM</td>
+                                        <td><b><b>c)</b></b> Vaccination has the potential to reduce occurrence of AOM</td>
 
                                         <td> <input type="radio" id="questions15_3" name="questions15_3"
                                                 value="Most Common" required></td>
@@ -1301,7 +1318,7 @@ h5{
                                     </tr>
 
                                     <tr>
-                                        <td>Ear pain and/ or discharge with fever are symptoms of AOM</td>
+                                        <td><b><b>d)</b></b> Ear pain and/ or discharge with fever are symptoms of AOM</td>
 
                                         <td> <input type="radio" id="questions15_4" name="questions15_4"
                                                 value="Most Common" required></td>
@@ -1357,7 +1374,7 @@ h5{
                         <!-- Modal content -->
                         <div class="modal-content">
                             <span class="close">&times;</span>
-                            <iframe id="myFrame" title="Disclaimer" style="height: 65vh;"></iframe>
+                            <iframe id="myFrame" title="Disclaimer" style="height: 100%; width: 100%;"></iframe>
                         </div>
 
                         </div>

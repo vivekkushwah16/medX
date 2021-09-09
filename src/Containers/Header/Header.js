@@ -84,8 +84,9 @@ export default function Header(props) {
 
   return (
     <div
-      className={` headerBox--full pd-r0 ${sticky ? "headerBox_sticky" : "headerBox"
-        }`}
+      className={` headerBox--full pd-r0 ${
+        sticky ? "headerBox_sticky" : "headerBox"
+      }`}
       ref={navBar}
       style={{
         padding:
@@ -111,8 +112,8 @@ export default function Header(props) {
                   props.whiteLogo
                     ? CIPLAMEDXLOGO_WHITE
                     : props.eventPage
-                      ? props.eventAndCiplaLogo
-                      : CIPLAMEDXLOGO
+                    ? props.eventAndCiplaLogo
+                    : CIPLAMEDXLOGO
                 }
                 alt="CIPLAMEDXLOGO"
               />
@@ -148,7 +149,7 @@ export default function Header(props) {
                         addClickAnalytics: () => {
                           addClickAnalytics(DOWNLOAD_CERTIFICATE);
                         },
-                        event: props.event
+                        event: props.event,
                       },
                     });
                   }
@@ -183,7 +184,10 @@ export default function Header(props) {
             <Link
               to="/search"
               style={{
-                display: history.location.pathname.includes("search") && "none",
+                display:
+                  (history.location.pathname.includes("search") ||
+                    !props.showMobileSearchBtn) &&
+                  "none",
               }}
               className="mobile-search-btn"
             >

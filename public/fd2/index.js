@@ -218,21 +218,6 @@ $(document).ready(function () {
     showError(true, err.code);
   };
 
-  // var checkboxes13 = $(".questions10:checkbox:checked").length;
-
-  // var checkbox13 = document.getElementsByClassName("questions13");
-
-  // checkbox13.addEventListener("change", function () {
-  // var checkboxes13 = $(".questions10:checkbox:checked").length;
-  // console.log(checkboxes13);
-  // if (this.checked) {
-  //   console.log(this.checked);
-  //   console.log("Checkbox is checked..", this.checked.length);
-  // } else {
-  //   console.log("Checkbox is not checked..", this.length);
-  // }
-  // });
-
   // check for disclaimer
   var checkbox = document.querySelector("#disclaimer");
 
@@ -246,8 +231,28 @@ $(document).ready(function () {
     }
   });
 
+  const questionCheckArray = [
+    "questions3",
+    "questions5",
+    "questions6",
+    "questions13",
+  ];
+
+  $("input").change(function () {
+    for (let i = 0; i < questionCheckArray.length; i++) {
+      var max = 2;
+      if ($(`input[name=${questionCheckArray[i]}]:checked`).length === max) {
+        $(`input[name=${questionCheckArray[i]}]`).attr("disabled", "disabled");
+        $(`input[name=${questionCheckArray[i]}]:checked`).removeAttr(
+          "disabled"
+        );
+      } else {
+        $(`input[name=${questionCheckArray[i]}]`).removeAttr("disabled");
+      }
+    }
+  });
+
   $("#mainForm").on("submit", async function (event) {
-    // console.log(event);
     event.preventDefault();
 
     var errorText = document.querySelector("#error");
@@ -261,21 +266,24 @@ $(document).ready(function () {
     var checkboxes10 = $(".questions10:checkbox:checked").length;
     var checkboxes13 = $(".questions13:checkbox:checked").length;
 
-    if (checkboxes3 <= 0 || checkboxes3 > 2) {
+    if (checkboxes3 <= 0) {
       errorText.style.display = "block";
-      errorText.innerHTML = "Maximum 2 option allowed in question number 3";
+      errorText.innerHTML =
+        "Please select at least one option in question number 3";
       return;
     }
 
-    if (checkboxes5 <= 0 || checkboxes5 > 2) {
+    if (checkboxes5 <= 0) {
       errorText.style.display = "block";
-      errorText.innerHTML = "Maximum 2 option allowed in question number 5";
+      errorText.innerHTML =
+        "Please select at least one option in question number 5";
       return;
     }
 
-    if (checkboxes6 <= 0 || checkboxes6 > 2) {
+    if (checkboxes6 <= 0) {
       errorText.style.display = "block";
-      errorText.innerHTML = "Maximum 2 option allowed in question number 6";
+      errorText.innerHTML =
+        "Please select at least one option in question number 6";
       return;
     }
 
@@ -285,9 +293,10 @@ $(document).ready(function () {
         "Please select at least one option in question nnumber 10";
       return;
     }
-    if (checkboxes13 <= 0 || checkboxes13 > 2) {
+    if (checkboxes13 <= 0) {
       errorText.style.display = "block";
-      errorText.innerHTML = "Maximum 2 option allowed in question number 13";
+      errorText.innerHTML =
+        "Please select at least one option in question number 13";
       return;
     }
 
