@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { SpeakerProfileType } from "../../AppConstants/SpeakerProfileType";
 import SpeakerProfile from "../../Containers/SpeakerProfile.js/SpeakerProfile";
 import AddToCalendar from "../AddToCalendar/AddToCalendar";
 import "./bannerIndex.css";
 import { isMobileOnly } from "react-device-detect";
 import Countdown from "../../Containers/Countdown/Countdown";
-import { useContext } from "react/cjs/react.development";
+// import { } from "react/cjs/react.development";
 import { UserMetaDataContext } from "../../Context/Auth/UserContextProvider";
 //props -  mainTitle, subTitle_line1, subTitle_line2, route, mainImageUrl, gotoRoute(),buttonText
 export function Custom1(props) {
@@ -95,17 +95,28 @@ export function Custom2(props) {
 //props - mainTitle, subTitle, eventId, enterEvent()
 export function LiveEventBanner(props) {
   const { data, needCountDown } = props;
-  const { events: registeredEvents } = useContext(UserMetaDataContext)
+  const userMetaData = useContext(UserMetaDataContext)
   const [isRegistered, setIsRegistered] = useState(false)
   useEffect(() => {
-    if (registeredEvents) {
-      if (registeredEvents.indexOf(data.eventId) !== -1) {
-        setIsRegistered(true)
-      } else {
-        setIsRegistered(false)
+    if (userMetaData) {
+      // console.log(userMetaData)
+      let registeredEvents = userMetaData.events
+      // console.log(userMetaData.events)
+      // console.log(data.eventId)
+
+      if (registeredEvents) {
+        if (registeredEvents.length > 0) {
+          if (registeredEvents.indexOf(data.eventId) !== -1) {
+            setIsRegistered(true)
+          } else {
+            setIsRegistered(false)
+          }
+        } else {
+          setIsRegistered(false)
+        }
       }
     }
-  }, [registeredEvents])
+  }, [userMetaData])
 
 
   return (
