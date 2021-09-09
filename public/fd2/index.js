@@ -71,11 +71,13 @@ window.onclick = function (event) {
 
 function openPdf() {
   modal.style.display = "block";
-  omyFrame.src = "/web/viewer.html?file=%2Fassets%2Fpdf%2FConsent.pdf";
+  omyFrame.src = "/assets/pdf/Consent.pdf";
+  // omyFrame.src = "/web/viewer.html?file=%2Fassets%2Fpdf%2FConsent.pdf";
 }
 function openPdf1() {
   modal.style.display = "block";
-  omyFrame.src = "/web/viewer.html?file=%2Fassets%2Fpdf%2FSurvey.pdf";
+  omyFrame.src = "/assets/pdf/Survey.pdf";
+  // omyFrame.src = "/web/viewer.html?file=%2Fassets%2Fpdf%2FSurvey.pdf";
 }
 
 $(document).ready(function () {
