@@ -53,14 +53,25 @@ const BannerData = [
   // {
   //   type: BannerType.LiveEvent,
   //   mainTitle:
-  //     "2 Days of Bronchiectasis Extravaganza",
-  //   subTitle: `Don't miss out the interesting Live Workshops!`,
-  //   eventId: "schoolofbrx",
-  //   eventName: "schoolofbrx",
+  //     "A two day state of the art scientific fest",
+  //   subTitle: `Don’t miss out the interesting sessions from experts of paediatric medicine`,
+  //   eventId: "ipaedia21",
+  //   eventName: "ipaedia21",
   //   mainImageUrl: "",
   //   needCountDown: true,
   //   mainImageUrl:
-  //     "https://storage.googleapis.com/cipla-impact.appspot.com/schoolofbrx/WithAgenda_Preevent_heading_right.png",
+  //     "https://storage.googleapis.com/cipla-impact.appspot.com/ipaedia21/ipaedia_banner.png",
+  //   style: {
+  //     bannerLeftStyle: {},
+  //     bannerRightStyle: {
+  //       position: "realtive",
+  //       display: "flex",
+  //       justifyContent: "flex-end",
+  //       alignItems: "center",
+  //     },
+  //     bannerImageStyle: {
+  //     }
+  //   },
   // },
   {
     type: BannerType.Custom2,
@@ -141,8 +152,13 @@ function Banner() {
     firestore.collection(BACKSTAGE_COLLECTION).doc("banners").onSnapshot(data => {
       if (data.exists) {
         let newBannerData = data.data().bannersData
+        let prossedData = []
+        newBannerData.forEach(banner => {
+          if (!banner.isDisabled)
+            prossedData.push(banner)
+        })
         setBanners(prev => ([
-          ...newBannerData,
+          ...prossedData,
           ...BannerData,
         ]))
       }

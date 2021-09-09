@@ -18,6 +18,7 @@ import firebase, {
 import VideoManager from "../../Managers/VideoManager";
 
 export const UserContext = createContext();
+export const UserMetaDataContext = createContext();
 
 const UserContextProvider = (props) => {
   const [user, setUser] = useState(
@@ -26,6 +27,7 @@ const UserContextProvider = (props) => {
   const [initalCheck, setInitalCheck] = useState(false);
   const [userInfo, setuserInfo] = useState(false);
   const [mediaMetaData, setMediaMetaData] = useState({});
+  const [userMetaData, setUserMetaData] = useState({});
 
   useEffect(() => {
     // firestore.collection(BACKSTAGE_COLLECTION).doc(PLATFORM_BACKSTAGE_DOC).onSnapshot((doc) => {
@@ -46,6 +48,7 @@ const UserContextProvider = (props) => {
         setInitalCheck(true);
         analytics.setUserId(user.uid);
         addUserLoginAnalytics(user.uid);
+        getUserMetaData(user.uid)
         // const userInfo = await getUserProfile(user.uid)
         // console.log(userInfo)
         // setuserInfo(userInfo)
@@ -245,6 +248,27 @@ const UserContextProvider = (props) => {
     });
   };
 
+  const getUserMetaData = (uid) => {
+    return new Promise(async (res, rej) => {
+      try {
+        if (uid) {
+          const doc = await firestore
+            .collection(USERMETADATA_COLLECTION)
+            .doc(uid)
+            .get();
+          if (doc.exists) {
+            setUserMetaData(doc.data());
+            res(doc.data());
+          } else {
+            res(1);
+          }
+        }
+      } catch (error) {
+        rej(error);
+      }
+    });
+  }
+
   return (
     <>
       <UserContext.Provider
@@ -263,7 +287,9 @@ const UserContextProvider = (props) => {
           updateDoctorVerificationClickCount,
         }}
       >
-        {props.children}
+        <UserMetaDataContext.Provider value={userMetaData}>
+          {props.children}
+        </UserMetaDataContext.Provider>
       </UserContext.Provider>
     </>
   );

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SpeakerProfileType } from "../../AppConstants/SpeakerProfileType";
 import SpeakerProfile from "../../Containers/SpeakerProfile.js/SpeakerProfile";
 import AddToCalendar from "../AddToCalendar/AddToCalendar";
 import "./bannerIndex.css";
 import { isMobileOnly } from "react-device-detect";
 import Countdown from "../../Containers/Countdown/Countdown";
+import { useContext } from "react/cjs/react.development";
+import { UserMetaDataContext } from "../../Context/Auth/UserContextProvider";
 //props -  mainTitle, subTitle_line1, subTitle_line2, route, mainImageUrl, gotoRoute(),buttonText
 export function Custom1(props) {
   const { data } = props;
@@ -93,6 +95,19 @@ export function Custom2(props) {
 //props - mainTitle, subTitle, eventId, enterEvent()
 export function LiveEventBanner(props) {
   const { data, needCountDown } = props;
+  const { events: registeredEvents } = useContext(UserMetaDataContext)
+  const [isRegistered, setIsRegistered] = useState(false)
+  useEffect(() => {
+    if (registeredEvents) {
+      if (registeredEvents.indexOf(data.eventId) !== -1) {
+        setIsRegistered(true)
+      } else {
+        setIsRegistered(false)
+      }
+    }
+  }, [registeredEvents])
+
+
   return (
     // bannerBox__inner2 gradient-bg4
     <div className="bannerBox__inner ">
@@ -102,7 +117,7 @@ export function LiveEventBanner(props) {
       >
         <div className="container">
           <div className="d-flex">
-            <div className="bannerBox__left">
+            <div className="bannerBox__left" style={data?.style?.bannerLeftStyle ?? {}}>
               ̰
               <h1 className="bannerBox__title mg-b30">{data.mainTitle}</h1>
               <div className="bannerBox__status mg-b30">
@@ -122,11 +137,13 @@ export function LiveEventBanner(props) {
                   props.enterEvent(data.eventName);
                 }}
               >
-                ENTER EVENT
+                {isRegistered ? 'ENTER EVENT' : 'Sign Up'}
+
               </a>
             </div>
-            <div className="bannerBox__right">
-              <img className="bannerBox__pic" src={data.mainImageUrl} alt="" />
+            <div className="bannerBox__right" style={data?.style?.bannerRightStyle ?? {}}>
+              <img className="bannerBox__pic" style={data?.style?.bannerImageStyle ?? {}}
+                src={data.mainImageUrl} alt="" />
             </div>
           </div>
         </div>

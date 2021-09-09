@@ -32,8 +32,7 @@ function Countdown(props) {
     setHours(remainingHours);
     setMins(remainingMin);
     setSecs(remainingSec);
-    if(!showTimer)
-    {
+    if (!showTimer) {
       setTimerVisiblity(true)
     }
   };
@@ -66,32 +65,38 @@ function Countdown(props) {
   }, []);
 
   if (!showTimer) {
-    return (null)
+    return (
+      <div className="count__container" style={{ marginBottom: '2rem' }}>
+        <div className="count__container_Live">
+          <div className="Live-dot"></div>  Live
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className="count__container">
+        <p className="txt head">Event starts in</p>
+        <ul className="countdown">
+          <li>
+            <div className="num">{days}</div>
+            <div className="txt">days</div>
+          </li>
+          <li>
+            <div className="num">{hours}</div>
+            <div className="txt">hours</div>
+          </li>
+          <li>
+            <div className="num">{mins}</div>
+            <div className="txt">minutes</div>
+          </li>
+          <li>
+            <div className="num">{secs}</div>
+            <div className="txt">seconds</div>
+          </li>
+        </ul>
+      </div>
+    );
   }
-
-  return (
-    <div className="count__container">
-      <p className="txt head">Event starts in</p>
-      <ul className="countdown">
-        <li>
-          <div className="num">{days}</div>
-          <div className="txt">days</div>
-        </li>
-        <li>
-          <div className="num">{hours}</div>
-          <div className="txt">hours</div>
-        </li>
-        <li>
-          <div className="num">{mins}</div>
-          <div className="txt">minutes</div>
-        </li>
-        <li>
-          <div className="num">{secs}</div>
-          <div className="txt">seconds</div>
-        </li>
-      </ul>
-    </div>
-  );
 }
 
 export default Countdown;
