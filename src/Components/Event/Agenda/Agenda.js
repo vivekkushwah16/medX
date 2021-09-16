@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AgendaCard from '../../AgendaCard/AgendaCard';
 import AgendaNavBar from '../AgendaNavBar/AgendaNavBar';
-
 class Agenda extends Component {
     render() {
         const { data, haveVideo, haveLikeButton, startVideo, currentDate, dates, handleDateChange, containerClass } = this.props

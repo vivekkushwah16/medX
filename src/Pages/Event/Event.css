@@ -181,8 +181,21 @@
 
 #eventPage .eventBox__video {
   background: transparent;
+  position: relative;
 }
-
+#eventPage .eventBox__video > .video-hvr {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.1;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+#eventPage .eventBox__video > .video-hvr:hover {
+  opacity: 1;
+}
 .noVisiblePoll {
   width: 100%;
   height: 100%;

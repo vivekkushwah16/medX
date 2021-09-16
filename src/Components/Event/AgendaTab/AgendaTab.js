@@ -6,7 +6,7 @@ import AgendaNavBar from '../AgendaNavBar/AgendaNavBar';
 export default function AgendaTab(props) {
     const { data, haveVideo, haveLikeButton, startVideo, activeTimeline, agendaDates, cureentAgendaDate, handleDateChange, allData } = props
     let activeAgendaStartTime = useMemo(() => {
-        if (allData && activeTimeline) { return allData.filter(d => d.id === activeTimeline)[0].startTime }
+        if (allData && activeTimeline) { return allData.filter(d => d.id === activeTimeline[activeTimeline.length-1])[0].startTime }
         else { return null }
     }, [allData, activeTimeline])
     // if (activeTimeline) {
@@ -29,13 +29,14 @@ export default function AgendaTab(props) {
                     cureentAgendaDate &&
                     data[cureentAgendaDate].map((timeline, index) => (
                         // <div className="maincardBox__card-wrap">
-                        <>
+                        
                             < AgendaCard
+                                key={timeline.id}
                                 timeline={timeline} haveVideo={haveVideo} haveLikeButton={activeTimeline !== null ? activeAgendaStartTime >= timeline.startTime : false} handleClick={startVideo} animate={true} placeIndex={index}
                                 forEventPage={true} wantHeaderFooter={true}
-                                showLive={activeTimeline !== null ? timeline.id === activeTimeline : activeTimeline}
+                                showLive={activeTimeline !== null ? activeTimeline.indexOf(timeline.id) !== -1 : activeTimeline}
                             />
-                        </>
+                        
                         // </div>
                     ))
                 }
@@ -43,4 +44,8 @@ export default function AgendaTab(props) {
         </div >
     )
 }
+                                {
+                                  /* showLive={activeTimeline !== null ? timeline.id === activeTimeline : activeTimeline} */
+                                }
+
 

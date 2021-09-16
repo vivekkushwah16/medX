@@ -195,43 +195,72 @@ function AgendaCard(props) {
               />
             )}
           </div>
-          {haveLikeButton && (
-            <div
-              className={`rating-block ${
-                props.fromTitle ? "from__title__rating" : ""
-              }`}
-            >
-              <button
-                className={`mg-b40 mg-sm-b20 like-btn ${
-                  like ? "like-btn--active" : ""
-                } `}
-                onClick={() => toggleLikeToTarget()}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "end",
+            }}
+          >
+            {haveLikeButton && (
+              <div
+                className={`rating-block ${
+                  props.fromTitle ? "from__title__rating" : ""
+                }`}
               >
-                <i className="icon-like"></i>
-                {likeAmount}
-              </button>
-              {forEventPage && rating !== null && (
-                <>
-                  {props.fromTitle ? (
-                    <div className="stars">
-                      <StartRating
-                        initalRating={rating}
-                        updateRating={updatingTimelineRating}
-                      />
-                    </div>
-                  ) : (
-                    <>
-                      <p className="font-12 mg-b20">Please Rate this Session</p>
-                      <StartRating
-                        initalRating={rating}
-                        updateRating={updatingTimelineRating}
-                      />
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-          )}
+                <button
+                  className={`mg-b40 mg-sm-b20 like-btn ${
+                    like ? "like-btn--active" : ""
+                  } `}
+                  onClick={() => toggleLikeToTarget()}
+                >
+                  <i className="icon-like"></i>
+                  {likeAmount}
+                </button>
+                {forEventPage && rating !== null && (
+                  <>
+                    {props.fromTitle ? (
+                      <div className="stars">
+                        <StartRating
+                          initalRating={rating}
+                          updateRating={updatingTimelineRating}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <p className="font-12 mg-b20">
+                          Please Rate this Session
+                        </p>
+                        <StartRating
+                          initalRating={rating}
+                          updateRating={updatingTimelineRating}
+                        />
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+            {props.fromTitle && (
+              <div>
+                {props.currentActiveVideo.timelineId === timeline.id ? (
+                  <span
+                    className="like-btn"
+                    style={{ background: "#015189", color: "#fff" }}
+                  >
+                    Watching
+                  </span>
+                ) : (
+                  <span
+                    className="like-btn like-btn--active"
+                    onClick={() => handleClick(timeline.id, props.videoUrl)}
+                  >
+                    Watch Now
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {timeline.speakers && timeline.speakers.length > 0 && (
@@ -289,13 +318,14 @@ function AgendaCard(props) {
   return (
     <div
       key={timeline.id}
-      className={`maincardBox__card ${haveVideo ? "maincardBox__card--large" : ""
-        } ${animate ? "maincardBox__card_animate" : ""}`}
+      className={`maincardBox__card ${
+        haveVideo ? "maincardBox__card--large" : ""
+      } ${animate ? "maincardBox__card_animate" : ""}`}
       style={
         animate
           ? {
-            animationDelay: `${placeIndex ? placeIndex * 0.25 : 0}s`,
-          }
+              animationDelay: `${placeIndex ? placeIndex * 0.25 : 0}s`,
+            }
           : {}
       }
     >
@@ -315,10 +345,11 @@ function AgendaCard(props) {
         )}
         {!haveVideo && (
           <>
-            <h2 className="maincardBox__card-date mg-b10">{`${MonthName[new Date(timeline.startTime).getMonth()]
-              } ${new Date(timeline.startTime).getDate()}, ${new Date(
-                timeline.startTime
-              ).getFullYear()} `}</h2>
+            <h2 className="maincardBox__card-date mg-b10">{`${
+              MonthName[new Date(timeline.startTime).getMonth()]
+            } ${new Date(timeline.startTime).getDate()}, ${new Date(
+              timeline.startTime
+            ).getFullYear()} `}</h2>
             <p className="maincardBox__card-time">
               {new Date(timeline.startTime).toLocaleTimeString([], {
                 hour: "2-digit",
@@ -375,8 +406,9 @@ function AgendaCard(props) {
         {haveLikeButton && !forEventPage && (
           <div className="rating-block">
             <button
-              className={` mg-b40 mg-sm - b20 like-btn ${like ? "like-btn--active" : ""
-                } `}
+              className={` mg-b40 mg-sm - b20 like-btn ${
+                like ? "like-btn--active" : ""
+              } `}
               onClick={() => toggleLikeToTarget()}
             >
               <i className="icon-like"></i>
@@ -397,8 +429,9 @@ function AgendaCard(props) {
       {forEventPage && (
         <div className="rating-block">
           <button
-            className={` mg-b40 mg-sm - b20 like-btn ${like ? "like-btn--active" : ""
-              } `}
+            className={` mg-b40 mg-sm - b20 like-btn ${
+              like ? "like-btn--active" : ""
+            } `}
             onClick={() => toggleLikeToTarget()}
           >
             <i className="icon-like"></i>

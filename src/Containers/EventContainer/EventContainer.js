@@ -42,10 +42,10 @@ const menuItems = [
 ];
 
 const eventBoxStyle = {
-  '& :after': {
-    background: 'red'
-  }
-}
+  "& :after": {
+    background: "red",
+  },
+};
 
 // custom hook for getting previous value
 export function usePrevious(value) {
@@ -83,6 +83,10 @@ export default function EventContainer(props) {
   const { addGAWithUserInfo, addCAWithUserInfo, updateUserStatus } =
     useContext(AnalyticsContext);
   const [activeTimelineId, setActiveTimelineId] = useState("");
+  const [currentActiveVideo, setCurrentActiveVideo] = useState({
+    timelineId: "",
+    url: "",
+  });
   let firstTime = useMemo(() => true, []);
 
   //#endregion
@@ -174,7 +178,7 @@ export default function EventContainer(props) {
         (new Date().getTime() - window.session_CurrentHit_StartTimestamp) / 1000
       );
     } else {
-      return 0
+      return 0;
     }
   };
 
@@ -221,6 +225,11 @@ export default function EventContainer(props) {
   useEffect(() => {
     // console.log(initalTimelineValue, data)
     if (data && data.activeTimelineId) {
+      setCurrentActiveVideo({
+        timelineId: data.activeTimelineId[0],
+        url: data.videoUrl,
+      });
+
       let activeTimelineId = data.activeTimelineId;
       // console.log(activeTimelineId)
       if (initalTimelineValue) {
@@ -251,8 +260,9 @@ export default function EventContainer(props) {
   useEffect(() => {
     // console.log(activeTimelineId);
     setActiveTimeline(
-      props.agendaData.filter((item) => item.id === activeTimelineId)[0]
+      props.agendaData.filter((item) => item.id === activeTimelineId.length - 1)
     );
+    // props.agendaData.filter((item) => item.id === activeTimelineId)[0];
   }, [activeTimelineId]);
 
   useEffect(() => {
@@ -268,8 +278,9 @@ export default function EventContainer(props) {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
-        } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${
+        MonthName[new Date(timeline.startTime).getMonth()]
+      } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -298,6 +309,13 @@ export default function EventContainer(props) {
     }
     setCureentAgendaDate(date);
   };
+
+  const startVideo = (id, videoUrl) => {
+    setCurrentActiveVideo({
+      timelineId: id,
+      url: videoUrl,
+    });
+  };
   useEffect(() => {
     // console.log(activeTimeline, "*************");
   }, [activeTimeline]);
@@ -316,26 +334,87 @@ export default function EventContainer(props) {
           Q&amp;A / Polls
         </a>
       )}
-
+      {/* <AgendaCard
+                            key={timeline.id}
+                            fromTitle={true}
+                            timeline={timeline}
+                            haveVideo={false}
+                            haveLikeButton={true}
+                            handleClick={startVideo}
+                            videoUrl={index === 0 ? data.videoUrl : data[url]}
+                            currentActiveVideo={currentActiveVideo}
+                            animate={true}
+                            placeIndex={index}
+                            forEventPage={true}
+                            wantHeaderFooter={true}
+                            showLive={
+                              data.activeTimelineId !== null &&
+                              data.activeTimelineId.indexOf(timeline.id) !== -1
+                            }
+                          /> */}
       <div
         className="container"
         style={activePollPanel && !isMobileOnly ? { maxWidth: "unset" } : {}}
       >
         <div
-          className={`d-flex row d-sm-block  ${activePollPanel && !isMobileOnly ? "eventBox__inner" : ""
-            }`}
+          className={`d-flex row d-sm-block  ${
+            activePollPanel && !isMobileOnly ? "eventBox__inner" : ""
+          }`}
         >
           <div className="eventBox__left col">
             <div className="eventBox__video">
               <ReactPlayer
                 playing={true}
-                url={data.videoUrl}
+                url={currentActiveVideo.url}
                 volume={0.85}
                 controls={true}
                 width="100%"
                 height={isMobileOnly ? "40vh" : "60vh"}
                 playsinline={true}
               ></ReactPlayer>
+              <div className="video-hvr">
+                <div>
+                   {agendaData &&
+                    cureentAgendaDate &&
+                    data.activeTimelineId.length !== 0 &&
+                    agendaData[cureentAgendaDate].map((timeline, index) => {
+                      let url = "videoUrl" + index;
+                      return (
+                        data.activeTimelineId.indexOf(timeline.id) !== -1 && (
+                          <div className="mg-b10" key={timeline.id}>
+                            {currentActiveVideo.timelineId === timeline.id ? (
+                              <span
+                                className="like-btn"
+                                style={{
+                                  background: "#015189",
+                                  color: "#fff",
+                                  minWidth: "118px",
+                                }}
+                              >
+                                Watching
+                              </span>
+                            ) : (
+                              <span
+                                style={{
+                                  minWidth: "118px",
+                                }}
+                                className="like-btn like-btn--active"
+                                onClick={() =>
+                                  startVideo(
+                                    timeline.id,
+                                    index === 0 ? data.videoUrl : data[url]
+                                  )
+                                }
+                              >
+                                Watch Now
+                              </span>
+                            )}
+                          </div>
+                        )
+                      );
+                    })}
+                </div>
+              </div>
               {/* <img src="assets/images/video3.jpg" alt="" /> */}
             </div>
             <div className="pd-t30 pd-b10 d-flex align-items-start justify-content-between">
@@ -388,8 +467,44 @@ export default function EventContainer(props) {
                     </button>
                   </div>
                 )}
-                {activeTimeline ? (
-                  <AgendaCard
+
+                {agendaData &&
+                cureentAgendaDate &&
+                data.activeTimelineId.length !== 0
+                  ? agendaData[cureentAgendaDate].map((timeline, index) => {
+                      let url = "videoUrl" + index;
+                      return (
+                        data.activeTimelineId.indexOf(timeline.id) !== -1 && (
+                          <AgendaCard
+                            key={timeline.id}
+                            fromTitle={true}
+                            timeline={timeline}
+                            haveVideo={false}
+                            haveLikeButton={true}
+                            handleClick={startVideo}
+                            videoUrl={index === 0 ? data.videoUrl : data[url]}
+                            currentActiveVideo={currentActiveVideo}
+                            animate={true}
+                            placeIndex={index}
+                            forEventPage={true}
+                            wantHeaderFooter={true}
+                            showLive={
+                              data.activeTimelineId !== null &&
+                              data.activeTimelineId.indexOf(timeline.id) !== -1
+                            }
+                          />
+                        )
+                      );
+                    })
+                  : data.description && (
+                      <p className="eventBox__desc">
+                        {data.description}
+                        <br></br>
+                      </p>
+                    )}
+
+                {/* {activeTimeline ? (
+                   <AgendaCard
                     fromTitle={true}
                     timeline={activeTimeline}
                     haveVideo={false}
@@ -401,6 +516,7 @@ export default function EventContainer(props) {
                     wantHeaderFooter={true}
                     showLive={true}
                   />
+                 
                 ) : (
                   data.description && (
                     <p className="eventBox__desc">
@@ -408,8 +524,7 @@ export default function EventContainer(props) {
                       <br></br>
                     </p>
                   )
-                )}
-
+                )} */}
                 {/* <h4 className="eventBox__subtitle mg-b40">200 LIVE Viewers</h4> */}
               </div>
 
@@ -531,8 +646,9 @@ export default function EventContainer(props) {
           </div>
           {!isMobileOnly && (
             <div
-              className={`eventBox__right  show-on-desktop col ${activePollPanel ? "active" : ""
-                }`}
+              className={`eventBox__right  show-on-desktop col ${
+                activePollPanel ? "active" : ""
+              }`}
             >
               <CommunityBox
                 sendQuestion={(eventId, ques) => {
