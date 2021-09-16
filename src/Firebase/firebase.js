@@ -4,6 +4,7 @@ import 'firebase/firestore';
 import 'firebase/database';
 import 'firebase/analytics';
 import 'firebase/functions';
+import XLSX from "xlsx";
 
 import { PROFILE_COLLECTION } from '../AppConstants/CollectionConstants';
 
@@ -92,4 +93,12 @@ export const copyFromRealtoFirestore = () => {
     } catch (error) {
         console.log(error)
     }
+}
+
+
+export const exportFile = (data, sheetName, filename) => {
+    const wb = XLSX.utils.book_new()
+    const wsAll = XLSX.utils.json_to_sheet(data)
+    XLSX.utils.book_append_sheet(wb, wsAll, sheetName)
+    XLSX.writeFile(wb, filename)
 }

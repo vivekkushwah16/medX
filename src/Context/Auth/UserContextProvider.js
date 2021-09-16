@@ -27,7 +27,7 @@ const UserContextProvider = (props) => {
   const [initalCheck, setInitalCheck] = useState(false);
   const [userInfo, setuserInfo] = useState(false);
   const [mediaMetaData, setMediaMetaData] = useState({});
-  const [userMetaData, setUserMetaData] = useState({});
+  const [userMetaData, setUserMetaData] = useState({ events: [] });
 
   useEffect(() => {
     // firestore.collection(BACKSTAGE_COLLECTION).doc(PLATFORM_BACKSTAGE_DOC).onSnapshot((doc) => {
@@ -259,9 +259,8 @@ const UserContextProvider = (props) => {
           if (doc.exists) {
             setUserMetaData(doc.data());
             res(doc.data());
-          } else {
-            res(1);
           }
+          res()
         }
       } catch (error) {
         rej(error);
