@@ -25,6 +25,8 @@ import swal from "sweetalert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAward, faTasks } from "@fortawesome/free-solid-svg-icons";
 import AgendaCard from "../../Components/AgendaCard/AgendaCard";
+import { firestore } from "../../Firebase/firebase";
+import { EVENT_COLLECTION } from "../../AppConstants/CollectionConstants";
 const menuItemsId = {
   About: "About",
   Agenda: "Agenda",
@@ -59,6 +61,17 @@ export function usePrevious(value) {
 const TIME_BETWEEN_CLOUDFUNCTION_HIT = 1 * 60 * 1000;
 
 export default function EventContainer(props) {
+
+  useEffect(() => {
+    window.updateTimeline = (timelineArr) => {
+      firestore.collection(EVENT_COLLECTION).doc(props.id).update({
+        activeTimelineId: timelineArr
+      }).then(() => {
+        console.log("done updating timeline")
+      })
+    }
+  }, [])
+
   //#region  decalaration
   const {
     id,
@@ -259,9 +272,10 @@ export default function EventContainer(props) {
 
   useEffect(() => {
     // console.log(activeTimelineId);
-    setActiveTimeline(
-      props.agendaData.filter((item) => item.id === activeTimelineId.length - 1)
-    );
+    if (activeTimelineId)
+      setActiveTimeline(
+        props.agendaData.filter((item) => item.id === activeTimelineId.length - 1)
+      );
     // props.agendaData.filter((item) => item.id === activeTimelineId)[0];
   }, [activeTimelineId]);
 
@@ -278,9 +292,8 @@ export default function EventContainer(props) {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -357,32 +370,33 @@ export default function EventContainer(props) {
         style={activePollPanel && !isMobileOnly ? { maxWidth: "unset" } : {}}
       >
         <div
-          className={`d-flex row d-sm-block  ${
-            activePollPanel && !isMobileOnly ? "eventBox__inner" : ""
-          }`}
+          className={`d-flex row d-sm-block  ${activePollPanel && !isMobileOnly ? "eventBox__inner" : ""
+            }`}
         >
           <div className="eventBox__left col">
             <div className="eventBox__video">
               <ReactPlayer
                 playing={true}
-                url={currentActiveVideo.url}
+                url={currentActiveVideo.url}//{currentActiveVideo.url ? currentActiveVideo.url : data.videoUrl}
                 volume={0.85}
                 controls={true}
                 width="100%"
                 height={isMobileOnly ? "40vh" : "60vh"}
                 playsinline={true}
               ></ReactPlayer>
-              <div className="video-hvr">
-                <div>
-                   {agendaData &&
-                    cureentAgendaDate &&
-                    data.activeTimelineId.length !== 0 &&
-                    agendaData[cureentAgendaDate].map((timeline, index) => {
-                      let url = "videoUrl" + index;
-                      return (
-                        data.activeTimelineId.indexOf(timeline.id) !== -1 && (
-                          <div className="mg-b10" key={timeline.id}>
-                            {currentActiveVideo.timelineId === timeline.id ? (
+
+              {agendaData &&
+                cureentAgendaDate &&
+                data.activeTimelineId &&
+                data.activeTimelineId.length > 1 &&
+                <div className="video-hvr">
+                  <div>
+                    {
+                      data.activeTimelineId.map((timeline, index) => {
+                        let url = "videoUrl" + (index > 0 ? index : '');
+                        return (
+                          <div className="vide-hvr-btn" key={timeline}>
+                            {currentActiveVideo.timelineId === timeline ? (
                               <span
                                 className="like-btn"
                                 style={{
@@ -391,7 +405,7 @@ export default function EventContainer(props) {
                                   minWidth: "118px",
                                 }}
                               >
-                                Watching
+                                {`Hall ${index + 1}(Watching)`}
                               </span>
                             ) : (
                               <span
@@ -399,22 +413,25 @@ export default function EventContainer(props) {
                                   minWidth: "118px",
                                 }}
                                 className="like-btn like-btn--active"
-                                onClick={() =>
+                                onClick={() => {
                                   startVideo(
-                                    timeline.id,
-                                    index === 0 ? data.videoUrl : data[url]
+                                    timeline,
+                                    data[url]
                                   )
                                 }
+                                }
                               >
-                                Watch Now
+                                {`Hall ${index + 1}`}
                               </span>
                             )}
                           </div>
-                        )
-                      );
-                    })}
+                        );
+                      })
+                    }
+                  </div>
                 </div>
-              </div>
+              }
+
               {/* <img src="assets/images/video3.jpg" alt="" /> */}
             </div>
             <div className="pd-t30 pd-b10 d-flex align-items-start justify-content-between">
@@ -469,39 +486,42 @@ export default function EventContainer(props) {
                 )}
 
                 {agendaData &&
-                cureentAgendaDate &&
-                data.activeTimelineId.length !== 0
+                  cureentAgendaDate &&
+                  data.activeTimelineId &&
+                  data.activeTimelineId.length !== 0
                   ? agendaData[cureentAgendaDate].map((timeline, index) => {
-                      let url = "videoUrl" + index;
-                      return (
-                        data.activeTimelineId.indexOf(timeline.id) !== -1 && (
-                          <AgendaCard
-                            key={timeline.id}
-                            fromTitle={true}
-                            timeline={timeline}
-                            haveVideo={false}
-                            haveLikeButton={true}
-                            handleClick={startVideo}
-                            videoUrl={index === 0 ? data.videoUrl : data[url]}
-                            currentActiveVideo={currentActiveVideo}
-                            animate={true}
-                            placeIndex={index}
-                            forEventPage={true}
-                            wantHeaderFooter={true}
-                            showLive={
-                              data.activeTimelineId !== null &&
-                              data.activeTimelineId.indexOf(timeline.id) !== -1
-                            }
-                          />
-                        )
-                      );
-                    })
+                    let timelineIndex = data.activeTimelineId.indexOf(timeline.id)
+                    let url = "videoUrl" + (timelineIndex > 0 ? timelineIndex : '');
+
+                    return (
+                      data.activeTimelineId.indexOf(timeline.id) !== -1 && (
+                        <AgendaCard
+                          key={timeline.id}
+                          fromTitle={true}
+                          timeline={timeline}
+                          haveVideo={false}
+                          haveLikeButton={true}
+                          handleClick={startVideo}
+                          videoUrl={data[url]}
+                          currentActiveVideo={currentActiveVideo}
+                          animate={true}
+                          placeIndex={timelineIndex}
+                          forEventPage={true}
+                          wantHeaderFooter={true}
+                          showLive={
+                            data.activeTimelineId !== null &&
+                            data.activeTimelineId.indexOf(timeline.id) !== -1
+                          }
+                        />
+                      )
+                    );
+                  })
                   : data.description && (
-                      <p className="eventBox__desc">
-                        {data.description}
-                        <br></br>
-                      </p>
-                    )}
+                    <p className="eventBox__desc">
+                      {data.description}
+                      <br></br>
+                    </p>
+                  )}
 
                 {/* {activeTimeline ? (
                    <AgendaCard
@@ -646,9 +666,8 @@ export default function EventContainer(props) {
           </div>
           {!isMobileOnly && (
             <div
-              className={`eventBox__right  show-on-desktop col ${
-                activePollPanel ? "active" : ""
-              }`}
+              className={`eventBox__right  show-on-desktop col ${activePollPanel ? "active" : ""
+                }`}
             >
               <CommunityBox
                 sendQuestion={(eventId, ques) => {
