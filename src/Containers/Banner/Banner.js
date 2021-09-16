@@ -50,6 +50,30 @@ const BannerType = {
 };
 
 const BannerData = [
+
+  // {
+  //   type: BannerType.LiveEvent,
+  //   mainTitle:
+  //     "2 Days Extensive Program",
+  //   subTitle: `Don't miss out academic feast on recent advances in Pediatric Respiratory medicine`,
+  //   eventId: "compass21",
+  //   eventName: "compass21",
+  //   mainImageUrl: "",
+  //   needCountDown: true,
+  //   mainImageUrl:
+  //     "https://storage.googleapis.com/cipla-impact.appspot.com/compass21/bannerImage.png?X=1",
+  //   style: {
+  //     bannerLeftStyle: {},
+  //     bannerRightStyle: {
+  //       position: "realtive",
+  //       display: "flex",
+  //       justifyContent: "flex-end",
+  //       alignItems: "center",
+  //     },
+  //     bannerImageStyle: {
+  //     }
+  //   },
+  // },
   // {
   //   type: BannerType.LiveEvent,
   //   mainTitle:

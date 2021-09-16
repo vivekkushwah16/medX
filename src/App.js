@@ -25,7 +25,7 @@ import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 import EventRoute, { EventStausType } from "./Components/EventRoute";
 // import EventManager from "./Managers/EventManager";
 // import { LOREM_TEXT } from "./AppConstants/Lorem";
-import firebase, { firestore } from "./Firebase/firebase";
+import firebase, { exportFile, firestore } from "./Firebase/firebase";
 import { PROFILE_COLLECTION, USERMETADATA_COLLECTION } from "./AppConstants/CollectionConstants";
 import { PollManager } from "./Managers/PollManager";
 import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
@@ -128,6 +128,21 @@ const preload = (component) => {
   component.preload && component.preload();
 };
 
+async function downloadData() {
+  firestore.collection("userFeedback").where("eventId", "==", "ipaedia21").get().then((snap) => {
+    if (!snap.empty) {
+      let data = {}
+      snap.docs.forEach(d => data[d.id] = {
+        ...d.data(),
+        id: d.id.split("_")[1],
+        phoneNumber: d.data().email.split("@")[0]
+      })
+      console.log(data)
+      exportFile(Object.values(data), "ipedia21_feedback", "ipedia21_feedback.xlsx")
+    }
+  })
+}
+
 export default function App() {
   const { initalCheck, user } = useContext(UserContext);
   useEffect(() => {
@@ -141,7 +156,9 @@ export default function App() {
     }
   }, [initalCheck, user]);
 
-  useEffect(() => { }, []);
+  useEffect(() => {
+    // downloadData()
+  }, []);
 
   const updateUserMetaData = async () => {
     const query = await firestore.collection(PROFILE_COLLECTION).get();
