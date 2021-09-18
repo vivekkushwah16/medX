@@ -641,6 +641,7 @@ export default function EventContainer(props) {
               {activeMenu.id === menuItemsId.Polls && (
                 <div id="tab4" className="eventBox__tabs-content active">
                   <CommunityBox
+                    currentActiveVideo={currentActiveVideo}
                     sendQuestion={(eventId, ques) => {
                       QNASendAnalytics();
                       sendQuestion(eventId, ques, data.activeTimelineId);
@@ -670,6 +671,7 @@ export default function EventContainer(props) {
                 }`}
             >
               <CommunityBox
+                currentActiveVideo={currentActiveVideo}
                 sendQuestion={(eventId, ques) => {
                   QNASendAnalytics();
                   sendQuestion(eventId, ques, data.activeTimelineId);
