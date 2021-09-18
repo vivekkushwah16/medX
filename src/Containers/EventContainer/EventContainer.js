@@ -120,15 +120,15 @@ export default function EventContainer(props) {
   };
 
   const QNASendAnalytics = () => {
-    if (data.activeTimelineId) {
+    if (currentActiveVideo.timelineId) {
       addGAWithUserInfo(QNA_INTERATCION, {
         eventId: id,
-        timelineId: data.activeTimelineId,
+        timelineId: currentActiveVideo.timelineId,
       });
       addCAWithUserInfo(
-        `/${QNA_INTERATCION}/${user.uid}_${data.activeTimelineId}`,
+        `/${QNA_INTERATCION}/${user.uid}_${currentActiveVideo.timelineId}`,
         false,
-        { eventId: id, timelineId: data.activeTimelineId },
+        { eventId: id, timelineId: currentActiveVideo.timelineId },
         true
       );
     } else {
@@ -143,17 +143,17 @@ export default function EventContainer(props) {
   };
 
   const PollInteractionAnalytics = (pollId, optionId) => {
-    if (data.activeTimelineId) {
+    if (currentActiveVideo.timelineId) {
       addGAWithUserInfo(POLL_INTERACTION, {
         eventId: id,
-        timelineId: data.activeTimelineId,
+        timelineId: currentActiveVideo.timelineId,
         pollId,
         optionId,
       });
       addCAWithUserInfo(
         `/${POLL_INTERACTION}/${user.uid}_${pollId}`,
         false,
-        { eventId: id, timelineId: data.activeTimelineId, pollId, optionId },
+        { eventId: id, timelineId: currentActiveVideo.timelineId, pollId, optionId },
         true
       );
     } else {
@@ -271,6 +271,10 @@ export default function EventContainer(props) {
         });
       }
     } else {
+      setCurrentActiveVideo({
+        timelineId: null,
+        url: data.videoUrl,
+      });
       // console.log("No Active timeline");
       setActiveTimelineId(null);
       stopTimespentCalculation();
@@ -677,7 +681,7 @@ export default function EventContainer(props) {
                     currentActiveVideo={currentActiveVideo}
                     sendQuestion={(eventId, ques) => {
                       QNASendAnalytics();
-                      sendQuestion(eventId, ques, data.activeTimelineId);
+                      sendQuestion(eventId, ques, currentActiveVideo.timelineId);
                     }}
                     noticeboard={data.noticeboard}
                     id={id}
@@ -707,7 +711,7 @@ export default function EventContainer(props) {
                 currentActiveVideo={currentActiveVideo}
                 sendQuestion={(eventId, ques) => {
                   QNASendAnalytics();
-                  sendQuestion(eventId, ques, data.activeTimelineId);
+                  sendQuestion(eventId, ques, currentActiveVideo.timelineId);
                 }}
                 noticeboard={data.noticeboard}
                 id={id}
