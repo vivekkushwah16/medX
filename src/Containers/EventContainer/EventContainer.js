@@ -58,7 +58,7 @@ export function usePrevious(value) {
   return ref.current;
 }
 
-const TIME_BETWEEN_CLOUDFUNCTION_HIT = 1 * 60 * 1000;
+const TIME_BETWEEN_CLOUDFUNCTION_HIT = 1 * 10 * 1000;
 
 export default function EventContainer(props) {
 
@@ -95,7 +95,7 @@ export default function EventContainer(props) {
   const { user, userInfo } = useContext(UserContext);
   const { addGAWithUserInfo, addCAWithUserInfo, updateUserStatus } =
     useContext(AnalyticsContext);
-  const [activeTimelineId, setActiveTimelineId] = useState("");
+  const [activeTimelineId_state, setActiveTimelineId] = useState("");
   const [currentActiveVideo, setCurrentActiveVideo] = useState({
     timelineId: "",
     url: "",
@@ -103,7 +103,7 @@ export default function EventContainer(props) {
   let firstTime = useMemo(() => true, []);
 
   //#endregion
-  //   console.log(props.agendaData, props.data, "*************");
+  // console.log(props.agendaData, props.data, "*************");
   const addClickAnalytics = (eventName) => {
     addGAWithUserInfo(eventName, { eventId: id });
     addCAWithUserInfo(`/${eventName}`, true, { eventId: id }, true);
@@ -168,8 +168,17 @@ export default function EventContainer(props) {
   };
 
   const sendSessionAnalytics = (initalTimelineValue) => {
-    // console.log({ timelineId: initalTimelineValue });
+    console.log({ timelineId: initalTimelineValue });
     setActiveTimelineId(initalTimelineValue);
+    // console.log("GA - > ", SESSION_ATTENDED, {
+    //   eventId: id,
+    //   timelineId: initalTimelineValue,
+    // })
+    // console.log("addCAWithUserInfo -> ", `/${SESSION_ATTENDED}/${user.uid}_${initalTimelineValue}`,
+    //   false,
+    //   { eventId: id, timelineId: initalTimelineValue },
+    //   true)
+    // uncomment
     addGAWithUserInfo(SESSION_ATTENDED, {
       eventId: id,
       timelineId: initalTimelineValue,
@@ -182,7 +191,8 @@ export default function EventContainer(props) {
     );
   };
 
-  const initalTimelineValue = usePrevious(data.activeTimelineId);
+  const initalActiveTimelineArr = usePrevious(data.activeTimelineId)
+  const initalTimelineValue = usePrevious(currentActiveVideo?.timelineId);
 
   //#region maintain timespent
   const calcaulateLastTimespent = () => {
@@ -195,22 +205,22 @@ export default function EventContainer(props) {
     }
   };
 
-  const startTimespentCalculation = () => {
-    // console.log("Started TIme Calculation");
-    updateUserStatus(id, data.activeTimelineId, 0);
+  const startTimespentCalculation = (timelineId) => {
+    // console.log("Started TIme Calculation: ", timelineId);
+    updateUserStatus(id, timelineId, 0);
     window.session_CurrentHit_StartTimestamp = new Date().getTime();
     window.sessionTimerRef = setInterval(() => {
       // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
       let currentHitTimespent = calcaulateLastTimespent();
-      // console.log('updateUserStatus()', id, data.activeTimelineId, currentHitTimespent)
-      updateUserStatus(id, data.activeTimelineId, currentHitTimespent);
+      // console.log('updateUserStatus()', id, timelineId, currentHitTimespent)
+      updateUserStatus(id, timelineId, currentHitTimespent);
       // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
       window.session_CurrentHit_StartTimestamp = new Date().getTime();
-      window.session_CurrentHit_timelineId = data.activeTimelineId;
+      window.session_CurrentHit_timelineId = timelineId;
     }, TIME_BETWEEN_CLOUDFUNCTION_HIT);
   };
 
-  const stopTimespentCalculation = (startNew = false, previousId) => {
+  const stopTimespentCalculation = (startNew = false, previousId, nextTimelineId) => {
     if (window.sessionTimerRef) {
       clearInterval(window.sessionTimerRef);
       // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
@@ -228,34 +238,37 @@ export default function EventContainer(props) {
         // console.log('Close-updateUserStatus(2)', id, previousId, currentHitTimespent)
         updateUserStatus(id, previousId, currentHitTimespent);
 
-        startTimespentCalculation();
+        startTimespentCalculation(nextTimelineId);
       }
       // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
     }
   };
   //#endregion
 
+  const setupAnalytics = (activeTimelineId) => {
+    // console.log(activeTimelineId)
+    if (initalTimelineValue) {
+      // console.log("////////////////////////////////////")
+      if (initalTimelineValue !== activeTimelineId) {
+        // console.log("differentTimeLineFOund, restart")
+        sendSessionAnalytics(activeTimelineId);
+        stopTimespentCalculation(true, initalTimelineValue, activeTimelineId);
+      }
+    } else {
+      // console.log("startCalcTimeFORFirstTIme")
+      sendSessionAnalytics(activeTimelineId);
+      startTimespentCalculation(activeTimelineId);
+    }
+  }
+
   useEffect(() => {
     // console.log(initalTimelineValue, data)
     if (data && data.activeTimelineId) {
-      setCurrentActiveVideo({
-        timelineId: data.activeTimelineId[0],
-        url: data.videoUrl,
-      });
-
-      let activeTimelineId = data.activeTimelineId;
-      // console.log(activeTimelineId)
-      if (initalTimelineValue) {
-        // console.log("////////////////////////////////////")
-        if (initalTimelineValue !== activeTimelineId) {
-          // console.log("differentTimeLineFOund, restart")
-          sendSessionAnalytics(activeTimelineId);
-          stopTimespentCalculation(true, initalTimelineValue);
-        }
-      } else {
-        // console.log("startCalcTimeFORFirstTIme")
-        sendSessionAnalytics(activeTimelineId);
-        startTimespentCalculation();
+      if (JSON.stringify(data.activeTimelineId) !== JSON.stringify(initalActiveTimelineArr)) {
+        setCurrentActiveVideo({
+          timelineId: data.activeTimelineId[0],
+          url: data.videoUrl,
+        });
       }
     } else {
       // console.log("No Active timeline");
@@ -264,26 +277,46 @@ export default function EventContainer(props) {
     }
   }, [data]);
 
+
+
   useEffect(() => {
     return () => {
       stopTimespentCalculation();
     };
   }, []);
 
+  // useEffect(() => {
+  //   console.log('===============')
+  //   console.log(props.agendaData.filter((item) => item.id === activeTimelineId[0]));
+  //   if (activeTimelineId)
+  //     setActiveTimeline(
+  //       props.agendaData.filter((item) => item.id === activeTimelineId)
+  //     );
+  //   // props.agendaData.filter((item) => item.id === activeTimelineId)[0];
+  // }, [activeTimelineId]);
+
   useEffect(() => {
-    // console.log(activeTimelineId);
-    if (activeTimelineId)
-      setActiveTimeline(
-        props.agendaData.filter((item) => item.id === activeTimelineId.length - 1)
-      );
-    // props.agendaData.filter((item) => item.id === activeTimelineId)[0];
-  }, [activeTimelineId]);
+    if (currentActiveVideo) {
+      if (currentActiveVideo.timelineId) {
+        setupAnalytics(currentActiveVideo.timelineId)
+        setActiveTimeline(
+          props.agendaData.filter((item) => item.id === currentActiveVideo.timelineId)
+        );
+        return
+      }
+    }
+    setActiveTimeline(null);
+
+  }, [currentActiveVideo])
 
   useEffect(() => {
     if (_initalAgendaData) processAgendaData(_initalAgendaData);
-    setActiveTimeline(
-      props.agendaData.filter((item) => item.id === activeTimelineId)[0]
-    );
+    if (activeTimelineId_state) {
+      setActiveTimeline(
+        props.agendaData.filter((item) => activeTimelineId_state.indexOf(item.id) !== -1)[0]
+      );
+    }
+
   }, [_initalAgendaData]);
 
   const processAgendaData = (data) => {
