@@ -58,7 +58,7 @@ export function usePrevious(value) {
   return ref.current;
 }
 
-const TIME_BETWEEN_CLOUDFUNCTION_HIT = 1 * 10 * 1000;
+const TIME_BETWEEN_CLOUDFUNCTION_HIT = 1 * 60 * 1000;
 
 export default function EventContainer(props) {
 
