@@ -526,7 +526,7 @@ export default function EventContainer(props) {
                   cureentAgendaDate &&
                   data.activeTimelineId &&
                   data.activeTimelineId.length !== 0
-                  ? agendaData[cureentAgendaDate].map((timeline, index) => {
+                  ? _initalAgendaData.map((timeline, index) => {
                     let timelineIndex = data.activeTimelineId.indexOf(timeline.id)
                     let url = "videoUrl" + (timelineIndex > 0 ? timelineIndex : '');
 
