@@ -20,19 +20,22 @@ export default function SideAgendaNoUser(props) {
                                 <img src="/assets/images/logos/ciplamed-logo.png" alt="" />
                             </a>
                         </div>
-                        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/eventLogo.png?updated=1`} alt="" className="cipla-res" />
+                        <img src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/eventLogo.png?updated=1`} alt="" className="cipla-res" style={{
+                            position: 'relative'
+                        }} />
                     </div>
                 </div>
             </header>
 
             <div className="login2Box__left" style={{
-                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg")`,
+                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?x=x")`,
                 backgroundPosition: 'top',
                 backgroundSize: "contain",
                 backgroundRepeat: "repeat-x",
-                backgroundColor: `${props.eventData?.regStyle?.registerationBGColor ? props.eventData.regStyle.registerationBGColor : 'inherit'}`
+                backgroundColor: `${props.eventData?.regStyle?.registerationBGColor ? props.eventData.regStyle.registerationBGColor : 'inherit'}`,
+                backgroundBlendMode: "multiply",
             }}>
-                <div className="bannerBox">
+                <div className="bannerBox" style={{ marginTop: '2rem' }}>
                     <div className="bannerBox__inner bannerBox__inner--small bannerBox__inner4 gradient-bg1">
                         <div className="bannerBox__slide">
                             <div className="container-small">
@@ -75,7 +78,7 @@ export default function SideAgendaNoUser(props) {
                                     <div className="bannerBox__right">
 
                                         <img className="bannerBox__pic"
-                                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_Registeration_heading_right.png?updated=${Math.random() * 100}`}
+                                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/${isMobileOnly && props.eventData.useSeparateImages ? 'WithAgenda_Mobile_Registration_heading_right.png' : 'WithAgenda_Registeration_heading_right.png'}?updated=${Math.random() * 100}`}
                                             alt="" />
                                     </div>
                                 </div>
