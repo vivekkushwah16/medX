@@ -26,7 +26,7 @@ import EventRoute, { EventStausType } from "./Components/EventRoute";
 // import EventManager from "./Managers/EventManager";
 // import { LOREM_TEXT } from "./AppConstants/Lorem";
 import firebase, { exportFile, firestore } from "./Firebase/firebase";
-import { PROFILE_COLLECTION, USERMETADATA_COLLECTION } from "./AppConstants/CollectionConstants";
+import { BRONCHTALK_COLLECTION, PROFILE_COLLECTION, USERMETADATA_COLLECTION } from "./AppConstants/CollectionConstants";
 import { PollManager } from "./Managers/PollManager";
 import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
 import Myprofile from "./Containers/myProfile/Myprofile";

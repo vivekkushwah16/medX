@@ -22,6 +22,8 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import { firestore } from "../../Firebase/firebase";
 import { BACKSTAGE_COLLECTION } from "../../AppConstants/CollectionConstants";
+import { bronchtalkindia_autoLogIn, bronchtalkindia_autoRegistration } from "../../utils";
+import { UserBronchTalkMetaDataContext, UserContext } from "../../Context/Auth/UserContextProvider";
 let scroll = Scroll.animateScroll;
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -46,10 +48,15 @@ const BannerType = {
   ImageSingleButton: "imageSingleButton",
   UpcompingEvent: "upcompingEvent",
   PromoVideoBanner: "promoVideoBanner",
+  platformPromo: "platformPromo",
   Custom1: "Custom1",
   Custom2: "Custom2",
   Custom3: "Custom3"
 };
+
+const PriorityBannerData = [
+
+]
 
 const BannerData = [
   // {
@@ -98,6 +105,28 @@ const BannerData = [
   //     }
   //   },
   // },
+
+  {
+    type: BannerType.platformPromo,
+    platformId: "BronchTalk",
+    mainTitle:
+      "An exclusive community of doctors analysing and studying Bronchiectasis",
+    subTitle: `By the experts, for the experts`,
+    mainImageUrl:
+      "/assets/images/bronchlogo.png",
+    style: {
+      bannerLeftStyle: {},
+      bannerRightStyle: {
+        position: "realtive",
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+      },
+      bannerImageStyle: {
+        maxWidth: '20rem',
+      }
+    },
+  },
   {
     type: BannerType.Custom2,
     buttonText: "Watch Now",
@@ -143,6 +172,9 @@ function Banner() {
   const [banners, setBanners] = useState(BannerData);
   let history = useHistory();
   const { showMediaModal } = useContext(MediaModalContext);
+  const userBronchTalkMetaDataContext = useContext(UserBronchTalkMetaDataContext)
+  const userContext = useContext(UserContext)
+  const [showloader, setShowLoader] = useState(false)
 
   const goToRoute = async (id) => {
     // console.log(id);
@@ -197,7 +229,7 @@ function Banner() {
     slidesToShow: 1,
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 10000,
     responsive: [
       {
@@ -209,6 +241,45 @@ function Banner() {
     ],
   };
 
+  const handlePlatformPromo = (id) => {
+    switch (id) {
+      case "BronchTalk": {
+        const registerBT = () => {
+          let userInfo = userContext.userInfo
+          let fullname = `${userInfo.firstName} ${userInfo.lastName ? userInfo.lastName : ''}`
+          let mobile = userInfo.phoneNumber
+          if (mobile.includes('+91')) {
+            mobile = mobile.substr(3, mobile.length - 1)
+          }
+          let apiInput = {
+            fullname,
+            email: userInfo.email,
+            mobile,
+            state: userInfo.state,
+            city: userInfo.city,
+            specialty: userInfo.speciality
+          }
+          console.log(apiInput)
+          console.log("register")
+          bronchtalkindia_autoRegistration(apiInput)
+        }
+
+        if (userBronchTalkMetaDataContext) {
+          if (userBronchTalkMetaDataContext.password) {
+            bronchtalkindia_autoLogIn({
+              email: userBronchTalkMetaDataContext.email,
+              pass: userBronchTalkMetaDataContext.password
+            })
+          } else {
+            registerBT()
+          }
+        } else {
+          registerBT()
+        }
+      }
+    }
+  }
+
   return (
     <div
       className="bannerBox bannerBox--large"
@@ -216,20 +287,19 @@ function Banner() {
       style={{ position: "relative" }}
     >
       <Slider className="slider-banner-desktop" {...settings}>
-        {banners.map((item,index) => (
+        {banners.map((item, index) => (
           <div key={item.mainImageUrl}>
-            {/* {item.type === BannerType.LiveEvent && (
+            {item.type === BannerType.LiveEvent && (
               <LiveEventBanner
                 data={item}
                 enterEvent={enterEvent}
                 needCountDown={item.needCountDown}
               />
-            )} */}
-            {item.type === BannerType.LiveEvent && (
+            )}
+            {item.type === BannerType.platformPromo && (
               <LiveEventBanner2
                 data={item}
-                enterEvent={enterEvent}
-                needCountDown={item.needCountDown}
+                enterEvent={handlePlatformPromo}
               />
             )}
             {item.type === BannerType.ImageSingleButton && (

@@ -342,7 +342,7 @@ export function LiveEventBanner2(props) {
                 onClick={(e) => {
                   e.preventDefault();
                   // console.log(data.eventId);
-                  props.enterEvent(data.eventName);
+                  props.enterEvent(data.platformId);
                 }}
               >
                 {isRegistered ? "ENTER EVENT" : "JOIN NOW"}
@@ -355,7 +355,7 @@ export function LiveEventBanner2(props) {
               <img
                 className="bannerBox__pic"
                 style={data?.style?.bannerImageStyle ?? {}}
-                src={data.mainImageUr}
+                src={data.mainImageUrl}
                 alt=""
               />
             </div>

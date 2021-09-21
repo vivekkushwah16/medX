@@ -30,7 +30,7 @@ const UserContextProvider = (props) => {
   const [userInfo, setuserInfo] = useState(false);
   const [mediaMetaData, setMediaMetaData] = useState({});
   const [userMetaData, setUserMetaData] = useState({ events: [] });
-  const [userBronchTalkMetaData, setUserBronchTalkMetaData] = useState({});
+  const [userBronchTalkMetaData, setUserBronchTalkMetaData] = useState(null);
 
   useEffect(() => {
     // firestore.collection(BACKSTAGE_COLLECTION).doc(PLATFORM_BACKSTAGE_DOC).onSnapshot((doc) => {
@@ -272,26 +272,24 @@ const UserContextProvider = (props) => {
     });
   };
   const getUserBronchTalkMetaData = (uid) => {
-    console.log("uid",uid)
+    console.log("uid", uid, BRONCHTALK_COLLECTION)
     return new Promise(async (res, rej) => {
       try {
         if (uid) {
           const doc = await firestore
-            .collection("BronchTalk")
-            // .doc(uid)
+            .collection(BRONCHTALK_COLLECTION)
+            .doc(uid)
             .get();
-             console.log("gfgfgfgfgfgfg", doc.docs);
-             doc.docs.forEach((da)=>console.log("datatataatatatata",da))
-              // console.log("gfgfgfgfgfgfg", doc.data());
           if (doc.exists) {
-            console.log("gfgfgfgfgfgfg", doc.data());
             setUserBronchTalkMetaData(doc.data());
             res(doc.data());
+          } else {
+            res();
           }
-          res();
         }
       } catch (error) {
-        console.log("SASasasassa here",error)
+        console.log("SASasasassa here", error)
+        window.error = error
         rej(error);
       }
     });
@@ -316,11 +314,10 @@ const UserContextProvider = (props) => {
         }}
       >
         <UserMetaDataContext.Provider value={userMetaData}>
-          {props.children}
+          <UserBronchTalkMetaDataContext.Provider value={userBronchTalkMetaData}>
+            {props.children}
+          </UserBronchTalkMetaDataContext.Provider>
         </UserMetaDataContext.Provider>
-        <UserBronchTalkMetaDataContext.Provider value={userBronchTalkMetaData}>
-          {props.children}
-        </UserBronchTalkMetaDataContext.Provider>
       </UserContext.Provider>
     </>
   );
