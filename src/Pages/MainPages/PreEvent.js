@@ -64,9 +64,8 @@ function PreEvent(props) {
           title: props.eventTitle,
           email: userInfo.email,
           mobileNumber: userInfo.phoneNumber,
-          name: `${userInfo.firstName} ${
-            userInfo.lastName ? userInfo.lastName : ""
-          }`,
+          name: `${userInfo.firstName} ${userInfo.lastName ? userInfo.lastName : ""
+            }`,
           isDoctor: userInfo.profession === "Doctor",
           event: props.eventData.eventName,
           date: props.eventDate ? props.eventDate : `03 July 2021`,
@@ -156,9 +155,8 @@ function PreEvent(props) {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -235,17 +233,17 @@ function PreEvent(props) {
               showMobileSearchBtn={false}
             />
             <div
-              className="login2Box__left"
+              className="login2Box__left s"
               style={{
-                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg")`,
+                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?X=x")`,
                 backgroundPosition: "top",
                 backgroundSize: "contain",
                 backgroundRepeat: "repeat-x",
-                backgroundColor: `${
-                  props.eventData?.preventStyle?.preeventBGColor
-                    ? props.eventData.preventStyle.preeventBGColor
-                    : "inherit"
-                }`,
+                backgroundColor: `${props.eventData?.preventStyle?.preeventBGColor
+                  ? props.eventData.preventStyle.preeventBGColor
+                  : "inherit"
+                  }`,
+                backgroundBlendMode: "multiply",
               }}
             >
               {/* BannerBox */}
@@ -257,13 +255,11 @@ function PreEvent(props) {
                         <div className="bannerBox__left">
                           <img
                             className="bannerBox__pic mg-b35"
-                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                              props.event
-                            }/${
-                              isMobileOnly
+                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                              }/${isMobileOnly
                                 ? "WithAgenda_Mobile_Preevent_heading_left.png"
                                 : "WithAgenda_Preevent_heading_left.png"
-                            }?updated=${Math.random() * 100}`}
+                              }?updated=${Math.random() * 100}`}
                             alt="header_left"
                           />
 
@@ -360,7 +356,7 @@ function PreEvent(props) {
                                     </a>
                                   )}
                                 {!props.canEnterEvent &&
-                                props.eventData?.feedback?.enabled ? (
+                                  props.eventData?.feedback?.enabled ? (
                                   <a
                                     href="#"
                                     className="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30 event-feedback"
@@ -410,11 +406,11 @@ function PreEvent(props) {
                         <div className="bannerBox__right">
                           <img
                             className="bannerBox__pic"
-                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                              props.event
-                            }/WithAgenda_Preevent_heading_right.png?updated=${
-                              Math.random() * 100
-                            }`}
+                            src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                              }/${isMobileOnly && props.eventData.useSeparateImages
+                                ? "WithAgenda_Mobile_Preevent_heading_right.png"
+                                : "WithAgenda_Preevent_heading_right.png"
+                              }?updated=${Math.random() * 100}`}
                             alt=""
                           />
                         </div>
@@ -473,9 +469,8 @@ function PreEvent(props) {
             />
             <div className="mobile__layout">
               <img
-                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                  props.event
-                }/preevent_mobile_Speaker.png?updated=${Math.random() * 100}`}
+                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                  }/preevent_mobile_Speaker.png?updated=${Math.random() * 100}`}
                 alt=""
                 className="evolve__logo"
               />
@@ -492,11 +487,9 @@ function PreEvent(props) {
                       <div className="thanks">
                         {/* <img src={leftMobileTest} alt="" className="thank__you" /> */}
                         <img
-                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                            props.event
-                          }/prevent_mobile_info.png?updated=${
-                            Math.random() * 100
-                          }`}
+                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                            }/prevent_mobile_info.png?updated=${Math.random() * 100
+                            }`}
                           alt=""
                           className="thank__you"
                         />
@@ -534,11 +527,9 @@ function PreEvent(props) {
                       <div className="thanks">
                         {/* <img src={leftMobileTest} alt="" className="thank__you" /> */}
                         <img
-                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                            props.event
-                          }/prevent_mobile_info.png?updated=${
-                            Math.random() * 100
-                          }`}
+                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                            }/prevent_mobile_info.png?updated=${Math.random() * 100
+                            }`}
                           alt=""
                           className="thank__you"
                         />
@@ -627,9 +618,8 @@ function PreEvent(props) {
                 style={{ position: "unset", display: "block" }}
               >
                 <img
-                  src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                    props.event
-                  }/eventLogo.png?updated=${Math.random() * 100}`}
+                  src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                    }/eventLogo.png?updated=${Math.random() * 100}`}
                   alt=""
                   className="eventLogo"
                 />
@@ -638,9 +628,8 @@ function PreEvent(props) {
             {/* <img src={mobile__blur} alt="" className="mobile__blur" /> */}
             {/* <img src={blur__img} alt="" className="blur__img" /> */}
             <img
-              src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                props.event
-              }/pre_event_bg.jpg?updated=${Math.random() * 100}`}
+              src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                }/pre_event_bg.jpg?updated=${Math.random() * 100}`}
               alt=""
               className="spider__img"
             />
@@ -662,11 +651,9 @@ function PreEvent(props) {
                       <div className="thanks">
                         {/* <img src={leftTest} alt="" className="thank__you" /> */}
                         <img
-                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                            props.event
-                          }/preEventPage_left_heading.svg?updated=${
-                            Math.random() * 100
-                          }`}
+                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                            }/preEventPage_left_heading.svg?updated=${Math.random() * 100
+                            }`}
                           alt=""
                           className="thank__you"
                         />
@@ -704,11 +691,9 @@ function PreEvent(props) {
                       <div className="thanks">
                         {/* <img src={leftTest} alt="" className="thank__you" /> */}
                         <img
-                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                            props.event
-                          }/preEventPage_left_heading.svg?updated=${
-                            Math.random() * 100
-                          }`}
+                          src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                            }/preEventPage_left_heading.svg?updated=${Math.random() * 100
+                            }`}
                           alt=""
                           className="thank__you"
                         />
@@ -791,11 +776,9 @@ function PreEvent(props) {
             </div>
             <div className="right__div">
               <img
-                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                  props.event
-                }/preEventPage_right_speakers.png?updated=${
-                  Math.random() * 100
-                }`}
+                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                  }/preEventPage_right_speakers.png?updated=${Math.random() * 100
+                  }`}
                 alt=""
                 className="speakerAreas"
               />
@@ -804,9 +787,8 @@ function PreEvent(props) {
 
             <div className="bottom_right_eventLogo">
               <img
-                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${
-                  props.event
-                }/eventLogo.png?updated=${Math.random() * 100}`}
+                src={`https://storage.googleapis.com/cipla-impact.appspot.com/${props.event
+                  }/eventLogo.png?updated=${Math.random() * 100}`}
                 alt=""
                 className="eventLogo"
               />

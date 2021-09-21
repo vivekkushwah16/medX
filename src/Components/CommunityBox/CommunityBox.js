@@ -11,7 +11,7 @@ export default function CommunityBox(props) {
                 props.noticeboard && !props.noticeboard.disabled &&
                 <Noticeboard message={props.noticeboard} />
             }
-            <PollContainer id={props.id} pollAnalytics={props.pollAnalytics} />
+            <PollContainer id={props.id} pollAnalytics={props.pollAnalytics} currentActiveVideo={props.currentActiveVideo} />
         </div>
     )
 }

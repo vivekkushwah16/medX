@@ -4,11 +4,13 @@ import { PollQuestion, PollResult } from "../../Components/Poll";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import { PollManager } from "../../Managers/PollManager";
 
+
 export default function PollContainer(props) {
-  const { id: eventId, pollAnalytics } = props;
+  const { id: eventId, pollAnalytics, currentActiveVideo } = props;
   const { user } = useContext(UserContext);
   const [pollAnswerredData, setPollAnswerredData] = useState({});
   const [pollData, setPollData] = useState(null);
+  const [pollRawData, setPollRawData] = useState([]);
 
   useEffect(() => {
     PollManager.attachPollListener(eventId, (data, err) => {
@@ -19,6 +21,7 @@ export default function PollContainer(props) {
       data.sort(function (a, b) {
         return a.index - b.index;
       });
+      // setPollRawData(data)
       setPollData(data);
       getAllPollAnsweredDataForCurrentUser(data);
     });
@@ -26,6 +29,34 @@ export default function PollContainer(props) {
       PollManager.removePollListener();
     };
   }, []);
+
+  const showPoll = (_poll) => {
+    if (_poll.timeline) {
+      if (_poll.timeline === currentActiveVideo.timelineId || _poll.timeline === 'platform') {
+        return true
+      }
+    } else {
+      return true
+    }
+    return false
+  }
+
+  // useEffect(() => {
+  //   if (pollRawData) {
+  //     let processedData = []
+  //     pollRawData.forEach(_poll => {
+  //       if (_poll.timeline) {
+  //         if (_poll.timeline === currentActiveVideo.timelineId || _poll.timeline === 'platform') {
+  //           processedData.push(_poll)
+  //         }
+  //       } else {
+  //         processedData.push(_poll)
+  //       }
+  //     })
+  //     setPollData(processedData);
+  //     getAllPollAnsweredDataForCurrentUser(processedData);
+  //   }
+  // }, [currentActiveVideo, pollRawData])
 
   const submitResponse = (pollId, option) => {
     return new Promise(async (res, rej) => {
@@ -115,17 +146,22 @@ export default function PollContainer(props) {
         {visiblePollData &&
           visiblePollData.map((pollItem, index) => (
             <>
-              {pollItem.state === POLL_STATES.showQuestion && (
-                <PollQuestion
-                  data={pollItem}
-                  handleSubmit={submitResponse}
-                  checkIfAlreadyAnswered={pollAnswerredData[pollItem.id]}
-                  index={index}
-                />
-              )}
-              {pollItem.state === POLL_STATES.showResult && (
-                <PollResult data={pollItem} index={index} />
-              )}
+              {
+                showPoll(pollItem) &&
+                <>
+                  {pollItem.state === POLL_STATES.showQuestion && (
+                    <PollQuestion
+                      data={pollItem}
+                      handleSubmit={submitResponse}
+                      checkIfAlreadyAnswered={pollAnswerredData[pollItem.id]}
+                      index={index}
+                    />
+                  )}
+                  {pollItem.state === POLL_STATES.showResult && (
+                    <PollResult data={pollItem} index={index} />
+                  )}
+                </>
+              }
             </>
           ))}
       </div>

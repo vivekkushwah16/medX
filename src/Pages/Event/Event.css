@@ -188,14 +188,29 @@
   inset: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  opacity: 0.1;
+  align-items: flex-start;
   text-align: center;
+  width: 100% !important;
+  height: 0 !important;
+}
+
+#eventPage .eventBox__video > .video-hvr > div {
+  display: flex;
+  border-bottom-right-radius: 0.5rem;
+  background: #cbb4b4;
+  border-bottom-left-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  opacity: 0.65;
   transition: all 0.3s ease-in-out;
 }
-#eventPage .eventBox__video > .video-hvr:hover {
+#eventPage .eventBox__video > .video-hvr > div:hover {
   opacity: 1;
 }
+
+#eventPage .vide-hvr-btn {
+  margin: 0rem 0.25rem;
+}
+
 .noVisiblePoll {
   width: 100%;
   height: 100%;

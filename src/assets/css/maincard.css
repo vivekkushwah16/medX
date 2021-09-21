@@ -24,9 +24,9 @@
 .maincardBox__card-wrapper {
   padding: 1.5rem 0 1rem;
   /* overflow: auto;  */
-  /* height: calc(100vh - 25rem); */
+  min-height: calc(100vh - 25rem);
   height: auto;
-  min-height: 200px;
+  /* min-height: 200px; */
 }
 .from__title {
   background-color: transparent !important;

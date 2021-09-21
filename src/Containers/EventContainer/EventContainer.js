@@ -25,6 +25,8 @@ import swal from "sweetalert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAward, faTasks } from "@fortawesome/free-solid-svg-icons";
 import AgendaCard from "../../Components/AgendaCard/AgendaCard";
+import { firestore } from "../../Firebase/firebase";
+import { EVENT_COLLECTION } from "../../AppConstants/CollectionConstants";
 const menuItemsId = {
   About: "About",
   Agenda: "Agenda",
@@ -59,6 +61,17 @@ export function usePrevious(value) {
 const TIME_BETWEEN_CLOUDFUNCTION_HIT = 1 * 60 * 1000;
 
 export default function EventContainer(props) {
+
+  useEffect(() => {
+    window.updateTimeline = (timelineArr) => {
+      firestore.collection(EVENT_COLLECTION).doc(props.id).update({
+        activeTimelineId: timelineArr
+      }).then(() => {
+        console.log("done updating timeline")
+      })
+    }
+  }, [])
+
   //#region  decalaration
   const {
     id,
@@ -82,7 +95,7 @@ export default function EventContainer(props) {
   const { user, userInfo } = useContext(UserContext);
   const { addGAWithUserInfo, addCAWithUserInfo, updateUserStatus } =
     useContext(AnalyticsContext);
-  const [activeTimelineId, setActiveTimelineId] = useState("");
+  const [activeTimelineId_state, setActiveTimelineId] = useState("");
   const [currentActiveVideo, setCurrentActiveVideo] = useState({
     timelineId: "",
     url: "",
@@ -90,7 +103,7 @@ export default function EventContainer(props) {
   let firstTime = useMemo(() => true, []);
 
   //#endregion
-  //   console.log(props.agendaData, props.data, "*************");
+  // console.log(props.agendaData, props.data, "*************");
   const addClickAnalytics = (eventName) => {
     addGAWithUserInfo(eventName, { eventId: id });
     addCAWithUserInfo(`/${eventName}`, true, { eventId: id }, true);
@@ -107,15 +120,15 @@ export default function EventContainer(props) {
   };
 
   const QNASendAnalytics = () => {
-    if (data.activeTimelineId) {
+    if (currentActiveVideo.timelineId) {
       addGAWithUserInfo(QNA_INTERATCION, {
         eventId: id,
-        timelineId: data.activeTimelineId,
+        timelineId: currentActiveVideo.timelineId,
       });
       addCAWithUserInfo(
-        `/${QNA_INTERATCION}/${user.uid}_${data.activeTimelineId}`,
+        `/${QNA_INTERATCION}/${user.uid}_${currentActiveVideo.timelineId}`,
         false,
-        { eventId: id, timelineId: data.activeTimelineId },
+        { eventId: id, timelineId: currentActiveVideo.timelineId },
         true
       );
     } else {
@@ -130,17 +143,17 @@ export default function EventContainer(props) {
   };
 
   const PollInteractionAnalytics = (pollId, optionId) => {
-    if (data.activeTimelineId) {
+    if (currentActiveVideo.timelineId) {
       addGAWithUserInfo(POLL_INTERACTION, {
         eventId: id,
-        timelineId: data.activeTimelineId,
+        timelineId: currentActiveVideo.timelineId,
         pollId,
         optionId,
       });
       addCAWithUserInfo(
         `/${POLL_INTERACTION}/${user.uid}_${pollId}`,
         false,
-        { eventId: id, timelineId: data.activeTimelineId, pollId, optionId },
+        { eventId: id, timelineId: currentActiveVideo.timelineId, pollId, optionId },
         true
       );
     } else {
@@ -155,8 +168,17 @@ export default function EventContainer(props) {
   };
 
   const sendSessionAnalytics = (initalTimelineValue) => {
-    // console.log({ timelineId: initalTimelineValue });
+    console.log({ timelineId: initalTimelineValue });
     setActiveTimelineId(initalTimelineValue);
+    // console.log("GA - > ", SESSION_ATTENDED, {
+    //   eventId: id,
+    //   timelineId: initalTimelineValue,
+    // })
+    // console.log("addCAWithUserInfo -> ", `/${SESSION_ATTENDED}/${user.uid}_${initalTimelineValue}`,
+    //   false,
+    //   { eventId: id, timelineId: initalTimelineValue },
+    //   true)
+    // uncomment
     addGAWithUserInfo(SESSION_ATTENDED, {
       eventId: id,
       timelineId: initalTimelineValue,
@@ -169,7 +191,8 @@ export default function EventContainer(props) {
     );
   };
 
-  const initalTimelineValue = usePrevious(data.activeTimelineId);
+  const initalActiveTimelineArr = usePrevious(data.activeTimelineId)
+  const initalTimelineValue = usePrevious(currentActiveVideo?.timelineId);
 
   //#region maintain timespent
   const calcaulateLastTimespent = () => {
@@ -182,22 +205,22 @@ export default function EventContainer(props) {
     }
   };
 
-  const startTimespentCalculation = () => {
-    // console.log("Started TIme Calculation");
-    updateUserStatus(id, data.activeTimelineId, 0);
+  const startTimespentCalculation = (timelineId) => {
+    // console.log("Started TIme Calculation: ", timelineId);
+    updateUserStatus(id, timelineId, 0);
     window.session_CurrentHit_StartTimestamp = new Date().getTime();
     window.sessionTimerRef = setInterval(() => {
       // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
       let currentHitTimespent = calcaulateLastTimespent();
-      // console.log('updateUserStatus()', id, data.activeTimelineId, currentHitTimespent)
-      updateUserStatus(id, data.activeTimelineId, currentHitTimespent);
+      // console.log('updateUserStatus()', id, timelineId, currentHitTimespent)
+      updateUserStatus(id, timelineId, currentHitTimespent);
       // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
       window.session_CurrentHit_StartTimestamp = new Date().getTime();
-      window.session_CurrentHit_timelineId = data.activeTimelineId;
+      window.session_CurrentHit_timelineId = timelineId;
     }, TIME_BETWEEN_CLOUDFUNCTION_HIT);
   };
 
-  const stopTimespentCalculation = (startNew = false, previousId) => {
+  const stopTimespentCalculation = (startNew = false, previousId, nextTimelineId) => {
     if (window.sessionTimerRef) {
       clearInterval(window.sessionTimerRef);
       // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
@@ -215,41 +238,50 @@ export default function EventContainer(props) {
         // console.log('Close-updateUserStatus(2)', id, previousId, currentHitTimespent)
         updateUserStatus(id, previousId, currentHitTimespent);
 
-        startTimespentCalculation();
+        startTimespentCalculation(nextTimelineId);
       }
       // console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
     }
   };
   //#endregion
 
+  const setupAnalytics = (activeTimelineId) => {
+    // console.log(activeTimelineId)
+    if (initalTimelineValue) {
+      // console.log("////////////////////////////////////")
+      if (initalTimelineValue !== activeTimelineId) {
+        // console.log("differentTimeLineFOund, restart")
+        sendSessionAnalytics(activeTimelineId);
+        stopTimespentCalculation(true, initalTimelineValue, activeTimelineId);
+      }
+    } else {
+      // console.log("startCalcTimeFORFirstTIme")
+      sendSessionAnalytics(activeTimelineId);
+      startTimespentCalculation(activeTimelineId);
+    }
+  }
+
   useEffect(() => {
     // console.log(initalTimelineValue, data)
     if (data && data.activeTimelineId) {
-      setCurrentActiveVideo({
-        timelineId: data.activeTimelineId[0],
-        url: data.videoUrl,
-      });
-
-      let activeTimelineId = data.activeTimelineId;
-      // console.log(activeTimelineId)
-      if (initalTimelineValue) {
-        // console.log("////////////////////////////////////")
-        if (initalTimelineValue !== activeTimelineId) {
-          // console.log("differentTimeLineFOund, restart")
-          sendSessionAnalytics(activeTimelineId);
-          stopTimespentCalculation(true, initalTimelineValue);
-        }
-      } else {
-        // console.log("startCalcTimeFORFirstTIme")
-        sendSessionAnalytics(activeTimelineId);
-        startTimespentCalculation();
+      if (JSON.stringify(data.activeTimelineId) !== JSON.stringify(initalActiveTimelineArr)) {
+        setCurrentActiveVideo({
+          timelineId: data.activeTimelineId[0],
+          url: data.videoUrl,
+        });
       }
     } else {
+      setCurrentActiveVideo({
+        timelineId: null,
+        url: data.videoUrl,
+      });
       // console.log("No Active timeline");
       setActiveTimelineId(null);
       stopTimespentCalculation();
     }
   }, [data]);
+
+
 
   useEffect(() => {
     return () => {
@@ -257,19 +289,38 @@ export default function EventContainer(props) {
     };
   }, []);
 
+  // useEffect(() => {
+  //   console.log('===============')
+  //   console.log(props.agendaData.filter((item) => item.id === activeTimelineId[0]));
+  //   if (activeTimelineId)
+  //     setActiveTimeline(
+  //       props.agendaData.filter((item) => item.id === activeTimelineId)
+  //     );
+  //   // props.agendaData.filter((item) => item.id === activeTimelineId)[0];
+  // }, [activeTimelineId]);
+
   useEffect(() => {
-    // console.log(activeTimelineId);
-    setActiveTimeline(
-      props.agendaData.filter((item) => item.id === activeTimelineId.length - 1)
-    );
-    // props.agendaData.filter((item) => item.id === activeTimelineId)[0];
-  }, [activeTimelineId]);
+    if (currentActiveVideo) {
+      if (currentActiveVideo.timelineId) {
+        setupAnalytics(currentActiveVideo.timelineId)
+        setActiveTimeline(
+          props.agendaData.filter((item) => item.id === currentActiveVideo.timelineId)
+        );
+        return
+      }
+    }
+    setActiveTimeline(null);
+
+  }, [currentActiveVideo])
 
   useEffect(() => {
     if (_initalAgendaData) processAgendaData(_initalAgendaData);
-    setActiveTimeline(
-      props.agendaData.filter((item) => item.id === activeTimelineId)[0]
-    );
+    if (activeTimelineId_state) {
+      setActiveTimeline(
+        props.agendaData.filter((item) => activeTimelineId_state.indexOf(item.id) !== -1)[0]
+      );
+    }
+
   }, [_initalAgendaData]);
 
   const processAgendaData = (data) => {
@@ -278,9 +329,8 @@ export default function EventContainer(props) {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -357,32 +407,33 @@ export default function EventContainer(props) {
         style={activePollPanel && !isMobileOnly ? { maxWidth: "unset" } : {}}
       >
         <div
-          className={`d-flex row d-sm-block  ${
-            activePollPanel && !isMobileOnly ? "eventBox__inner" : ""
-          }`}
+          className={`d-flex row d-sm-block  ${activePollPanel && !isMobileOnly ? "eventBox__inner" : ""
+            }`}
         >
           <div className="eventBox__left col">
             <div className="eventBox__video">
               <ReactPlayer
                 playing={true}
-                url={currentActiveVideo.url}
+                url={currentActiveVideo.url}//{currentActiveVideo.url ? currentActiveVideo.url : data.videoUrl}
                 volume={0.85}
                 controls={true}
                 width="100%"
                 height={isMobileOnly ? "40vh" : "60vh"}
                 playsinline={true}
               ></ReactPlayer>
-              <div className="video-hvr">
-                <div>
-                   {/* {agendaData &&
-                    cureentAgendaDate &&
-                    data.activeTimelineId.length !== 0 &&
-                    agendaData[cureentAgendaDate].map((timeline, index) => {
-                      let url = "videoUrl" + index;
-                      return (
-                        data.activeTimelineId.indexOf(timeline.id) !== -1 && (
-                          <div className="mg-b10" key={timeline.id}>
-                            {currentActiveVideo.timelineId === timeline.id ? (
+
+              {agendaData &&
+                cureentAgendaDate &&
+                data.activeTimelineId &&
+                data.activeTimelineId.length > 1 &&
+                <div className="video-hvr">
+                  <div>
+                    {
+                      data.activeTimelineId.map((timeline, index) => {
+                        let url = "videoUrl" + (index > 0 ? index : '');
+                        return (
+                          <div className="vide-hvr-btn" key={timeline}>
+                            {currentActiveVideo.timelineId === timeline ? (
                               <span
                                 className="like-btn"
                                 style={{
@@ -391,7 +442,7 @@ export default function EventContainer(props) {
                                   minWidth: "118px",
                                 }}
                               >
-                                Watching
+                                {`Hall ${index + 1}(Watching)`}
                               </span>
                             ) : (
                               <span
@@ -399,22 +450,25 @@ export default function EventContainer(props) {
                                   minWidth: "118px",
                                 }}
                                 className="like-btn like-btn--active"
-                                onClick={() =>
+                                onClick={() => {
                                   startVideo(
-                                    timeline.id,
-                                    index === 0 ? data.videoUrl : data[url]
+                                    timeline,
+                                    data[url]
                                   )
                                 }
+                                }
                               >
-                                Watch Now
+                                {`Hall ${index + 1}`}
                               </span>
                             )}
                           </div>
-                        )
-                      );
-                    })} */}
+                        );
+                      })
+                    }
+                  </div>
                 </div>
-              </div>
+              }
+
               {/* <img src="assets/images/video3.jpg" alt="" /> */}
             </div>
             <div className="pd-t30 pd-b10 d-flex align-items-start justify-content-between">
@@ -469,39 +523,42 @@ export default function EventContainer(props) {
                 )}
 
                 {agendaData &&
-                cureentAgendaDate &&
-                data.activeTimelineId.length !== 0
-                  ? agendaData[cureentAgendaDate].map((timeline, index) => {
-                      let url = "videoUrl" + index;
-                      return (
-                        data.activeTimelineId.indexOf(timeline.id) !== -1 && (
-                          <AgendaCard
-                            key={timeline.id}
-                            fromTitle={true}
-                            timeline={timeline}
-                            haveVideo={false}
-                            haveLikeButton={true}
-                            handleClick={startVideo}
-                            videoUrl={index === 0 ? data.videoUrl : data[url]}
-                            currentActiveVideo={currentActiveVideo}
-                            animate={true}
-                            placeIndex={index}
-                            forEventPage={true}
-                            wantHeaderFooter={true}
-                            showLive={
-                              data.activeTimelineId !== null &&
-                              data.activeTimelineId.indexOf(timeline.id) !== -1
-                            }
-                          />
-                        )
-                      );
-                    })
+                  cureentAgendaDate &&
+                  data.activeTimelineId &&
+                  data.activeTimelineId.length !== 0
+                  ? _initalAgendaData.map((timeline, index) => {
+                    let timelineIndex = data.activeTimelineId.indexOf(timeline.id)
+                    let url = "videoUrl" + (timelineIndex > 0 ? timelineIndex : '');
+
+                    return (
+                      data.activeTimelineId.indexOf(timeline.id) !== -1 && (
+                        <AgendaCard
+                          key={timeline.id}
+                          fromTitle={true}
+                          timeline={timeline}
+                          haveVideo={false}
+                          haveLikeButton={true}
+                          handleClick={startVideo}
+                          videoUrl={data[url]}
+                          currentActiveVideo={currentActiveVideo}
+                          animate={true}
+                          placeIndex={timelineIndex}
+                          forEventPage={true}
+                          wantHeaderFooter={true}
+                          showLive={
+                            data.activeTimelineId !== null &&
+                            data.activeTimelineId.indexOf(timeline.id) !== -1
+                          }
+                        />
+                      )
+                    );
+                  })
                   : data.description && (
-                      <p className="eventBox__desc">
-                        {data.description}
-                        <br></br>
-                      </p>
-                    )}
+                    <p className="eventBox__desc">
+                      {data.description}
+                      <br></br>
+                    </p>
+                  )}
 
                 {/* {activeTimeline ? (
                    <AgendaCard
@@ -621,9 +678,10 @@ export default function EventContainer(props) {
               {activeMenu.id === menuItemsId.Polls && (
                 <div id="tab4" className="eventBox__tabs-content active">
                   <CommunityBox
+                    currentActiveVideo={currentActiveVideo}
                     sendQuestion={(eventId, ques) => {
                       QNASendAnalytics();
-                      sendQuestion(eventId, ques, data.activeTimelineId);
+                      sendQuestion(eventId, ques, currentActiveVideo.timelineId);
                     }}
                     noticeboard={data.noticeboard}
                     id={id}
@@ -646,14 +704,14 @@ export default function EventContainer(props) {
           </div>
           {!isMobileOnly && (
             <div
-              className={`eventBox__right  show-on-desktop col ${
-                activePollPanel ? "active" : ""
-              }`}
+              className={`eventBox__right  show-on-desktop col ${activePollPanel ? "active" : ""
+                }`}
             >
               <CommunityBox
+                currentActiveVideo={currentActiveVideo}
                 sendQuestion={(eventId, ques) => {
                   QNASendAnalytics();
-                  sendQuestion(eventId, ques, data.activeTimelineId);
+                  sendQuestion(eventId, ques, currentActiveVideo.timelineId);
                 }}
                 noticeboard={data.noticeboard}
                 id={id}
