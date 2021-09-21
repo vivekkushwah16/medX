@@ -6,7 +6,7 @@ import "./bannerIndex.css";
 import { isMobileOnly } from "react-device-detect";
 import Countdown from "../../Containers/Countdown/Countdown";
 // import { } from "react/cjs/react.development";
-import { UserMetaDataContext } from "../../Context/Auth/UserContextProvider";
+import UserContextProvider, { UserBronchTalkMetaDataContext, UserMetaDataContext } from "../../Context/Auth/UserContextProvider";
 //props -  mainTitle, subTitle_line1, subTitle_line2, route, mainImageUrl, gotoRoute(),buttonText
 export function Custom1(props) {
   const { data } = props;
@@ -95,29 +95,28 @@ export function Custom2(props) {
 //props - mainTitle, subTitle, eventId, enterEvent()
 export function LiveEventBanner(props) {
   const { data, needCountDown } = props;
-  const userMetaData = useContext(UserMetaDataContext)
-  const [isRegistered, setIsRegistered] = useState(false)
+  const userMetaData = useContext(UserMetaDataContext);
+  const [isRegistered, setIsRegistered] = useState(false);
   useEffect(() => {
     if (userMetaData) {
       // console.log(userMetaData)
-      let registeredEvents = userMetaData.events
+      let registeredEvents = userMetaData.events;
       // console.log(userMetaData.events)
       // console.log(data.eventId)
 
       if (registeredEvents) {
         if (registeredEvents.length > 0) {
           if (registeredEvents.indexOf(data.eventId) !== -1) {
-            setIsRegistered(true)
+            setIsRegistered(true);
           } else {
-            setIsRegistered(false)
+            setIsRegistered(false);
           }
         } else {
-          setIsRegistered(false)
+          setIsRegistered(false);
         }
       }
     }
-  }, [userMetaData])
-
+  }, [userMetaData]);
 
   return (
     // bannerBox__inner2 gradient-bg4
@@ -128,17 +127,16 @@ export function LiveEventBanner(props) {
       >
         <div className="container">
           <div className="d-flex">
-            <div className="bannerBox__left" style={data?.style?.bannerLeftStyle ?? {}}>
-              ̰
-              <h1 className="bannerBox__title mg-b30">{data.mainTitle}</h1>
+            <div
+              className="bannerBox__left"
+              style={data?.style?.bannerLeftStyle ?? {}}
+            >
+              ̰<h1 className="bannerBox__title mg-b30">{data.mainTitle}</h1>
               <div className="bannerBox__status mg-b30">
                 <h3 className="bannerBox__status-title">{data.subTitle}</h3>
                 {/* <span className="bannerBox__status-mark">LIVE</span> */}
               </div>
-              {
-                needCountDown &&
-                <Countdown event={data.eventId} />
-              }
+              {needCountDown && <Countdown event={data.eventId} />}
               <a
                 href="#"
                 className="btn bannerBox__btn mg-b30"
@@ -148,13 +146,19 @@ export function LiveEventBanner(props) {
                   props.enterEvent(data.eventName);
                 }}
               >
-                {isRegistered ? 'ENTER EVENT' : 'Sign Up'}
-
+                {isRegistered ? "ENTER EVENT" : "Sign Up"}
               </a>
             </div>
-            <div className="bannerBox__right" style={data?.style?.bannerRightStyle ?? {}}>
-              <img className="bannerBox__pic" style={data?.style?.bannerImageStyle ?? {}}
-                src={data.mainImageUrl} alt="" />
+            <div
+              className="bannerBox__right"
+              style={data?.style?.bannerRightStyle ?? {}}
+            >
+              <img
+                className="bannerBox__pic"
+                style={data?.style?.bannerImageStyle ?? {}}
+                src={data.mainImageUrl}
+                alt=""
+              />
             </div>
           </div>
         </div>
@@ -278,6 +282,82 @@ export function UpcompingEventBanner(props) {
             </div>
             <div className="bannerBox__right">
               <img className="bannerBox__pic" src={data.mainImageUrl} alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function LiveEventBanner2(props) {
+  const { data, needCountDown } = props;
+  const userBronchTalkMetaData = useContext(UserBronchTalkMetaDataContext);
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  // console.log("Ssasasasasasasa", userBronchTalkMetaData);
+  useEffect(() => {
+    if (userBronchTalkMetaData) {
+      // console.log(userMetaData)
+      let registeredEvents = userBronchTalkMetaData.events;
+      // console.log(userMetaData.events)
+      // console.log(data.eventId)
+
+      if (registeredEvents) {
+        if (registeredEvents.length > 0) {
+          if (registeredEvents.indexOf(data.eventId) !== -1) {
+            setIsRegistered(true);
+          } else {
+            setIsRegistered(false);
+          }
+        } else {
+          setIsRegistered(false);
+        }
+      }
+    }
+  }, [userBronchTalkMetaData]);
+
+  return (
+    // bannerBox__inner2 gradient-bg4
+    <div className="bannerBox__inner ">
+      <div
+        className="bannerBox__slide"
+        style={{ backgroundImage: "url(/assets/images/bronchbg.png)" }}
+      >
+        <div className="container">
+          <div className="d-flex">
+            <div
+              className="bannerBox__left"
+              style={data?.style?.bannerLeftStyle ?? {}}
+            >
+              ̰<h1 className="bannerBox__title mg-b30">{data.mainTitle}</h1>
+              <div className="bannerBox__status mg-b30">
+                <h3 className="bannerBox__status-title">{data.subTitle}</h3>
+                {/* <span className="bannerBox__status-mark">LIVE</span> */}
+              </div>
+              {/* {needCountDown && <Countdown event={data.eventId} />} */}
+              <a
+                href="#"
+                className="btn bannerBox__btn mg-b30"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // console.log(data.eventId);
+                  props.enterEvent(data.eventName);
+                }}
+              >
+                {isRegistered ? "ENTER EVENT" : "JOIN NOW"}
+              </a>
+            </div>
+            <div
+              className="bannerBox__right"
+              style={data?.style?.bannerRightStyle ?? {}}
+            >
+              <img
+                className="bannerBox__pic"
+                style={data?.style?.bannerImageStyle ?? {}}
+                src={data.mainImageUr}
+                alt=""
+              />
             </div>
           </div>
         </div>

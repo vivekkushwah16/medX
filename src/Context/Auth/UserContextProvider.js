@@ -6,6 +6,7 @@ import {
   PLATFORM_BACKSTAGE_DOC,
   PROFILE_COLLECTION,
   USERMETADATA_COLLECTION,
+  BRONCHTALK_COLLECTION,
 } from "../../AppConstants/CollectionConstants";
 import { MediaType } from "../../AppConstants/TypeConstant";
 import firebase, {
@@ -19,6 +20,7 @@ import VideoManager from "../../Managers/VideoManager";
 
 export const UserContext = createContext();
 export const UserMetaDataContext = createContext();
+export const UserBronchTalkMetaDataContext = createContext();
 
 const UserContextProvider = (props) => {
   const [user, setUser] = useState(
@@ -28,6 +30,7 @@ const UserContextProvider = (props) => {
   const [userInfo, setuserInfo] = useState(false);
   const [mediaMetaData, setMediaMetaData] = useState({});
   const [userMetaData, setUserMetaData] = useState({ events: [] });
+  const [userBronchTalkMetaData, setUserBronchTalkMetaData] = useState({});
 
   useEffect(() => {
     // firestore.collection(BACKSTAGE_COLLECTION).doc(PLATFORM_BACKSTAGE_DOC).onSnapshot((doc) => {
@@ -48,7 +51,8 @@ const UserContextProvider = (props) => {
         setInitalCheck(true);
         analytics.setUserId(user.uid);
         addUserLoginAnalytics(user.uid);
-        getUserMetaData(user.uid)
+        getUserMetaData(user.uid);
+        getUserBronchTalkMetaData(user.uid);
         // const userInfo = await getUserProfile(user.uid)
         // console.log(userInfo)
         // setuserInfo(userInfo)
@@ -260,13 +264,38 @@ const UserContextProvider = (props) => {
             setUserMetaData(doc.data());
             res(doc.data());
           }
-          res()
+          res();
         }
       } catch (error) {
         rej(error);
       }
     });
-  }
+  };
+  const getUserBronchTalkMetaData = (uid) => {
+    console.log("uid",uid)
+    return new Promise(async (res, rej) => {
+      try {
+        if (uid) {
+          const doc = await firestore
+            .collection("BronchTalk")
+            // .doc(uid)
+            .get();
+             console.log("gfgfgfgfgfgfg", doc.docs);
+             doc.docs.forEach((da)=>console.log("datatataatatatata",da))
+              // console.log("gfgfgfgfgfgfg", doc.data());
+          if (doc.exists) {
+            console.log("gfgfgfgfgfgfg", doc.data());
+            setUserBronchTalkMetaData(doc.data());
+            res(doc.data());
+          }
+          res();
+        }
+      } catch (error) {
+        console.log("SASasasassa here",error)
+        rej(error);
+      }
+    });
+  };
 
   return (
     <>
@@ -289,6 +318,9 @@ const UserContextProvider = (props) => {
         <UserMetaDataContext.Provider value={userMetaData}>
           {props.children}
         </UserMetaDataContext.Provider>
+        <UserBronchTalkMetaDataContext.Provider value={userBronchTalkMetaData}>
+          {props.children}
+        </UserBronchTalkMetaDataContext.Provider>
       </UserContext.Provider>
     </>
   );

@@ -374,7 +374,7 @@ export default function EventContainer(props) {
               ></ReactPlayer>
               <div className="video-hvr">
                 <div>
-                   {agendaData &&
+                   {/* {agendaData &&
                     cureentAgendaDate &&
                     data.activeTimelineId.length !== 0 &&
                     agendaData[cureentAgendaDate].map((timeline, index) => {
@@ -412,7 +412,7 @@ export default function EventContainer(props) {
                           </div>
                         )
                       );
-                    })}
+                    })} */}
                 </div>
               </div>
               {/* <img src="assets/images/video3.jpg" alt="" /> */}

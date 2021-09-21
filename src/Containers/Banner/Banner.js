@@ -6,6 +6,7 @@ import {
   PromoVideoBanner,
   Custom1,
   Custom2,
+  LiveEventBanner2,
 } from "../../Components/Banners";
 import * as Scroll from "react-scroll";
 import Slider from "react-slick";
@@ -47,10 +48,10 @@ const BannerType = {
   PromoVideoBanner: "promoVideoBanner",
   Custom1: "Custom1",
   Custom2: "Custom2",
+  Custom3: "Custom3"
 };
 
 const BannerData = [
-
   // {
   //   type: BannerType.LiveEvent,
   //   mainTitle:
@@ -139,7 +140,7 @@ const BannerData = [
 ];
 
 function Banner() {
-  const [banners, setBanners] = useState(BannerData)
+  const [banners, setBanners] = useState(BannerData);
   let history = useHistory();
   const { showMediaModal } = useContext(MediaModalContext);
 
@@ -173,21 +174,20 @@ function Banner() {
   };
 
   useEffect(() => {
-    firestore.collection(BACKSTAGE_COLLECTION).doc("banners").onSnapshot(data => {
-      if (data.exists) {
-        let newBannerData = data.data().bannersData
-        let prossedData = []
-        newBannerData.forEach(banner => {
-          if (!banner.isDisabled)
-            prossedData.push(banner)
-        })
-        setBanners(prev => ([
-          ...prossedData,
-          ...BannerData,
-        ]))
-      }
-    })
-  }, [])
+    firestore
+      .collection(BACKSTAGE_COLLECTION)
+      .doc("banners")
+      .onSnapshot((data) => {
+        if (data.exists) {
+          let newBannerData = data.data().bannersData;
+          let prossedData = [];
+          newBannerData.forEach((banner) => {
+            if (!banner.isDisabled) prossedData.push(banner);
+          });
+          setBanners((prev) => [...prossedData, ...BannerData]);
+        }
+      });
+  }, []);
 
   var settings = {
     dots: true,
@@ -216,10 +216,17 @@ function Banner() {
       style={{ position: "relative" }}
     >
       <Slider className="slider-banner-desktop" {...settings}>
-        {banners.map((item) => (
+        {banners.map((item,index) => (
           <div key={item.mainImageUrl}>
-            {item.type === BannerType.LiveEvent && (
+            {/* {item.type === BannerType.LiveEvent && (
               <LiveEventBanner
+                data={item}
+                enterEvent={enterEvent}
+                needCountDown={item.needCountDown}
+              />
+            )} */}
+            {item.type === BannerType.LiveEvent && (
+              <LiveEventBanner2
                 data={item}
                 enterEvent={enterEvent}
                 needCountDown={item.needCountDown}
