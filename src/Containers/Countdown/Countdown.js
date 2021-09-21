@@ -7,12 +7,14 @@ function Countdown(props) {
   const [mins, setMins] = useState(0);
   const [secs, setSecs] = useState(0);
   const [showTimer, setTimerVisiblity] = useState(false)
+  const [checkedOnce, setCheckedOnce] = useState(false)
   const timerRef = React.useRef();
 
   const startTimer = (eventTime) => {
     const DateNow = new Date().getTime();
     const difference = eventTime - DateNow;
     if (difference < 0) {
+      setCheckedOnce(true)
       setTimerVisiblity(false)
       if (timerRef.current) {
         clearInterval(timerRef.current)
@@ -33,6 +35,7 @@ function Countdown(props) {
     setMins(remainingMin);
     setSecs(remainingSec);
     if (!showTimer) {
+      setCheckedOnce(true)
       setTimerVisiblity(true)
     }
   };
@@ -65,13 +68,18 @@ function Countdown(props) {
   }, []);
 
   if (!showTimer) {
-    return (
-      <div className="count__container" style={{ marginBottom: '2rem' }}>
-        <div className="count__container_Live">
-          <div className="Live-dot"></div>  Live
+    if (checkedOnce) {
+      return (
+        <div className="count__container" style={{ marginBottom: '2rem' }}>
+          <div className="count__container_Live">
+            <div className="Live-dot"></div>  Live
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return null
+    }
+
   } else {
     return (
       <div className="count__container">
