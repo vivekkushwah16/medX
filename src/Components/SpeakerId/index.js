@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { SPEAKER_PROFILE_CLICK_EVENT } from "../../AppConstants/AnalyticsEventName";
 import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
@@ -27,32 +27,41 @@ export function CardSpeaker(props) {
   const [isProfileActive, setIsProfileActive] = useState(false);
   const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext);
   const { user } = useContext(UserContext);
+  const ref = useRef(Math.random())
 
   const openSocialLink = (link) => {
     window.open(link, "_Blank");
   };
 
   useEffect(() => {
-    var elems = document.querySelectorAll(".maincardBox__card-profile");
-    [].forEach.call(elems, function (el) {
-      el.classList.remove("active");
-    });
+    // var elems = document.querySelectorAll(".maincardBox__card-profile");
+    // [].forEach.call(elems, function (el) {
+    //   el.classList.remove("active");
+    // });
+    // if (isProfileActive) {
+    //   document.getElementById(profile.id).classList.add("active");
+    // }
+    const handleClick = () => {
+      window.removeEventListener('click', handleClick)
+      setIsProfileActive(false)
+    }
     if (isProfileActive) {
-      document.getElementById(profile.id).classList.add("active");
+      window.addEventListener('click', handleClick)
     }
   }, [isProfileActive]);
+
   return (
     <div
-      key={`${profile.id}-profile`}
+      key={`${profile.id}-profile-${ref.current}`}
       id={`${props.fromTitle ? "" : profile.id}`}
-      className={`maincardBox__card-profile`}
+      className={`maincardBox__card-profile ${isProfileActive ? 'active' : ''}`}
       style={{
         marginRight: !multiple && "2rem",
         pointerEvents: `${props.fromTitle ? "none" : ""}`,
       }}
     >
       {/* ${isProfileActive ? 'active' : ''}`} > */}
-      {isProfileActive && (
+      {/* {isProfileActive && (
         <div
           className="maincardBox__card-profile-popover-closeConatiner"
           style={{
@@ -68,7 +77,7 @@ export function CardSpeaker(props) {
             setIsProfileActive(false);
           }}
         ></div>
-      )}
+      )} */}
       <div className={`maincardBox__card-profile-popover`}>
         <a
           href="#"
@@ -155,7 +164,7 @@ export function CardSpeaker(props) {
         {!multiple && (
           <p
             className="maincardBox__card-profile-subtitle"
-            // style={{color:'#ffffff96'}}
+          // style={{color:'#ffffff96'}}
           >
             {profile.designation}
           </p>

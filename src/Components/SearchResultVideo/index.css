@@ -94,8 +94,8 @@
   .search_video_txt {
     text-align: left;
   }
-  .wrap-speakers,
-  .maincardBox__card-profile {
+  .searchResult .wrap-speakers,
+  .searchResult .maincardBox__card-profile {
     overflow: hidden;
     width: 100%;
   }

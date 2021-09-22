@@ -59,6 +59,7 @@
   transition: all 0.3s;
   background: #fff;
   max-width: 41.25rem;
+  z-index: 55;
   /* transform: scale(0.95, 0.95); */
 }
 
@@ -533,6 +534,9 @@
 @media only screen and (max-width: 991px) {
   .from__title__rating {
     justify-content: flex-start !important;
+  }
+  .maincardBox__card-profile-text {
+    max-width: 70%;
   }
 }
 .stars {
