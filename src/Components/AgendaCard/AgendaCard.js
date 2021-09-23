@@ -27,6 +27,8 @@ function AgendaCard(props) {
     wantHeaderFooter,
     showLive,
     handleClick,
+    redirectBtn,
+    redirectLink,
   } = props;
   const { getLike, addLike, removeLike, getRating, updateRating } =
     useContext(likeContext);
@@ -201,6 +203,22 @@ function AgendaCard(props) {
               alignItems: "end",
             }}
           >
+            {
+              redirectBtn &&
+              <div className="rating-block">
+                <button
+                  className={` mg-b40 mg-sm - b20 like-btn ${like ? "like-btn--active" : ""
+                    } `}
+                  onClick={() => {
+                    window.open(redirectLink, '_blank')
+                  }}
+                >
+                  <i className="icon-link"></i>
+                  Connect
+                </button>
+              </div>
+            }
+
             {haveLikeButton && (
               <div
                 className={`rating-block ${props.fromTitle ? "from__title__rating" : ""
@@ -354,6 +372,7 @@ function AgendaCard(props) {
           </>
         )}
       </div>
+
       <div className="maincardBox__card-right">
         <h4 className="mg-b15 maincardBox__card-title">{timeline.title}</h4>
         <ReadMore
@@ -420,6 +439,7 @@ function AgendaCard(props) {
           </div>
         )}
       </div>
+
       {forEventPage && (
         <div className="rating-block">
           <button

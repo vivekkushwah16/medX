@@ -15,6 +15,7 @@ import {
 import { HOME_ROUTE } from "../../AppConstants/Routes";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import { firestore } from "../../Firebase/firebase";
+import Workshop from "../../Pages/MainPages/Workshop";
 import LoadableFallback from "../LoadableFallback/LoadableFallback";
 import NotLoggedInRoutes from "../NotLoggedInRoutes/NotLoggedInRoutes";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -207,6 +208,26 @@ export const EventChecker = (props) => {
             eventDetails.feedback &&
               eventDetails.feedback.enabled ?
               <iframe className="feedback-fullpage" src={`${eventDetails.feedback.link}?id=123&event=${eventDetails.id.toLowerCase()}&title=${eventDetails.title}`} title="feedback" />
+              :
+              <Redirect to={`${url}/signup`}></Redirect>
+          }
+        </ProtectedRoute>
+
+        <ProtectedRoute
+          redirectTo={`${url}/signup`}
+          path={`${url}/workshop`}
+        >
+          {
+            eventDetails.workshop &&
+              eventDetails.workshop.enabled ?
+              <Workshop
+                event={eventDetails.id.toLowerCase()}
+                eventTitle={eventDetails.title}
+                canEnterEvent={eventStatus === EventStausType.Live}
+                eventData={eventDetails}
+                workshopData={eventDetails.workshop}
+                redirectLink={`${url}`}//redirect if not registered
+              />
               :
               <Redirect to={`${url}/signup`}></Redirect>
           }
