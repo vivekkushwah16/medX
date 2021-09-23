@@ -98,6 +98,7 @@ function showLeaderBoard() {
         });
         // console.log(rankList);
         // console.log(r);
+        document.getElementById("quizContainer").style.display = "none";
         resolve(rankList);
       });
   });

@@ -22,17 +22,17 @@
 	</style>
 </head>
 
-<body style="background: url(image/bgland.png);background-size: 100% 100%;background-repeat: no-repeat;background-color: #fff;">
+<body style="background: url(image/bgland.png);background-size: 100% 100%;background-repeat: no-repeat;background-color: #fff;background-attachment: fixed;">
 	<!-- <img src="image/bgland.jpg" width="100%" style="height:100%"> -->
 	<div class="logo-partnersumit">
-		<div><img class="logo-partnersumit" src="image/logoipaedia.png"></div>
+		<!-- <div><img class="logo-partnersumit" src="image/logoipaedia.png"></div> -->
 		<!-- <div><img class="logo-img-other" src="image/2.png"></div>
 			<div><img class="logo-img-other" src="image/3.png"></div>						 -->
 	</div>
 
 	<!-- </div> -->
 
-	<div class="container box-shadow">
+	<div class="container box-shadow" id="quizContainer">
 
 		<!-- start page -->
 		<div id="firstpage">
@@ -68,7 +68,7 @@
 				<div id="tab">
 					<div class="question_container">
 						<p id="que">---Question---</p>
-						<img src="image/q1.png" width="auto" height="200px" id="question_image">
+						<img src="image/q1.png" width="auto" height="250px" id="question_image">
 					</div>
 					<hr />
 					<div class="custom-control custom-radio" id="radio1">
@@ -108,7 +108,7 @@
 					</div>
 				</div>
 				<div style="overflow:auto; ">
-					<button type="button" disabled="disabled" class="btn-next mb-2" id="next-button" onclick="next();">
+					<button type="button" disabled="disabled" class="btn-next" id="next-button" onclick="next();">
 						Next
 					</button>
 				</div>
