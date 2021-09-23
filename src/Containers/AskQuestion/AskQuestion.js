@@ -51,9 +51,8 @@ export default function AskQuestion(props) {
               style={{ pointerEvents: "none" }}
               href="#"
             >
-              {`${
-                userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ""
-              }${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ""} `}
+              {`${userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ""
+                }${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ""} `}
             </a>
 
             <div class="form-group">

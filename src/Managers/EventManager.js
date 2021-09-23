@@ -484,7 +484,7 @@ const EventManager = {
         })
     },
     attachEngagmentListener: (eventId, callback) => {
-        console.log("xxxxxxxxxxxxx", eventId, callback)
+        // console.log("xxxxxxxxxxxxx", eventId, callback)
         try {
             engagmentListenerRef = firestore.collection(ENGAGEMENTS_COLLECTION).where('eventId', '==', eventId).onSnapshot(snapshot => {
                 console.log(snapshot)

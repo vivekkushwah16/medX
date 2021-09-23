@@ -95,6 +95,7 @@
   text-decoration: none;
   color: #fff;
   background: #01518a;
+  transform: scale(1) !important;
 }
 
 .communityBox__question {

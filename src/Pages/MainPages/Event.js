@@ -100,7 +100,7 @@ export default function Event(props) {
   }, []);
 
   useEffect(() => {
-    console.log(event)
+    // console.log(event)
     if (event) {
       // Get the root element
       var r = document.querySelector(':root');
@@ -191,7 +191,7 @@ export default function Event(props) {
       getPartnerWithUsData();
     }
 
-    console.log(finalMenu[EVENTPAGE_MENUITEM_INDEX.Engagement])
+    // console.log(finalMenu[EVENTPAGE_MENUITEM_INDEX.Engagement])
     if (finalMenu[EVENTPAGE_MENUITEM_INDEX.Engagement].enabled) {
       getEngagment()
     }
@@ -242,7 +242,7 @@ export default function Event(props) {
 
   const getEngagment = () => {
     try {
-      console.log('getEngagment', param.id)
+      // console.log('getEngagment', param.id)
       attachEngagementListener(param.id, (data) => {
         setEngagementData(data);
       });
@@ -280,7 +280,7 @@ export default function Event(props) {
   };
 
   const addClickAnalytics = (eventName) => {
-    console.log(userInfo);
+    // console.log(userInfo);
     addGAWithUserInfo(eventName, { eventId: param.id });
     addCAWithUserInfo(`/${eventName}`, true, { eventId: param.id }, true);
   };
