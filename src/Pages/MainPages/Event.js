@@ -22,6 +22,35 @@ import { USERMETADATA_COLLECTION } from "../../AppConstants/CollectionConstants"
 import LoadableFallback from "../../Components/LoadableFallback/LoadableFallback";
 import Myprofile from "../../Containers/myProfile/Myprofile";
 
+export const EVENTPAGE_MENUITEM_ID = {
+  About: "About",
+  Agenda: "Agenda",
+  Trending: "Trending",
+  Polls: "Polls",
+  Partner_with_us: "Partner_with_us",
+  Engagement: "Engagement"
+};
+
+export const EVENTPAGE_MENUITEM_INDEX = {
+  About: 0,
+  Agenda: 1,
+  Trending: 2,
+  Polls: 3,
+  Partner_with_us: 4,
+  Engagement: 5
+};
+
+export const EVENTPAGE_MENUITEM = [
+  { id: EVENTPAGE_MENUITEM_ID.About, name: "Faculty", className: "", enabled: true },
+  { id: EVENTPAGE_MENUITEM_ID.Agenda, name: "Agenda", className: "", enabled: true },
+  { id: EVENTPAGE_MENUITEM_ID.Trending, name: "Resources", className: "", enabled: true },
+  { id: EVENTPAGE_MENUITEM_ID.Polls, name: "Q&A", className: "hide-on-desktop", enabled: true },
+  { id: EVENTPAGE_MENUITEM_ID.Partner_with_us, name: "Partner with us", className: "", enabled: true },
+  { id: EVENTPAGE_MENUITEM_ID.Engagement, name: "Engagement", className: "", enabled: true },
+];
+
+let MenuSpecification = "menuSpecification"
+
 export default function Event(props) {
   // console.log(props);
   const { event } = props;
@@ -45,6 +74,8 @@ export default function Event(props) {
     removeEventDataListener,
     attachTimelineListener,
     removeTimelineListener,
+    attachEngagementListener,
+    removeEngagementListener
   } = useContext(eventContext);
   const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext);
   let { getLike, addLike, removeLike } = useContext(likeContext);
@@ -52,9 +83,11 @@ export default function Event(props) {
   const [eventData, setEventData] = useState({});
   const [agendaData, setAgendaData] = useState([]);
   const [trendingData, setTrendingData] = useState(null);
+  const [engagementData, setEngagementData] = useState(null);
   const [partnerWithUsData, setPartnerWithUsData] = useState(null);
   const [likedEvent, setLikeEvent] = useState(false);
   const [isloading, setIsloading] = useState(true);
+  const [menuItems, setMenuItems] = useState(null);
 
   useEffect(() => {
     checkIfUserIsRegistered();
@@ -62,6 +95,7 @@ export default function Event(props) {
       removeTrendingDataListener();
       removeEventDataListener();
       removeTimelineListener();
+      removeEngagementListener();
     };
   }, []);
 
@@ -115,12 +149,56 @@ export default function Event(props) {
   };
 
   const startLoadingContent = () => {
+    setMenuItems(EVENTPAGE_MENUITEM);
     setIsloading(false);
     getEventInfo();
-    getAgendaInfo();
-    getTrending();
-    getPartnerWithUsData();
+    // getAgendaInfo();
+    // getTrending();
+    // getPartnerWithUsData();
   };
+
+  const checkEventMenu = (eventData) => {
+    let finalMenu = EVENTPAGE_MENUITEM
+    if (eventData[MenuSpecification]) {
+      let newSpecifications = eventData[MenuSpecification]
+
+      let newMenuItem = EVENTPAGE_MENUITEM.map(item => {
+        if (newSpecifications.hasOwnProperty(item.id)) {
+          let newItem = newSpecifications[item.id]
+          const updateValue = (newObj, key, valueContainer, newKey) => {
+            if (newObj.hasOwnProperty(key)) {
+              valueContainer[newKey] = newObj[key]
+            }
+          }
+          updateValue(newItem, 'status', item, 'enabled')
+          updateValue(newItem, 'name', item, 'name')
+          return item
+        } else {
+          return item
+        }
+      })
+      finalMenu = newMenuItem
+    }
+    if (finalMenu[EVENTPAGE_MENUITEM_INDEX.Agenda].enabled) {
+      getAgendaInfo();
+    }
+
+    if (finalMenu[EVENTPAGE_MENUITEM_INDEX.Trending].enabled) {
+      getTrending();
+    }
+
+    if (finalMenu[EVENTPAGE_MENUITEM_INDEX.Partner_with_us].enabled) {
+      getPartnerWithUsData();
+    }
+
+    console.log(finalMenu[EVENTPAGE_MENUITEM_INDEX.Engagement])
+    if (finalMenu[EVENTPAGE_MENUITEM_INDEX.Engagement].enabled) {
+      getEngagment()
+    }
+
+
+    setMenuItems(EVENTPAGE_MENUITEM)
+  }
 
   const getEventInfo = async () => {
     try {
@@ -128,6 +206,7 @@ export default function Event(props) {
       // setEventData(data)
       getEventDataListener(param.id, (data) => {
         setEventData(data);
+        checkEventMenu(data)
       });
       getLike(param.id).then((status) => setLikeEvent(status));
     } catch (error) {
@@ -160,6 +239,17 @@ export default function Event(props) {
       console.log(error);
     }
   };
+
+  const getEngagment = () => {
+    try {
+      console.log('getEngagment', param.id)
+      attachEngagementListener(param.id, (data) => {
+        setEngagementData(data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const getPartnerWithUsData = async () => {
     try {
@@ -243,17 +333,19 @@ export default function Event(props) {
                 stickyOnScroll={true}
               />
             )}
-            {eventData && (
+            {eventData && menuItems && (
               <EventContainer
                 id={param.id}
                 data={eventData}
                 agendaData={agendaData}
                 trendingData={trendingData}
+                engagementData={engagementData}
                 partnerWithUsData={partnerWithUsData}
                 countPartnerWithUsAgree={countPartnerWithUsAgree}
                 sendQuestion={sendQuestion}
                 likedEvent={likedEvent}
                 handleEventLikeButton={handleEventLikeButton}
+                menuItems={menuItems}
               />
             )}
             {/* <Footer /> */}

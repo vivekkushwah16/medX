@@ -94,6 +94,14 @@ export default function EventContextProvider(props) {
     EventManager.removeTimelineListener();
   };
 
+  const attachEngagementListener = (eventId, callback) => {
+    EventManager.attachEngagmentListener(eventId, callback);
+  };
+
+  const removeEngagementListener = () => {
+    EventManager.removeEngagmentListener();
+  };
+
   const getTrendingData = async (eventId) => {
     const eventIds = Object.keys(trendingData);
     if (eventIds.indexOf(eventId) !== -1) {
@@ -216,6 +224,8 @@ export default function EventContextProvider(props) {
         sendQuestion,
         getEventDataListener,
         removeEventDataListener,
+        attachEngagementListener,
+        removeEngagementListener,
       }}
     >
       {props.children}

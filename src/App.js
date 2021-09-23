@@ -33,6 +33,7 @@ import Myprofile from "./Containers/myProfile/Myprofile";
 import IntersetSelection from "./Containers/IntersetSelection";
 import EventManager from "./Managers/EventManager";
 import SearchPage from "./Pages/SearchPage";
+import { MediaModalType } from "./AppConstants/ModalType";
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 // import Upload from './Components/Upload/upload';
@@ -158,6 +159,12 @@ export default function App() {
 
   useEffect(() => {
     // downloadData()
+    // EventManager.addEngagement('testevent', MediaModalType.Iframe, 'Quiz', 'Show us what you got!!', '/fd1/index.html', 'https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FForacort%20Synchrobreathe%20-%20Infoguide.jpg?alt=media&token=9195d987-7708-4039-ab78-70613fce7b6a').then(res => {
+    //   console.log('xxxxxxxxxxxxxxxxx')
+    //   console.log('xxxxxxxxxxxxxxxxx')
+    //   console.log(res)
+    //   console.log('xxxxxxxxxxxxxxxxx')
+    // })
   }, []);
 
   const updateUserMetaData = async () => {

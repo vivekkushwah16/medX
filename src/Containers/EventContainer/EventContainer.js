@@ -4,6 +4,7 @@ import ReactPlayer from "react-player";
 import {
   CERTIFICATE_CLICK,
   DOWNLOAD_CERTIFICATE,
+  ENGAGEMENT_CLICK,
   FEEDBACK_CLICK,
   POLL_INTERACTION,
   QNA_INTERATCION,
@@ -27,21 +28,7 @@ import { faAward, faTasks } from "@fortawesome/free-solid-svg-icons";
 import AgendaCard from "../../Components/AgendaCard/AgendaCard";
 import { firestore } from "../../Firebase/firebase";
 import { EVENT_COLLECTION } from "../../AppConstants/CollectionConstants";
-const menuItemsId = {
-  About: "About",
-  Agenda: "Agenda",
-  Trending: "Trending",
-  Polls: "Polls",
-  Partner_with_us: "Partner_with_us",
-};
-
-const menuItems = [
-  { id: menuItemsId.About, name: "Faculty", className: "" },
-  { id: menuItemsId.Agenda, name: "Agenda", className: "" },
-  { id: menuItemsId.Trending, name: "Resources", className: "" },
-  { id: menuItemsId.Polls, name: "Q&A", className: "hide-on-desktop" },
-  { id: menuItemsId.Partner_with_us, name: "Partner with us", className: "" },
-];
+import { EVENTPAGE_MENUITEM_ID } from "../../Pages/MainPages/Event";
 
 const eventBoxStyle = {
   "& :after": {
@@ -83,6 +70,8 @@ export default function EventContainer(props) {
     sendQuestion,
     likedEvent,
     handleEventLikeButton,
+    engagementData,
+    menuItems
   } = props;
   const [activeMenu, setActiveMenu] = useState(menuItems[0]);
   const [activePollPanel, setPollPanelActive] = useState(true);
@@ -377,7 +366,7 @@ export default function EventContainer(props) {
           className="eventBox__sidebar-btn active"
           onClick={(e) => {
             e.preventDefault();
-            addClickAnalytics(`${menuItemsId.Polls}_click`);
+            addClickAnalytics(`${EVENTPAGE_MENUITEM_ID.Polls}_click`);
             setPollPanelActive(true);
           }}
         >
@@ -652,11 +641,11 @@ export default function EventContainer(props) {
                                 <a href="#" className={`like-btn ${like.status ? 'like-btn--active' : ''}`} onClick={toggleLike}><i className="icon-like"></i>{like.count}</a>
                             </div> */}
 
-              {activeMenu.id === menuItemsId.About && (
+              {activeMenu.id === EVENTPAGE_MENUITEM_ID.About && (
                 <About data={data} fromTitle={props.fromTitle} />
               )}
 
-              {activeMenu.id === menuItemsId.Agenda && agendaData && (
+              {activeMenu.id === EVENTPAGE_MENUITEM_ID.Agenda && agendaData && (
                 <AgendaTab
                   data={agendaData}
                   haveVideo={false}
@@ -668,14 +657,23 @@ export default function EventContainer(props) {
                   allData={_initalAgendaData}
                 />
               )}
-              {activeMenu.id === menuItemsId.Trending && trendingData && (
+              {activeMenu.id === EVENTPAGE_MENUITEM_ID.Trending && trendingData && (
                 <Trending
                   data={trendingData}
                   addAnalytics={addItemClickAnalytics}
                 />
               )}
 
-              {activeMenu.id === menuItemsId.Polls && (
+              {activeMenu.id === EVENTPAGE_MENUITEM_ID.Engagement && engagementData && (
+                <Trending
+                  data={engagementData}
+                  addAnalytics={(eventName, id, itemId, title, type) => {
+                    addItemClickAnalytics(ENGAGEMENT_CLICK, id, itemId, title, type)
+                  }}
+                />
+              )}
+
+              {activeMenu.id === EVENTPAGE_MENUITEM_ID.Polls && (
                 <div id="tab4" className="eventBox__tabs-content active">
                   <CommunityBox
                     currentActiveVideo={currentActiveVideo}
@@ -697,7 +695,7 @@ export default function EventContainer(props) {
                   eventId={id}
                   data={partnerWithUsData}
                   countIn={countPartnerWithUsAgree}
-                  isActive={activeMenu.id === menuItemsId.Partner_with_us}
+                  isActive={activeMenu.id === EVENTPAGE_MENUITEM_ID.Partner_with_us}
                 />
               )}
             </div>
