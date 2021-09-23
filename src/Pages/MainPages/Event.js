@@ -46,7 +46,7 @@ export const EVENTPAGE_MENUITEM = [
   { id: EVENTPAGE_MENUITEM_ID.Trending, name: "Resources", className: "", enabled: true },
   { id: EVENTPAGE_MENUITEM_ID.Polls, name: "Q&A", className: "hide-on-desktop", enabled: true },
   { id: EVENTPAGE_MENUITEM_ID.Partner_with_us, name: "Partner with us", className: "", enabled: true },
-  { id: EVENTPAGE_MENUITEM_ID.Engagement, name: "Engagement", className: "", enabled: true },
+  { id: EVENTPAGE_MENUITEM_ID.Engagement, name: "Engagement", className: "", enabled: false },
 ];
 
 let MenuSpecification = "menuSpecification"
