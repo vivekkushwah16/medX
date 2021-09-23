@@ -3,4 +3,5 @@ export const TRENDING_ITEM_TYPE = {
     IMAGE: 'image',
     PDF: 'pdf',
     URL: 'url',
+    iframe: 'pdf',
 }

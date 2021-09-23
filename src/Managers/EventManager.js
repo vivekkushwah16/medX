@@ -1,10 +1,11 @@
-import { EVENT_COLLECTION, LIKES_COLLECTION, PARTNERWITHUSAGREE_COLLECTION, PARTNERWITHUS_COLLECTION, TIMELINE_COLLECTION, TRENDINGITEM_COLLECTION } from "../AppConstants/CollectionConstants";
+import { ENGAGEMENTS_COLLECTION, EVENT_COLLECTION, LIKES_COLLECTION, PARTNERWITHUSAGREE_COLLECTION, PARTNERWITHUS_COLLECTION, TIMELINE_COLLECTION, TRENDINGITEM_COLLECTION } from "../AppConstants/CollectionConstants";
 import { LikeType } from "../AppConstants/TypeConstant";
 import firebase, { firestore } from "../Firebase/firebase";
 var uniqid = require('uniqid');
 
 let trendingListenerRef = null;
 let eventListenerRef = null;
+let engagmentListenerRef = null;
 
 const EventManager = {
     addEvent: (title, description = "", videoUrl = "", eventId = null) => {
@@ -317,6 +318,25 @@ const EventManager = {
             }
         })
     },
+    attachTimelineListener: (eventId, callback) => {
+        window.eventTimeline = firestore.collection(TIMELINE_COLLECTION).where('eventId', '==', eventId).onSnapshot(snapshot => {
+            if (snapshot.empty) {
+                if (callback) {
+                    callback([])
+                }
+                return
+            }
+            let _data = snapshot.docs.map(doc => doc.data())
+            if (callback) {
+                callback(_data)
+            }
+            return
+        }, err => {
+            if (callback) {
+                callback(null, err)
+            }
+        })
+    },
     removeTimelineListener: () => {
         if (window.eventTimeline) {
             window.eventTimeline()
@@ -431,6 +451,66 @@ const EventManager = {
     },
     removeTrendingListener: () => {
         if (trendingListenerRef) { trendingListenerRef() }
+    },
+    addEngagement: (eventId, type, title = "", description = "", link, thumbnailUrl = "", disabled = false) => {
+        return new Promise(async (res, rej) => {
+            try {
+                let itemId = uniqid('engagement-')
+                await firestore.collection(ENGAGEMENTS_COLLECTION).doc(itemId).set({
+                    itemId,
+                    type,
+                    title: title ? title : "",
+                    description: description ? description : "",
+                    eventId,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    link,
+                    thumbnailUrl: thumbnailUrl ? thumbnailUrl : "",
+                    disabled
+                })
+                res(itemId);
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    removeEngagement: (itemId) => {
+        return new Promise(async (res, rej) => {
+            try {
+                await firestore.collection(ENGAGEMENTS_COLLECTION).doc(itemId).delete()
+                res();
+            } catch (error) {
+                rej(error)
+            }
+        })
+    },
+    attachEngagmentListener: (eventId, callback) => {
+        console.log("xxxxxxxxxxxxx", eventId, callback)
+        try {
+            engagmentListenerRef = firestore.collection(ENGAGEMENTS_COLLECTION).where('eventId', '==', eventId).onSnapshot(snapshot => {
+                console.log(snapshot)
+                if (snapshot.empty) {
+                    if (callback) {
+                        callback([])
+                    }
+                    return
+                }
+                let _data = snapshot.docs.map(doc => doc.data())
+                if (callback) {
+                    callback(_data)
+                }
+                return
+            }, err => {
+                if (callback) {
+                    callback(null, err)
+                }
+            }, error => console.log(error))
+        } catch (error) {
+            console.log(error)
+        }
+
+    },
+    removeEngagmentListener: () => {
+        if (engagmentListenerRef) { engagmentListenerRef() }
     },
     addPartnerWithUs: (eventId, title = "", description = "", subTitle = "", subDesciption = "", thumbnailUrl = "") => {
         return new Promise(async (res, rej) => {
@@ -625,7 +705,7 @@ export default EventManager;
 
 /**
  * active Event List
- *  eventName 
+ *  eventName
  *   agenda (boolean)
  *   id
  *   status - live, noLice

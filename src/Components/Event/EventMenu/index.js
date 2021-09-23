@@ -8,7 +8,12 @@ export default function EventMenu(props) {
         <ul className="eventBox__tabs">
             {
                 menuItems.map(item => (
-                    <li key={item.id} className={`${item.className}`} onClick={(e) =>{e.preventDefault(); setActiveMenu(item)}} ><a className={`${item.className} ${item.id === activeMenu.id ? 'active' : ''} `} href="#">{item.name}</a></li>
+                    <>
+                        {
+                            item.enabled &&
+                            <li key={item.id} className={`${item.className}`} onClick={(e) => { e.preventDefault(); setActiveMenu(item) }} ><a className={`${item.className} ${item.id === activeMenu.id ? 'active' : ''} `} href="#">{item.name}</a></li>
+                        }
+                    </>
                 ))
             }
         </ul>

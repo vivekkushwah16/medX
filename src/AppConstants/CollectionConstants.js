@@ -10,6 +10,7 @@ export const RATING_COLLECTION = "ratings"
 export const PROFILE_COLLECTION = 'profiles'
 export const MEDIAMETADATA_COLLECTION = 'mediaMetaData'
 export const TRENDINGITEM_COLLECTION = 'trendingItems'
+export const ENGAGEMENTS_COLLECTION = 'engagements'
 export const PARTNERWITHUS_COLLECTION = 'partnerWithUs'
 export const PARTNERWITHUSAGREE_COLLECTION = 'partnerWithUs_agreed'
 export const NOTICEBOARD_COLLECTION = 'noticeboard'
