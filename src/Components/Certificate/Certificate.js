@@ -37,8 +37,8 @@ export default function Certificate(props) {
   return (
     <div className="certificateContainer" ref={certificatBody}>
       <img
-        src={`/assets/images/certificate.jpg`}
-        // src={`https://storage.googleapis.com/cipla-impact.appspot.com/${event}/certificate.jpg`}
+        // src={`/assets/images/certificate.jpg`}
+        src={`https://storage.googleapis.com/cipla-impact.appspot.com/${event}/certificate.jpg`}
         width="100%"
         height="auto"
         className="certificate"
