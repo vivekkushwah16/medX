@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+	<!-- Google Material Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<!-- Custom Style Sheet -->
+	<link rel="stylesheet" href="brain/css/style.css" />
+	<link rel="stylesheet" href="brain/css/leaderboard.css" />
+	<title>Quiz !</title>
+	<link rel="icon" type="image/png" href="brain/img/favicon.png" />
+	<style>
+		.h-5-p {
+			/* height: 5% !important; */
+			margin-bottom: 20px;
+		}
+	</style>
+</head>
+
+<body style="background: url(image/bgland.png);background-size: 100% 100%;background-repeat: no-repeat;background-color: #fff;">
+	<!-- <img src="image/bgland.jpg" width="100%" style="height:100%"> -->
+	<div class="logo-partnersumit">
+		<!-- <div><img class="logo-partnersumit" src="image/all.png"></div> -->
+		<!-- <div><img class="logo-img-other" src="image/2.png"></div>
+			<div><img class="logo-img-other" src="image/3.png"></div>						 -->
+	</div>
+
+	<!-- </div> -->
+
+	<div class="container box-shadow">
+
+		<!-- start page -->
+		<div id="firstpage">
+			<div id="quizForm">
+				
+				<div class="welcometext">
+					<h1 style="text-align: center;">
+						Welcome to <span>IPAEDIA QUIZ</span>
+					</h1>
+					<!-- <h2>
+						A Potpourri of Pediatric Problems
+					</h2> -->
+				</div>
+				
+				<div style="overflow:auto; ">
+					<button type="button" class="btn-next " id="playButton" onclick="startQuiz();analytics();">Checking..</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- end of start page -->
+
+
+		<!-- Quiz Starts Here -->
+		<section id="theQuiz">
+			<span id="app"></span>
+			<form id="quizForm" onsubmit="return false;">
+				<div id="steps" style="text-align:center;">
+
+				</div>
+				<hr />
+				<!-- One "tab" for each step in the form: -->
+				<div id="tab">
+					<div class="question_container">
+						<p id="que">---Question---</p>
+						<img src="image/q1.png" width="auto" height="200px" id="question_image">
+					</div>
+					<hr />
+					<div class="custom-control custom-radio" id="radio1">
+						<input type="radio" id="opt1" name="q" class="custom-control-input" onclick="enableBtn(this)"
+							value="1" />
+						<label class="custom-control-label"
+							onclick="var id = this.previousElementSibling.id; this.setAttribute('for', id)">---Option
+							1---</label>
+					</div>
+					<div class="custom-control custom-radio" id="radio2">
+						<input type="radio" id="opt2" name="q" class="custom-control-input" onclick="enableBtn(this)"
+							value="2" />
+						<label class="custom-control-label"
+							onclick="var id = this.previousElementSibling.id; this.setAttribute('for', id)">---Option
+							2---</label>
+					</div>
+					<div class="custom-control custom-radio" id="radio3">
+						<input type="radio" id="opt3" name="q" class="custom-control-input" onclick="enableBtn(this)"
+							value="3" />
+						<label class="custom-control-label"
+							onclick="var id = this.previousElementSibling.id; this.setAttribute('for', id)">---Option
+							3---</label>
+					</div>
+					<div class="custom-control custom-radio" id="radio4">
+						<input type="radio" id="opt4" name="q" class="custom-control-input" onclick="enableBtn(this)"
+							value="4" />
+						<label class="custom-control-label"
+							onclick="var id = this.previousElementSibling.id; this.setAttribute('for', id)">---Option
+							4---</label>
+					</div>
+					<div class="custom-control custom-radio" id="radio5">
+						<input type="radio" id="opt5" name="q" class="custom-control-input" onclick="enableBtn(this)"
+							value="5" />
+						<label class="custom-control-label"
+							onclick="var id = this.previousElementSibling.id; this.setAttribute('for', id)">---Option
+							5---</label>
+					</div>
+				</div>
+				<div style="overflow:auto; ">
+					<button type="button" disabled="disabled" class="btn-next mb-2" id="next-button" onclick="next();">
+						Next
+					</button>
+				</div>
+			</form>
+		</section>
+
+		<!-- The Result -->
+		<section id="theResult">
+			<br />
+			<h2 id="resultFb" style="font-weight: bold;"></h2>
+			<div>
+				<!-- <img id="covid-message" src="image/congratulations.png" alt="covid-message">  -->
+			</div>
+			<h3 id="correctAns"></h3>
+			<div style="width: 100%;">
+				<div style="padding-top:15px;">
+					<h5>Your Points is added to the leaderboard. Thanks for joining us at Quizone. Hope you had a great
+						time!</h5>
+					<!-- <button class="btn btn-info retake_quiz" onclick="retakeQuiz();">
+						Retake Test
+					</button> -->
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<div class="blast table_container" style="display: none; margin-top:8rem;" id="leaderboard">
+		<div class="header"><span>Leaderboard</span><img src="image/CloseBtn.png" align="right" class="close_btn"
+				id="close_btn"></img></div>
+		<div class="table_parent">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Rank</th>
+						<th>Name</th>
+						<th>Score</th>
+					</tr>
+				</thead>
+				<tbody class="scrollable" id="tbody">
+					<!-- <tr>
+							<td>1</td>
+							<td>Akash</td>
+							<td><img src="/image/gold.png"></img>200</td>
+						</tr>
+
+						<tr>
+							<td>1</td>
+							<td>Akash</td>
+							<td><img src="/image/silver.png"></img>200</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Akash</td>
+							<td><img src="/image/bronze.png"></img>200</td>
+						</tr>
+						<tr class="myRow">
+							<td>1</td>
+							<td>Me</td>
+							<td>200</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Akash</td>
+							<td>200</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Akash</td>
+							<td>200</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Akash</td>
+							<td>200</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Akash</td>
+							<td>200</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Akash</td>
+							<td>200</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>Akash</td>
+							<td>200</td>
+						</tr> -->
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- Container End
+	
+	 <footer style="padding-top: 25px;position: absolute;bottom: 0;">
+		
+		<img src="image/footer.jpg" alt="Exercise 1" style="width: 100%;">
+	</footer> -->
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="brain/js/questions.js"></script>
+
+	<!-- Fire base connectivity -->
+
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-database.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+
+	<script>
+		// Your web app's Firebase configuration
+		const firebaseConfig = {
+			apiKey: "AIzaSyBjSPRUgzyQhITpWHb9FdzMMuLS45Zsd9s",
+			authDomain: "cipla-impact.firebaseapp.com",
+			databaseURL: "https://cipla-impact-default-rtdb.firebaseio.com",
+			projectId: "cipla-impact",
+			storageBucket: "cipla-impact.appspot.com",
+			messagingSenderId: "1009487366735",
+			appId: "1:1009487366735:web:1d55b85d23d818bcac383a",
+			measurementId: "G-JJY7JWKTV3"
+			};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+		firebase.analytics();
+		const auth = firebase.auth();
+		var rdb = firebase.database();
+		const rdbx = firebase.database();
+		//const analytics = firebase.analytics();
+		//OuterIndex
+
+		function analytics() { }
+
+	//  function analytics(){
+	// 	rdbx.ref('/user_analytics_wd_stall_1/' + userid + '/GA').once('value').then(function(snapshot){
+    //     var subject = (snapshot.val());
+    //     //Entering first time
+    //     if(subject == "N"){
+	// 		rdbx.ref('/user_analytics_wd_stall_1/' + userid + '/GA').set("Y");
+
+	// 		rdbx.ref('/user_analytics_wd/' + userid + '/X01_PScore').once('value').then(function(snapshot){
+    //                 var scoreValue = (snapshot.val());
+    //                 scoreValue += 15;
+    //                 rdbx.ref('/user_analytics_wd/' + userid + '/X01_PScore').set(scoreValue);
+
+    //             });
+    //     }
+    //     //Already entered Audi1 Session1 once
+    //     else{
+    //     }
+    // 	});
+	//  }
+	</script>
+	<script src="brain/js/main.js"></script>
+	<script src="brain/js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,552 @@
+@font-face {
+  font-family: Cerapro-Black;
+  src: url("../../fonts/CeraPRO-Black.otf");
+}
+
+@font-face {
+  font-family: Cerapro-Medium;
+  src: url("../../fonts/CeraPRO-Medium.otf");
+}
+
+@font-face {
+  font-family: Cerapro-Bold;
+  src: url("../../fonts/CeraPRO-Bold.otf");
+}
+/*-----------------------------------*\
+$ANIMATIONS
+\*-----------------------------------*/
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+.animated.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+@-webkit-keyframes shake {
+  from,
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  from,
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+.shake {
+  -webkit-animation-name: shake;
+  animation-name: shake;
+}
+
+@-webkit-keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*-----------------------------------*\
+$GENERAL STYLING
+\*-----------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  font-family: Cerapro-Medium, Cerapro-Bold;
+}
+
+.form-control:focus,
+.form-control:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #b993d6;
+  /* background: rgb(228, 228, 228);
+    background-image: url('../img/bg.jpg');
+    background-size: 125%; 
+    background-repeat: no-repeat;
+    background-position: center; */
+  background: linear-gradient(to bottom, #d5dee7 0%, #e8ebf2 50%, #e2e7ed 100%),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.02) 50%,
+      rgba(255, 255, 255, 0.02) 61%,
+      rgba(0, 0, 0, 0.02) 73%
+    ),
+    linear-gradient(33deg, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%);
+  background-blend-mode: normal, color-burn;
+}
+
+/*-----------------------------------*\
+$The Main Container
+\*-----------------------------------*/
+.welcometext {
+  padding: 20px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  font-size: 25px;
+}
+.container {
+  /* height: auto; */
+  /* height:100vh; */
+  padding: 0;
+  margin: auto;
+  color: #415868;
+  background: rgb(255, 255, 255);
+  margin-top: 340px;
+  border-radius: 35px;
+}
+@media screen and (max-width: 2500px) {
+  .container {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    margin: auto;
+    color: #415868;
+    background: rgb(255, 255, 255);
+    border-radius: 30px;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    margin-top: 50px;
+    transform: translate(-50%, 0);
+  }
+}
+/*
+.box-shadow {
+	position: relative;
+}
+.box-shadow:before,
+.box-shadow:after {
+	z-index: -1;
+	position: absolute;
+	content: '';
+	bottom: 12px;
+	left: 10px;
+	width: 50%;
+	top: 80%;
+	max-width: 300px;
+	background: #777;
+	-webkit-box-shadow: 0 15px 10px #777;
+	-moz-box-shadow: 0 15px 10px #777;
+	box-shadow: 0 15px 10px #777;
+	-webkit-transform: rotate(-3deg);
+	-moz-transform: rotate(-3deg);
+	-o-transform: rotate(-3deg);
+	-ms-transform: rotate(-3deg);
+	transform: rotate(-3deg);
+}
+.box-shadow:after {
+	-webkit-transform: rotate(3deg);
+	-moz-transform: rotate(3deg);
+	-o-transform: rotate(3deg);
+	-ms-transform: rotate(3deg);
+	transform: rotate(3deg);
+	right: 10px;
+	left: auto;
+} 
+
+/*-----------------------------------*\
+$THE NAME SECTION
+\*-----------------------------------*/
+
+.btn-next {
+  color: #fff;
+  /* background: linear-gradient(180deg, #d7b56d 0%, #e9c77f 100%); */
+  border-radius: 0px 0px 30.7577px 30.7577px;
+  position: absolute;
+  bottom: -10px;
+  width: 100%;
+  left: 0;
+  font-size: 1.5em;
+  height: 52px;
+  border: 0px;
+  outline: none !important;
+  /* box-shadow: none; */
+  text-transform: uppercase;
+  background: linear-gradient(
+    90deg,
+    #60308d 12.89%,
+    #018cb4 52.91%,
+    #8bc541 96.27%
+  );
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.25);
+  /* border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px; */
+}
+
+.btn-next.disabled,
+.btn-next:disabled {
+  opacity: 0.65;
+}
+.btn-next:focus,
+.btn-next:hover {
+  text-decoration: none;
+}
+.btn-next:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+
+/*-----------------------------------*\
+$QUESTION SECTIONS
+\*-----------------------------------*/
+section#theQuiz {
+  display: none;
+  background: rgb(255, 255, 255);
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+}
+
+#quizForm {
+  position: relative;
+  background-color: #efeeee;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  /* top: 1rem; */
+  padding-top: 15px;
+  /* margin-top: 40px; */
+  /* box-shadow: 0 0 10px 2px #1655b0; */
+  padding-bottom: 70px;
+  border-radius: 30.7577px;
+}
+
+#quizForm h2 {
+  text-align: center;
+}
+
+/* question  */
+#quizForm p {
+  /* text-align: center; */
+  /* font-weight: bold; */
+  font-size: 1.1em;
+  margin-top: -5px;
+  font-family: Cerapro-Bold;
+  user-select: none;
+}
+
+#quizForm #tab .custom-radio {
+  margin-top: 10px;
+}
+
+#quizForm #tab label.custom-control-label {
+  width: 100%;
+  overflow: auto;
+  cursor: pointer;
+}
+
+/* Make circles that indicate the steps of the form: */
+#quizForm .step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+#quizForm .step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+#quizForm .step.finish {
+  opacity: 0.8;
+  background-color: #17a2b8;
+}
+
+.logo-partnersumit {
+  position: absolute;
+  width: 95%;
+  display: flex;
+  justify-content: right;
+  padding-top: 10px;
+  left: 2.5%;
+  top: 0;
+}
+.logo-partnersumit-img {
+  width: 65%;
+  align-self: left;
+  margin: auto 0;
+  margin-left: 50px;
+}
+.logo-img-other {
+  width: 95%;
+  margin: auto 0;
+  padding-right: 120px;
+}
+
+/*-----------------------------------*\
+$RESULT SECTION
+\*-----------------------------------*/
+section#theResult {
+  display: none;
+  background: rgb(255, 255, 255);
+  border-radius: 30px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+
+  margin: auto;
+  padding-bottom: 15vh;
+  padding-top: 15vh;
+  position: relative;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+#covid-message {
+  width: 80%;
+  margin: auto;
+  display: block;
+  padding-bottom: 2vh;
+  /* font-family: Cerapro-Medium;
+	font-size: 30px;
+	color: #333333;
+	line-height: 1;
+	text-align: center; */
+}
+#correctAns {
+  font-size: 26px;
+  color: #000000;
+  text-align: center;
+  font-family: Cerapro-Medium;
+}
+.circular-chart {
+  display: block;
+  margin: 10px auto;
+  max-width: 80%;
+  max-height: 250px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}
+
+.circular-chart.red .circle {
+  stroke: #ff0000;
+}
+
+.circular-chart.orange .circle {
+  stroke: #ff9f00;
+}
+
+.circular-chart.green .circle {
+  stroke: #4cc790;
+}
+
+.circular-chart.blue .circle {
+  stroke: #3c9ee5;
+}
+
+.circular-chart.teal .circle {
+  stroke: #008080;
+}
+
+#percentage {
+  fill: #666;
+  font-size: 0.5em;
+  text-anchor: middle;
+}
+
+/*-----------------------------------*\
+$RESPONSIVENESS
+\*-----------------------------------*/
+@media screen and (max-width: 768px) {
+  .container,
+  #username form {
+    width: 100%;
+    margin-top: 150px;
+  }
+  #username form i.material-icons {
+    font-size: 4.5em;
+  }
+}
+@media screen and (max-width: 600px) {
+  .container,
+  #username form {
+    width: 100%;
+    margin-top: 100px;
+    top: 0;
+  }
+  #username form i.material-icons {
+    font-size: 4em;
+  }
+  #quizForm #tab label.custom-control-label {
+    border-bottom: 1px solid #ccc;
+  }
+  #correctAns {
+    font-size: 16px;
+    color: #000000;
+    text-align: center;
+    font-family: Cerapro-Medium;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .container {
+    width: 80%;
+    /* margin-left: 10%; */
+  }
+
+  .welcometext {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  section#theResult {
+    padding-bottom: 5vh;
+  }
+  #quizForm {
+    top: 0rem;
+  }
+  .welcometext > h1 {
+    font-size: 2rem;
+  }
+  .welcometext > h1 > span {
+    font-weight: 600;
+  }
+}
+
+.base-timer {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  /* margin:auto; */
+}
+
+.base-timer__svg {
+  transform: scaleX(-1);
+}
+
+.base-timer__circle {
+  fill: none;
+  stroke: none;
+}
+
+.base-timer__path-elapsed {
+  stroke-width: 7px;
+  stroke: grey;
+}
+
+.base-timer__path-remaining {
+  stroke-width: 7px;
+  stroke-linecap: round;
+  transform: rotate(90deg);
+  transform-origin: center;
+  transition: 1s linear all;
+  fill-rule: nonzero;
+  stroke: currentColor;
+}
+
+.base-timer__path-remaining.green {
+  color: rgb(65, 184, 131);
+}
+
+.base-timer__path-remaining.orange {
+  color: orange;
+}
+
+.base-timer__path-remaining.red {
+  color: red;
+}
+
+.base-timer__label {
+  position: absolute;
+  width: 5rem;
+  height: 5rem;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.app {
+  margin-top: 140px;
+}
+
+.retake_quiz {
+  margin-top: 30px;
+}
+
+/* #firstpage #quizForm {
+  margin-top: 0;
+} */
+
+.question_container {
+  display: flex;
+  justify-content: space-between;
+}

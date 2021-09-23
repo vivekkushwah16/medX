@@ -1,0 +1,200 @@
+.table_container {
+  /* background: #c6541b; */
+  /* background: #fa71cd;
+    background: -webkit-linear-gradient(109.66deg, #EE4D80 -6.4%, #C6437B 1.58%, #993776 12.05%, #732D71 22.96%, #53246D 34.19%, #3B1E6A 45.8%, #2A1A68 58.01%, #1F1766 71.13%, #1C1666 86.92%, #1C1A6A 114.81%, #1E2674 143.11%, #203A85 171.5%, #224992 187.14%);
+    background: -o-linear-gradient(109.66deg, #EE4D80 -6.4%, #C6437B 1.58%, #993776 12.05%, #732D71 22.96%, #53246D 34.19%, #3B1E6A 45.8%, #2A1A68 58.01%, #1F1766 71.13%, #1C1666 86.92%, #1C1A6A 114.81%, #1E2674 143.11%, #203A85 171.5%, #224992 187.14%);
+    background: -moz-linear-gradient(109.66deg, #EE4D80 -6.4%, #C6437B 1.58%, #993776 12.05%, #732D71 22.96%, #53246D 34.19%, #3B1E6A 45.8%, #2A1A68 58.01%, #1F1766 71.13%, #1C1666 86.92%, #1C1A6A 114.81%, #1E2674 143.11%, #203A85 171.5%, #224992 187.14%);
+    background: linear-gradient(109.66deg, #EE4D80 -6.4%, #C6437B 1.58%, #993776 12.05%, #732D71 22.96%, #53246D 34.19%, #3B1E6A 45.8%, #2A1A68 58.01%, #1F1766 71.13%, #1C1666 86.92%, #1C1A6A 114.81%, #1E2674 143.11%, #203A85 171.5%, #224992 187.14%);
+    */
+  background: linear-gradient(
+    90deg,
+    #60308d 12.89%,
+    #018cb4 52.91%,
+    #8bc541 96.27%
+  );
+  z-index: 6;
+  position: absolute;
+  top: 5%;
+  left: 20%;
+  right: 20%;
+  color: #ffffff;
+  /* border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem; */
+  border-radius: 1rem;
+}
+
+.header {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25);
+  border-radius: 1rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 4vh;
+  position: relative;
+}
+
+.header img {
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  bottom: 0;
+  margin: auto;
+}
+
+tr.myRow {
+  background: rgba(255, 255, 255, 1);
+  /* box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25); */
+  color: #ffcc0a;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+}
+
+.table_parent {
+  padding-bottom: 1rem;
+}
+
+th,
+td {
+  padding-top: 1vh !important;
+  padding-bottom: 1vh !important;
+  font-size: 2.8vh;
+}
+
+td img {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.1em;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  width: 20%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 55%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  width: 25%;
+}
+
+tbody tr td {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.close_btn:hover {
+  cursor: pointer;
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+}
+
+/* tr:first-child {
+    border-bottom : 1px solid #000 !important;
+} */
+
+tbody {
+  display: block;
+  /* height: 300px; */
+  /* overflow-y:scroll; */
+}
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* even columns width , fix width of table too*/
+}
+
+/* .scrollable{
+    overflow-y: scroll;
+} */
+
+.scrollable::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: black;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 5px;
+  background-color: #4a4a4a;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: #4a4a4a;
+}
+
+th {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  /* background-color: white; */
+  z-index: 2;
+  top: 0;
+  opacity: 0.7;
+}
+
+@media only screen and (orientation: portrait) {
+  .table_container {
+    left: 5%;
+    right: 5%;
+  }
+
+  th,
+  td {
+    padding-top: 1.7vh;
+    padding-bottom: 1.7vh;
+    font-size: 2.75vh;
+  }
+}
+
+.leaderboardContainerParent {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #000000c2;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  z-index: 11;
+}
+
+.score_container {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  position: absolute;
+  top: 3%;
+  left: 3%;
+  padding: 1.2vh;
+}
+
+.score_container img {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 2vh;
+  width: 6vh;
+}
+
+.score_container {
+  font-size: 4vh;
+}
+
+.profile {
+  background-color: yellow;
+}
