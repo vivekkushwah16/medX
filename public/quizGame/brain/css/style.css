@@ -314,7 +314,7 @@ section#theQuiz {
 
 .logo-partnersumit {
   position: absolute;
-  width: 95%;
+  /* width: 95%; */
   display: flex;
   justify-content: right;
   padding-top: 10px;
