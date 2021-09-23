@@ -132,7 +132,7 @@
   top: 0;
   left: 0;
 }
-
+/* 
 .eventBoxBg::before {
   z-index: -1;
   position: absolute;
@@ -141,11 +141,11 @@
   height: 100%;
   width: 100%;
   content: "";
-  /* background: url(../../assets/images/bg_wave.png) center center no-repeat; */
+  background: url(../../assets/images/bg_wave.png) center center no-repeat;
   background-size: 100% auto;
   background-size: cover;
   background-position-y: inherit;
-}
+} */
 
 .eventBox__tabs-content .navigarion-bar {
   width: 90%;
