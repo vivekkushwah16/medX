@@ -16,6 +16,7 @@ export const PARTNERWITHUSAGREE_COLLECTION = 'partnerWithUs_agreed'
 export const NOTICEBOARD_COLLECTION = 'noticeboard'
 export const BACKSTAGE_COLLECTION = 'backstage'
 export const PLATFORM_BACKSTAGE_DOC = 'platform'
+export const BANNERS_BACKSTAGE_DOC = 'banners'
 export const USERMETADATA_COLLECTION = 'userMetaData'
 export const BRONCHTALK_COLLECTION = `BronchTalk`;
 export const DOCTOR_COLLECTION = "doctors-varification-data";

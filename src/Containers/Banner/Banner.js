@@ -62,14 +62,14 @@ const BannerData = [
   // {
   //   type: BannerType.LiveEvent,
   //   mainTitle:
-  //     "2 Days Extensive Program",
-  //   subTitle: `Don't miss out academic feast on recent advances in Pediatric Respiratory medicine`,
-  //   eventId: "compass21",
-  //   eventName: "compass21",
+  //     "Sign-up to join discussion with leading Urology experts",
+  //   subTitle: ``,
+  //   eventId: "cme250921",
+  //   eventName: "cme250921",//url
   //   mainImageUrl: "",
   //   needCountDown: true,
   //   mainImageUrl:
-  //     "https://storage.googleapis.com/cipla-impact.appspot.com/compass21/bannerImage.png?X=1",
+  //     "https://storage.googleapis.com/cipla-impact.appspot.com/cme250921/1more-collateral.png",
   //   style: {
   //     bannerLeftStyle: {},
   //     bannerRightStyle: {
@@ -229,7 +229,7 @@ function Banner() {
     slidesToShow: 1,
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 10000,
     responsive: [
       {

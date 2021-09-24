@@ -1,4 +1,4 @@
-import { ENGAGEMENTS_COLLECTION, EVENT_COLLECTION, LIKES_COLLECTION, PARTNERWITHUSAGREE_COLLECTION, PARTNERWITHUS_COLLECTION, TIMELINE_COLLECTION, TRENDINGITEM_COLLECTION } from "../AppConstants/CollectionConstants";
+import { BACKSTAGE_COLLECTION, BANNERS_BACKSTAGE_DOC, ENGAGEMENTS_COLLECTION, EVENT_COLLECTION, LIKES_COLLECTION, PARTNERWITHUSAGREE_COLLECTION, PARTNERWITHUS_COLLECTION, TIMELINE_COLLECTION, TRENDINGITEM_COLLECTION } from "../AppConstants/CollectionConstants";
 import { LikeType } from "../AppConstants/TypeConstant";
 import firebase, { firestore } from "../Firebase/firebase";
 var uniqid = require('uniqid');
@@ -699,6 +699,30 @@ const EventManager = {
             }
         })
     },
+    addBanner: (data) => {
+        return new Promise(async (res, rej) => {
+            try {
+                let requiredKeys = ['eventId', 'eventName', 'mainImageUrl', 'mainTitle', 'needCountDown', 'subTitle', 'type']
+                const docRef = firestore.collection(BACKSTAGE_COLLECTION).doc(BANNERS_BACKSTAGE_DOC)
+                const count = await firestore.runTransaction(async transcation => {
+                    let doc = await transcation.get(docRef)
+                    if (!doc.exists) {
+                        transcation.set(docRef, {
+                            bannersData: [
+                                data
+                            ]
+                        })
+                    } else {
+
+                    }
+
+                })
+                res(count);
+            } catch (error) {
+                rej(error)
+            }
+        })
+    }
 }
 
 export default EventManager;
