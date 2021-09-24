@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Redirect, Route, Switch, useParam } from 'react-router-dom'
-import { POLL_COLLECTION, PROFILE_COLLECTION } from '../../AppConstants/CollectionConstants'
+import { POLL_COLLECTION, PROFILE_COLLECTION, TIMELINE_COLLECTION } from '../../AppConstants/CollectionConstants'
 import Header from '../../Containers/Header/Header'
 import { database, firestore } from '../../Firebase/firebase'
+import EventManager from '../../Managers/EventManager'
 import './QnaPage.css'
 
 
@@ -48,14 +49,35 @@ var timelineIdRecord = {}
 export default function QnaPage(props) {
     let { eventId } = props
     let [data, setData] = useState(null);
+    let [timelineData, setTimelineData] = useState(null)
 
     useEffect(() => {
+        firestore
+            .collection(TIMELINE_COLLECTION)
+            .where("eventId", "==", eventId)
+            .get().then(snapshot => {
+                if (snapshot.empty) {
+                    setTimelineData([]);
+                } else {
+                    let rawAgendaData = snapshot.docs.map((doc) => doc.data());
+                    let _data = {}
+                    rawAgendaData.forEach(timelineData => {
+                        _data = {
+                            ..._data,
+                            [timelineData.id]: timelineData
+                        }
+                    });
+                    setTimelineData(_data)
+                }
+
+            })
         getData()
     }, [])
 
     const getData = async () => {
         try {
             eventId = eventId ? eventId.toLowerCase() : 'event-kmde59n5'
+
             let docrRef = firestore.collection("qna").where("eventId", "==", eventId)//.orderBy("timestamp")
             await docrRef.onSnapshot(async real => {
                 if (real.empty) {
@@ -114,7 +136,7 @@ export default function QnaPage(props) {
                         <tr key={`Quesstion-header`}>
                             <th key={`Quesstion-name`}>Name</th>
                             <th key={`Quesstion-state`}>State</th>
-                            {/* <th key={`Quesstion-state`}>Timeline Id</th> */}
+                            <th key={`Quesstion-state`}>Session Id</th>
                             <th key={`Quesstion-quesiton`}>Question</th>
                             <th key={`Quesstion-time`}>Time</th>
                         </tr>
@@ -125,6 +147,7 @@ export default function QnaPage(props) {
                                     <tr key={`question-${d.userId}`}>
                                         <td key={`question-${d.userId}-name`} >{d.firstName}{d.lastName ? ' ' + d.lastName : ''}</td>
                                         <td key={`question-${d.userId}-state`}>{d.state}</td>
+                                        <td key={`question-${d.userId}-question`}>{timelineData[d.timelineId] ? timelineData[d.timelineId].title : ''}</td>
                                         {/* <td key={`question-${d.userId}-question`}>{d.timelineId}</td> */}
                                         <td key={`question-${d.userId}-question`}>{d.question}</td>
                                         <td key={`question-${d.userId}-time`}>{new Date(d.date).toLocaleString()}</td>
