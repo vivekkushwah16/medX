@@ -154,7 +154,7 @@ var q11 = new CQuiz(
 
 // Question 12
 var q12 = new CQuiz(
-  "<ul><li>A 7-year-old male child presented with short stature, massive lymphedema, webbing of neck and<br/>congenital heart disease.</li></ul>What is the name of the condition?",
+  "<ul><li>A 7-year-old male child presented with short stature, massive lymphedema, webbing of neck and congenital heart disease.</li></ul>What is the name of the condition?",
   "A) Turner Syndrome",
   "B) Klinefelter Syndrome",
   "C) Fragile X Syndrome",
