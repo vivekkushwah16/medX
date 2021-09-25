@@ -54,6 +54,7 @@ function Countdown(props) {
         const DateNow = new Date().getTime();
         const difference = eventTime - DateNow;
         if (difference < 0) {
+          setCheckedOnce(true)
           return;
         }
         if (timerRef.current) {
