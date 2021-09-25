@@ -270,6 +270,21 @@ export default function EventContainer(props) {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (data.activeTimelineId) {
+      let index = data.activeTimelineId.indexOf(currentActiveVideo.timelineId)
+      if (index != -1) {
+        let videoUrlVarName = 'videoUrl' + (index > 0 ? index : '')
+        if (currentActiveVideo.url !== data[videoUrlVarName]) {
+          setCurrentActiveVideo({
+            timelineId: currentActiveVideo.timelineId,
+            url: data[videoUrlVarName],
+          });
+        }
+      }
+    }
+  }, [data])
+
 
 
   useEffect(() => {
