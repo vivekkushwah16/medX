@@ -4,6 +4,7 @@ import 'firebase/firestore';
 import 'firebase/database';
 import 'firebase/analytics';
 import 'firebase/functions';
+import 'firebase/messaging';
 import XLSX from "xlsx";
 
 import { PROFILE_COLLECTION } from '../AppConstants/CollectionConstants';
@@ -27,6 +28,7 @@ export const firestore = firebase.firestore();
 export const database = firebase.database();
 export const analytics = firebase.analytics();
 export const auth = firebase.auth();
+// export const firebaseMessaging = firebase.messaging()
 
 export const cloudFunction = firebase.app().functions('asia-south1')
 // cloudFunction.useEmulator("localhost", 5001)
@@ -56,6 +58,26 @@ export const getUserProfile = (uid) => {
             rej(error)
         }
     })
+}
+export const askForPermissionToReceiveNotifications = async (user) => {
+    try {
+        const firebaseMessaging = firebase.messaging()
+        await firebaseMessaging.requestPermission();
+        const token = await firebaseMessaging.getToken({ vapidKey: 'BJ9-wIY9F5wie3fzoPYHzPa34H-V_X3nkKSA7LIUpe_kRcGgX584JMojPTSvWdwQeDvOgl9F3qmipEjXVNXLnZ0' });
+        firestore.collection('cloudMessaging').doc(user.uid).set({
+            uid: user.uid,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            token: firebase.firestore.FieldValue.arrayUnion(token)
+        })
+        firebaseMessaging.onMessage((payload) => {
+            console.log('Message received. ', payload);
+        });
+        console.log(firebaseMessaging)
+        console.log('Your token is:', token);
+        return token;
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 export const copyFromRealtoFirestore = () => {
@@ -94,7 +116,6 @@ export const copyFromRealtoFirestore = () => {
         console.log(error)
     }
 }
-
 
 export const exportFile = (data, sheetName, filename) => {
     const wb = XLSX.utils.book_new()

@@ -15,6 +15,7 @@ import firebase, {
   database,
   getUserProfile,
   firestore,
+  askForPermissionToReceiveNotifications,
 } from "../../Firebase/firebase";
 import VideoManager from "../../Managers/VideoManager";
 
@@ -48,6 +49,7 @@ const UserContextProvider = (props) => {
         window.user = user;
         localStorage.setItem("userAuth", JSON.stringify(user));
         setUser(user);
+        askForPermissionToReceiveNotifications(user)
         setInitalCheck(true);
         analytics.setUserId(user.uid);
         addUserLoginAnalytics(user.uid);
@@ -58,6 +60,8 @@ const UserContextProvider = (props) => {
         // setuserInfo(userInfo)
       } else {
         localStorage.removeItem("userAuth");
+        sessionStorage.clear()
+        localStorage.clear()
         setUser(null);
         setInitalCheck(true);
       }

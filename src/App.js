@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
 import { UserContext } from "./Context/Auth/UserContextProvider";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import NotLoggedInRoutes from "./Components/NotLoggedInRoutes/NotLoggedInRoutes";
-
+import usePWA from 'react-pwa-install-prompt'
 import {
   HOME_ROUTE,
   LOGIN_ROUTE,
@@ -34,6 +34,7 @@ import IntersetSelection from "./Containers/IntersetSelection";
 import EventManager from "./Managers/EventManager";
 import SearchPage from "./Pages/SearchPage";
 import { MediaModalType } from "./AppConstants/ModalType";
+import PWApromptWithButton, { PWAInstaller } from "./Components/pwaPrompt/PWAprompt";
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 // import Upload from './Components/Upload/upload';
@@ -146,6 +147,7 @@ async function downloadData() {
 
 export default function App() {
   const { initalCheck, user } = useContext(UserContext);
+
   useEffect(() => {
     if (user) {
       // console.log("App Started - DJ");
@@ -215,6 +217,8 @@ export default function App() {
   return (
     <>
       <MediaModalLazy />
+
+      {/* <PWApromptWithButton /> */}
       <Router>
         {initalCheck && (
           <Switch>
