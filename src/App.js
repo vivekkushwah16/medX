@@ -45,7 +45,6 @@ import { MediaModalType } from "./AppConstants/ModalType";
 import PWApromptWithButton, {
   PWAInstaller,
 } from "./Components/pwaPrompt/PWAprompt";
-import ReactNotificationComponent from "./Components/ReactToastify/ReactNotification";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
