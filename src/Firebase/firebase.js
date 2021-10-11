@@ -92,16 +92,24 @@ export const askForPermissionToReceiveNotifications = async (user) => {
         });
     }
 
-    firebaseMessaging.onMessage((payload) => {
-      console.log("Message received. ", payload);
-    });
-    console.log(firebaseMessaging);
+    // firebaseMessaging.onMessage((payload) => {
+    //   console.log("Message received. ", payload);
+    // });
+    // console.log(firebaseMessaging);
     console.log("Your token is:", token);
     return token;
   } catch (error) {
     console.error(error);
   }
 };
+
+export const onMessageListener = () =>
+  new Promise((resolve) => {
+    console.log("onMessageListener");
+    firebase.messaging().onMessage((payload) => {
+      resolve(payload);
+    });
+  });
 
 export const sendNotificationToTopic = (data) => {
   const cloudRef = cloudFunction.httpsCallable("sendNotificationToTopic");

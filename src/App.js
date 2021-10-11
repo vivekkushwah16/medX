@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
 import { UserContext } from "./Context/Auth/UserContextProvider";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import NotLoggedInRoutes from "./Components/NotLoggedInRoutes/NotLoggedInRoutes";
-import usePWA from 'react-pwa-install-prompt'
+import usePWA from "react-pwa-install-prompt";
 import {
   HOME_ROUTE,
   LOGIN_ROUTE,
@@ -25,8 +25,16 @@ import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 import EventRoute, { EventStausType } from "./Components/EventRoute";
 // import EventManager from "./Managers/EventManager";
 // import { LOREM_TEXT } from "./AppConstants/Lorem";
-import firebase, { exportFile, firestore } from "./Firebase/firebase";
-import { BRONCHTALK_COLLECTION, PROFILE_COLLECTION, USERMETADATA_COLLECTION } from "./AppConstants/CollectionConstants";
+import firebase, {
+  exportFile,
+  firestore,
+  onMessageListener,
+} from "./Firebase/firebase";
+import {
+  BRONCHTALK_COLLECTION,
+  PROFILE_COLLECTION,
+  USERMETADATA_COLLECTION,
+} from "./AppConstants/CollectionConstants";
 import { PollManager } from "./Managers/PollManager";
 import { TRENDING_ITEM_TYPE } from "./AppConstants/TrendingItemTypes";
 import Myprofile from "./Containers/myProfile/Myprofile";
@@ -34,7 +42,10 @@ import IntersetSelection from "./Containers/IntersetSelection";
 import EventManager from "./Managers/EventManager";
 import SearchPage from "./Pages/SearchPage";
 import { MediaModalType } from "./AppConstants/ModalType";
-import PWApromptWithButton, { PWAInstaller } from "./Components/pwaPrompt/PWAprompt";
+import PWApromptWithButton, {
+  PWAInstaller,
+} from "./Components/pwaPrompt/PWAprompt";
+import ReactNotificationComponent from "./Components/ReactToastify/ReactNotification";
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
 // import Upload from './Components/Upload/upload';
@@ -131,22 +142,35 @@ const preload = (component) => {
 };
 
 async function downloadData() {
-  firestore.collection("userFeedback").where("eventId", "==", "ipaedia21").get().then((snap) => {
-    if (!snap.empty) {
-      let data = {}
-      snap.docs.forEach(d => data[d.id] = {
-        ...d.data(),
-        id: d.id.split("_")[1],
-        phoneNumber: d.data().email.split("@")[0]
-      })
-      console.log(data)
-      exportFile(Object.values(data), "ipedia21_feedback", "ipedia21_feedback.xlsx")
-    }
-  })
+  firestore
+    .collection("userFeedback")
+    .where("eventId", "==", "ipaedia21")
+    .get()
+    .then((snap) => {
+      if (!snap.empty) {
+        let data = {};
+        snap.docs.forEach(
+          (d) =>
+            (data[d.id] = {
+              ...d.data(),
+              id: d.id.split("_")[1],
+              phoneNumber: d.data().email.split("@")[0],
+            })
+        );
+        console.log(data);
+        exportFile(
+          Object.values(data),
+          "ipedia21_feedback",
+          "ipedia21_feedback.xlsx"
+        );
+      }
+    });
 }
 
 export default function App() {
   const { initalCheck, user } = useContext(UserContext);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notification, setNotification] = useState({ title: "", body: "" });
 
   useEffect(() => {
     if (user) {
@@ -160,6 +184,16 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
+    onMessageListener()
+      .then((payload) => {
+        setShowNotification(true);
+        setNotification({
+          title: payload.notification.title,
+          body: payload.notification.body,
+        });
+        console.log("Sa", payload);
+      })
+      .catch((err) => console.log("failed: ", err));
     // downloadData()
     // EventManager.addEngagement('ipaedia21', MediaModalType.Iframe, 'Survey', 'We need your valuable feedback.', '/fd2/index.html', 'https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FForacort%20Synchrobreathe%20-%20Infoguide.jpg?alt=media&token=9195d987-7708-4039-ab78-70613fce7b6a').then(res => {
     //   console.log('xxxxxxxxxxxxxxxxx')
@@ -218,6 +252,13 @@ export default function App() {
     <>
       <MediaModalLazy />
 
+      <ReactNotificationComponent
+        title={notification.title}
+        body={notification.body}
+        setShowNotification={setShowNotification}
+      />
+      {/* )} */}
+
       {/* <PWApromptWithButton /> */}
       <Router>
         {initalCheck && (
@@ -254,7 +295,6 @@ export default function App() {
               <HomeLazy />
               {/* <Redirect to={"/event/event-kmde59n5"}></Redirect> */}
             </ProtectedRoute>
-
 
             {/* UPLOAD */}
             <ProtectedRoute
@@ -293,30 +333,31 @@ export default function App() {
 //make speaker context, video context
 
 async function ReadUser() {
-  let lastUID = null
+  let lastUID = null;
   try {
-    console.log("start")
-    let startTime = firebase.firestore.Timestamp.fromMillis(1626912000000)
-    let endTime = firebase.firestore.Timestamp.fromMillis(1628121600000)
-    let queryRef = firestore.collection(PROFILE_COLLECTION)
+    console.log("start");
+    let startTime = firebase.firestore.Timestamp.fromMillis(1626912000000);
+    let endTime = firebase.firestore.Timestamp.fromMillis(1628121600000);
+    let queryRef = firestore
+      .collection(PROFILE_COLLECTION)
       .where("timestamp", ">=", startTime)
-      .where("timestamp", "<=", endTime)
+      .where("timestamp", "<=", endTime);
     // .limit(5)
 
-    let queryResult = await queryRef.get()
+    let queryResult = await queryRef.get();
     if (!queryResult.empty) {
-      let docs = queryResult.docs
+      let docs = queryResult.docs;
       for (let i = 0; i < docs.length; i++) {
-        lastUID = docs[i].id
-        await checkForUserMetaData(docs[i].id)
+        lastUID = docs[i].id;
+        await checkForUserMetaData(docs[i].id);
       }
     } else {
-      console.log("not Found")
+      console.log("not Found");
     }
-    console.log("end")
+    console.log("end");
   } catch (error) {
-    console.log("last uid :" + lastUID)
-    console.error(error)
+    console.log("last uid :" + lastUID);
+    console.error(error);
   }
 }
 
@@ -324,27 +365,27 @@ async function checkForUserMetaData(uid) {
   return new Promise(async (response, reject) => {
     try {
       if (!uid) {
-        throw ({ code: "invalid UID" })
+        throw { code: "invalid UID" };
       }
-      console.log("start checking userMetaData", uid)
-      let userMetaef = firestore.collection(USERMETADATA_COLLECTION).doc(uid)
-      await firestore.runTransaction(async trans => {
-        let document = await trans.get(userMetaef)
+      console.log("start checking userMetaData", uid);
+      let userMetaef = firestore.collection(USERMETADATA_COLLECTION).doc(uid);
+      await firestore.runTransaction(async (trans) => {
+        let document = await trans.get(userMetaef);
         if (!document.exists) {
-          console.log("No userMeta found for ", uid)
+          console.log("No userMeta found for ", uid);
           return trans.set(userMetaef, {
             registeration: "copdupdate",
-            events: ["copdupdate"]
-          })
+            events: ["copdupdate"],
+          });
         } else {
-          console.log("userMeta already exits for ", uid)
-          return true
+          console.log("userMeta already exits for ", uid);
+          return true;
         }
-      })
-      response()
+      });
+      response();
     } catch (error) {
-      console.error(error)
-      reject(error)
+      console.error(error);
+      reject(error);
     }
-  })
+  });
 }
