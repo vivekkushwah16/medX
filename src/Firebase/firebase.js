@@ -103,13 +103,13 @@ export const askForPermissionToReceiveNotifications = async (user) => {
   }
 };
 
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    console.log("onMessageListener");
-    firebase.messaging().onMessage((payload) => {
-      resolve(payload);
-    });
+export const onMessageListener = (callback) => {
+  firebase.messaging().onMessage((payload) => {
+    if (callback) {
+      callback(payload)
+    }
   });
+}
 
 export const sendNotificationToTopic = (data) => {
   const cloudRef = cloudFunction.httpsCallable("sendNotificationToTopic");
@@ -183,7 +183,7 @@ export const copyFromRealtoFirestore = () => {
           }
         }
       },
-      (err) => {}
+      (err) => { }
     );
   } catch (error) {
     console.log(error);
