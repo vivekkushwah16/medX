@@ -46,8 +46,8 @@ import PWApromptWithButton, {
   PWAInstaller,
 } from "./Components/pwaPrompt/PWAprompt";
 import ReactNotificationComponent from "./Components/ReactToastify/ReactNotification";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
@@ -154,11 +154,11 @@ async function downloadData() {
         let data = {};
         snap.docs.forEach(
           (d) =>
-          (data[d.id] = {
-            ...d.data(),
-            id: d.id.split("_")[1],
-            phoneNumber: d.data().email.split("@")[0],
-          })
+            (data[d.id] = {
+              ...d.data(),
+              id: d.id.split("_")[1],
+              phoneNumber: d.data().email.split("@")[0],
+            })
         );
         console.log(data);
         exportFile(
@@ -172,7 +172,6 @@ async function downloadData() {
 function NotificationDisplay({ title, body }) {
   return (
     <div>
-      {console.log("here")}
       <h4>{title}</h4>
       <p>{body}</p>
     </div>
@@ -181,8 +180,6 @@ function NotificationDisplay({ title, body }) {
 
 export default function App() {
   const { initalCheck, user } = useContext(UserContext);
-  const [showNotification, setShowNotification] = useState(false);
-  const [notification, setNotification] = useState({ title: "", body: "" });
 
   useEffect(() => {
     if (user) {
@@ -197,15 +194,16 @@ export default function App() {
 
   useEffect(() => {
     onMessageListener((payload) => {
-      toast.info(<NotificationDisplay title={payload.notification.title} body={payload.notification.body} />)
-
-      // setShowNotification(true);
-      // setNotification({
-      //   title: payload.notification.title,
-      //   body: payload.notification.body,
-      // });
-      console.log("Sa", payload);
-    })
+      toast.info(
+        <NotificationDisplay
+          title={payload.notification.title}
+          body={payload.notification.body}
+        />,
+        {
+          icon: <img src="/logo192.png" alt="" />,
+        }
+      );
+    });
     // downloadData()
     // EventManager.addEngagement('ipaedia21', MediaModalType.Iframe, 'Survey', 'We need your valuable feedback.', '/fd2/index.html', 'https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FForacort%20Synchrobreathe%20-%20Infoguide.jpg?alt=media&token=9195d987-7708-4039-ab78-70613fce7b6a').then(res => {
     //   console.log('xxxxxxxxxxxxxxxxx')
@@ -264,13 +262,17 @@ export default function App() {
     <>
       <MediaModalLazy />
 
-      {/* <ReactNotificationComponent
-        title={notification.title}
-        body={notification.body}
-        setShowNotification={setShowNotification}
-      /> */}
-      <ToastContainer />
-      {/* )} */}
+      <ToastContainer
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        transition={Flip}
+        pauseOnHover={false}
+      />
 
       {/* <PWApromptWithButton /> */}
       <Router>
