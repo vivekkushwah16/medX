@@ -39,8 +39,19 @@ export default function Header(props) {
 
   const navBar = useRef(null);
   const [sticky, setSticky] = useState(false);
+  const [notificationData, setNotificationData] = useState([]);
   const [searchBarSticky, setSearchBarSticky] = useState(false);
   const [yOffset, setyOffset] = useState(100);
+
+  useEffect(() => {
+    setInterval(() => {
+      setNotificationData(
+        JSON.parse(localStorage.getItem("notifications"))
+          ? JSON.parse(localStorage.getItem("notifications"))
+          : []
+      );
+    }, 1000);
+  }, []);
   useEffect(() => {
     if (stickyOnScroll) {
       // console.log(navBar.current)
@@ -197,7 +208,9 @@ export default function Header(props) {
               handleClick={() => {
                 // showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fimages%2Fnewflyer.pdf')
               }}
-              data={["No Notifications"]}
+              data={
+                notificationData //["No Notifications"]
+              }
             />
             <Profile />
           </div>
