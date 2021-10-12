@@ -14,6 +14,20 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
+  // console.log("object",self)
+  // let notificationArray = JSON.parse(localStorage.getItem("notifications"))
+  //   ? JSON.parse(localStorage.getItem("notifications"))
+  //   : [];
+  // let data = {
+  //   id: payload.from,
+  //   title: payload.notification.title,
+  //   body: payload.notification.body,
+  //   // link: payload.notification.click_action,
+  //   date: new Date().toISOString,
+  //   opened: false,
+  // };
+  // notificationArray.unshift(data);
+  // localStorage.setItem("notifications", JSON.stringify(notificationArray));
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload

@@ -205,9 +205,9 @@ export default function Header(props) {
               <i className="icon-search"></i>
             </Link>
             <Notification
-              handleClick={() => {
+              // handleClick={() => {
                 // showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fimages%2Fnewflyer.pdf')
-              }}
+              // }}
               data={
                 notificationData //["No Notifications"]
               }

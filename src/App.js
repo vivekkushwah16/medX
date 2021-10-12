@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
 import { UserContext } from "./Context/Auth/UserContextProvider";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
@@ -168,16 +168,19 @@ async function downloadData() {
       }
     });
 }
-function NotificationDisplay({ title, body }) {
+function NotificationDisplay({ title, body, link, id }) {
   return (
-    <div>
-      <h4>{title}</h4>
-      <p>{body}</p>
+    <div key={id}>
+      <a href={link} style={{ textDecoration: "none", color: "initial" }}>
+        <h4>{title}</h4>
+        <p>{body}</p>
+      </a>
     </div>
   );
 }
 
 export default function App() {
+  let audioRef = useRef();
   const { initalCheck, user } = useContext(UserContext);
 
   useEffect(() => {
@@ -193,26 +196,38 @@ export default function App() {
 
   useEffect(() => {
     onMessageListener((payload) => {
+      console.log("object", payload);
+      audioRef.current.play();
       let notificationArray = JSON.parse(localStorage.getItem("notifications"))
         ? JSON.parse(localStorage.getItem("notifications"))
         : [];
       let data = {
+        id: payload.fcmMessageId,
         title: payload.notification.title,
         body: payload.notification.body,
+        link: payload.notification.click_action,
+        date: new Date().toISOString(),
+        opened: false,
       };
-      notificationArray.push(data);
+      notificationArray.unshift(data);
       localStorage.setItem("notifications", JSON.stringify(notificationArray));
       // console.log("ds", notificationArray);
-      // toast.info(
-      //   <NotificationDisplay
-      //     title={payload.notification.title}
-      //     body={payload.notification.body}
-      //   />,
-      //   {
-      //     icon: <img src="/logo192.png" alt="" />,
-      //   }
-      // );
+      toast.info(
+        <NotificationDisplay
+          title={payload.notification.title}
+          body={payload.notification.body}
+          link={payload.notification.click_action}
+          id={payload.fcmMessageId}
+        />,
+        {
+          icon: <img src="/logo192.png" alt="" />,
+        }
+      );
+      document.getElementById("ad").play();
     });
+    console.log("object", audioRef);
+    console.log("aud", document.getElementById("ad"));
+
     // downloadData()
     // EventManager.addEngagement('ipaedia21', MediaModalType.Iframe, 'Survey', 'We need your valuable feedback.', '/fd2/index.html', 'https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FForacort%20Synchrobreathe%20-%20Infoguide.jpg?alt=media&token=9195d987-7708-4039-ab78-70613fce7b6a').then(res => {
     //   console.log('xxxxxxxxxxxxxxxxx')
@@ -271,7 +286,7 @@ export default function App() {
     <>
       <MediaModalLazy />
 
-      {/* <ToastContainer
+      <ToastContainer
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={true}
@@ -281,7 +296,15 @@ export default function App() {
         draggable
         transition={Flip}
         pauseOnHover={false}
-      /> */}
+      />
+      <audio
+        // style={{ display: "none" }}
+        id="ad"
+        src="/assets/music/notification.mp3"
+        ref={audioRef}
+        autoplay="true"
+        preload="auto"
+      ></audio>
 
       {/* <PWApromptWithButton /> */}
       <Router>
