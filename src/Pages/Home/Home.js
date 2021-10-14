@@ -20,7 +20,7 @@ import VideoRow from "../../Containers/VideoRow/VideoRow";
 import Header from "../../Containers/Header/Header";
 import TagsRow from "../../Containers/TagsRow/TagsRow";
 import Footer from "../../Containers/Footer/Footer";
-import { isMobileOnly } from "react-device-detect";
+import { isIOS, isMobileOnly } from "react-device-detect";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import {
   cloudFunction,
@@ -56,6 +56,7 @@ import { INTEREST_ROUTE } from "../../AppConstants/Routes";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import DoctorFormModal from "../../Components/DoctorFormModal/DoctorFormModal";
 import { redirectClinet, removeURLQuery, updateURLQuery } from "../../utils/HandleUrlParam";
+import { customScrollToId } from "../../utils";
 
 const TAG_URL_PARAM_NAME = "selectedTag"
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
@@ -227,17 +228,21 @@ class Home extends Component {
 
   scrollToTargetAdjusted = () => {
     if (this.contentBoXTop.current) {
-      var element = this.contentBoXTop.current;
-      var headerOffset = 150;
-      var elementPosition = element.getBoundingClientRect().top;
-      var offsetPosition =
-        elementPosition - headerOffset + (window.scrollY ? window.scrollY : 0);
-      // let isInTheView = (elementPosition + 100 > window.scrollY) && ((elementPosition + 100) < (window.scrollY + window.innerHeight))
-      // console.log((elementPosition + 100 > window.scrollY), ((elementPosition + 100) < (window.scrollY + window.innerHeight)), isInTheView)
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+      if (isIOS) {
+        customScrollToId("contentBoXTop")
+      } else {
+        var element = this.contentBoXTop.current;
+        var headerOffset = 150;
+        var elementPosition = element.getBoundingClientRect().top;
+        var offsetPosition =
+          elementPosition - headerOffset + (window.scrollY ? window.scrollY : 0);
+        // let isInTheView = (elementPosition + 100 > window.scrollY) && ((elementPosition + 100) < (window.scrollY + window.innerHeight))
+        // console.log((elementPosition + 100 > window.scrollY), ((elementPosition + 100) < (window.scrollY + window.innerHeight)), isInTheView)
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
@@ -1023,7 +1028,11 @@ class Home extends Component {
               alt=""
               style={{ minWidth: "100%" }}
               onClick={() => {
-                this.scrollIntoViewHead(document.getElementById("scrollable"));
+                if (isIOS) {
+                  customScrollToId("scrollable")
+                } else {
+                  this.scrollIntoViewHead(document.getElementById("scrollable"));
+                }
               }}
             />
           </div>
@@ -1069,7 +1078,7 @@ class Home extends Component {
                 activeTag={this.state.activeTag}
               />
 
-              <div className="contentBox" ref={this.contentBoXTop}>
+              <div className="contentBox" ref={this.contentBoXTop} id="contentBoXTop">
                 {/* {this.state.activeTag !== "" && (
                   <VideoRow
                     key={this.state.activeTag}

@@ -200,8 +200,14 @@ function VideoRow(props) {
     <>
       {videosData ? (
         <>
-          <h2 className="contentBox__title mg-b5 " id={rowData ? (rowData.id ? rowData.id : tag) : tag}>
+          <h2 className="contentBox__title mg-b5 ">
             {heading}
+            <a className="fakeAnchor" style={{
+              top: "-5.5rem",
+              left: "0",
+              position: "absolute",
+              pointerEvents: "none",
+            }} id={rowData ? (rowData.id ? rowData.id : tag) : tag}></a>
           </h2>
           {grid ? (
             <div className="contentBox__item-wrapper row">

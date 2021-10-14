@@ -22,7 +22,7 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import { firestore } from "../../Firebase/firebase";
 import { BACKSTAGE_COLLECTION } from "../../AppConstants/CollectionConstants";
-import { bronchtalkindia_autoLogIn, bronchtalkindia_autoRegistration } from "../../utils";
+import { bronchtalkindia_autoLogIn, bronchtalkindia_autoRegistration, customScrollToId } from "../../utils";
 import { UserBronchTalkMetaDataContext, UserContext } from "../../Context/Auth/UserContextProvider";
 import { redirectClinet } from "../../utils/HandleUrlParam";
 let scroll = Scroll.animateScroll;
@@ -187,11 +187,7 @@ function Banner() {
     // setTimeout(()=>{
     if (isIOS) {
       // history.push(`/home#${id}`)
-      let a = document.createElement('a')
-      a.href = `#${id}`
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
+      customScrollToId(id)
     } else {
       window.scroll(0, (thing.scrollHeight - 200));
     }

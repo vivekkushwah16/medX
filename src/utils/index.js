@@ -77,3 +77,10 @@ export function bronchtalkindia_autoLogIn(info) {
     form.submit();
 }
 
+export function customScrollToId(id) {
+    let a = document.createElement('a')
+    a.href = `#${id}`
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+}
