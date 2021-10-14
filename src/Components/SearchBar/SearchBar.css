@@ -8,6 +8,9 @@
   margin-bottom: 50px;
   transform: translate(-50%, -136%);
 }
+.search-container-top input[type="text"] {
+  display: none;
+}
 
 .search-container input[type="text"] {
   font-size: 1rem;

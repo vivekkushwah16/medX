@@ -46,9 +46,12 @@ export function Custom1(props) {
                             <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={data.speakerId} />
                         </a> */}
             <a
-              href="#"
+              href={`#${data.route}`}
               className="btn  bannerBox__btn"
-              onClick={() => props.goToRoute(data.route)}
+              onClick={(event) => {
+                event.preventDefault()
+                props.goToRoute(data.route)
+              }}
             >
               {data.buttonText}
             </a>
@@ -79,9 +82,12 @@ export function Custom2(props) {
             <img className=" mg-b20" src={data.logoImageUrl} alt="logo"></img>
             {/* <h1 className="bannerBox__featired-title mg-b50" style={{ color: '#fff' }}>{data.mainTitle}<br></br><span>{data.subTitle_line1}<br></br>{data.subTitle_line2}</span></h1> */}
             <a
-              href="#"
+              href={`#${data.route}`}
               className="btn   bannerBox__btn"
-              onClick={() => props.goToRoute(data.route)}
+              onClick={(event) => {
+                event.preventDefault()
+                props.goToRoute(data.route)
+              }}
             >
               {data.buttonText}
             </a>

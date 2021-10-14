@@ -166,7 +166,7 @@ class Home extends Component {
       { tag: "ILD/IPF", header: "Videos on ILD/IPF" },
       // { tag: "anti fungal", header: "Videos of Anti Fungal" },
       { tag: "Telemedicine", header: "Videos on Telemedicine" },
-      { tag: "Impact Sessions", header: "Videos of Impact session" },
+      { tag: "Impact Sessions", header: "Videos of Impact session", id: "ImpactSessions" },
       { tag: "covid19", header: "Videos on COVID-19" },
       { tag: "evolve session", header: "Videos of Evolve session" },
       { tag: "HeartFailure", header: "Videos of Heart Failure" },
@@ -191,7 +191,7 @@ class Home extends Component {
     ],
 
     tags: [
-      { tag: "Impact Sessions", header: "Impact Sessions" },
+      { tag: "Impact Sessions", header: "Impact Sessions", id: "ImpactSessions" },
       { tag: "COPD", header: "COPD" },
       { tag: "Asthma", header: "Asthma" },
       { tag: "covid19", header: "COVID-19" },
@@ -210,7 +210,7 @@ class Home extends Component {
       // { tag: "anti fungal", header: "Anti Fungal" },
       // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
     ],
-    activeTag: { tag: "Impact Sessions", header: "Videos of Impact session" },
+    activeTag: { tag: "Impact Sessions", header: "Videos of Impact session", id: "ImpactSessions" },
     lastPlayed: null,
     lastVideoMetadata: null,
     platformData: JSON.parse(localStorage.getItem("platformData")),
@@ -1091,6 +1091,7 @@ class Home extends Component {
                       openVideoPop={this.openVideoPop}
                       grid={false}
                       multipleTags={this.state.activeTag.multipleTags}
+                      rowData={this.state.activeTag}
                     />)
                 }
                 {RecommendedRow.map((row) => (
@@ -1132,6 +1133,7 @@ class Home extends Component {
                         tag={row.tag}
                         openVideoPop={this.openVideoPop}
                         grid={false}
+                        rowData={row}
                         multipleTags={row.multipleTags}
                       />
                     )}

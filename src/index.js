@@ -27,12 +27,8 @@ const options = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <PWAPrompt promptOnVisit={1} timesToShow={3} copyClosePrompt="Close" permanentlyHideOnDismiss={false} />
     <PWAInstaller />
-    {/* {
-      isIOS ?
-      :
-    } */}
+    {/* <PWAPrompt promptOnVisit={1} timesToShow={3} copyClosePrompt="Close" permanentlyHideOnDismiss={false} /> */}
     <UserContextProvider>
       <AnalyticsContextProvider>
         <EventContextProvider>

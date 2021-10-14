@@ -84,7 +84,7 @@ export const removeURLQuery = (history, location, paramName) => {
   })
 }
 
-export const redirectClinet = (history, location, newPath, newUrlParam = [], removeUrlParam = []) => {
+export const redirectClinet = (history, location, newPath, newUrlParam = [], removeUrlParam = [], hash = null) => {
   let urlQuery = new URLSearchParams(location.search)
   if (newUrlParam.length > 0) {
     newUrlParam.forEach(param => {
@@ -96,8 +96,15 @@ export const redirectClinet = (history, location, newPath, newUrlParam = [], rem
       urlQuery.delete(param)
     })
   }
-  history.push({
+  let locationProp = {
     pathname: newPath,
     search: urlQuery.toString(),
-  });
+  }
+  if (hash) {
+    locationProp = {
+      ...locationProp,
+      hash,
+    }
+  }
+  history.push(locationProp);
 }

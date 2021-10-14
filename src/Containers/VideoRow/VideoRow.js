@@ -200,7 +200,7 @@ function VideoRow(props) {
     <>
       {videosData ? (
         <>
-          <h2 className="contentBox__title mg-b5 " id={tag}>
+          <h2 className="contentBox__title mg-b5 " id={rowData ? (rowData.id ? rowData.id : tag) : tag}>
             {heading}
           </h2>
           {grid ? (

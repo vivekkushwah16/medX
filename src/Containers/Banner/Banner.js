@@ -12,11 +12,11 @@ import * as Scroll from "react-scroll";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { EVENT_ROUTE, RootRoute } from "../../AppConstants/Routes";
 import { MediaModalContext } from "../../Context/MedialModal/MediaModalContextProvider";
 import { MediaModalType } from "../../AppConstants/ModalType";
-import { isMobileOnly } from "react-device-detect";
+import { isIOS, isMobileOnly } from "react-device-detect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../../Components/SearchBar/SearchBar";
@@ -24,13 +24,14 @@ import { firestore } from "../../Firebase/firebase";
 import { BACKSTAGE_COLLECTION } from "../../AppConstants/CollectionConstants";
 import { bronchtalkindia_autoLogIn, bronchtalkindia_autoRegistration } from "../../utils";
 import { UserBronchTalkMetaDataContext, UserContext } from "../../Context/Auth/UserContextProvider";
+import { redirectClinet } from "../../utils/HandleUrlParam";
 let scroll = Scroll.animateScroll;
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <button className="slider-btn slider-btn-next" onClick={onClick}>
       <i className="icon-angle-right"></i>
-      
+
     </button>
   );
 }
@@ -133,7 +134,7 @@ const BannerData = [
     buttonText: "Watch Now",
     mainImageUrl: "/assets/images/Banner_07052021.jpg",
     logoImageUrl: "/assets/images/logoSessionLive.png",
-    route: "Impact Sessions",
+    route: "ImpactSessions",
   },
   {
     type: BannerType.Custom1,
@@ -176,13 +177,25 @@ function Banner() {
   const userBronchTalkMetaDataContext = useContext(UserBronchTalkMetaDataContext)
   const userContext = useContext(UserContext)
   const [showloader, setShowLoader] = useState(false)
+  let location = useLocation();
 
   const goToRoute = async (id) => {
     console.log(id);
 
     var thing = document.getElementById("bannerParentDiv");
+    //   redirectClinet(history, location, '/home', [], [], "bannerParentDiv")
     // setTimeout(()=>{
+    if (isIOS) {
+      // history.push(`/home#${id}`)
+      let a = document.createElement('a')
+      a.href = `#${id}`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+    } else {
       window.scroll(0, (thing.scrollHeight - 200));
+    }
+
 
     // },1)
     // let a =Scroll.Link;
