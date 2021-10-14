@@ -56,6 +56,7 @@ import { INTEREST_ROUTE } from "../../AppConstants/Routes";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import DoctorFormModal from "../../Components/DoctorFormModal/DoctorFormModal";
 
+const TAG_URL_PARAM_NAME = "selectedTag"
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
 
 function HandleUrlParam(props) {
@@ -239,30 +240,31 @@ class Home extends Component {
     }
   };
 
+  updateTagState = (selectedTag) => {
+    if (selectedTag === this.state.activeTag.tag) {
+      this.setState({ activeTag: { tag: "", header: "" } });
+      this.removeURLQuery(TAG_URL_PARAM_NAME)
+      return;
+    }
+    this.scrollToTargetAdjusted();
+    let _tag = this.state.rows.filter((r) =>
+      !r.multipleTags ? r.tag === selectedTag : r.tag.indexOf(selectedTag) !== -1
+    )[0];
+    if (_tag.multipleTags) {
+      this.setState({ activeTag: { ..._tag, currentTag: selectedTag } });
+      this.updateURLQuery(TAG_URL_PARAM_NAME, selectedTag)
+    } else {
+      this.setState({ activeTag: _tag });
+      this.updateURLQuery(TAG_URL_PARAM_NAME, _tag.tag)
+    }
+  }
+
   onTagSelect = (tag) => {
     // if (this.contentBoXTop.current) {
     //     this.contentBoXTop.current.scrollIntoView();
     // }
     // if tag is already selected
-    if (tag.tag === this.state.activeTag.tag) {
-      this.setState({ activeTag: { tag: "", header: "" } });
-      return;
-    }
-    this.scrollToTargetAdjusted();
-    let _tag = this.state.rows.filter((r) =>
-      !r.multipleTags ? r.tag === tag.tag : r.tag.indexOf(tag.tag) !== -1
-    )[0];
-    if (_tag.multipleTags) {
-      this.setState({ activeTag: { ..._tag, currentTag: tag.tag } });
-    } else {
-      this.setState({ activeTag: _tag });
-    }
-    return;
-    this.setState({ activeTag: tag });
-    return;
-    this.state.activeTag.tag == tag.tag
-      ? this.setState({ activeTag: "" })
-      : this.setState({ activeTag: tag });
+    this.updateTagState(tag.tag)
   };
 
   //#region verification flow
@@ -830,6 +832,8 @@ class Home extends Component {
     if (this.context.userInfo) {
     }
 
+    this.updateTagAccToURL()
+
     firestore
       .collection(BACKSTAGE_COLLECTION)
       .doc(PLATFORM_BACKSTAGE_DOC)
@@ -968,6 +972,35 @@ class Home extends Component {
   handledoctorResultLoading = (bool) => {
     this.setState({ doctorResultLoading: bool });
   };
+
+  updateURLQuery = (paramName, paramValue) => {
+    const { history, location } = this.props;
+    let urlQuery = new URLSearchParams(location.search)
+    urlQuery.set(paramName, paramValue)
+    history.replace({
+      search: urlQuery.toString(),
+    })
+  }
+
+  removeURLQuery = (paramName) => {
+    const { history, location } = this.props;
+    let urlQuery = new URLSearchParams(location.search)
+    urlQuery.delete(paramName)
+    history.replace({
+      search: urlQuery.toString(),
+    })
+  }
+
+  updateTagAccToURL = () => {
+    const { location } = this.props;
+    let urlQuery = new URLSearchParams(location.search)
+    let tag = urlQuery.get(TAG_URL_PARAM_NAME)
+    console.log("xxxxxxxxxxxxxxxxxxxxxx")
+    console.log(tag)
+    console.log("xxxxxxxxxxxxxxxxxxxxxx")
+    if (tag)
+      this.updateTagState(tag)
+  }
 
   render() {
     return (
