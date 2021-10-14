@@ -55,6 +55,7 @@ import IntersetSelection from "../../Containers/IntersetSelection";
 import { INTEREST_ROUTE } from "../../AppConstants/Routes";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import DoctorFormModal from "../../Components/DoctorFormModal/DoctorFormModal";
+import { redirectClinet, removeURLQuery, updateURLQuery } from "../../utils/HandleUrlParam";
 
 const TAG_URL_PARAM_NAME = "selectedTag"
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
@@ -243,7 +244,7 @@ class Home extends Component {
   updateTagState = (selectedTag) => {
     if (selectedTag === this.state.activeTag.tag) {
       this.setState({ activeTag: { tag: "", header: "" } });
-      this.removeURLQuery(TAG_URL_PARAM_NAME)
+      this.removeURLQuery__(TAG_URL_PARAM_NAME)
       return;
     }
     this.scrollToTargetAdjusted();
@@ -252,10 +253,10 @@ class Home extends Component {
     )[0];
     if (_tag.multipleTags) {
       this.setState({ activeTag: { ..._tag, currentTag: selectedTag } });
-      this.updateURLQuery(TAG_URL_PARAM_NAME, selectedTag)
+      this.updateURLQuery__(TAG_URL_PARAM_NAME, selectedTag)
     } else {
       this.setState({ activeTag: _tag });
-      this.updateURLQuery(TAG_URL_PARAM_NAME, _tag.tag)
+      this.updateURLQuery__(TAG_URL_PARAM_NAME, _tag.tag)
     }
   }
 
@@ -809,9 +810,8 @@ class Home extends Component {
         },
         () => {
           if (updateUrl) {
-            const { history } = this.props;
-            if (history)
-              history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
+            const { history, location } = this.props;
+            redirectClinet(history, location, `/home/${videoData.id}`, [{ name: 'tag', value: tagSelectedFrom }])
           }
         }
       );
@@ -856,8 +856,8 @@ class Home extends Component {
               icon: "info",
               button: data.liveEventCTA.buttonText,
             }).then(() => {
-              const { history } = this.props;
-              if (history) history.push(data.liveEventCTA.redirectTo);
+              const { history, location } = this.props;
+              redirectClinet(history, location, data.liveEventCTA.redirectTo)
             });
           }
         }
@@ -973,31 +973,20 @@ class Home extends Component {
     this.setState({ doctorResultLoading: bool });
   };
 
-  updateURLQuery = (paramName, paramValue) => {
+  updateURLQuery__ = (paramName, paramValue) => {
     const { history, location } = this.props;
-    let urlQuery = new URLSearchParams(location.search)
-    urlQuery.set(paramName, paramValue)
-    history.replace({
-      search: urlQuery.toString(),
-    })
+    updateURLQuery(history, location, paramName, paramValue)
   }
 
-  removeURLQuery = (paramName) => {
+  removeURLQuery__ = (paramName) => {
     const { history, location } = this.props;
-    let urlQuery = new URLSearchParams(location.search)
-    urlQuery.delete(paramName)
-    history.replace({
-      search: urlQuery.toString(),
-    })
+    removeURLQuery(history, location, paramName)
   }
 
   updateTagAccToURL = () => {
     const { location } = this.props;
     let urlQuery = new URLSearchParams(location.search)
     let tag = urlQuery.get(TAG_URL_PARAM_NAME)
-    console.log("xxxxxxxxxxxxxxxxxxxxxx")
-    console.log(tag)
-    console.log("xxxxxxxxxxxxxxxxxxxxxx")
     if (tag)
       this.updateTagState(tag)
   }
@@ -1182,8 +1171,8 @@ class Home extends Component {
                   currVideosData={this.state.currentVideosData}
                   closeVideoPop={(videoData) => {
                     this.closeVideoPop(videoData);
-                    const { history } = this.props;
-                    if (history) history.push(`/home`);
+                    const { history, location } = this.props;
+                    redirectClinet(history, location, '/home', [], ['tag'])
                   }}
                   openVideoPop={this.openVideoPop}
                 />
