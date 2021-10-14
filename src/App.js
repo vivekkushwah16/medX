@@ -153,11 +153,11 @@ async function downloadData() {
         let data = {};
         snap.docs.forEach(
           (d) =>
-            (data[d.id] = {
-              ...d.data(),
-              id: d.id.split("_")[1],
-              phoneNumber: d.data().email.split("@")[0],
-            })
+          (data[d.id] = {
+            ...d.data(),
+            id: d.id.split("_")[1],
+            phoneNumber: d.data().email.split("@")[0],
+          })
         );
         console.log(data);
         exportFile(
@@ -196,37 +196,40 @@ export default function App() {
 
   useEffect(() => {
     audioRef.current.play();
-    onMessageListener((payload) => {
-      document.body.click()
-      console.log("object", payload);
-      audioRef.current.play();
-      let notificationArray = JSON.parse(localStorage.getItem("notifications"))
-        ? JSON.parse(localStorage.getItem("notifications"))
-        : [];
-      let data = {
-        id: payload.fcmMessageId,
-        title: payload.notification.title,
-        body: payload.notification.body,
-        link: payload.notification.click_action,
-        date: new Date().toISOString(),
-        opened: false,
-      };
-      notificationArray.unshift(data);
-      localStorage.setItem("notifications", JSON.stringify(notificationArray));
-      // console.log("ds", notificationArray);
-      toast.info(
-        <NotificationDisplay
-          title={payload.notification.title}
-          body={payload.notification.body}
-          link={payload.notification.click_action}
-          id={payload.fcmMessageId}
-        />,
-        {
-          icon: <img src="/logo192.png" alt="" />,
-        }
-      );
-      document.getElementById("ad").play();
-    });
+
+    //Notification Listener
+    // onMessageListener((payload) => {
+    //   document.body.click()
+    //   console.log("object", payload);
+    //   audioRef.current.play();
+    //   let notificationArray = JSON.parse(localStorage.getItem("notifications"))
+    //     ? JSON.parse(localStorage.getItem("notifications"))
+    //     : [];
+    //   let data = {
+    //     id: payload.fcmMessageId,
+    //     title: payload.notification.title,
+    //     body: payload.notification.body,
+    //     link: payload.notification.click_action,
+    //     date: new Date().toISOString(),
+    //     opened: false,
+    //   };
+    //   notificationArray.unshift(data);
+    //   localStorage.setItem("notifications", JSON.stringify(notificationArray));
+    //   // console.log("ds", notificationArray);
+    //   toast.info(
+    //     <NotificationDisplay
+    //       title={payload.notification.title}
+    //       body={payload.notification.body}
+    //       link={payload.notification.click_action}
+    //       id={payload.fcmMessageId}
+    //     />,
+    //     {
+    //       icon: <img src="/logo192.png" alt="" />,
+    //     }
+    //   );
+    //   document.getElementById("ad").play();
+    // });
+
     console.log("object", audioRef);
     console.log("aud", document.getElementById("ad"));
 
