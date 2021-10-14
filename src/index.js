@@ -15,7 +15,7 @@ import AnalyticsContextProvider, {
 } from "./Context/Analytics/AnalyticsContextProvider";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import { PWAInstaller } from "./Components/pwaPrompt/PWAprompt";
-import { isIOS } from "react-device-detect";
+import { isAndroid, isIOS } from "react-device-detect";
 import PWAPrompt from 'react-ios-pwa-prompt'
 
 const options = {
@@ -28,7 +28,10 @@ const options = {
 ReactDOM.render(
   <React.StrictMode>
     <PWAInstaller />
-    {/* <PWAPrompt promptOnVisit={1} timesToShow={3} copyClosePrompt="Close" permanentlyHideOnDismiss={false} /> */}
+    {
+      !isAndroid &&
+      <PWAPrompt promptOnVisit={1} timesToShow={3} copyClosePrompt="Close" permanentlyHideOnDismiss={false} />
+    }
     <UserContextProvider>
       <AnalyticsContextProvider>
         <EventContextProvider>
