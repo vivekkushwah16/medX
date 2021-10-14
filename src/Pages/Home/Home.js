@@ -55,7 +55,9 @@ import IntersetSelection from "../../Containers/IntersetSelection";
 import { INTEREST_ROUTE } from "../../AppConstants/Routes";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import DoctorFormModal from "../../Components/DoctorFormModal/DoctorFormModal";
+import { redirectClinet, removeURLQuery, updateURLQuery } from "../../utils/HandleUrlParam";
 
+const TAG_URL_PARAM_NAME = "selectedTag"
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
 
 function HandleUrlParam(props) {
@@ -239,30 +241,31 @@ class Home extends Component {
     }
   };
 
+  updateTagState = (selectedTag) => {
+    if (selectedTag === this.state.activeTag.tag) {
+      this.setState({ activeTag: { tag: "", header: "" } });
+      this.removeURLQuery__(TAG_URL_PARAM_NAME)
+      return;
+    }
+    this.scrollToTargetAdjusted();
+    let _tag = this.state.rows.filter((r) =>
+      !r.multipleTags ? r.tag === selectedTag : r.tag.indexOf(selectedTag) !== -1
+    )[0];
+    if (_tag.multipleTags) {
+      this.setState({ activeTag: { ..._tag, currentTag: selectedTag } });
+      this.updateURLQuery__(TAG_URL_PARAM_NAME, selectedTag)
+    } else {
+      this.setState({ activeTag: _tag });
+      this.updateURLQuery__(TAG_URL_PARAM_NAME, _tag.tag)
+    }
+  }
+
   onTagSelect = (tag) => {
     // if (this.contentBoXTop.current) {
     //     this.contentBoXTop.current.scrollIntoView();
     // }
     // if tag is already selected
-    if (tag.tag === this.state.activeTag.tag) {
-      this.setState({ activeTag: { tag: "", header: "" } });
-      return;
-    }
-    this.scrollToTargetAdjusted();
-    let _tag = this.state.rows.filter((r) =>
-      !r.multipleTags ? r.tag === tag.tag : r.tag.indexOf(tag.tag) !== -1
-    )[0];
-    if (_tag.multipleTags) {
-      this.setState({ activeTag: { ..._tag, currentTag: tag.tag } });
-    } else {
-      this.setState({ activeTag: _tag });
-    }
-    return;
-    this.setState({ activeTag: tag });
-    return;
-    this.state.activeTag.tag == tag.tag
-      ? this.setState({ activeTag: "" })
-      : this.setState({ activeTag: tag });
+    this.updateTagState(tag.tag)
   };
 
   //#region verification flow
@@ -310,8 +313,10 @@ class Home extends Component {
                 logout();
               });
             } else if (
-              res.data.status === "fail" &&
-              res.data.code === "auth/phone-number-already-exists"
+              res.data.status === "fail" && (
+                res.data.code === "auth/phone-number-already-exists" ||
+                res.data.code === "auth/email-already-exists"
+              )
             ) {
               swal({
                 title: "Already Exists",
@@ -807,9 +812,8 @@ class Home extends Component {
         },
         () => {
           if (updateUrl) {
-            const { history } = this.props;
-            if (history)
-              history.push(`/home/${videoData.id}?tag=${tagSelectedFrom}`);
+            const { history, location } = this.props;
+            redirectClinet(history, location, `/home/${videoData.id}`, [{ name: 'tag', value: tagSelectedFrom }])
           }
         }
       );
@@ -829,6 +833,8 @@ class Home extends Component {
     // console.log(this.context.userInfo);
     if (this.context.userInfo) {
     }
+
+    this.updateTagAccToURL()
 
     firestore
       .collection(BACKSTAGE_COLLECTION)
@@ -852,8 +858,8 @@ class Home extends Component {
               icon: "info",
               button: data.liveEventCTA.buttonText,
             }).then(() => {
-              const { history } = this.props;
-              if (history) history.push(data.liveEventCTA.redirectTo);
+              const { history, location } = this.props;
+              redirectClinet(history, location, data.liveEventCTA.redirectTo)
             });
           }
         }
@@ -968,6 +974,24 @@ class Home extends Component {
   handledoctorResultLoading = (bool) => {
     this.setState({ doctorResultLoading: bool });
   };
+
+  updateURLQuery__ = (paramName, paramValue) => {
+    const { history, location } = this.props;
+    updateURLQuery(history, location, paramName, paramValue)
+  }
+
+  removeURLQuery__ = (paramName) => {
+    const { history, location } = this.props;
+    removeURLQuery(history, location, paramName)
+  }
+
+  updateTagAccToURL = () => {
+    const { location } = this.props;
+    let urlQuery = new URLSearchParams(location.search)
+    let tag = urlQuery.get(TAG_URL_PARAM_NAME)
+    if (tag)
+      this.updateTagState(tag)
+  }
 
   render() {
     return (
@@ -1149,8 +1173,8 @@ class Home extends Component {
                   currVideosData={this.state.currentVideosData}
                   closeVideoPop={(videoData) => {
                     this.closeVideoPop(videoData);
-                    const { history } = this.props;
-                    if (history) history.push(`/home`);
+                    const { history, location } = this.props;
+                    redirectClinet(history, location, '/home', [], ['tag'])
                   }}
                   openVideoPop={this.openVideoPop}
                 />

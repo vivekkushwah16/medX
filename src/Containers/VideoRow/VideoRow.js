@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useContext } from "react";
+import React, { useEffect, useState, useCallback, useContext, useRef } from "react";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -8,6 +8,8 @@ import VideoManager from "../../Managers/VideoManager";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import TagsRow from "../TagsRow/TagsRow";
 import { isMobileOnly } from "react-device-detect";
+import { GET_SIMPLE_RECOMMENDATION } from "../../AppConstants/CloudFunctionName";
+import { cloudFunction } from "../../Firebase/firebase";
 
 const checkArrowHide = (props) => {
   let width = window.innerWidth;
@@ -78,9 +80,9 @@ function VideoRow(props) {
   const { heading, tag, lastPlayed, openVideoPop, grid, multipleTags, systemTags, rowData } = props;
   const [videosData, setData] = useState(null);
   const { userInfo } = useContext(UserContext);
+  const isGetSystemTagCalled = useRef(false)
 
   useEffect(() => {
-    // console.log(multipleTags, tag)
     if (systemTags) {
       getSystemTags()
     } else {
@@ -92,14 +94,15 @@ function VideoRow(props) {
     }
   }, [tag])
 
-  useEffect(() => {
-    if (systemTags && "RecommendedVideos" === rowData.tag) {
-      if (userInfo.interests) {
-        getSystemTags()
-      }
-    }
+  // useEffect(() => {
+  //   if (systemTags && "RecommendedVideos" === rowData.tag) {
+  //     if (userInfo.interests && !isGetSystemTagCalled.current) {
+  //       console.log("Recommendataion called")
+  //       getSystemTags()
+  //     }
+  //   }
 
-  }, [userInfo])
+  // }, [userInfo, tag, systemTags])
 
   const getVideosFromMultipleTags = async () => {
     let arr = [];
@@ -119,18 +122,31 @@ function VideoRow(props) {
 
   const getSystemTags = useCallback(
     async () => {
+      isGetSystemTagCalled.current = true
+      let startTime = new Date()
+      // console.log(startTime)
       if (rowData && rowData.videoFetchFunction) {
         let arr = []
         if (rowData.fetchParameters) {
           arr = await rowData.videoFetchFunction(rowData.fetchParameters)
         } else if ("RecommendedVideos" === rowData.tag) {
-          let recommendedTags = []
-          if (userInfo.interests) {
-            Object.keys(userInfo.interests).forEach(cate => {
-              recommendedTags = [...recommendedTags, ...userInfo.interests[cate]]
-            })
-            arr = await VideoManager.getBasicRecommendedVideos(recommendedTags, 3, 10)
-          }
+
+          const getRecommendation = cloudFunction.httpsCallable(
+            GET_SIMPLE_RECOMMENDATION
+          );
+          // console.log("called")
+          // console.log(new Date())
+          getRecommendation().then(res => {
+            if (res.data.status === "done") {
+              // console.log(res.data)
+              // console.log("ourtime:", (new Date().getTime() - startTime.getTime()) / 1000)
+              // console.log(new Date())
+              setData(res.data.videos);
+            }
+          }).catch(err => {
+            console.log(err)
+          })
+          return
         } else {
           arr = await rowData.videoFetchFunction()
         }

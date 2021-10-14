@@ -76,7 +76,7 @@ function VideoPopup(props) {
 
   useEffect(() => {
     if (playerRef.current && metadata) {
-      
+
       seekTo(metadata.lastKnownTimestamp);
       currenttimeWatched = 0;
     }
@@ -513,7 +513,8 @@ function VideoPopup(props) {
 
                 <p className="videodetailBox__views">
                   {/* {videoData.views} Views  */}
-                  {moment(videoData.timestamp.toMillis()).format("MMMM YYYY") +
+
+                  {videoData.timestamp && (videoData.timestamp.toMillis ? moment(videoData.timestamp.toMillis()).format("MMMM YYYY") : moment(videoData.timestamp._seconds * 1000).format("MMMM YYYY")) +
                     " "}
                   {playerRef.current && playerRef.current.getDuration() > 0 && (
                     <>
