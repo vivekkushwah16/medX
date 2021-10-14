@@ -22,5 +22,6 @@ export const ENGAGEMENT_CLICK = 'engagment_click'
 export const QNA_INTERATCION = 'qna_interaction'
 export const POLL_INTERACTION = 'poll_interaction'
 export const SESSION_ATTENDED = 'session_attended'
+export const INSTALL_PWA_ANALYTICS_EVENT = 'pwa_install_click'
 
 export const OLD_USER_REGISTER_EVENT = 'old_user_register_event'

@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { UPDATE_USER_STAUS } from "../../AppConstants/CloudFunctionName";
 import { MonthName } from "../../AppConstants/Months";
+import { PWAInstaller } from "../../Components/pwaPrompt/PWAprompt";
+import { isAndroid } from "react-device-detect";
+import PWAPrompt from 'react-ios-pwa-prompt'
 import firebase, {
   analytics,
   cloudFunction,
@@ -22,6 +25,10 @@ export default function AnalyticsContextProvider(props) {
   useEffect(() => {
     if (user) {
       setSessionId(getSessonId(user.uid));
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        console.log("Inside PWA")
+        analytics.logEvent("pwa_page_view");
+      }
     } else {
       setSessionId(null);
     }
@@ -45,7 +52,7 @@ export default function AnalyticsContextProvider(props) {
         dateTimeStamp: new Date().getTime(),
       };
       let wholeData = { ...baseData, ...data };
-      // console.log(wholeData);
+      console.log(wholeData);
       analytics.logEvent(eventName, wholeData);
     } catch (error) {
       // console.log(error);
@@ -120,9 +127,8 @@ export default function AnalyticsContextProvider(props) {
       }
 
       var currentDate = new Date();
-      let dateString = `${currentDate.getDate()} ${
-        MonthName[currentDate.getMonth()]
-      } ${currentDate.getFullYear()} 00:00:00`;
+      let dateString = `${currentDate.getDate()} ${MonthName[currentDate.getMonth()]
+        } ${currentDate.getFullYear()} 00:00:00`;
       // console.log(dateString)
       var dateTimeStamp = new Date(dateString).getTime();
       let _sessionId = sessionId;
@@ -143,9 +149,8 @@ export default function AnalyticsContextProvider(props) {
         country: userInfo.country,
         state: userInfo.state,
         city: userInfo.city,
-        dateString: `${currentDate.getDate()}-${
-          currentDate.getMonth() + 1
-        }-${currentDate.getFullYear()}`,
+        dateString: `${currentDate.getDate()}-${currentDate.getMonth() + 1
+          }-${currentDate.getFullYear()}`,
         //event based info
         eventId,
         timelineId,
@@ -175,6 +180,16 @@ export default function AnalyticsContextProvider(props) {
     <AnalyticsContext.Provider
       value={{ addGAWithUserInfo, addCAWithUserInfo, updateUserStatus }}
     >
+      {
+        user &&
+        <>
+          <PWAInstaller />
+          {
+            !isAndroid &&
+            <PWAPrompt promptOnVisit={1} timesToShow={3} copyClosePrompt="Close" permanentlyHideOnDismiss={false} />
+          }
+        </>
+      }
       {props.children}
     </AnalyticsContext.Provider>
   );
