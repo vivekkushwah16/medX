@@ -313,8 +313,10 @@ class Home extends Component {
                 logout();
               });
             } else if (
-              res.data.status === "fail" &&
-              res.data.code === "auth/phone-number-already-exists"
+              res.data.status === "fail" && (
+                res.data.code === "auth/phone-number-already-exists" ||
+                res.data.code === "auth/email-already-exists"
+              )
             ) {
               swal({
                 title: "Already Exists",
