@@ -30,6 +30,8 @@ export const database = firebase.database();
 export const analytics = firebase.analytics();
 export const auth = firebase.auth();
 // export const firebaseMessaging = firebase.messaging()
+export const messaging = firebase.messaging.isSupported() ? firebase.messaging() : null
+
 
 export const cloudFunction = firebase.app().functions("asia-south1");
 // cloudFunction.useEmulator("localhost", 5001)
@@ -65,9 +67,11 @@ export const getUserProfile = (uid) => {
 };
 export const askForPermissionToReceiveNotifications = async (user) => {
   try {
-    const firebaseMessaging = firebase.messaging();
-    await firebaseMessaging.requestPermission();
-    const token = await firebaseMessaging.getToken({
+    if(messaging){
+
+    // const firebaseMessaging = firebase.messaging();
+    await messaging.requestPermission();
+    const token = await messaging.getToken({
       vapidKey:
         "BJ9-wIY9F5wie3fzoPYHzPa34H-V_X3nkKSA7LIUpe_kRcGgX584JMojPTSvWdwQeDvOgl9F3qmipEjXVNXLnZ0",
     });
@@ -98,17 +102,23 @@ export const askForPermissionToReceiveNotifications = async (user) => {
     // console.log(firebaseMessaging);
     console.log("Your token is:", token);
     return token;
+
+    }else{
+      return null;
+    }
   } catch (error) {
     console.error(error);
   }
 };
 
 export const onMessageListener = (callback) => {
-  firebase.messaging().onMessage((payload) => {
-    if (callback) {
-      callback(payload)
-    }
-  });
+  if(messaging){
+    messaging.onMessage((payload) => {
+      if (callback) {
+        callback(payload)
+      }
+    });
+  }
 }
 
 export const sendNotificationToTopic = (data) => {

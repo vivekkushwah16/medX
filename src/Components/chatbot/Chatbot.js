@@ -22,7 +22,7 @@ function Chatbot(props) {
 
   useEffect(() => {
     // console.log(props);
-    setTopic(!props.videoVisible ? "Platform" : props.videoData.title);
+    setTopic(!props.videoVisible ? "What kind of videos you would like to see more?" : props.videoData.title);
   }, [props.videoVisible]);
   const sendMail = () => {
     setLoading(true);
@@ -145,7 +145,7 @@ function Chatbot(props) {
           </div>
           <div className="header">
             <label htmlFor="topics">Topic:</label>
-            <select
+            {props.videoVisible ? <select
               name="topics"
               id="topics"
               value={topic}
@@ -160,7 +160,15 @@ function Chatbot(props) {
               {props.videoVisible && <option value={topic}>{topic}</option>}
               {/* <option value="Cipla events">Cipla events</option> */}
               {/* <option value="Feedback">Feedback</option> */}
-            </select>
+            </select> : 
+            (<div
+              name="topics"
+              id="topics"
+              style={{fontSize: "0.8rem"}}
+              >
+                What kind of videos you would like to see more?
+              </div>
+              )}
           </div>
           <div className="textarea">
             {showThankyou ? (

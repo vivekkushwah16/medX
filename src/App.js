@@ -195,7 +195,9 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
+    audioRef.current.play();
     onMessageListener((payload) => {
+      document.body.click()
       console.log("object", payload);
       audioRef.current.play();
       let notificationArray = JSON.parse(localStorage.getItem("notifications"))
@@ -300,9 +302,9 @@ export default function App() {
       <audio
         // style={{ display: "none" }}
         id="ad"
-        src="/assets/music/notification.mp3"
+        src="./assets/music/notification.mp3"
         ref={audioRef}
-        autoplay="true"
+        autoPlay
         preload="auto"
       ></audio>
 

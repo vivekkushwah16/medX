@@ -287,7 +287,7 @@ function VideoPopup(props) {
         id="videoPopupDiv"
       >
         <span
-          class="modalBox__overlay"
+          className="modalBox__overlay"
           onClick={() => {
             __closeVideoPop();
           }}
@@ -387,7 +387,7 @@ function VideoPopup(props) {
                       width: "60%",
                       background: "#0869a8",
                       height: "0.08rem",
-                      "margin-bottom": "1rem",
+                      marginBottom: "1rem",
                     }}
                   ></div>
                   <div style={{ width: "60%" }}>
@@ -535,7 +535,7 @@ function VideoPopup(props) {
                     width: "100%",
                     background: "rgb(255 255 255 / 18%)",
                     height: "0.01rem",
-                    "margin-bottom": "1rem",
+                    marginBottom: "1rem",
                   }}
                 ></div>
                 {videoData.speakers && videoData.speakers.length > 0 && (
@@ -545,8 +545,9 @@ function VideoPopup(props) {
                     </h4>
 
                     <div className="videodetailBox__profiles">
-                      {videoData.speakers.map((speaker) => (
+                      {videoData.speakers.map((speaker,index) => (
                         <SpeakerProfile
+                          key={index}
                           type={SpeakerProfileType.CARD_PROFILE}
                           id={speaker}
                         />
@@ -595,8 +596,9 @@ function VideoPopup(props) {
                     )}
                   </div>
                   <div className="timelineBox mobileView_timelineBox">
-                    {videoData.videoTimestamp.map((timeline) => (
+                    {videoData.videoTimestamp.map((timeline, index) => (
                       <TimelineBoxItem
+                        key={index}
                         minPlayed={minPlayed}
                         timelineData={timeline}
                         timelineClick={seekTo}
@@ -635,8 +637,9 @@ function VideoPopup(props) {
                       More Videos
                     </h4>
                     <div className="videodetailBox__list">
-                      {moreVideos.map((currentVideoData) => (
+                      {moreVideos.map((currentVideoData,index) => (
                         <VideoThumbnail_Compact
+                          key={index}
                           videosData={currVideosData}
                           currentVideoData={currentVideoData}
                           openVideoPop={(currentVideoData, videosData) => {

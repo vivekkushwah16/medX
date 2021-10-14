@@ -148,7 +148,7 @@ export default function TagsRow(props) {
             <a
               className={
                 // checkForActiveTag(currTag.tag) ? "active mg-b20" : "mg-b20"
-                checkForActiveTag(currTag.tag) && "active"
+                checkForActiveTag(currTag.tag) ? "active" : ""
               }
               onClick={() => {
                 addGAWithUserInfo(TAG_CLICKED, { tag: currTag.tag });

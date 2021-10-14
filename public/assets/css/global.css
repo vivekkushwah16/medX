@@ -344,7 +344,7 @@ html { scroll-behavior: smooth; }
 .jump-btn > img { margin: 0 auto; display: block; max-width: 100%; }
 .jump-btn:hover { color: #00A59E; }
 
-.slider-btn { cursor: pointer; display: flex; align-items: center; color: #000000; font-weight: 700; font-size: 1.5rem; border: medium none; background: transparent; }
+.slider-btn { cursor: pointer; display: flex; align-items: center; color: #000000; font-weight: 700; font-size: 1.5rem; border: medium none; background: transparent; z-index: 2; }
 .slider-btn__icon { height: 4.25rem; width: 4.25rem; display: flex; align-items: center; font-size: 1.75rem; justify-content: center; color: #fff; border-radius: 50%; background: #00A59E; border: 2px solid #00A59E; }
 .slider-btn__title { display: inline-block; padding: 0 1rem; } 
 .slider-btn.slider-btn--prev { margin-left: 12%; }

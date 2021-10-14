@@ -30,6 +30,7 @@ function SampleNextArrow(props) {
   return (
     <button className="slider-btn slider-btn-next" onClick={onClick}>
       <i className="icon-angle-right"></i>
+      
     </button>
   );
 }
@@ -177,10 +178,13 @@ function Banner() {
   const [showloader, setShowLoader] = useState(false)
 
   const goToRoute = async (id) => {
-    // console.log(id);
+    console.log(id);
 
     var thing = document.getElementById("bannerParentDiv");
-    window.scrollTo(0, thing.scrollHeight - 200);
+    // setTimeout(()=>{
+      window.scroll(0, (thing.scrollHeight - 200));
+
+    // },1)
     // let a =Scroll.Link;
 
     // console.log(thing.scrollHeight);
@@ -231,14 +235,14 @@ function Banner() {
     nextArrow: <SampleNextArrow />,
     autoplay: true,
     autoplaySpeed: 10000,
-    responsive: [
-      {
-        breakpoint: 600,
-        settings: {
-          arrows: false,
-        },
-      },
-    ],
+    // responsive: [
+    //   {
+    //     breakpoint: 600,
+    //     settings: {
+    //       arrows: false,
+    //     },
+    //   },
+    // ],
   };
 
   const handlePlatformPromo = (id) => {
@@ -325,7 +329,7 @@ function Banner() {
       </Slider>
 
       {isMobileOnly && (
-        <div class="arrow bounce">
+        <div className="arrow bounce">
           {/* <i className="icon-play whiteColor"></i> */}
           <FontAwesomeIcon
             icon={faAngleDown}

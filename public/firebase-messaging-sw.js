@@ -14,6 +14,22 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
+  // In the following line, you should include the prefixes of implementations you want to test.
+// let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
+// if (!indb) {
+//   console.log("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
+// } else {
+//   var db;
+//   var request = window.indexedDB.open("notifications", 1);
+//   request.onerror = function(event) {
+//     // Do something with request.errorCode!
+//     console.log("Why didn't you allow my web app to use IndexedDB?!",event);
+//   };
+//   request.onsuccess = function(event) {
+//     db = event.target.result;
+//   };
+// }
+
   // console.log("object",self)
   // let notificationArray = JSON.parse(localStorage.getItem("notifications"))
   //   ? JSON.parse(localStorage.getItem("notifications"))
