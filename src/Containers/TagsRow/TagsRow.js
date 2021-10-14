@@ -53,10 +53,16 @@ export default function TagsRow(props) {
           display: className.includes("slick-disabled")
             ? "none"
             : checkArrowHide(props),
+            position: "relative",
         }}
         className={`slider-btn slider-btn-next `}
         onClick={onClick}
       >
+        <div style={{width: "10rem",
+            position: "absolute",
+            left: "-7rem",
+            height: "100%",}}>
+          </div>
         <i className="icon-angle-right"></i>
       </button>
     );
