@@ -114,6 +114,7 @@ export const askForPermissionToReceiveNotifications = async (user) => {
 export const onMessageListener = (callback) => {
   if(messaging){
     messaging.onMessage((payload) => {
+      console.log("payload",payload)
       if (callback) {
         callback(payload)
       }
