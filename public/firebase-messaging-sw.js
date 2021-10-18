@@ -14,21 +14,36 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  // In the following line, you should include the prefixes of implementations you want to test.
-// let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
-// if (!indb) {
-//   console.log("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
-// } else {
-//   var db;
-//   var request = window.indexedDB.open("notifications", 1);
-//   request.onerror = function(event) {
-//     // Do something with request.errorCode!
-//     console.log("Why didn't you allow my web app to use IndexedDB?!",event);
-//   };
-//   request.onsuccess = function(event) {
-//     db = event.target.result;
-//   };
-// }
+  // let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
+  // if (!indb) {
+    // console.log(
+      // "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
+    // );
+  // } else {
+    // var db;
+    // var request = indb.open("notifications", 1);
+
+    // const tx = db.transaction("user_notification","readwrite")
+    // tx.objectStore("user_notification")
+    // const 
+
+    // request.onerror = (event) => {
+      // Do something with request.errorCode!
+      // console.log("Why didn't you allow my web app to use IndexedDB?!", event);
+    // };
+
+    // request.onsuccess = (event) => {
+      // db = event.target.result;
+    // };
+
+    // request.onupgradeneeded = (rvent) => {
+      // let data = {
+        // id: "1",
+        // title: "hi"
+      // }
+    //  const user_Notifications = db.createObjectStore("user_notification",{keyPath: "id"})
+    // };
+  // }
 
   // console.log("object",self)
   // let notificationArray = JSON.parse(localStorage.getItem("notifications"))
@@ -49,22 +64,22 @@ messaging.onBackgroundMessage((payload) => {
     payload
   );
   // Customize notification here
-  
+
   navigator.customNotification = payload;
   let payl = payload;
   // payload.fcmOptions.click_action= "https://www.ciplamedx.com?topic=ankur1"
   const notificationTitle = payl.notification.title;
   const notificationOptions = {
     body: payl.notification.body,
-    icon: "/logo192.png",
+    icon: "/logo512.png",
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
 
-  self.addEventListener('notificationclick', function(event) {
+  self.addEventListener("notificationclick", function (event) {
     //---access data from event using event.notification.data---
-    console.log("object",event)
-    console.log('On notification click: ', event.notification.data);
+    console.log("object", event);
+    console.log("On notification click: ", event.notification.data);
     var url = payl.data.link;
 
     //---close the notification---
@@ -72,8 +87,6 @@ messaging.onBackgroundMessage((payload) => {
 
     //---open the app and navigate to breaking.html
     // after clicking the notification---
-    event.waitUntil(
-        clients.openWindow(url)
-    );
-});
+    event.waitUntil(clients.openWindow(url));
+  });
 });

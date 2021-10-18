@@ -41,7 +41,7 @@ export default function Notification(props) {
           <li key={`${notification}_${index}`}>
             <a key={index} onClick={(e)=>handleClick(e,notification.id, notification.link)} href={notification.link}>
               <span className="notification__icon">
-                <img src="/logo192.png" alt="" height="100%" width="100%" />
+                <img src="/logo512.png" alt="" height="100%" width="100%" />
               </span>
               <span className="notification__data">
                 <span className="notification__title">

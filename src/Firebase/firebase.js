@@ -9,6 +9,7 @@ import XLSX from "xlsx";
 
 import { PROFILE_COLLECTION } from "../AppConstants/CollectionConstants";
 import { USER_TOKEN_UPDATE } from "../AppConstants/CloudFunctionName";
+import axios from "axios";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBjSPRUgzyQhITpWHb9FdzMMuLS45Zsd9s",
@@ -34,10 +35,10 @@ export const messaging = firebase.messaging.isSupported() ? firebase.messaging()
 
 
 export const cloudFunction = firebase.app().functions("asia-south1");
-// cloudFunction.useEmulator("localhost", 5001)
+// cloudFunction.useEmulator("localhost", 4000)
 // export const cloudFunctionUS = firebase.functions()
 
-// export const cloudFunctionUS = firebase.functions().useEmulator("localhost", 4000);
+// export const cloudFunction = firebase.functions().useEmulator("localhost", 4000);
 
 export const logout = () => {
   firebase
@@ -152,10 +153,21 @@ export const sendEventBasedNotification = (data) => {
       console.log(error);
     });
 };
+export const fn = (data) => {
+  const cloudRef = cloudFunction.httpsCallable("fn");
+  cloudRef(JSON.stringify(data))
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 window.sendNotificationToTopic = sendNotificationToTopic;
 window.subscribeAllTokens = subscribeAllTokens;
 window.sendEventBasedNotification = sendEventBasedNotification;
+window.fn = fn;
 
 export const copyFromRealtoFirestore = () => {
   try {
