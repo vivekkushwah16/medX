@@ -177,6 +177,7 @@ class Home extends Component {
       { tag: "Pediatric asthma", header: "Videos of Pediatric asthma" },
       { tag: "Bronchiectasis", header: "Videos of Bronchiectasis" },
       { tag: "Allergic Rhinitis", header: "Videos of Allergic Rhinitis" },
+      { tag: "pediatric hepatology", header: "Pediatric hepatology" },
       // {
       //   tag: [
       //     "Inhalation Devices",
@@ -207,6 +208,8 @@ class Home extends Component {
       { tag: "HeartFailure", header: "Heart Failure" },
       { tag: "nebulization", header: "Nebulization" },
       { tag: "evolve session", header: "Evolve session" },
+      { tag: "pediatric hepatology", header: "Pediatric hepatology" },
+      
 
       // { tag: "anti fungal", header: "Anti Fungal" },
       // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
