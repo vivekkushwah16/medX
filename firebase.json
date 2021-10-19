@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "express-impact",
+    "site": "cipla-impact",
     "public": "build",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [

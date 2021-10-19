@@ -43,11 +43,11 @@ export const PWAInstaller = () => {
                         <div className={PWAStyle.pwaContainer}>
                             <div className={PWAStyle.pwaModal}>
                                 <div className={PWAStyle.titleContainer}>
-                                    Keep App, For Offline &amp; Quick Access!
+                                Download the app to quickly access<br/>videos and play them offline
                                 </div>
                                 <div className={PWAStyle.btnContainer}>
                                     <button onClick={() => toggleShow(false)} className={PWAStyle.cancelBtn}>
-                                        cancel
+                                        Not now
                                     </button>
 
                                     <button onClick={(e) => {
