@@ -195,7 +195,7 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    audioRef.current.play();
+    // audioRef.current.play();
 
     //Notification Listener
     // onMessageListener((payload) => {
@@ -230,8 +230,8 @@ export default function App() {
     //   document.getElementById("ad").play();
     // });
 
-    console.log("object", audioRef);
-    console.log("aud", document.getElementById("ad"));
+    // console.log("object", audioRef);
+    // console.log("aud", document.getElementById("ad"));
 
     // downloadData()
     // EventManager.addEngagement('ipaedia21', MediaModalType.Iframe, 'Survey', 'We need your valuable feedback.', '/fd2/index.html', 'https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FForacort%20Synchrobreathe%20-%20Infoguide.jpg?alt=media&token=9195d987-7708-4039-ab78-70613fce7b6a').then(res => {
