@@ -1,5 +1,6 @@
 importScripts("https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/8.4.1/firebase-messaging.js");
+
 firebase.initializeApp({
   apiKey: "AIzaSyBjSPRUgzyQhITpWHb9FdzMMuLS45Zsd9s",
   authDomain: "cipla-impact.firebaseapp.com",
@@ -16,49 +17,35 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage((payload) => {
   // let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
   // if (!indb) {
-    // console.log(
-      // "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
-    // );
+  // console.log(
+  // "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
+  // );
   // } else {
-    // var db;
-    // var request = indb.open("notifications", 1);
+  // var db;
+  // var request = indb.open("notifications", 1);
 
-    // const tx = db.transaction("user_notification","readwrite")
-    // tx.objectStore("user_notification")
-    // const 
+  // const tx = db.transaction("user_notification","readwrite")
+  // tx.objectStore("user_notification")
+  // const
 
-    // request.onerror = (event) => {
-      // Do something with request.errorCode!
-      // console.log("Why didn't you allow my web app to use IndexedDB?!", event);
-    // };
+  // request.onerror = (event) => {
+  // Do something with request.errorCode!
+  // console.log("Why didn't you allow my web app to use IndexedDB?!", event);
+  // };
 
-    // request.onsuccess = (event) => {
-      // db = event.target.result;
-    // };
+  // request.onsuccess = (event) => {
+  // db = event.target.result;
+  // };
 
-    // request.onupgradeneeded = (rvent) => {
-      // let data = {
-        // id: "1",
-        // title: "hi"
-      // }
-    //  const user_Notifications = db.createObjectStore("user_notification",{keyPath: "id"})
-    // };
+  // request.onupgradeneeded = (rvent) => {
+  // let data = {
+  // id: "1",
+  // title: "hi"
+  // }
+  //  const user_Notifications = db.createObjectStore("user_notification",{keyPath: "id"})
+  // };
   // }
 
-  // console.log("object",self)
-  // let notificationArray = JSON.parse(localStorage.getItem("notifications"))
-  //   ? JSON.parse(localStorage.getItem("notifications"))
-  //   : [];
-  // let data = {
-  //   id: payload.from,
-  //   title: payload.notification.title,
-  //   body: payload.notification.body,
-  //   // link: payload.notification.click_action,
-  //   date: new Date().toISOString,
-  //   opened: false,
-  // };
-  // notificationArray.unshift(data);
-  // localStorage.setItem("notifications", JSON.stringify(notificationArray));
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload
@@ -68,13 +55,12 @@ messaging.onBackgroundMessage((payload) => {
   navigator.customNotification = payload;
   let payl = payload;
   // payload.fcmOptions.click_action= "https://www.ciplamedx.com?topic=ankur1"
+  payl.notification.body.icon = "/logo512.png";
   const notificationTitle = payl.notification.title;
   const notificationOptions = {
     body: payl.notification.body,
     icon: "/logo512.png",
   };
-
-  self.registration.showNotification(notificationTitle, notificationOptions);
 
   self.addEventListener("notificationclick", function (event) {
     //---access data from event using event.notification.data---
@@ -89,4 +75,9 @@ messaging.onBackgroundMessage((payload) => {
     // after clicking the notification---
     event.waitUntil(clients.openWindow(url));
   });
+
+  return self.registration.showNotification(
+    notificationTitle,
+    notificationOptions
+  );
 });

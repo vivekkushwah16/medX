@@ -199,7 +199,7 @@ export default function App() {
 
     //Notification Listener
     onMessageListener((payload) => {
-      document.body.click()
+      // document.body.click()
       console.log("object", payload);
       audioRef.current.play();
       let notificationArray = JSON.parse(localStorage.getItem("notifications"))
