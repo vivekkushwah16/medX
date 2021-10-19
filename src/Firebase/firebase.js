@@ -9,7 +9,6 @@ import XLSX from "xlsx";
 
 import { PROFILE_COLLECTION } from "../AppConstants/CollectionConstants";
 import { USER_TOKEN_UPDATE } from "../AppConstants/CloudFunctionName";
-import axios from "axios";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBjSPRUgzyQhITpWHb9FdzMMuLS45Zsd9s",
@@ -35,7 +34,7 @@ export const messaging = firebase.messaging.isSupported() ? firebase.messaging()
 
 
 export const cloudFunction = firebase.app().functions("asia-south1");
-// cloudFunction.useEmulator("localhost", 4000)
+cloudFunction.useEmulator("localhost", 5001)
 // export const cloudFunctionUS = firebase.functions()
 
 // export const cloudFunction = firebase.functions().useEmulator("localhost", 4000);
@@ -115,7 +114,6 @@ export const askForPermissionToReceiveNotifications = async (user) => {
 export const onMessageListener = (callback) => {
   if(messaging){
     messaging.onMessage((payload) => {
-      console.log("payload",payload)
       if (callback) {
         callback(payload)
       }
@@ -133,6 +131,8 @@ export const sendNotificationToTopic = (data) => {
       console.log(error);
     });
 };
+
+
 export const subscribeAllTokens = (data) => {
   const cloudRef = cloudFunction.httpsCallable("subscribeAllTokens");
   cloudRef(JSON.stringify(data))
@@ -143,18 +143,10 @@ export const subscribeAllTokens = (data) => {
       console.log(error);
     });
 };
+
+
 export const sendEventBasedNotification = (data) => {
   const cloudRef = cloudFunction.httpsCallable("sendEventBasedNotification");
-  cloudRef(JSON.stringify(data))
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-export const fn = (data) => {
-  const cloudRef = cloudFunction.httpsCallable("fn");
   cloudRef(JSON.stringify(data))
     .then((res) => {
       console.log(res);
@@ -167,7 +159,6 @@ export const fn = (data) => {
 window.sendNotificationToTopic = sendNotificationToTopic;
 window.subscribeAllTokens = subscribeAllTokens;
 window.sendEventBasedNotification = sendEventBasedNotification;
-window.fn = fn;
 
 export const copyFromRealtoFirestore = () => {
   try {

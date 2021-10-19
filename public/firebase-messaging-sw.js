@@ -1,5 +1,5 @@
-importScripts("https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js");
-importScripts("https://www.gstatic.com/firebasejs/8.4.1/firebase-messaging.js");
+importScripts("https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js");
 
 firebase.initializeApp({
   apiKey: "AIzaSyBjSPRUgzyQhITpWHb9FdzMMuLS45Zsd9s",
@@ -46,38 +46,50 @@ messaging.onBackgroundMessage((payload) => {
   // };
   // }
 
-  console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
-  );
-  // Customize notification here
+ 
+  if (payload) {
+    console.log(
+      "[firebase-messaging-sw.js] Received background message ",
+      payload
+    );
+    // Customize notification here
 
-  navigator.customNotification = payload;
-  let payl = payload;
-  // payload.fcmOptions.click_action= "https://www.ciplamedx.com?topic=ankur1"
-  payl.notification.body.icon = "/logo512.png";
-  const notificationTitle = payl.notification.title;
-  const notificationOptions = {
-    body: payl.notification.body,
-    icon: "/logo512.png",
-  };
+    // navigator.customNotification = payload;
+    let payl = payload;
+    // payload.fcmOptions.click_action= "https://www.ciplamedx.com?topic=ankur1"
+    // payl.notification.body.icon = "/logo512.png";
+    const notificationTitle = payl.data.title;
+    const notificationOptions = {
+      body: payl.data.body,
+      icon: payl.data.icon,
+      image: payl.data.image,
+    };
 
-  self.addEventListener("notificationclick", function (event) {
-    //---access data from event using event.notification.data---
-    console.log("object", event);
-    console.log("On notification click: ", event.notification.data);
-    var url = payl.data.link;
+    // for getting all notificications
+    // self.registration
+    //   .getNotifications(notificationOptions)
+    //   .then(function (notifications) {
+    //     // do something with your notifications
+    //     console.log("DAadaaaddadad", notifications);
+    //   });
 
-    //---close the notification---
-    event.notification.close();
+    self.addEventListener("notificationclick", function (event) {
+      //---access data from event using event.notification.data---
+      console.log("object", event);
+      console.log("On notification click: ", event.notification.data);
+      var url = payl.data.link;
 
-    //---open the app and navigate to breaking.html
-    // after clicking the notification---
-    event.waitUntil(clients.openWindow(url));
-  });
+      //---close the notification---
+      event.notification.close();
 
-  return self.registration.showNotification(
-    notificationTitle,
-    notificationOptions
-  );
+      //---open the app and navigate to breaking.html
+      // after clicking the notification---
+      event.waitUntil(clients.openWindow(url));
+    });
+
+    return self.registration.showNotification(
+      notificationTitle,
+      notificationOptions
+    );
+  }
 });

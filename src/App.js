@@ -200,16 +200,16 @@ export default function App() {
     //Notification Listener
     onMessageListener((payload) => {
       // document.body.click()
-      console.log("object", payload);
+      console.log("payload", payload);
       audioRef.current.play();
       let notificationArray = JSON.parse(localStorage.getItem("notifications"))
         ? JSON.parse(localStorage.getItem("notifications"))
         : [];
       let data = {
         id: payload.fcmMessageId,
-        title: payload.notification.title,
-        body: payload.notification.body,
-        link: payload.notification.click_action,
+        title: payload.data.title,
+        body: payload.data.body,
+        link: payload.data.link,
         date: new Date().toISOString(),
         opened: false,
       };
@@ -218,13 +218,13 @@ export default function App() {
       // console.log("ds", notificationArray);
       toast.info(
         <NotificationDisplay
-          title={payload.notification.title}
-          body={payload.notification.body}
-          link={payload.notification.click_action}
+          title={payload.data.title}
+          body={payload.data.body}
+          link={payload.data.link}
           id={payload.fcmMessageId}
         />,
         {
-          icon: <img src="/logo512.png" alt="" />,
+          icon: <img src={payload.data.icon} alt="" />,
         }
       );
       document.getElementById("ad").play();
