@@ -34,7 +34,7 @@ export const messaging = firebase.messaging.isSupported() ? firebase.messaging()
 
 
 export const cloudFunction = firebase.app().functions("asia-south1");
-cloudFunction.useEmulator("localhost", 5001)
+// cloudFunction.useEmulator("localhost", 5001)
 // export const cloudFunctionUS = firebase.functions()
 
 // export const cloudFunction = firebase.functions().useEmulator("localhost", 4000);
