@@ -8,7 +8,7 @@ export default function Notification(props) {
   } = props;
 
   const handleClick = (e, notification) => {
-    if(!notification.opened){
+    if (!notification.opened) {
       let newData = { ...notification, opened: true };
       updateNotification(newData, (res) => {
         // console.log("clicked", res);
@@ -27,7 +27,10 @@ export default function Notification(props) {
       <ul className="notification__dropdown">
         {data &&
           data.map((notification, index) => (
-            <li key={`${notification}_${index}`} style={{    background: notification.opened && "rgba(0,0,0,0.1)"}}>
+            <li
+              key={`${notification}_${index}`}
+              style={{ background: notification.opened && "rgba(0,0,0,0.1)" }}
+            >
               <a
                 key={index}
                 onClick={(e) => handleClick(e, notification)}
