@@ -31,6 +31,8 @@ import { onMessageListener } from "../../Firebase/firebase";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const audioLinkRef = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+
 //showCertificate, showFeedback
 export default function Header(props) {
   let audioRef = useRef();
@@ -91,9 +93,6 @@ export default function Header(props) {
     onMessageListener((payload) => {
       // console.log("payload", payload);
       audioRef.current.play();
-      document.getElementById("ad").play();
-      console.log("object", audioRef);
-      console.log("aud", document.getElementById("ad"));
 
       let date = new Date();
       let data = {
@@ -195,10 +194,8 @@ export default function Header(props) {
       />
       <audio
         // style={{ display: "none" }}
-        id="ad"
-        src="./assets/music/notification.mp3"
+        src={audioLinkRef}
         ref={audioRef}
-        autoPlay
         preload="auto"
       ></audio>
 
