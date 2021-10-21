@@ -67,6 +67,9 @@ export const addNewNotification = (data, cb) => {
       db.createObjectStore("user_notification", {
         keyPath: "id",
       });
+      db.createObjectStore("new_notification", {
+        keyPath: "id",
+      });
     };
 
     request.onsuccess = (event) => {

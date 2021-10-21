@@ -144,7 +144,9 @@ function createIndexDb(name, version, payload) {
   request.onupgradeneeded = (event) => {
     db = event.target.result;
     console.log("object", db);
-
+    db.createObjectStore("user_notification", {
+      keyPath: "id",
+    });
     db.createObjectStore("new_notification", {
       keyPath: "id",
     });
