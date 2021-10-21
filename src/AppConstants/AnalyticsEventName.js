@@ -22,5 +22,8 @@ export const ENGAGEMENT_CLICK = 'engagment_click'
 export const QNA_INTERATCION = 'qna_interaction'
 export const POLL_INTERACTION = 'poll_interaction'
 export const SESSION_ATTENDED = 'session_attended'
+export const NOTIFICATION_RECEIVED = 'notification_received'
+export const NOTIFICATION_INTERACTED = 'notification_interacted'
+
 
 export const OLD_USER_REGISTER_EVENT = 'old_user_register_event'

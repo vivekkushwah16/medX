@@ -45,8 +45,7 @@ import { MediaModalType } from "./AppConstants/ModalType";
 import PWApromptWithButton, {
   PWAInstaller,
 } from "./Components/pwaPrompt/PWAprompt";
-import { ToastContainer, toast, Flip } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
@@ -153,11 +152,11 @@ async function downloadData() {
         let data = {};
         snap.docs.forEach(
           (d) =>
-          (data[d.id] = {
-            ...d.data(),
-            id: d.id.split("_")[1],
-            phoneNumber: d.data().email.split("@")[0],
-          })
+            (data[d.id] = {
+              ...d.data(),
+              id: d.id.split("_")[1],
+              phoneNumber: d.data().email.split("@")[0],
+            })
         );
         console.log(data);
         exportFile(
@@ -168,19 +167,8 @@ async function downloadData() {
       }
     });
 }
-function NotificationDisplay({ title, body, link, id }) {
-  return (
-    <div key={id}>
-      <a href={link} style={{ textDecoration: "none", color: "initial" }}>
-        <h4>{title}</h4>
-        <p>{body}</p>
-      </a>
-    </div>
-  );
-}
 
 export default function App() {
-  let audioRef = useRef();
   const { initalCheck, user } = useContext(UserContext);
 
   useEffect(() => {
@@ -195,43 +183,7 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    audioRef.current.play();
-
-    //Notification Listener
-    onMessageListener((payload) => {
-      document.body.click()
-      console.log("object", payload);
-      audioRef.current.play();
-      let notificationArray = JSON.parse(localStorage.getItem("notifications"))
-        ? JSON.parse(localStorage.getItem("notifications"))
-        : [];
-      let data = {
-        id: payload.fcmMessageId,
-        title: payload.notification.title,
-        body: payload.notification.body,
-        link: payload.notification.click_action,
-        date: new Date().toISOString(),
-        opened: false,
-      };
-      notificationArray.unshift(data);
-      localStorage.setItem("notifications", JSON.stringify(notificationArray));
-      // console.log("ds", notificationArray);
-      toast.info(
-        <NotificationDisplay
-          title={payload.notification.title}
-          body={payload.notification.body}
-          link={payload.notification.click_action}
-          id={payload.fcmMessageId}
-        />,
-        {
-          icon: <img src="/logo512.png" alt="" />,
-        }
-      );
-      document.getElementById("ad").play();
-    });
-
-    // console.log("object", audioRef);
-    // console.log("aud", document.getElementById("ad"));
+    
 
     // downloadData()
     // EventManager.addEngagement('ipaedia21', MediaModalType.Iframe, 'Survey', 'We need your valuable feedback.', '/fd2/index.html', 'https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FForacort%20Synchrobreathe%20-%20Infoguide.jpg?alt=media&token=9195d987-7708-4039-ab78-70613fce7b6a').then(res => {
@@ -290,26 +242,6 @@ export default function App() {
   return (
     <>
       <MediaModalLazy />
-
-      <ToastContainer
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        transition={Flip}
-        pauseOnHover={false}
-      />
-      <audio
-        // style={{ display: "none" }}
-        id="ad"
-        src="./assets/music/notification.mp3"
-        ref={audioRef}
-        autoPlay
-        preload="auto"
-      ></audio>
 
       {/* <PWApromptWithButton /> */}
       <Router>
