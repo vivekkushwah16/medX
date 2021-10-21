@@ -8,6 +8,9 @@ window.sendNotificationToTopic({
         icon: "/logo512.png",
         title: "Hello Ankur,",
         body: "Testing Push Notifications",
-    }
+        topic: "",
+        msg_id: "unique_id",
+    },
+    analytics_label: ""
 })
 window.subscribeAllTokens({uid: "RtWXsbENPsW0uTywN0oVdlO8Dem2", topic:"ankur2"})

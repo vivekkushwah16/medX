@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NOTIFICATION_INTERACTED } from "../../AppConstants/AnalyticsEventName";
+import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
 import { updateNotification } from "../../utils/notificationsManager";
 
 export default function Notification(props) {
@@ -6,12 +8,18 @@ export default function Notification(props) {
     data,
     //  handleClick
   } = props;
+  const { addGAWithUserInfo } = useContext(AnalyticsContext);
 
   const handleClick = (e, notification) => {
     if (!notification.opened) {
       let newData = { ...notification, opened: true };
       updateNotification(newData, (res) => {
         // console.log("clicked", res);
+        addGAWithUserInfo(NOTIFICATION_INTERACTED, {
+          msg_id: notification.id || notification.title,
+          title: notification.title,
+          topic: notification.topic,
+        });
       });
     }
   };

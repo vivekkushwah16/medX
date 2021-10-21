@@ -24,7 +24,7 @@ messaging.onBackgroundMessage((payload) => {
     );
   } else {
     const dbName = "notifications";
-    const version = 1;
+    const version = 2;
     createIndexDb(dbName, version, payload);
   }
 
@@ -38,12 +38,23 @@ messaging.onBackgroundMessage((payload) => {
     // navigator.customNotification = payload;
     let payl = payload;
     // payload.fcmOptions.click_action= "https://www.ciplamedx.com?topic=ankur1"
-    // payl.notification.body.icon = "/logo512.png";
     const notificationTitle = payl.data.title;
     const notificationOptions = {
       body: payl.data.body,
       icon: payl.data.icon,
       image: payl.data.image,
+      // actions: [
+      //   {
+      //     action: "https://www.google.com",
+      //     title: "Accept",
+      //     icon: payl.data.icon,
+      //   },
+      //   {
+      //     action: "https://www.google.com",
+      //     title: "Reject",
+      //     icon: payl.data.icon,
+      //   },
+      // ],
     };
 
     // for getting all notificications
@@ -59,6 +70,22 @@ messaging.onBackgroundMessage((payload) => {
       console.log("object", event);
       console.log("On notification click: ", event.notification.data);
       var url = payl.data.link;
+
+      // onclick handle
+
+      let newData = {
+        id: payl.data.msg_id,
+        title: payl.data.title,
+        body: payl.data.body,
+        link: payl.data.link,
+        icon: payl.data.icon,
+        topic: payl.data.topic,
+        date: new Date(),
+        opened: true,
+      };
+      updateNotification(newData, (res) => {
+        console.log("updated", res);
+      });
 
       //---close the notification---
       event.notification.close();
@@ -78,11 +105,12 @@ function createIndexDb(name, version, payload) {
   let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
 
   let data = {
-    id: Math.random(),
+    id: payload.data.msg_id,
     title: payload.data.title,
     body: payload.data.body,
     icon: payload.data.icon,
     link: payload.data.link,
+    topic: payload.data.topic,
     date: new Date(),
     opened: false,
   };
@@ -105,9 +133,9 @@ function createIndexDb(name, version, payload) {
       }
     };
 
-    const tx = db.transaction("user_notification", "readwrite");
+    const tx = db.transaction("new_notification", "readwrite");
 
-    const uNotifications = tx.objectStore("user_notification");
+    const uNotifications = tx.objectStore("new_notification");
     uNotifications.add(data);
 
     request.result.close();
@@ -117,48 +145,44 @@ function createIndexDb(name, version, payload) {
     db = event.target.result;
     console.log("object", db);
 
-    db.createObjectStore("user_notification", {
+    db.createObjectStore("new_notification", {
       keyPath: "id",
     });
   };
 }
 
-// const updateNotification = (newData, cb) => {
-//   let indb =
-//     window.indexedDB ||
-//     window.mozIndexedDB ||
-//     window.webkitIndexedDB ||
-//     window.msIndexedDB;
-//   if (!indb) {
-//     console.log(
-//       "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
-//     );
-//   } else {
-//     var db = null;
-//     var request = indb.open(dbName, version);
+const updateNotification = (newData, cb) => {
+  let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
+  if (!indb) {
+    console.log(
+      "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
+    );
+  } else {
+    var db = null;
+    var request = indb.open("notifications", 2);
 
-//     request.onsuccess = (event) => {
-//       db = event.target.result;
+    request.onsuccess = (event) => {
+      db = event.target.result;
 
-//       event.target.result.onversionchange = function (e) {
-//         if (e.newVersion === null) {
-//           // An attempt is made to delete the db
-//           e.target.close(); // Manually close our connection to the db
-//         }
-//       };
+      event.target.result.onversionchange = function (e) {
+        if (e.newVersion === null) {
+          // An attempt is made to delete the db
+          e.target.close(); // Manually close our connection to the db
+        }
+      };
 
-//       const tx = db.transaction(["user_notification"], "readwrite");
+      const tx = db.transaction(["new_notification"], "readwrite");
 
-//       const store = tx.objectStore("user_notification");
-//       store.put(newData);
-//       request.result.close();
-//       cb(true);
-//     };
+      const store = tx.objectStore("new_notification");
+      store.put(newData);
+      request.result.close();
+      cb(true);
+    };
 
-//     request.onerror = (event) => {
-//       // Do something with request.errorCode!
-//       console.log("Why didn't you allow my web app to use IndexedDB?!", event);
-//       cb(null);
-//     };
-//   }
-// };
+    request.onerror = (event) => {
+      // Do something with request.errorCode!
+      console.log("Why didn't you allow my web app to use IndexedDB?!", event);
+      cb(null);
+    };
+  }
+};

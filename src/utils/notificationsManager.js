@@ -1,5 +1,5 @@
 const dbName = "notifications";
-const version = 1;
+const version = 2;
 
 export const getAllNotifications = (cb) => {
   let indb =

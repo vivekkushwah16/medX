@@ -18,6 +18,8 @@ import {
   CERTIFICATE_CLICK,
   DOWNLOAD_CERTIFICATE,
   FEEDBACK_CLICK,
+  NOTIFICATION_RECEIVED,
+  NOTIFICATION_INTERACTED,
 } from "../../AppConstants/AnalyticsEventName";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
@@ -30,8 +32,10 @@ import {
 import { onMessageListener } from "../../Firebase/firebase";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
 
-const audioLinkRef = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+const audioLinkRef =
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
 //showCertificate, showFeedback
 export default function Header(props) {
@@ -48,6 +52,7 @@ export default function Header(props) {
   } = props;
   const [showInviteFriendModal, toggleInviteFriendModal] = useState(false);
   const { showMediaModal } = useContext(MediaModalContext);
+  const { addGAWithUserInfo } = useContext(AnalyticsContext);
 
   const navBar = useRef(null);
   const [sticky, setSticky] = useState(false);
@@ -55,12 +60,35 @@ export default function Header(props) {
   const [searchBarSticky, setSearchBarSticky] = useState(false);
   const [yOffset, setyOffset] = useState(100);
 
-  function NotificationDisplay({ title, body, link, id, date, icon, opened }) {
+  function NotificationDisplay({
+    title,
+    body,
+    link,
+    id,
+    date,
+    icon,
+    opened,
+    topic,
+  }) {
     const handleClick = () => {
       if (!opened) {
-        let newData = { title, body, link, id, date, icon, opened: true };
+        let newData = {
+          title,
+          body,
+          link,
+          id,
+          date,
+          icon,
+          opened: true,
+          topic,
+        };
         updateNotification(newData, (res) => {
           // console.log("clicked", res);
+          addGAWithUserInfo(NOTIFICATION_INTERACTED, {
+            msg_id: id || title,
+            title: title,
+            topic: topic,
+          });
         });
       }
     };
@@ -79,7 +107,20 @@ export default function Header(props) {
   }
 
   useEffect(() => {
-
+    window.addEventListener("focus", () => {
+      getAllNotifications((data) => {
+        if (data) {
+          setNotificationData(data);
+        } else {
+          setNotificationData([]);
+        }
+      });
+      addGAWithUserInfo(NOTIFICATION_INTERACTED, {
+        msg_id: "id" || "title",
+        title: "title",
+        topic: "topic",
+      });
+    });
     // fetch all notifications from db initially
     getAllNotifications((data) => {
       if (data) {
@@ -92,22 +133,29 @@ export default function Header(props) {
     //Notification Listener
     onMessageListener((payload) => {
       // console.log("payload", payload);
+
+      addGAWithUserInfo(NOTIFICATION_RECEIVED, {
+        msg_id: payload.data.msg_id || payload.data.title,
+        title: payload.data.title,
+        topic: payload.data.topic,
+      });
       audioRef.current.play();
 
       let date = new Date();
       let data = {
-        id: Math.random(),
+        id: payload.data.msg_id,
         title: payload.data.title,
         body: payload.data.body,
         link: payload.data.link,
         icon: payload.data.icon,
+        topic: payload.data.topic,
         date: date,
         opened: false,
       };
       addNewNotification(data, (res) => {
         if (res) {
           console.log("data successfully added in indexDB");
-          // fetch all notifications from db 
+          // fetch all notifications from db
           getAllNotifications((data) => {
             if (data) {
               setNotificationData(data);
@@ -115,7 +163,6 @@ export default function Header(props) {
               setNotificationData([]);
             }
           });
-
         } else {
           console.log("failed to add data in indexDB");
         }
@@ -126,8 +173,9 @@ export default function Header(props) {
           title={payload.data.title}
           body={payload.data.body}
           link={payload.data.link}
-          id={payload.id}
+          id={payload.data.msg_id}
           date={date}
+          topic={payload.data.topic}
           icon={payload.data.icon}
           opened={false}
         />,
