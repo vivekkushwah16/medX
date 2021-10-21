@@ -161,6 +161,8 @@ const updateNotification = (newData, cb) => {
     var db = null;
     var request = indb.open("notifications", 2);
 
+
+
     request.onsuccess = (event) => {
       db = event.target.result;
 
@@ -177,6 +179,10 @@ const updateNotification = (newData, cb) => {
       store.put(newData);
       request.result.close();
       cb(true);
+    };
+
+    request.onupgradeneeded = (event) => {
+      event.target.transaction.abort();
     };
 
     request.onerror = (event) => {

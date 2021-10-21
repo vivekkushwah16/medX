@@ -34,7 +34,7 @@ export const messaging = firebase.messaging.isSupported() ? firebase.messaging()
 
 
 export const cloudFunction = firebase.app().functions("asia-south1");
-cloudFunction.useEmulator("localhost", 5001)
+// cloudFunction.useEmulator("localhost", 5001)
 
 window.testCloud = (name, obj) => {
   const verifyCLoudFunctionRef = cloudFunction.httpsCallable(
@@ -125,10 +125,7 @@ export const askForPermissionToReceiveNotifications = async (user) => {
 export const onMessageListener = (callback) => {
   if (messaging) {
     messaging.onMessage((payload) => {
-<<<<<<< HEAD
       console.log("payload", payload)
-=======
->>>>>>> a896181c677d6a06cbff97004afa4a8718aa532e
       if (callback) {
         callback(payload)
       }

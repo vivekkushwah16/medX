@@ -33,6 +33,7 @@ import { onMessageListener } from "../../Firebase/firebase";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
+import { UserContext } from "../../Context/Auth/UserContextProvider";
 
 const audioLinkRef =
   "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
@@ -53,6 +54,7 @@ export default function Header(props) {
   const [showInviteFriendModal, toggleInviteFriendModal] = useState(false);
   const { showMediaModal } = useContext(MediaModalContext);
   const { addGAWithUserInfo } = useContext(AnalyticsContext);
+  const { userInfo } = useContext(UserContext)
 
   const navBar = useRef(null);
   const [sticky, setSticky] = useState(false);
@@ -106,8 +108,25 @@ export default function Header(props) {
     );
   }
 
+  const isListenerAttached = useRef(false)
   useEffect(() => {
-    window.addEventListener("focus", () => {
+    if (userInfo && !isListenerAttached.current) {
+      isListenerAttached.current = true
+      window.addEventListener("focus", () => {
+        getAllNotifications((data) => {
+          if (data) {
+            setNotificationData(data);
+          } else {
+            setNotificationData([]);
+          }
+        });
+        addGAWithUserInfo(NOTIFICATION_INTERACTED, {
+          msg_id: "id" || "title",
+          title: "title",
+          topic: "topic",
+        });
+      });
+      // fetch all notifications from db initially
       getAllNotifications((data) => {
         if (data) {
           setNotificationData(data);
@@ -115,76 +134,63 @@ export default function Header(props) {
           setNotificationData([]);
         }
       });
-      addGAWithUserInfo(NOTIFICATION_INTERACTED, {
-        msg_id: "id" || "title",
-        title: "title",
-        topic: "topic",
+
+      //Notification Listener
+      onMessageListener((payload) => {
+        // console.log("payload", payload);
+
+        addGAWithUserInfo(NOTIFICATION_RECEIVED, {
+          msg_id: payload.data.msg_id || payload.data.title,
+          title: payload.data.title,
+          topic: payload.data.topic,
+        });
+        audioRef.current.play();
+
+        let date = new Date();
+        let data = {
+          id: payload.data.msg_id,
+          title: payload.data.title,
+          body: payload.data.body,
+          link: payload.data.link,
+          icon: payload.data.icon,
+          topic: payload.data.topic,
+          date: date,
+          opened: false,
+        };
+        addNewNotification(data, (res) => {
+          if (res) {
+            console.log("data successfully added in indexDB");
+            // fetch all notifications from db
+            getAllNotifications((data) => {
+              if (data) {
+                setNotificationData(data);
+              } else {
+                setNotificationData([]);
+              }
+            });
+          } else {
+            console.log("failed to add data in indexDB");
+          }
+        });
+
+        toast.info(
+          <NotificationDisplay
+            title={payload.data.title}
+            body={payload.data.body}
+            link={payload.data.link}
+            id={payload.data.msg_id}
+            date={date}
+            topic={payload.data.topic}
+            icon={payload.data.icon}
+            opened={false}
+          />,
+          {
+            icon: <img src={payload.data.icon} alt="" />,
+          }
+        );
       });
-    });
-    // fetch all notifications from db initially
-    getAllNotifications((data) => {
-      if (data) {
-        setNotificationData(data);
-      } else {
-        setNotificationData([]);
-      }
-    });
-
-    //Notification Listener
-    onMessageListener((payload) => {
-      // console.log("payload", payload);
-
-      addGAWithUserInfo(NOTIFICATION_RECEIVED, {
-        msg_id: payload.data.msg_id || payload.data.title,
-        title: payload.data.title,
-        topic: payload.data.topic,
-      });
-      audioRef.current.play();
-
-      let date = new Date();
-      let data = {
-        id: payload.data.msg_id,
-        title: payload.data.title,
-        body: payload.data.body,
-        link: payload.data.link,
-        icon: payload.data.icon,
-        topic: payload.data.topic,
-        date: date,
-        opened: false,
-      };
-      addNewNotification(data, (res) => {
-        if (res) {
-          console.log("data successfully added in indexDB");
-          // fetch all notifications from db
-          getAllNotifications((data) => {
-            if (data) {
-              setNotificationData(data);
-            } else {
-              setNotificationData([]);
-            }
-          });
-        } else {
-          console.log("failed to add data in indexDB");
-        }
-      });
-
-      toast.info(
-        <NotificationDisplay
-          title={payload.data.title}
-          body={payload.data.body}
-          link={payload.data.link}
-          id={payload.data.msg_id}
-          date={date}
-          topic={payload.data.topic}
-          icon={payload.data.icon}
-          opened={false}
-        />,
-        {
-          icon: <img src={payload.data.icon} alt="" />,
-        }
-      );
-    });
-  }, []);
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     if (stickyOnScroll) {
@@ -210,7 +216,7 @@ export default function Header(props) {
       }
       if (
         window.pageYOffset >
-          window.innerHeight + navBar.current.offsetTop + 130 &&
+        window.innerHeight + navBar.current.offsetTop + 130 &&
         window.innerHeight <= 600
       ) {
         setSearchBarSticky(true);
@@ -248,9 +254,8 @@ export default function Header(props) {
       ></audio>
 
       <div
-        className={` headerBox--full pd-r0 ${
-          sticky ? "headerBox_sticky" : "headerBox"
-        }`}
+        className={` headerBox--full pd-r0 ${sticky ? "headerBox_sticky" : "headerBox"
+          }`}
         ref={navBar}
         style={{
           padding:
@@ -276,8 +281,8 @@ export default function Header(props) {
                     props.whiteLogo
                       ? CIPLAMEDXLOGO_WHITE
                       : props.eventPage
-                      ? props.eventAndCiplaLogo
-                      : CIPLAMEDXLOGO
+                        ? props.eventAndCiplaLogo
+                        : CIPLAMEDXLOGO
                   }
                   alt="CIPLAMEDXLOGO"
                 />

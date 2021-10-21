@@ -30,6 +30,7 @@ export default function AnalyticsContextProvider(props) {
   async function addGAWithUserInfo(eventName, data = {}) {
     try {
       console.log(eventName, data, userInfo);
+      return
       if (!userInfo) {
         console.error("No UsrInfo Found");
         return;
@@ -120,9 +121,8 @@ export default function AnalyticsContextProvider(props) {
       }
 
       var currentDate = new Date();
-      let dateString = `${currentDate.getDate()} ${
-        MonthName[currentDate.getMonth()]
-      } ${currentDate.getFullYear()} 00:00:00`;
+      let dateString = `${currentDate.getDate()} ${MonthName[currentDate.getMonth()]
+        } ${currentDate.getFullYear()} 00:00:00`;
       // console.log(dateString)
       var dateTimeStamp = new Date(dateString).getTime();
       let _sessionId = sessionId;
@@ -143,9 +143,8 @@ export default function AnalyticsContextProvider(props) {
         country: userInfo.country,
         state: userInfo.state,
         city: userInfo.city,
-        dateString: `${currentDate.getDate()}-${
-          currentDate.getMonth() + 1
-        }-${currentDate.getFullYear()}`,
+        dateString: `${currentDate.getDate()}-${currentDate.getMonth() + 1
+          }-${currentDate.getFullYear()}`,
         //event based info
         eventId,
         timelineId,

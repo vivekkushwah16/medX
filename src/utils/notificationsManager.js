@@ -15,7 +15,10 @@ export const getAllNotifications = (cb) => {
   } else {
     var db = null;
     var request = indb.open(dbName, version);
-
+    request.onupgradeneeded = (event) => {
+      //abort the transcation if table doesn't exists
+      event.target.transaction.abort();
+    };
     request.onsuccess = (event) => {
       db = event.target.result;
       if (db.objectStoreNames.length > 0) {
@@ -23,6 +26,7 @@ export const getAllNotifications = (cb) => {
         const notificationStore = txt.objectStore("user_notification").getAll();
 
         notificationStore.onsuccess = (event) => {
+          console.log("request.onsuccess")
           allData = event.target.result;
           request.result.close();
           cb(allData);
@@ -56,7 +60,9 @@ export const addNewNotification = (data, cb) => {
   } else {
     var db = null;
     var request = indb.open(dbName, version);
+
     request.onupgradeneeded = (event) => {
+      console.log("request.onupgradeneeded")
       db = event.target.result;
       db.createObjectStore("user_notification", {
         keyPath: "id",
@@ -64,16 +70,17 @@ export const addNewNotification = (data, cb) => {
     };
 
     request.onsuccess = (event) => {
+      console.log("request.onsuccess")
+
       db = event.target.result;
+      console.log(db)
       event.target.result.onversionchange = function (e) {
         if (e.newVersion === null) {
           // An attempt is made to delete the db
           e.target.close(); // Manually close our connection to the db
         }
       };
-
-      const tx = db.transaction(["user_notification"], "readwrite");
-
+      let tx = db.transaction(["user_notification"], "readwrite");
       const store = tx.objectStore("user_notification");
       store.add(data);
       request.result.close();
@@ -81,6 +88,7 @@ export const addNewNotification = (data, cb) => {
     };
 
     request.onerror = (event) => {
+      console.log("request.onerror")
       // Do something with request.errorCode!
       console.log("Why didn't you allow my web app to use IndexedDB?!", event);
       cb(false);
