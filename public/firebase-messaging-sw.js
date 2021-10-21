@@ -64,6 +64,22 @@ messaging.onBackgroundMessage((payload) => {
     //     // do something with your notifications
     //     console.log("all notifications", notifications);
     //   });
+    let newData = {
+      id: payl.data.msg_id,
+      title: payl.data.title,
+      body: payl.data.body,
+      link: payl.data.link,
+      icon: payl.data.icon,
+      topic: payl.data.topic,
+      date: new Date(),
+      opened: true,
+    };
+    addNotificationToIDB("new_notification", newData, (res) => {
+      console.log("updated new_notification-------------", res);
+    });
+    addNotificationToIDB("user_notification", newData, (res) => {
+      console.log("updated user_notification------------", res);
+    });
 
     self.addEventListener("notificationclick", function (event) {
       //---access data from event using event.notification.data---
@@ -73,23 +89,14 @@ messaging.onBackgroundMessage((payload) => {
 
       // onclick handle
 
-      let newData = {
-        id: payl.data.msg_id,
-        title: payl.data.title,
-        body: payl.data.body,
-        link: payl.data.link,
-        icon: payl.data.icon,
-        topic: payl.data.topic,
-        date: new Date(),
-        opened: true,
-      };
-      updateNotification(newData, (res) => {
-        console.log("updated", res);
-      });
+
+
 
       //---close the notification---
       event.notification.close();
-
+      addNotificationToIDB("clicked_notification", newData, (res) => {
+        console.log("updated", res);
+      });
       // after clicking the notification---
       event.waitUntil(clients.openWindow(url));
     });
@@ -150,6 +157,9 @@ function createIndexDb(name, version, payload) {
     db.createObjectStore("new_notification", {
       keyPath: "id",
     });
+    db.createObjectStore("clicked_notification", {
+      keyPath: "id",
+    });
   };
 }
 
@@ -194,3 +204,47 @@ const updateNotification = (newData, cb) => {
     };
   }
 };
+
+
+
+
+const addNotificationToIDB = (tableName = "new_notification", newData, cb) => {
+  let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
+  if (!indb) {
+    console.log(
+      "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
+    );
+  } else {
+    var db = null;
+    var request = indb.open("notifications", 2);
+    request.onsuccess = (event) => {
+      db = event.target.result;
+
+      event.target.result.onversionchange = function (e) {
+        if (e.newVersion === null) {
+          // An attempt is made to delete the db
+          e.target.close(); // Manually close our connection to the db
+        }
+      };
+
+      const tx = db.transaction([tableName], "readwrite");
+
+      const store = tx.objectStore(tableName);
+      store.put(newData);
+      request.result.close();
+      cb(true);
+    };
+
+    request.onupgradeneeded = (event) => {
+      event.target.transaction.abort();
+    };
+
+    request.onerror = (event) => {
+      // Do something with request.errorCode!
+      console.log("Why didn't you allow my web app to use IndexedDB?!", event);
+      cb(null);
+    };
+  }
+};
+
+

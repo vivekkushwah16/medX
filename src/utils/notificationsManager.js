@@ -70,6 +70,9 @@ export const addNewNotification = (data, cb) => {
       db.createObjectStore("new_notification", {
         keyPath: "id",
       });
+      db.createObjectStore("clicked_notification", {
+        keyPath: "id",
+      });
     };
 
     request.onsuccess = (event) => {
@@ -178,3 +181,58 @@ export const removeNotification = (id, cb) => {
     };
   }
 };
+
+
+export const getClickNotificationFromDB = (tableName = "clicked_notification", cb) => {
+  let indb =
+    window.indexedDB ||
+    window.mozIndexedDB ||
+    window.webkitIndexedDB ||
+    window.msIndexedDB;
+  let allData = null;
+  if (!indb) {
+    console.log(
+      "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
+    );
+  } else {
+    var db = null;
+    var request = indb.open(dbName, version);
+
+    request.onupgradeneeded = (event) => {
+      event.target.transaction.abort();
+    };
+
+    request.onsuccess = (event) => {
+      console.log("request.onsuccess")
+      db = event.target.result;
+      event.target.result.onversionchange = function (e) {
+        if (e.newVersion === null) {
+          // An attempt is made to delete the db
+          e.target.close(); // Manually close our connection to the db
+        }
+      };
+      let txt = db.transaction([tableName], "readwrite");
+      const notificationStore = txt.objectStore(tableName).getAll();
+      notificationStore.onsuccess = (event) => {
+        console.log("request.onsuccess")
+        allData = event.target.result;
+        txt.objectStore(tableName).clear();
+        request.result.close();
+        cb(allData);
+      };
+      notificationStore.onerror = (event) => {
+        console.log("error in getting notification from db", event);
+        request.result.close();
+        cb(null);
+      };
+    };
+
+    request.onerror = (event) => {
+      console.log("request.onerror")
+      // Do something with request.errorCode!
+      console.log("Why didn't you allow my web app to use IndexedDB?!", event);
+      request.result.close();
+      cb(allData);
+    };
+  }
+}

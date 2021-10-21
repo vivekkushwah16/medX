@@ -27,6 +27,7 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 import {
   addNewNotification,
   getAllNotifications,
+  getClickNotificationFromDB,
   updateNotification,
 } from "../../utils/notificationsManager";
 import { onMessageListener } from "../../Firebase/firebase";
@@ -113,18 +114,24 @@ export default function Header(props) {
     if (userInfo && !isListenerAttached.current) {
       isListenerAttached.current = true
       window.addEventListener("focus", () => {
-        getAllNotifications((data) => {
+        getClickNotificationFromDB("new_notification", (data) => {
           if (data) {
+            //Update state with new notification
             setNotificationData(data);
-          } else {
-            setNotificationData([]);
           }
-        });
-        addGAWithUserInfo(NOTIFICATION_INTERACTED, {
-          msg_id: "id" || "title",
-          title: "title",
-          topic: "topic",
-        });
+        })
+
+        getClickNotificationFromDB("clicked_notification", (data) => {
+          if (data) {
+            //if clicked add click analytics
+            addGAWithUserInfo(NOTIFICATION_INTERACTED, {
+              msg_id: "id" || "title",
+              title: "title",
+              topic: "topic",
+            });
+          }
+        })
+
       });
       // fetch all notifications from db initially
       getAllNotifications((data) => {
