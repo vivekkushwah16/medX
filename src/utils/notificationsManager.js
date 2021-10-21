@@ -1,4 +1,7 @@
-import { NOTIFICATION_INTERACTED } from "../AppConstants/AnalyticsEventName";
+import {
+  NOTIFICATION_INTERACTED,
+  NOTIFICATION_RECEIVED,
+} from "../AppConstants/AnalyticsEventName";
 
 const dbName = "notifications";
 const version = 2;
@@ -245,6 +248,16 @@ export const getClickNotificationFromDB = (
             }
             txt.objectStore(tableName).clear();
             console.log("CLICKED_NOTIFICATION_TABLE", data);
+          });
+        }
+        if (tableName === "new_notification") {
+          allData.map((data) => {
+            addGAWithUserInfo(NOTIFICATION_RECEIVED, {
+              msg_id: data.id || data.title,
+              title: data.title,
+              topic: data.topic,
+            });
+            txt.objectStore(tableName).clear();
           });
         }
 

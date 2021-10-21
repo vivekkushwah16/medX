@@ -25,10 +25,10 @@ export default function Notification(props) {
           title: notification.title,
           topic: notification.topic,
         });
-        addNewNotificationToIDB(CLICKED_NOTIFICATION_TABLE, newData, (res) => {
-          console.log("updated new_notification-------------", res);
+        // addNewNotificationToIDB(CLICKED_NOTIFICATION_TABLE, newData, (res) => {
+        //   console.log("updated new_notification-------------", res);
           window.location.href = notification.link
-        });
+        // });
       });
     }
   };

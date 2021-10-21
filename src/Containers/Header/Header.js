@@ -91,13 +91,13 @@ export default function Header(props) {
         };
         updateNotification(newData, (res) => {
           // console.log("clicked", res);
-          addNewNotificationToIDB(
-            CLICKED_NOTIFICATION_TABLE,
-            newData,
-            (res) => {
-              console.log("updated new_notification-------------", res);
-            }
-          );
+          // addNewNotificationToIDB(
+          //   CLICKED_NOTIFICATION_TABLE,
+          //   newData,
+          //   (res) => {
+          //     console.log("updated new_notification-------------", res);
+          //   }
+          // );
           addGAWithUserInfo(NOTIFICATION_INTERACTED, {
             msg_id: id || title,
             title: title,
@@ -147,7 +147,16 @@ export default function Header(props) {
           (data) => {
             if (data) {
               //Update state with new notification
-              setNotificationData(data);
+              // setNotificationData(data);
+              // fetch all notifications from db initially
+              getAllNotifications(USER_NOTIFICATION_TABLE, (data) => {
+                if (data) {
+                  let sortedData = data.sort((a, b) => b.date - a.date);
+                  setNotificationData(sortedData);
+                } else {
+                  setNotificationData([]);
+                }
+              });
             }
           }
         );
@@ -155,7 +164,8 @@ export default function Header(props) {
       // fetch all notifications from db initially
       getAllNotifications(USER_NOTIFICATION_TABLE, (data) => {
         if (data) {
-          setNotificationData(data);
+          let sortedData = data.sort((a, b) => b.date - a.date);
+          setNotificationData(sortedData);
         } else {
           setNotificationData([]);
         }
@@ -190,7 +200,8 @@ export default function Header(props) {
             // fetch all notifications from db
             getAllNotifications(USER_NOTIFICATION_TABLE, (data) => {
               if (data) {
-                setNotificationData(data);
+                let sortedData = data.sort((a, b) => b.date - a.date);
+                setNotificationData(sortedData);
               } else {
                 setNotificationData([]);
               }
@@ -200,9 +211,9 @@ export default function Header(props) {
           }
         });
 
-        addNewNotificationToIDB(NEW_NOTIFICATION_TABLE, data, (res) => {
-          console.log("updated new_notification-------------", res);
-        });
+        // addNewNotificationToIDB(NEW_NOTIFICATION_TABLE, data, (res) => {
+        //   console.log("updated new_notification-------------", res);
+        // });
 
         toast.info(
           <NotificationDisplay
