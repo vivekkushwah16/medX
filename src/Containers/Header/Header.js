@@ -25,7 +25,7 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import {
-  addNewNotification,
+  addNewNotificationToIDB,
   getAllNotifications,
   getClickNotificationFromDB,
   updateNotification,
@@ -37,7 +37,11 @@ import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvid
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 
 const audioLinkRef =
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+  "https://storage.googleapis.com/cipla-impact.appspot.com/notification_music/notification.mp3";
+
+const USER_NOTIFICATION_TABLE = "user_notification";
+const NEW_NOTIFICATION_TABLE = "new_notification";
+const CLICKED_NOTIFICATION_TABLE = "clicked_notification";
 
 //showCertificate, showFeedback
 export default function Header(props) {
@@ -55,7 +59,7 @@ export default function Header(props) {
   const [showInviteFriendModal, toggleInviteFriendModal] = useState(false);
   const { showMediaModal } = useContext(MediaModalContext);
   const { addGAWithUserInfo } = useContext(AnalyticsContext);
-  const { userInfo } = useContext(UserContext)
+  const { userInfo } = useContext(UserContext);
 
   const navBar = useRef(null);
   const [sticky, setSticky] = useState(false);
@@ -87,6 +91,13 @@ export default function Header(props) {
         };
         updateNotification(newData, (res) => {
           // console.log("clicked", res);
+          addNewNotificationToIDB(
+            CLICKED_NOTIFICATION_TABLE,
+            newData,
+            (res) => {
+              console.log("updated new_notification-------------", res);
+            }
+          );
           addGAWithUserInfo(NOTIFICATION_INTERACTED, {
             msg_id: id || title,
             title: title,
@@ -109,32 +120,40 @@ export default function Header(props) {
     );
   }
 
-  const isListenerAttached = useRef(false)
+  const isListenerAttached = useRef(false);
+
   useEffect(() => {
     if (userInfo && !isListenerAttached.current) {
-      isListenerAttached.current = true
+      isListenerAttached.current = true;
       window.addEventListener("focus", () => {
-        getClickNotificationFromDB("new_notification", (data) => {
-          if (data) {
-            //Update state with new notification
-            setNotificationData(data);
+        getClickNotificationFromDB(
+          CLICKED_NOTIFICATION_TABLE,
+          addGAWithUserInfo,
+          (data) => {
+            if (data) {
+              //if clicked add click analytics
+              // addGAWithUserInfo(NOTIFICATION_INTERACTED, {
+              //   msg_id: "id" || "title",
+              //   title: "title",
+              //   topic: "topic",
+              // });
+            }
           }
-        })
+        );
 
-        getClickNotificationFromDB("clicked_notification", (data) => {
-          if (data) {
-            //if clicked add click analytics
-            addGAWithUserInfo(NOTIFICATION_INTERACTED, {
-              msg_id: "id" || "title",
-              title: "title",
-              topic: "topic",
-            });
+        getClickNotificationFromDB(
+          NEW_NOTIFICATION_TABLE,
+          addGAWithUserInfo,
+          (data) => {
+            if (data) {
+              //Update state with new notification
+              setNotificationData(data);
+            }
           }
-        })
-
+        );
       });
       // fetch all notifications from db initially
-      getAllNotifications((data) => {
+      getAllNotifications(USER_NOTIFICATION_TABLE, (data) => {
         if (data) {
           setNotificationData(data);
         } else {
@@ -164,11 +183,12 @@ export default function Header(props) {
           date: date,
           opened: false,
         };
-        addNewNotification(data, (res) => {
+
+        addNewNotificationToIDB(USER_NOTIFICATION_TABLE, data, (res) => {
           if (res) {
             console.log("data successfully added in indexDB");
             // fetch all notifications from db
-            getAllNotifications((data) => {
+            getAllNotifications(USER_NOTIFICATION_TABLE, (data) => {
               if (data) {
                 setNotificationData(data);
               } else {
@@ -178,6 +198,10 @@ export default function Header(props) {
           } else {
             console.log("failed to add data in indexDB");
           }
+        });
+
+        addNewNotificationToIDB(NEW_NOTIFICATION_TABLE, data, (res) => {
+          console.log("updated new_notification-------------", res);
         });
 
         toast.info(
@@ -223,7 +247,7 @@ export default function Header(props) {
       }
       if (
         window.pageYOffset >
-        window.innerHeight + navBar.current.offsetTop + 130 &&
+          window.innerHeight + navBar.current.offsetTop + 130 &&
         window.innerHeight <= 600
       ) {
         setSearchBarSticky(true);
@@ -261,8 +285,9 @@ export default function Header(props) {
       ></audio>
 
       <div
-        className={` headerBox--full pd-r0 ${sticky ? "headerBox_sticky" : "headerBox"
-          }`}
+        className={` headerBox--full pd-r0 ${
+          sticky ? "headerBox_sticky" : "headerBox"
+        }`}
         ref={navBar}
         style={{
           padding:
@@ -288,8 +313,8 @@ export default function Header(props) {
                     props.whiteLogo
                       ? CIPLAMEDXLOGO_WHITE
                       : props.eventPage
-                        ? props.eventAndCiplaLogo
-                        : CIPLAMEDXLOGO
+                      ? props.eventAndCiplaLogo
+                      : CIPLAMEDXLOGO
                   }
                   alt="CIPLAMEDXLOGO"
                 />

@@ -16,6 +16,9 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
+const dbName = "notifications";
+const version = 2;
+
 messaging.onBackgroundMessage((payload) => {
   let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
   if (!indb) {
@@ -23,12 +26,8 @@ messaging.onBackgroundMessage((payload) => {
       "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
     );
   } else {
-    const dbName = "notifications";
-    const version = 2;
-    createIndexDb(dbName, version, payload);
-  }
+    // createIndexDb(payload);
 
-  if (payload) {
     console.log(
       "[firebase-messaging-sw.js] Received background message ",
       payload
@@ -64,6 +63,16 @@ messaging.onBackgroundMessage((payload) => {
     //     // do something with your notifications
     //     console.log("all notifications", notifications);
     //   });
+    let data = {
+      id: payload.data.msg_id,
+      title: payload.data.title,
+      body: payload.data.body,
+      icon: payload.data.icon,
+      link: payload.data.link,
+      topic: payload.data.topic,
+      date: new Date(),
+      opened: false,
+    };
     let newData = {
       id: payl.data.msg_id,
       title: payl.data.title,
@@ -74,10 +83,10 @@ messaging.onBackgroundMessage((payload) => {
       date: new Date(),
       opened: true,
     };
-    addNotificationToIDB("new_notification", newData, (res) => {
+    addNotificationToIDB("new_notification", data, (res) => {
       console.log("updated new_notification-------------", res);
     });
-    addNotificationToIDB("user_notification", newData, (res) => {
+    addNotificationToIDB("user_notification", data, (res) => {
       console.log("updated user_notification------------", res);
     });
 
@@ -89,12 +98,12 @@ messaging.onBackgroundMessage((payload) => {
 
       // onclick handle
 
-
-
-
       //---close the notification---
       event.notification.close();
-      addNotificationToIDB("clicked_notification", newData, (res) => {
+      updateNotificationToIDB("clicked_notification", newData, (res) => {
+        console.log("updated", res);
+      });
+      updateNotificationToIDB("user_notification", newData, (res) => {
         console.log("updated", res);
       });
       // after clicking the notification---
@@ -108,22 +117,11 @@ messaging.onBackgroundMessage((payload) => {
   }
 });
 
-function createIndexDb(name, version, payload) {
+function addNotificationToIDB(tableName, data, cb) {
   let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
 
-  let data = {
-    id: payload.data.msg_id,
-    title: payload.data.title,
-    body: payload.data.body,
-    icon: payload.data.icon,
-    link: payload.data.link,
-    topic: payload.data.topic,
-    date: new Date(),
-    opened: false,
-  };
-
   var db = null;
-  var request = indb.open(name, version);
+  var request = indb.open(dbName, version);
 
   request.onerror = (event) => {
     // Do something with request.errorCode!
@@ -140,9 +138,9 @@ function createIndexDb(name, version, payload) {
       }
     };
 
-    const tx = db.transaction("new_notification", "readwrite");
+    const tx = db.transaction(tableName, "readwrite");
 
-    const uNotifications = tx.objectStore("new_notification");
+    const uNotifications = tx.objectStore(tableName);
     uNotifications.add(data);
 
     request.result.close();
@@ -163,7 +161,7 @@ function createIndexDb(name, version, payload) {
   };
 }
 
-const updateNotification = (newData, cb) => {
+const updateNotificationToIDB = (tableName, newData, cb) => {
   let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
   if (!indb) {
     console.log(
@@ -171,52 +169,8 @@ const updateNotification = (newData, cb) => {
     );
   } else {
     var db = null;
-    var request = indb.open("notifications", 2);
+    var request = indb.open(dbName, version);
 
-
-
-    request.onsuccess = (event) => {
-      db = event.target.result;
-
-      event.target.result.onversionchange = function (e) {
-        if (e.newVersion === null) {
-          // An attempt is made to delete the db
-          e.target.close(); // Manually close our connection to the db
-        }
-      };
-
-      const tx = db.transaction(["new_notification"], "readwrite");
-
-      const store = tx.objectStore("new_notification");
-      store.put(newData);
-      request.result.close();
-      cb(true);
-    };
-
-    request.onupgradeneeded = (event) => {
-      event.target.transaction.abort();
-    };
-
-    request.onerror = (event) => {
-      // Do something with request.errorCode!
-      console.log("Why didn't you allow my web app to use IndexedDB?!", event);
-      cb(null);
-    };
-  }
-};
-
-
-
-
-const addNotificationToIDB = (tableName = "new_notification", newData, cb) => {
-  let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
-  if (!indb) {
-    console.log(
-      "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
-    );
-  } else {
-    var db = null;
-    var request = indb.open("notifications", 2);
     request.onsuccess = (event) => {
       db = event.target.result;
 
@@ -247,4 +201,41 @@ const addNotificationToIDB = (tableName = "new_notification", newData, cb) => {
   }
 };
 
+// const addNotificationToIDB = (tableName = "new_notification", newData, cb) => {
+//   let indb = indexedDB || mozIndexedDB || webkitIndexedDB || msIndexedDB;
+//   if (!indb) {
+//     console.log(
+//       "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
+//     );
+//   } else {
+//     var db = null;
+//     var request = indb.open(dbName, version);
+//     request.onsuccess = (event) => {
+//       db = event.target.result;
 
+//       event.target.result.onversionchange = function (e) {
+//         if (e.newVersion === null) {
+//           // An attempt is made to delete the db
+//           e.target.close(); // Manually close our connection to the db
+//         }
+//       };
+
+//       const tx = db.transaction([tableName], "readwrite");
+
+//       const store = tx.objectStore(tableName);
+//       store.put(newData);
+//       request.result.close();
+//       cb(true);
+//     };
+
+//     request.onupgradeneeded = (event) => {
+//       event.target.transaction.abort();
+//     };
+
+//     request.onerror = (event) => {
+//       // Do something with request.errorCode!
+//       console.log("Why didn't you allow my web app to use IndexedDB?!", event);
+//       cb(null);
+//     };
+//   }
+// };

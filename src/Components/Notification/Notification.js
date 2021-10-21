@@ -1,7 +1,12 @@
 import React, { useContext } from "react";
 import { NOTIFICATION_INTERACTED } from "../../AppConstants/AnalyticsEventName";
 import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
-import { updateNotification } from "../../utils/notificationsManager";
+import {
+  addNewNotificationToIDB,
+  updateNotification,
+} from "../../utils/notificationsManager";
+
+const CLICKED_NOTIFICATION_TABLE = "clicked_notification";
 
 export default function Notification(props) {
   const {
@@ -19,6 +24,10 @@ export default function Notification(props) {
           msg_id: notification.id || notification.title,
           title: notification.title,
           topic: notification.topic,
+        });
+        addNewNotificationToIDB(CLICKED_NOTIFICATION_TABLE, newData, (res) => {
+          console.log("updated new_notification-------------", res);
+          window.location.href = notification.link
         });
       });
     }
@@ -42,7 +51,7 @@ export default function Notification(props) {
               <a
                 key={index}
                 onClick={(e) => handleClick(e, notification)}
-                href={notification.link}
+                // href={notification.link}
               >
                 <span className="notification__icon">
                   <img
