@@ -90,24 +90,50 @@ messaging.onBackgroundMessage((payload) => {
       console.log("updated user_notification------------", res);
     });
 
-    self.addEventListener("notificationclick", function (event) {
-      //---access data from event using event.notification.data---
-      console.log("object", event);
-      console.log("On notification click: ", event.notification.data);
-      var url = payl.data.link;
+    // self.addEventListener("notificationclick", function (event) {
+    //   //---access data from event using event.notification.data---
+    //   console.log("object", event);
+    //   console.log("On notification click: ", event.notification.data);
+    //   var url = payl.data.link;
 
-      // onclick handle
+    //   // onclick handle
 
-      //---close the notification---
+    //   //---close the notification---
+    //   event.notification.close();
+    //   updateNotificationToIDB("clicked_notification", newData, (res) => {
+    //     console.log("updated", res);
+    //   });
+    //   updateNotificationToIDB("user_notification", newData, (res) => {
+    //     console.log("updated", res);
+    //   });
+    //   // after clicking the notification---
+    //   event.waitUntil(clients.openWindow(url));
+    // });
+
+    self.addEventListener('notificationclick', function(event) {
+      console.log('On notification click: ', event.notification.tag);
       event.notification.close();
+      var url = payl.data.link;
+    
       updateNotificationToIDB("clicked_notification", newData, (res) => {
         console.log("updated", res);
       });
       updateNotificationToIDB("user_notification", newData, (res) => {
         console.log("updated", res);
       });
-      // after clicking the notification---
-      event.waitUntil(clients.openWindow(url));
+      // This looks to see if the current is already open and
+      // focuses if it is
+      event.waitUntil(clients.matchAll({
+        type: "window"
+      }).then(function(clientList) {
+        for (var i = 0; i < clientList.length; i++) {
+          var client = clientList[i];
+          if (client.url == url && 'focus' in client)
+            return client.focus();
+        }
+        if (clients.openWindow)
+          return clients.openWindow(url);
+      }));
     });
 
     return self.registration.showNotification(
