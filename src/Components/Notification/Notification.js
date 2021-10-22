@@ -51,7 +51,7 @@ export default function Notification(props) {
               <a
                 key={index}
                 onClick={(e) => handleClick(e, notification)}
-                // href={notification.link}
+                href={notification.link}
               >
                 <span className="notification__icon">
                   <img
