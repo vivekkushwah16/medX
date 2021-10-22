@@ -110,30 +110,51 @@ messaging.onBackgroundMessage((payload) => {
     //   event.waitUntil(clients.openWindow(url));
     // });
 
-    self.addEventListener('notificationclick', function(event) {
-      console.log('On notification click: ', event.notification.tag);
-      event.notification.close();
-      var url = payl.data.link;
-    
+    self.addEventListener("notificationclick", function (event) {
+      console.log("On notification click: ", event.notification.tag);
       updateNotificationToIDB("clicked_notification", newData, (res) => {
         console.log("updated", res);
       });
       updateNotificationToIDB("user_notification", newData, (res) => {
         console.log("updated", res);
       });
+      event.notification.close();
+
+      const urlToOpen = new URL(payl.data.link, self.location.origin).href;
+      let newURL = urlToOpen.split("//")[1].split("/")[0];
       // This looks to see if the current is already open and
       // focuses if it is
-      event.waitUntil(clients.matchAll({
-        type: "window"
-      }).then(function(clientList) {
-        for (var i = 0; i < clientList.length; i++) {
-          var client = clientList[i];
-          if (client.url == url && 'focus' in client)
-            return client.focus();
-        }
-        if (clients.openWindow)
-          return clients.openWindow(url);
-      }));
+      event.waitUntil(
+        clients
+          .matchAll({
+            type: "window",
+            includeUncontrolled: true,
+          })
+          .then(function (clientList) {
+            console.log("clientList", clientList);
+            let matchingClient = null;
+            for (var i = 0; i < clientList.length; i++) {
+              console.log("matchingClient", matchingClient);
+              var client = clientList[i];
+              console.log(
+                "client.url",
+                client.url.split("//")[1].split("/")[0]
+              );
+              if (
+                client.url.split("//")[1].split("/")[0] == newURL &&
+                "focused" in client
+              ) {
+                matchingClient = client;
+                break;
+              }
+            }
+            if (matchingClient) {
+              return matchingClient.focus();
+            } else {
+              return clients.openWindow(urlToOpen);
+            }
+          })
+      );
     });
 
     return self.registration.showNotification(
