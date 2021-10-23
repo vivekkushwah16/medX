@@ -244,6 +244,7 @@ export const getClickNotificationFromDB = (
                 msg_id: data.id || data.title,
                 title: data.title,
                 topic: data.topic,
+                mode: "BACKGROUND_NOTIFICATION"
               });
             }
             txt.objectStore(tableName).clear();
@@ -256,6 +257,7 @@ export const getClickNotificationFromDB = (
               msg_id: data.id || data.title,
               title: data.title,
               topic: data.topic,
+              mode: "BACKGROUND_NOTIFICATION"
             });
             txt.objectStore(tableName).clear();
           });

@@ -24,6 +24,7 @@ export default function Notification(props) {
           msg_id: notification.id || notification.title,
           title: notification.title,
           topic: notification.topic,
+          mode: "FRONTEND_NOTIFICATION"
         });
         // addNewNotificationToIDB(CLICKED_NOTIFICATION_TABLE, newData, (res) => {
         //   console.log("updated new_notification-------------", res);

@@ -102,6 +102,7 @@ export default function Header(props) {
             msg_id: id || title,
             title: title,
             topic: topic,
+            mode: "FRONTEND_NOTIFICATION"
           });
         });
       }

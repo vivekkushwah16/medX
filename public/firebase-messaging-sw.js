@@ -149,6 +149,7 @@ messaging.onBackgroundMessage((payload) => {
               }
             }
             if (matchingClient) {
+              matchingClient.url = urlToOpen;
               return matchingClient.focus();
             } else {
               return clients.openWindow(urlToOpen);
