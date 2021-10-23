@@ -25,5 +25,6 @@ export const SESSION_ATTENDED = 'session_attended'
 export const NOTIFICATION_RECEIVED = 'notification_received'
 export const NOTIFICATION_INTERACTED = 'notification_interacted'
 
+export const INSTALL_PWA_ANALYTICS_EVENT = 'pwa_install_click'
 
 export const OLD_USER_REGISTER_EVENT = 'old_user_register_event'

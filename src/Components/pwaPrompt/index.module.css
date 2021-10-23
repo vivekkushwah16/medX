@@ -8,6 +8,7 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  background: #00000066;
 }
 
 .pwaModal {

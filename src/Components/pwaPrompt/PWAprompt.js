@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import usePWA from 'react-pwa-install-prompt'
 import PWAInstallerPrompt from 'react-pwa-installer-prompt';
+import { INSTALL_PWA_ANALYTICS_EVENT } from '../../AppConstants/AnalyticsEventName';
+import { AnalyticsContext } from '../../Context/Analytics/AnalyticsContextProvider';
 import PWAStyle from './index.module.css'
 
 export default function PWApromptWithButton() {
@@ -29,7 +31,9 @@ export default function PWApromptWithButton() {
 
 export const PWAInstaller = () => {
     const [show, toggleShow] = useState(true)
-    console.log(PWAStyle.pwaContainer)
+    const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext);
+
+    // console.log(PWAStyle.pwaContainer)
     return (
         <>
             {
@@ -39,14 +43,23 @@ export const PWAInstaller = () => {
                         <div className={PWAStyle.pwaContainer}>
                             <div className={PWAStyle.pwaModal}>
                                 <div className={PWAStyle.titleContainer}>
-                                    Keep App, For Offline &amp; Quick Access!
+                                Download the app to quickly access<br/>videos and play them offline
                                 </div>
                                 <div className={PWAStyle.btnContainer}>
                                     <button onClick={() => toggleShow(false)} className={PWAStyle.cancelBtn}>
-                                        cancel
+                                        Not now
                                     </button>
 
-                                    <button onClick={onClick} className={PWAStyle.installBtn}>
+                                    <button onClick={(e) => {
+                                        onClick(e)
+                                        addGAWithUserInfo(
+                                            INSTALL_PWA_ANALYTICS_EVENT
+                                        );
+                                        addCAWithUserInfo(
+                                            `/${INSTALL_PWA_ANALYTICS_EVENT}`,
+                                            true
+                                        );
+                                    }} className={PWAStyle.installBtn}>
                                         Install
                                     </button>
                                 </div>

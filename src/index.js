@@ -10,13 +10,9 @@ import LikeContextProvider from "./Context/Like/LikeContextProvider";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import MediaModalContextProvider from "./Context/MedialModal/MediaModalContextProvider";
-import AnalyticsContextProvider, {
-  AnalyticsContext,
-} from "./Context/Analytics/AnalyticsContextProvider";
+import AnalyticsContextProvider from "./Context/Analytics/AnalyticsContextProvider";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import { PWAInstaller } from "./Components/pwaPrompt/PWAprompt";
-import { isAndroid, isIOS } from "react-device-detect";
-import PWAPrompt from 'react-ios-pwa-prompt'
+
 
 const options = {
   position: positions.BOTTOM_RIGHT,
@@ -27,11 +23,6 @@ const options = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <PWAInstaller />
-    {
-      !isAndroid &&
-      <PWAPrompt promptOnVisit={1} timesToShow={3} copyClosePrompt="Close" permanentlyHideOnDismiss={false} />
-    }
     <UserContextProvider>
       <AnalyticsContextProvider>
         <EventContextProvider>
