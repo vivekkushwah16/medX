@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import usePWA from 'react-pwa-install-prompt'
 import PWAInstallerPrompt from 'react-pwa-installer-prompt';
 import { INSTALL_PWA_ANALYTICS_EVENT } from '../../AppConstants/AnalyticsEventName';
@@ -30,10 +30,25 @@ export default function PWApromptWithButton() {
 }
 
 export const PWAInstaller = () => {
-    const [show, toggleShow] = useState(true)
+    const [show, toggleShow] = useState(false)
     const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext);
 
-    // console.log(PWAStyle.pwaContainer)
+    useEffect(() => {
+
+        let isShow = sessionStorage.getItem("show_pwa")
+        if (!isShow){
+            toggleShow(true)
+        }
+        return () => {
+            // cleanup
+        }
+    }, [])
+
+    const handleCancleBtn = () =>{
+        sessionStorage.setItem("show_pwa", false)
+        toggleShow(false)
+    }
+
     return (
         <>
             {
@@ -43,10 +58,10 @@ export const PWAInstaller = () => {
                         <div className={PWAStyle.pwaContainer}>
                             <div className={PWAStyle.pwaModal}>
                                 <div className={PWAStyle.titleContainer}>
-                                Download the app to quickly access<br/>videos and play them offline
+                                Add a shortcut to your home screen<br/>for quick access to latest content.
                                 </div>
                                 <div className={PWAStyle.btnContainer}>
-                                    <button onClick={() => toggleShow(false)} className={PWAStyle.cancelBtn}>
+                                    <button onClick={handleCancleBtn} className={PWAStyle.cancelBtn}>
                                         Not now
                                     </button>
 
@@ -60,7 +75,7 @@ export const PWAInstaller = () => {
                                             true
                                         );
                                     }} className={PWAStyle.installBtn}>
-                                        Install
+                                        Add Shortcut
                                     </button>
                                 </div>
                             </div>

@@ -25,10 +25,11 @@
 
 .titleContainer {
   width: 100%;
+  text-align: center;
 }
 
 .btnContainer {
-  width: 80%;
+  width: 90%;
   text-align: center;
   margin-top: 1rem;
   display: flex;
@@ -50,4 +51,10 @@
 
 .installBtn {
   background: linear-gradient(180deg, #30c1ff, #1597cf);
+}
+
+@media screen and (max-width: 800px) {
+  .btnContainer {
+    width: 100%;
+  }
 }

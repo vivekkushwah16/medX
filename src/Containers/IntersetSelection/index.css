@@ -67,7 +67,11 @@
 .topicsBox .container {
     padding-bottom: 8rem;
 }
-
+.strt-btn-fixed{
+    position: fixed;
+    bottom: 2%;
+    right: 2%;
+}
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 
 @media only screen and (max-width: 1199px) {}
@@ -87,6 +91,12 @@
     .topicsBox__list>li {
         text-align: center;
         width: 50%;
+    }
+    .strt-btn-fixed{
+        position: fixed;
+        bottom: 2%;
+        right: 50%;
+        transform: translateX(50%);
     }
 }
 

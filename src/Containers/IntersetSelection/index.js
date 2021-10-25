@@ -147,7 +147,7 @@ class IntersetSelection extends Component {
                             <h1 className="topicsBox__title">Choose your  <br />Topics of Interest</h1>
                             {
                                 Object.keys(values).map(categories => (
-                                    <>
+                                    <div key={categories}>
                                         <h3 className="topicsBox__title_categories">{categories}</h3>
                                         <ul className="topicsBox__list mg-b30 mg-sm-b30">
                                             {
@@ -167,10 +167,10 @@ class IntersetSelection extends Component {
                                                 ))
                                             }
                                         </ul>
-                                    </>
+                                    </div>
                                 ))
                             }
-                            <div className="pd-l15 pd-r15 text-sm-center">
+                            <div className="pd-l15 pd-r15 text-sm-center strt-btn-fixed">
                                 <button
                                     onClick={this.handleSubmit}
                                     className="btn btn-primary"
