@@ -57,6 +57,7 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 import DoctorFormModal from "../../Components/DoctorFormModal/DoctorFormModal";
 import { redirectClinet, removeURLQuery, updateURLQuery } from "../../utils/HandleUrlParam";
 import { customScrollToId } from "../../utils";
+import NewsBanner from "../../Components/NewsBanner/NewsBanner";
 
 const TAG_URL_PARAM_NAME = "selectedTag"
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
@@ -1119,6 +1120,7 @@ class Home extends Component {
                     rowData={row}
                   />
                 ))}
+                <NewsBanner/>
 
                 {preDefinedRows.map((row) => (
                   <VideoRow

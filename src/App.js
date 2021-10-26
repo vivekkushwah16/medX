@@ -11,6 +11,7 @@ import {
   RootRoute,
   EVENT_ROUTE,
   INTEREST_ROUTE,
+  NEWS_ROUTE,
   SEARCH_ROUTE,
 } from "./AppConstants/Routes";
 
@@ -45,7 +46,7 @@ import { MediaModalType } from "./AppConstants/ModalType";
 import PWApromptWithButton, {
   PWAInstaller,
 } from "./Components/pwaPrompt/PWAprompt";
-
+import News from "./Containers/News/News";
 
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
@@ -183,8 +184,6 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    
-
     // downloadData()
     // EventManager.addEngagement('ipaedia21', MediaModalType.Iframe, 'Survey', 'We need your valuable feedback.', '/fd2/index.html', 'https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FForacort%20Synchrobreathe%20-%20Infoguide.jpg?alt=media&token=9195d987-7708-4039-ab78-70613fce7b6a').then(res => {
     //   console.log('xxxxxxxxxxxxxxxxx')
@@ -242,7 +241,6 @@ export default function App() {
   return (
     <>
       <MediaModalLazy />
-
       {/* <PWApromptWithButton /> */}
       <Router>
         {initalCheck && (
@@ -287,6 +285,11 @@ export default function App() {
               path={"/upload-kmp23"}
             >
               <UploadLazy />
+            </ProtectedRoute>
+
+            {/* NEWS Route */}
+            <ProtectedRoute redirectTo={LOGIN_ROUTE} path={NEWS_ROUTE}>
+              <News />
             </ProtectedRoute>
 
             <EventRoute
