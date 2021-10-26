@@ -10,7 +10,10 @@
   z-index: 999;
   background: #00000066;
 }
-
+.animation {
+  animation: showPWA 0.3s;
+  animation-delay: 5s;
+}
 .pwaModal {
   padding: 1.5rem;
   background: #fff;
@@ -48,7 +51,14 @@
 .cancelBtn {
   background: linear-gradient(180deg, #d4d5d5, #909496);
 }
-
+@keyframes showPWA {
+  0% {
+    display: none;
+  }
+  100% {
+    display: flex;
+  }
+}
 .installBtn {
   background: linear-gradient(180deg, #30c1ff, #1597cf);
 }

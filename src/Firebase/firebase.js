@@ -30,22 +30,21 @@ export const database = firebase.database();
 export const analytics = firebase.analytics();
 export const auth = firebase.auth();
 // export const firebaseMessaging = firebase.messaging()
-export const messaging = firebase.messaging.isSupported() ? firebase.messaging() : null
-
+export const messaging = firebase.messaging.isSupported()
+  ? firebase.messaging()
+  : null;
 
 export const cloudFunction = firebase.app().functions("asia-south1");
 // cloudFunction.useEmulator("localhost", 5001)
 
 window.testCloud = (name, obj) => {
-  const verifyCLoudFunctionRef = cloudFunction.httpsCallable(
-    name
-  );
+  const verifyCLoudFunctionRef = cloudFunction.httpsCallable(name);
   verifyCLoudFunctionRef(JSON.stringify(obj))
     .then((res) => {
-      console.log(res)
+      console.log(res);
     })
-    .catch(err => console.log(err))
-}
+    .catch((err) => console.log(err));
+};
 // export const cloudFunctionUS = firebase.functions()
 
 // export const cloudFunction = firebase.functions().useEmulator("localhost", 4000);
@@ -79,7 +78,6 @@ export const getUserProfile = (uid) => {
 export const askForPermissionToReceiveNotifications = async (user) => {
   try {
     if (messaging) {
-
       // const firebaseMessaging = firebase.messaging();
       await messaging.requestPermission();
       const token = await messaging.getToken({
@@ -92,11 +90,13 @@ export const askForPermissionToReceiveNotifications = async (user) => {
       //     token: firebase.firestore.FieldValue.arrayUnion(token)
       // })
       if (token) {
+        // await getUserProfile(user.uid).then((res) => {
+        // console.log("userData", res);
+
         let userData = {
           uid: user.uid,
           token: token,
         };
-
         const cloudRef = cloudFunction.httpsCallable(USER_TOKEN_UPDATE);
         cloudRef(JSON.stringify(userData))
           .then((res) => {
@@ -105,6 +105,7 @@ export const askForPermissionToReceiveNotifications = async (user) => {
           .catch((error) => {
             console.log(error);
           });
+        // });
       }
 
       // firebaseMessaging.onMessage((payload) => {
@@ -113,7 +114,6 @@ export const askForPermissionToReceiveNotifications = async (user) => {
       // console.log(firebaseMessaging);
       console.log("Your token is:", token);
       return token;
-
     } else {
       return null;
     }
@@ -125,13 +125,13 @@ export const askForPermissionToReceiveNotifications = async (user) => {
 export const onMessageListener = (callback) => {
   if (messaging) {
     messaging.onMessage((payload) => {
-      console.log("payload", payload)
+      console.log("payload", payload);
       if (callback) {
-        callback(payload)
+        callback(payload);
       }
     });
   }
-}
+};
 
 export const sendNotificationToTopic = (data) => {
   const cloudRef = cloudFunction.httpsCallable("sendNotificationToTopic");
@@ -144,7 +144,6 @@ export const sendNotificationToTopic = (data) => {
     });
 };
 
-
 export const subscribeAllTokens = (data) => {
   const cloudRef = cloudFunction.httpsCallable("subscribeAllTokens");
   cloudRef(JSON.stringify(data))
@@ -155,7 +154,6 @@ export const subscribeAllTokens = (data) => {
       console.log(error);
     });
 };
-
 
 export const sendEventBasedNotification = (data) => {
   const cloudRef = cloudFunction.httpsCallable("sendEventBasedNotification");
@@ -209,7 +207,7 @@ export const copyFromRealtoFirestore = () => {
           }
         }
       },
-      (err) => { }
+      (err) => {}
     );
   } catch (error) {
     console.log(error);
