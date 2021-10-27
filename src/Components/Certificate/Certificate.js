@@ -51,8 +51,9 @@ export default function Certificate(props) {
         width="100%"
         height="auto"
         className="certificate"
+        alt=""
       />
-      <span class="your_name" id="your_name">
+      <span className="your_name" id="your_name">
         {user.displayName}
       </span>
       <ButtonWithLoader
