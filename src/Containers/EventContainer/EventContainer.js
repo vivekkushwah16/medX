@@ -502,6 +502,7 @@ export default function EventContainer(props) {
                               addClickAnalytics: () => {
                                 addClickAnalytics(DOWNLOAD_CERTIFICATE);
                               },
+                              event: props.id,
                             },
                           });
                           addClickAnalytics(CERTIFICATE_CLICK);
