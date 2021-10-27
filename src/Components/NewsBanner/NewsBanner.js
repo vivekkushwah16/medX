@@ -1,9 +1,12 @@
 import style from "./NewsBanner.module.css";
+import { useHistory } from "react-router";
+
 const newsLogo = "./assets/images/newsLogo.png";
 
 const NewsBanner = () => {
+  let history = useHistory();
   const handleExploreBtn = () => {
-    console.log("explore clicked");
+    history.push("/news");
   };
 
   return (

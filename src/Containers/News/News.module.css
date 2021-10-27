@@ -4,7 +4,7 @@
   color: #fff;
   display: flex;
   justify-content: center;
-  padding-top: 3rem;
+  padding: 7rem 1rem 2rem 1rem;
 }
 .news__container > .news__innerContainer {
   max-width: 700px;
@@ -18,7 +18,7 @@
   padding-left: 0.4rem;
 }
 #stories__dropdown {
-  max-width: 150px;
+  /* max-width: 150px; */
   display: inline;
   background: none;
   border: none;
@@ -26,4 +26,17 @@
   font-size: 1.5rem;
   padding: 0;
   cursor: pointer;
+}
+@media only screen and (max-width: 991px) {
+  .news__innerContainer > h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .news__innerContainer > h2 {
+    font-size: 1.2rem;
+  }
+  #stories__dropdown {
+    display: block;
+    font-size: 1.2rem;
+  }
 }

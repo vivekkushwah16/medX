@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NewsCard from "../../Components/NewsCard/NewsCard";
+import NewsHeader from "../../Components/NewsHeader/NewsHeader";
 import styles from "./News.module.css";
 
 const dropDownIcon = () => {
@@ -30,6 +31,17 @@ const newsData = [
   },
   {
     id: "2",
+    enable: true,
+    title: "Lorem ipsum dolor sit amet, consect etur adipiscing elit.",
+    thumbnail: "./assets/images/doctors.jpg",
+    date: "7th Jan, 2020",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque est maecenas id arcu. Placerat in faucibus amet massa consectetur vitae.Diam ipsum.",
+    source: "From Crux News",
+    newsLink: "https://www.google.com",
+  },
+  {
+    id: "3",
     enable: true,
     title: "Lorem ipsum dolor sit amet, consect etur adipiscing elit.",
     thumbnail: "./assets/images/doctors.jpg",
@@ -113,38 +125,51 @@ const SPECIALITY = [
 const News = () => {
   const [speciality, setSpeciality] = useState(null);
 
-//   console.log("object", speciality);
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
+  //   console.log("object", speciality);
 
   return (
-    <div className={styles["news__container"]}>
-      <div className={styles["news__innerContainer"]}>
-        <h1>
-          Welcome
-          <span className={styles["news__person__name"]}>Dr Pranab Baral</span>
-        </h1>
-        <h2>
-          Here are the top stories for you on
-          {/* Respiratory Medicine <span>{dropDownIcon()}</span> */}
-          <select
-            className="form-control"
-            name="speciality"
-            id={styles["stories__dropdown"]}
-            value={speciality}
-            onChange={(e) => setSpeciality(e.target.value)}
-          >
-            <option>Speciality</option>
-            {SPECIALITY.map((sp) => (
-              <option key={sp} value={sp}>
-                {sp}
-              </option>
-            ))}
-          </select>
-        </h2>
-        {newsData.map(
-          (news) => news.enable && <NewsCard key={news.id} data={news} />
-        )}
+    <>
+      <NewsHeader />
+      <div className={styles["news__container"]}>
+        <div className={styles["news__innerContainer"]}>
+          <h1>
+            Welcome
+            <span className={styles["news__person__name"]}>
+              Dr Pranab Baral
+            </span>
+          </h1>
+          <h2>
+            Here are the top stories for you on
+            {/* Respiratory Medicine <span>{dropDownIcon()}</span> */}
+            {console.log("object", speciality)}
+            <select
+              className="form-control"
+              name="speciality"
+              id={styles["stories__dropdown"]}
+              style={{
+                maxWidth: speciality ? `${speciality.length * 20}px` : "150px",
+              }}
+              value={speciality}
+              onChange={(e) => setSpeciality(e.target.value)}
+            >
+              <option>Speciality</option>
+              {SPECIALITY.map((sp) => (
+                <option key={sp} value={sp}>
+                  {sp}
+                </option>
+              ))}
+            </select>
+          </h2>
+          {newsData.map(
+            (news) => news.enable && <NewsCard key={news.id} data={news} />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

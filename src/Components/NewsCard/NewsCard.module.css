@@ -60,6 +60,7 @@
   font-weight: 700;
   grid-area: 4 / 2 / 5 / 3;
   justify-self: flex-end;
+  align-self: center;
 }
 
 .upperContainer > .title {
@@ -76,3 +77,19 @@
   height: 100%;
   width: 100%;
 }
+@media only screen and (max-width: 991px) and (orientation: portrait) {
+  .newsCard__container {
+    padding: 0;
+    background: none;
+    min-height: 260px;
+    border-radius: 0;
+    padding-top: 1.2rem;
+    border-top: 0.659868px solid #474747;
+  }
+}
+@media only screen and (max-width: 700px) and (orientation: landscape) {
+  .newsCard__container {
+    min-height: 260px;
+  }
+}
+

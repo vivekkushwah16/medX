@@ -22,8 +22,9 @@ const shareIcon = () => {
 
 const NewsCard = ({ data }) => {
   const [share, setshare] = useState(false);
+
   const handleReadMoreBtn = (link) => {
-    window.location.href = link;
+    window.open(link, "_blank");
   };
 
   const handleShareBtn = () => {

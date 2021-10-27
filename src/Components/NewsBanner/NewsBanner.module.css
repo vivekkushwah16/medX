@@ -32,7 +32,7 @@
 }
 .newsBanner__desc > .sub__title {
   font-weight: normal;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 .newsBanner__btn {
   grid-area: 1 / 3 / 2 / 4;
@@ -60,5 +60,17 @@
   .newsBanner__container {
     transform: scale(1);
     width: unset;
+  }
+}
+@media only screen and (max-width: 600px) and (orientation: portrait) {
+  .newsBanner__container {
+    font-size: 0.6rem;
+  }
+  .newsBanner__desc > h2 {
+    font-weight: 900;
+  }
+  .btn {
+    padding: 1rem !important;
+    min-width: 4rem;
   }
 }
