@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import NewsCard from "../../Components/NewsCard/NewsCard";
 import NewsHeader from "../../Components/NewsHeader/NewsHeader";
+import { UserContext } from "../../Context/Auth/UserContextProvider";
+import { firestore } from "../../Firebase/firebase";
 import { NewsManager } from "../../Managers/NewsManager";
 import styles from "./News.module.css";
 
@@ -40,79 +42,81 @@ import styles from "./News.module.css";
 //   },
 // ];
 
-const SPECIALITY = [
-  "CARDIOLOGIST",
-  "CLINICAL CARDIOLOGIST",
-  "ECHO CARDIOLOGIST",
-  "PEAD CARDIOLOGIST",
-  "PRACTICING CARDIOLOGIST",
-  "INTERVENTIONAL CARDIOLOGIST",
-  "MBBS CARDIOLOGIST D CARD",
-  "MBBS DIABETOLOGIST D DIAB",
-  "CTV SURGEON",
-  "CVTS",
-  "ELECTROPHYSIOLOGIST",
-  "CHEST PHYSICIAN",
-  "PULMONOLOGIST",
-  "DIABETOLOGIST",
-  "PRACTICING DIABETOLOGIST",
-  "ENDOCRINOLOGIST",
-  "GASTRO SURGEON",
-  "GASTROENTEROLOGIST",
-  "DENTIST",
-  "DERMATOLOGIST",
-  "COSMETIC DERMATOLOGIST",
-  "COSMETIC SURGEON",
-  "PAEDIATRIC DERMATOLOGIST",
-  "PLASTIC SURGEON",
-  "HAIR TRANSPLANT SURGEON",
-  "TRICHOLOGIST",
-  "OPHTHALMOLOGIST",
-  "OPTH CATARACT",
-  "OPTHAL CORNEA",
-  "OPTHAL GLAUCOMA",
-  "OPTHAL PHACO",
-  "OPTHAL RETINA",
-  "OPTOMETRIST",
-  "ORTHOPEDICIAN",
-  "ORTHO SURGEON",
-  "GYNAECOLOGIST",
-  "HAEMATOLOGIST",
-  "IVF",
-  "EMBRYOLOGIST",
-  "NEUROSURGEON",
-  "NEUROLOGIST",
-  "PAED NEUROLOGIST",
-  "PSYCHIATRIST",
-  "ID SPECIALIST",
-  "INTENSIVE CARE",
-  "PRACTICING ICU CCU",
-  "PAEDIATRICIAN",
-  "NEONATOLOGIST",
-  "ONCOLOGIST",
-  "RADIATION ONCOLOGIST",
-  "RHEUMATOLOGIST",
-  "NEPHROLOGIST",
-  "SURGEON",
-  "PAEDIATRIC SURGEON",
-  "ENT SURGEON",
-  "URO ONCOLOGIST",
-  "UROLOGIST",
-  "VASCULAR SURGEON",
-  "MICROBIOLOGIST",
-  "GENERAL PHYSICIAN",
-  "CONSULTANT PHYSICIAN",
-  "GP NON MBBS",
-  "ANAESTHETIST",
-  "NON MBBS",
-  "PURCHASE PHARMACY",
-  "OTHERS",
-];
+// const SPECIALITY = [
+//   "CARDIOLOGIST",
+//   "CLINICAL CARDIOLOGIST",
+//   "ECHO CARDIOLOGIST",
+//   "PEAD CARDIOLOGIST",
+//   "PRACTICING CARDIOLOGIST",
+//   "INTERVENTIONAL CARDIOLOGIST",
+//   "MBBS CARDIOLOGIST D CARD",
+//   "MBBS DIABETOLOGIST D DIAB",
+//   "CTV SURGEON",
+//   "CVTS",
+//   "ELECTROPHYSIOLOGIST",
+//   "CHEST PHYSICIAN",
+//   "PULMONOLOGIST",
+//   "DIABETOLOGIST",
+//   "PRACTICING DIABETOLOGIST",
+//   "ENDOCRINOLOGIST",
+//   "GASTRO SURGEON",
+//   "GASTROENTEROLOGIST",
+//   "DENTIST",
+//   "DERMATOLOGIST",
+//   "COSMETIC DERMATOLOGIST",
+//   "COSMETIC SURGEON",
+//   "PAEDIATRIC DERMATOLOGIST",
+//   "PLASTIC SURGEON",
+//   "HAIR TRANSPLANT SURGEON",
+//   "TRICHOLOGIST",
+//   "OPHTHALMOLOGIST",
+//   "OPTH CATARACT",
+//   "OPTHAL CORNEA",
+//   "OPTHAL GLAUCOMA",
+//   "OPTHAL PHACO",
+//   "OPTHAL RETINA",
+//   "OPTOMETRIST",
+//   "ORTHOPEDICIAN",
+//   "ORTHO SURGEON",
+//   "GYNAECOLOGIST",
+//   "HAEMATOLOGIST",
+//   "IVF",
+//   "EMBRYOLOGIST",
+//   "NEUROSURGEON",
+//   "NEUROLOGIST",
+//   "PAED NEUROLOGIST",
+//   "PSYCHIATRIST",
+//   "ID SPECIALIST",
+//   "INTENSIVE CARE",
+//   "PRACTICING ICU CCU",
+//   "PAEDIATRICIAN",
+//   "NEONATOLOGIST",
+//   "ONCOLOGIST",
+//   "RADIATION ONCOLOGIST",
+//   "RHEUMATOLOGIST",
+//   "NEPHROLOGIST",
+//   "SURGEON",
+//   "PAEDIATRIC SURGEON",
+//   "ENT SURGEON",
+//   "URO ONCOLOGIST",
+//   "UROLOGIST",
+//   "VASCULAR SURGEON",
+//   "MICROBIOLOGIST",
+//   "GENERAL PHYSICIAN",
+//   "CONSULTANT PHYSICIAN",
+//   "GP NON MBBS",
+//   "ANAESTHETIST",
+//   "NON MBBS",
+//   "PURCHASE PHARMACY",
+//   "OTHERS",
+// ];
 
 const News = () => {
   const [speciality, setSpeciality] = useState(null);
+  const { user } = useContext(UserContext);
   const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [allSpeciality, setAllSpeicality] = useState([]);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -120,10 +124,14 @@ const News = () => {
       speciality: speciality,
     };
     getNews(data);
+  }, [speciality]);
+
+  useEffect(() => {
+    getSpeciality();
   }, []);
 
   const getNews = async (data) => {
-    NewsManager.getNews(data.speciality ? data.speciality.toLowerCase() : "")
+    NewsManager.getNews(data.speciality ? data.speciality : "")
       .then((res) => {
         setNewsData(res);
         setLoading(false);
@@ -133,7 +141,15 @@ const News = () => {
       });
   };
 
-  //   console.log("object", speciality);
+  const getSpeciality = () => {
+    NewsManager.getSpeciality()
+      .then((res) => {
+        setAllSpeicality(res);
+      })
+      .catch((err) => {
+        setAllSpeicality([]);
+      });
+  };
 
   return (
     <>
@@ -143,7 +159,7 @@ const News = () => {
           <h1>
             Welcome
             <span className={styles["news__person__name"]}>
-              Dr Pranab Baral
+              {user.displayName}
             </span>
           </h1>
           <h2>
@@ -159,18 +175,22 @@ const News = () => {
               onChange={(e) => setSpeciality(e.target.value)}
             >
               <option>Speciality</option>
-              {SPECIALITY.map((sp) => (
+              {allSpeciality.map((sp) => (
                 <option key={sp} value={sp}>
                   {sp}
                 </option>
               ))}
             </select>
           </h2>
-          {!loading &&
-            newsData.map(
-              (news) => news.enable && <NewsCard key={news.id} data={news} />
-            )}
-          {loading && (
+          {!loading ? (
+            newsData.length > 0 ? (
+              newsData.map(
+                (news) => news.enable && <NewsCard key={news.id} data={news} />
+              )
+            ) : (
+              <div>No News</div>
+            )
+          ) : (
             <div className="loaderContainer">
               <div className="lds-dual-ring"></div>
             </div>
