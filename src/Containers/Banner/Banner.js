@@ -22,8 +22,15 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import { firestore } from "../../Firebase/firebase";
 import { BACKSTAGE_COLLECTION } from "../../AppConstants/CollectionConstants";
-import { bronchtalkindia_autoLogIn, bronchtalkindia_autoRegistration, customScrollToId } from "../../utils";
-import { UserBronchTalkMetaDataContext, UserContext } from "../../Context/Auth/UserContextProvider";
+import {
+  bronchtalkindia_autoLogIn,
+  bronchtalkindia_autoRegistration,
+  customScrollToId,
+} from "../../utils";
+import {
+  UserBronchTalkMetaDataContext,
+  UserContext,
+} from "../../Context/Auth/UserContextProvider";
 import { redirectClinet } from "../../utils/HandleUrlParam";
 let scroll = Scroll.animateScroll;
 function SampleNextArrow(props) {
@@ -31,7 +38,6 @@ function SampleNextArrow(props) {
   return (
     <button className="slider-btn slider-btn-next" onClick={onClick}>
       <i className="icon-angle-right"></i>
-
     </button>
   );
 }
@@ -53,12 +59,10 @@ const BannerType = {
   platformPromo: "platformPromo",
   Custom1: "Custom1",
   Custom2: "Custom2",
-  Custom3: "Custom3"
+  Custom3: "Custom3",
 };
 
-const PriorityBannerData = [
-
-]
+const PriorityBannerData = [];
 
 const BannerData = [
   // {
@@ -109,13 +113,33 @@ const BannerData = [
   // },
 
   {
+    type: BannerType.LiveEvent,
+    mainTitle: `In Conversation with Experts on “Rare, but not so uncommon ILDs”`,
+    subTitle: ``,
+    eventId: "cme271021",
+    eventName: "cme271021",
+    needCountDown: false,
+    mainImageUrl: "/assets/images/cipla27thOct.jpg",
+    style: {
+      bannerLeftStyle: {},
+      bannerRightStyle: {
+        position: "realtive",
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+      },
+      bannerImageStyle: {},
+    },
+  },
+
+
+  {
     type: BannerType.platformPromo,
     platformId: "BronchTalk",
     mainTitle:
       "An exclusive community of doctors analysing and studying Bronchiectasis",
     subTitle: `By the experts, for the experts`,
-    mainImageUrl:
-      "/assets/images/bronchlogo.png",
+    mainImageUrl: "/assets/images/bronchlogo.png",
     style: {
       bannerLeftStyle: {},
       bannerRightStyle: {
@@ -125,8 +149,8 @@ const BannerData = [
         alignItems: "center",
       },
       bannerImageStyle: {
-        maxWidth: '20rem',
-      }
+        maxWidth: "20rem",
+      },
     },
   },
   {
@@ -174,9 +198,11 @@ function Banner() {
   const [banners, setBanners] = useState(BannerData);
   let history = useHistory();
   const { showMediaModal } = useContext(MediaModalContext);
-  const userBronchTalkMetaDataContext = useContext(UserBronchTalkMetaDataContext)
-  const userContext = useContext(UserContext)
-  const [showloader, setShowLoader] = useState(false)
+  const userBronchTalkMetaDataContext = useContext(
+    UserBronchTalkMetaDataContext
+  );
+  const userContext = useContext(UserContext);
+  const [showloader, setShowLoader] = useState(false);
   let location = useLocation();
 
   const goToRoute = async (id) => {
@@ -187,11 +213,10 @@ function Banner() {
     // setTimeout(()=>{
     if (isIOS) {
       // history.push(`/home#${id}`)
-      customScrollToId(id)
+      customScrollToId(id);
     } else {
-      window.scroll(0, (thing.scrollHeight - 200));
+      window.scroll(0, thing.scrollHeight - 200);
     }
-
 
     // },1)
     // let a =Scroll.Link;
@@ -258,11 +283,13 @@ function Banner() {
     switch (id) {
       case "BronchTalk": {
         const registerBT = () => {
-          let userInfo = userContext.userInfo
-          let fullname = `${userInfo.firstName} ${userInfo.lastName ? userInfo.lastName : ''}`
-          let mobile = userInfo.phoneNumber
-          if (mobile.includes('+91')) {
-            mobile = mobile.substr(3, mobile.length - 1)
+          let userInfo = userContext.userInfo;
+          let fullname = `${userInfo.firstName} ${
+            userInfo.lastName ? userInfo.lastName : ""
+          }`;
+          let mobile = userInfo.phoneNumber;
+          if (mobile.includes("+91")) {
+            mobile = mobile.substr(3, mobile.length - 1);
           }
           let apiInput = {
             fullname,
@@ -270,28 +297,28 @@ function Banner() {
             mobile,
             state: userInfo.state,
             city: userInfo.city,
-            specialty: userInfo.speciality
-          }
-          console.log(apiInput)
-          console.log("register")
-          bronchtalkindia_autoRegistration(apiInput)
-        }
+            specialty: userInfo.speciality,
+          };
+          console.log(apiInput);
+          console.log("register");
+          bronchtalkindia_autoRegistration(apiInput);
+        };
 
         if (userBronchTalkMetaDataContext) {
           if (userBronchTalkMetaDataContext.password) {
             bronchtalkindia_autoLogIn({
               email: userBronchTalkMetaDataContext.email,
-              pass: userBronchTalkMetaDataContext.password
-            })
+              pass: userBronchTalkMetaDataContext.password,
+            });
           } else {
-            registerBT()
+            registerBT();
           }
         } else {
-          registerBT()
+          registerBT();
         }
       }
     }
-  }
+  };
 
   return (
     <div
@@ -310,10 +337,7 @@ function Banner() {
               />
             )}
             {item.type === BannerType.platformPromo && (
-              <LiveEventBanner2
-                data={item}
-                enterEvent={handlePlatformPromo}
-              />
+              <LiveEventBanner2 data={item} enterEvent={handlePlatformPromo} />
             )}
             {item.type === BannerType.ImageSingleButton && (
               <ImageSingleButtonBanner
