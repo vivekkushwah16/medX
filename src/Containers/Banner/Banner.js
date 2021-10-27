@@ -111,7 +111,26 @@ const BannerData = [
   //     }
   //   },
   // },
-
+  
+  {
+    type: BannerType.LiveEvent,
+    mainTitle: `Bilastine in Allergic Rhinitis: Current Concepts and Future Perspectives`,
+    subTitle: ``,
+    eventId: "cme291021",
+    eventName: "cme291021",
+    needCountDown: false,
+    mainImageUrl: "/assets/images/cipla27thOct2.png",
+    style: {
+      bannerLeftStyle: {},
+      bannerRightStyle: {
+        position: "realtive",
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+      },
+      bannerImageStyle: {},
+    },
+  },
   {
     type: BannerType.LiveEvent,
     mainTitle: `In Conversation with Experts on “Rare, but not so uncommon ILDs”`,
