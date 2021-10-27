@@ -237,7 +237,7 @@ const News = () => {
                 (news) => news.enable && <NewsCard key={news.id} data={news} />
               )
             ) : (
-              <div>No News</div>
+              <div className={styles.no_news}>No News</div>
             )
           ) : (
             <div className="loaderContainer">
