@@ -4,6 +4,7 @@ import {
 } from "../AppConstants/CollectionConstants";
 import { firestore } from "../Firebase/firebase";
 
+const NEWS_LIMIT = 10;
 export const NewsManager = {
   getNews: (speciality) => {
     return new Promise(async (res, rej) => {
@@ -13,20 +14,61 @@ export const NewsManager = {
           ref = firestore
             .collection(NEWS_COLLECTION)
             .where("speciality", "==", speciality)
-            .limit(10);
+            .orderBy("timestamp", "desc")
+            .limit(NEWS_LIMIT);
         } else {
-          ref = firestore.collection(NEWS_COLLECTION).limit(10);
+          ref = firestore
+            .collection(NEWS_COLLECTION)
+            .orderBy("timestamp", "desc")
+            .limit(NEWS_LIMIT);
         }
         const query = await ref.get();
         if (query.empty) {
-          res([]);
+          res({ data: [], lastVisible: "" });
         }
+        const lastVisible = query && query.docs[query.docs.length - 1];
+
         let _data = query.docs.map((doc) => {
           let data = doc.data();
           data.id = doc.id;
           return data;
         });
-        res(_data);
+        res({ data: _data, lastVisible: lastVisible });
+      } catch (error) {
+        console.log(error);
+        rej(error);
+      }
+    });
+  },
+  getMoreNews: (speciality, lastNews) => {
+    return new Promise(async (res, rej) => {
+      try {
+        let ref = "";
+        if (speciality) {
+          ref = firestore
+            .collection(NEWS_COLLECTION)
+            .where("speciality", "==", speciality)
+            .orderBy("timestamp", "desc")
+            .startAfter(lastNews)
+            .limit(NEWS_LIMIT);
+        } else {
+          ref = firestore
+            .collection(NEWS_COLLECTION)
+            .orderBy("timestamp", "desc")
+            .limit(NEWS_LIMIT);
+        }
+        const query = await ref.get();
+        if (query.empty) {
+          res({ data: [], lastVisible: "" });
+        }
+        const lastVisible = query && query.docs[query.docs.length - 1];
+
+        let _data = query.docs.map((doc) => {
+          let data = doc.data();
+          data.id = doc.id;
+          return data;
+        });
+        res({ data: _data, lastVisible: lastVisible });
       } catch (error) {
         console.log(error);
         rej(error);

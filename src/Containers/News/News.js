@@ -115,11 +115,12 @@ const News = () => {
   const [speciality, setSpeciality] = useState(null);
   const { user } = useContext(UserContext);
   const [newsData, setNewsData] = useState([]);
+  const [lastNews, setLastNews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [allSpeciality, setAllSpeicality] = useState([]);
 
   useEffect(() => {
-    window.scroll(0, 0);
+    // window.scroll(0, 0);
     let data = {
       speciality: speciality,
     };
@@ -128,12 +129,17 @@ const News = () => {
 
   useEffect(() => {
     getSpeciality();
+    document.addEventListener("scroll", trackScrolling);
+    return () => {
+      document.removeEventListener("scroll", trackScrolling);
+    };
   }, []);
 
   const getNews = async (data) => {
     NewsManager.getNews(data.speciality ? data.speciality : "")
       .then((res) => {
-        setNewsData(res);
+        setNewsData(res.data);
+        setLastNews(res.lastVisible);
         setLoading(false);
       })
       .catch((err) => {
@@ -151,11 +157,50 @@ const News = () => {
       });
   };
 
+  const fetchMoreNews = () => {
+    // setLoading(true);
+    NewsManager.getMoreNews(speciality ? speciality : "", lastNews)
+      .then((res) => {
+        const newNewsData = [...newsData];
+        for (let i = 0; i < res.data.length; i++) {
+          if (newNewsData.indexOf(res.data[i].id) === -1) {
+            newNewsData.push(res.data[i]);
+          }
+        }
+
+        setNewsData(newNewsData);
+        setLastNews(res.lastVisible);
+        // window.scrollIntoView()
+        // setLoading(false);
+        document.addEventListener("scroll", trackScrolling);
+        window.scrollIntoView();
+      })
+      .catch((err) => {
+        // setLoading(false);
+      });
+  };
+
+  const isBottom = (el) => {
+    return el.getBoundingClientRect().bottom <= window.innerHeight;
+  };
+
+  const trackScrolling = () => {
+    const wrappedElement = document.getElementById("main_inner_news_container");
+    if (isBottom(wrappedElement)) {
+      console.log("header bottom reached");
+      fetchMoreNews();
+      document.removeEventListener("scroll", trackScrolling);
+    }
+  };
+
   return (
     <>
       <NewsHeader />
       <div className={styles["news__container"]}>
-        <div className={styles["news__innerContainer"]}>
+        <div
+          className={styles["news__innerContainer"]}
+          id="main_inner_news_container"
+        >
           <h1>
             Welcome
             <span className={styles["news__person__name"]}>
@@ -172,7 +217,11 @@ const News = () => {
                 maxWidth: speciality ? `${speciality.length * 20}px` : "150px",
               }}
               value={speciality}
-              onChange={(e) => setSpeciality(e.target.value)}
+              onChange={(e) =>
+                e.target.value === "Speciality"
+                  ? setSpeciality("")
+                  : setSpeciality(e.target.value)
+              }
             >
               <option>Speciality</option>
               {allSpeciality.map((sp) => (
@@ -183,7 +232,7 @@ const News = () => {
             </select>
           </h2>
           {!loading ? (
-            newsData.length > 0 ? (
+            newsData && newsData.length > 0 ? (
               newsData.map(
                 (news) => news.enable && <NewsCard key={news.id} data={news} />
               )
