@@ -133,7 +133,7 @@ export default function ShareVideoLink(props) {
             <label className="form-label">Link</label>
             <div className="form-group__has-icon">
               <i className="icon-link" onClick={() => copyCodeToClipboard()}>
-                <span class="link-tooltip">Click here to copy.</span>
+                <span className="link-tooltip">Click here to copy.</span>
               </i>
 
               <input
