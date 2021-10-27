@@ -14,23 +14,32 @@ export default function Certificate(props) {
   const downloadCert = async () => {
     if (certificatBody.current) {
       // console.log(certificatDownloadBtn.current)
-      if (certificatDownloadBtn.current) {
-        certificatDownloadBtn.current.style.display = 'none'
+      let cerImg = new Image()
+      cerImg.onloadstart = () => {
+        // console.log("loadeed start")
       }
-      const canvas = await html2canvas(certificatBody.current, {
-        allowTaint: true,
-        useCORS: true,
-      });
-      // document.body.appendChild(canvas);
-      canvasToImage(canvas, {
-        name: "certificate",
-        type: "jpg",
-        quality: 0.7,
-      });
-      addClickAnalytics();
-      if (certificatDownloadBtn.current) {
-        certificatDownloadBtn.current.style.display = ''
+      cerImg.onload = async () => {
+        // console.log("loadeed")
+        if (certificatDownloadBtn.current) {
+          certificatDownloadBtn.current.style.display = 'none'
+        }
+        const canvas = await html2canvas(certificatBody.current, {
+          allowTaint: true,
+          useCORS: true,
+        });
+        // document.body.appendChild(canvas);
+        canvasToImage(canvas, {
+          name: "certificate",
+          type: "jpg",
+          quality: 0.7,
+        });
+        addClickAnalytics();
+        if (certificatDownloadBtn.current) {
+          certificatDownloadBtn.current.style.display = ''
+        }
       }
+      cerImg.src = `https://storage.googleapis.com/cipla-impact.appspot.com/${event}/certificate.jpg`
+      // console.log(cerImg)
     }
   };
 
