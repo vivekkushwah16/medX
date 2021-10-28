@@ -4,7 +4,65 @@ import {
 } from "../AppConstants/AnalyticsEventName";
 
 const dbName = "notifications";
-const version = 2;
+const version = 3;
+
+const getIndexDB = () => {
+  return window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+}
+
+const createStores = (event) => {
+  let db = event.target.result;
+  var oldVersion = event.oldVersion;
+  var newVersion = event.newVersion;
+  if (oldVersion < 2) {
+    db.createObjectStore("user_notification", {
+      keyPath: "id",
+    });
+    db.createObjectStore("new_notification", {
+      keyPath: "id",
+    });
+    db.createObjectStore("clicked_notification", {
+      keyPath: "id",
+    });
+  }
+  if (oldVersion < 3) {
+    let erStore = db.createObjectStore("event_registered", {
+      keyPath: "id",
+    });
+    erStore.createIndex("id", "id", { unique: true });
+  }
+}
+
+const getEventRegisteredStoreSession = (tableName = "event_registered", callback) => {
+  let indb = getIndexDB()
+  if (!indb) {
+    console.log(
+      "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
+    );
+  }
+  var db = null;
+  var request = indb.open(dbName, version);
+  request.onupgradeneeded = (event) => {
+    console.log("request.onupgradeneeded");
+    db = event.target.result;
+    createStores(event)
+  };
+
+  request.onsuccess = (event) => {
+    console.log("session start");
+    let db = event.target.result;
+    event.target.result.onversionchange = function (e) {
+      if (e.newVersion === null) {
+        // An attempt is made to delete the db
+        e.target.close(); // Manually close our connection to the db
+      }
+    };
+    let transcation = db.transaction([tableName], "readwrite");
+    if (callback) {
+      callback(event, request, transcation)
+    }
+  };
+}
 
 export const getAllNotifications = (tableName, cb) => {
   let indb =
@@ -23,18 +81,8 @@ export const getAllNotifications = (tableName, cb) => {
     request.onupgradeneeded = (event) => {
       //abort the transcation if table doesn't exists
       // event.target.transaction.abort();
-
       db = event.target.result;
-      console.log("object", db);
-      db.createObjectStore("user_notification", {
-        keyPath: "id",
-      });
-      db.createObjectStore("new_notification", {
-        keyPath: "id",
-      });
-      db.createObjectStore("clicked_notification", {
-        keyPath: "id",
-      });
+      createStores(event)
     };
     request.onsuccess = (event) => {
       db = event.target.result;
@@ -81,15 +129,7 @@ export const addNewNotificationToIDB = (tableName, data, cb) => {
     request.onupgradeneeded = (event) => {
       console.log("request.onupgradeneeded");
       db = event.target.result;
-      db.createObjectStore("user_notification", {
-        keyPath: "id",
-      });
-      db.createObjectStore("new_notification", {
-        keyPath: "id",
-      });
-      db.createObjectStore("clicked_notification", {
-        keyPath: "id",
-      });
+      createStores(event)
     };
 
     request.onsuccess = (event) => {
@@ -282,3 +322,52 @@ export const getClickNotificationFromDB = (
     };
   }
 };
+
+export const addToEventRegistered_IndexDB = (eventNames = []) => {
+  let tableName = 'event_registered'
+  getEventRegisteredStoreSession(tableName, (event, request, transcation) => {
+    const store = transcation.objectStore(tableName);
+    //data => { id: eventId, status: true}
+    eventNames.forEach(data => {
+      let addrequest = store.add(data);
+      addrequest.onerror = function (event) {
+        if (event.target.error.name = "ConstraintError") {
+          event.preventDefault()
+        }
+        // console.log(event, '< -- onerror')
+      };
+      addrequest.onsuccess = function (event) {
+        console.log(addrequest, '< -- addded')
+      };
+    });
+    request.result.close();
+  })
+}
+
+export const checkIfEventIsRegistered_IndexDB = (eventId, cb) => {
+  let tableName = 'event_registered'
+  getEventRegisteredStoreSession(tableName, (event, request, transcation) => {
+    const store = transcation.objectStore(tableName);
+    let getRequest = store.get(eventId)
+    getRequest.onerror = function (event) {
+      console.log("reading error", event.target.error)
+      if (cb) {
+        cb(false)
+      }
+    };
+    getRequest.onsuccess = function (event) {
+      if (event.target.result) {
+        // console.log("reading onsuccess", event.target.result)
+        if (cb) {
+          cb(true)
+        }
+      } else {
+        if (cb) {
+          cb(false)
+        }
+      }
+    };
+    request.result.close();
+  })
+}
+

@@ -26,6 +26,7 @@ import swal from "sweetalert";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import {
   addNewNotificationToIDB,
+  checkIfEventIsRegistered_IndexDB,
   getAllNotifications,
   getClickNotificationFromDB,
   updateNotification,
@@ -42,7 +43,7 @@ const audioLinkRef =
 const USER_NOTIFICATION_TABLE = "user_notification";
 const NEW_NOTIFICATION_TABLE = "new_notification";
 const CLICKED_NOTIFICATION_TABLE = "clicked_notification";
-
+const notificationType_registration = "registration"
 //showCertificate, showFeedback
 export default function Header(props) {
   let audioRef = useRef();
@@ -175,62 +176,74 @@ export default function Header(props) {
       //Notification Listener
       onMessageListener((payload) => {
         // console.log("payload", payload);
+        const handleNotification = () => {
+          addGAWithUserInfo(NOTIFICATION_RECEIVED, {
+            msg_id: payload.data.msg_id || payload.data.title,
+            title: payload.data.title,
+            topic: payload.data.topic,
+          });
+          audioRef.current.play();
 
-        addGAWithUserInfo(NOTIFICATION_RECEIVED, {
-          msg_id: payload.data.msg_id || payload.data.title,
-          title: payload.data.title,
-          topic: payload.data.topic,
-        });
-        audioRef.current.play();
+          let date = new Date();
+          let data = {
+            id: payload.data.msg_id,
+            title: payload.data.title,
+            body: payload.data.body,
+            link: payload.data.link,
+            icon: payload.data.icon,
+            topic: payload.data.topic,
+            date: date,
+            opened: false,
+          };
 
-        let date = new Date();
-        let data = {
-          id: payload.data.msg_id,
-          title: payload.data.title,
-          body: payload.data.body,
-          link: payload.data.link,
-          icon: payload.data.icon,
-          topic: payload.data.topic,
-          date: date,
-          opened: false,
-        };
+          addNewNotificationToIDB(USER_NOTIFICATION_TABLE, data, (res) => {
+            if (res) {
+              console.log("data successfully added in indexDB");
+              // fetch all notifications from db
+              getAllNotifications(USER_NOTIFICATION_TABLE, (data) => {
+                if (data) {
+                  let sortedData = data.sort((a, b) => b.date - a.date);
+                  setNotificationData(sortedData);
+                } else {
+                  setNotificationData([]);
+                }
+              });
+            } else {
+              console.log("failed to add data in indexDB");
+            }
+          });
 
-        addNewNotificationToIDB(USER_NOTIFICATION_TABLE, data, (res) => {
-          if (res) {
-            console.log("data successfully added in indexDB");
-            // fetch all notifications from db
-            getAllNotifications(USER_NOTIFICATION_TABLE, (data) => {
-              if (data) {
-                let sortedData = data.sort((a, b) => b.date - a.date);
-                setNotificationData(sortedData);
-              } else {
-                setNotificationData([]);
-              }
-            });
-          } else {
-            console.log("failed to add data in indexDB");
-          }
-        });
+          // addNewNotificationToIDB(NEW_NOTIFICATION_TABLE, data, (res) => {
+          //   console.log("updated new_notification-------------", res);
+          // });
 
-        // addNewNotificationToIDB(NEW_NOTIFICATION_TABLE, data, (res) => {
-        //   console.log("updated new_notification-------------", res);
-        // });
+          toast.info(
+            <NotificationDisplay
+              title={payload.data.title}
+              body={payload.data.body}
+              link={payload.data.link}
+              id={payload.data.msg_id}
+              date={date}
+              topic={payload.data.topic}
+              icon={payload.data.icon}
+              opened={false}
+            />,
+            {
+              icon: <img src={payload.data.icon} alt="" />,
+            }
+          );
 
-        toast.info(
-          <NotificationDisplay
-            title={payload.data.title}
-            body={payload.data.body}
-            link={payload.data.link}
-            id={payload.data.msg_id}
-            date={date}
-            topic={payload.data.topic}
-            icon={payload.data.icon}
-            opened={false}
-          />,
-          {
-            icon: <img src={payload.data.icon} alt="" />,
-          }
-        );
+        }
+        if (payload.type === notificationType_registration && payload.eventId) {
+          checkIfEventIsRegistered_IndexDB(payload.eventId, (registered) => {
+            if (!registered) {
+              handleNotification()
+            }
+          })
+        } else {
+          handleNotification()
+        }
+
       });
     }
   }, [userInfo]);
@@ -259,7 +272,7 @@ export default function Header(props) {
       }
       if (
         window.pageYOffset >
-          window.innerHeight + navBar.current.offsetTop + 130 &&
+        window.innerHeight + navBar.current.offsetTop + 130 &&
         window.innerHeight <= 600
       ) {
         setSearchBarSticky(true);
@@ -297,9 +310,8 @@ export default function Header(props) {
       ></audio>
 
       <div
-        className={` headerBox--full pd-r0 ${
-          sticky ? "headerBox_sticky" : "headerBox"
-        }`}
+        className={` headerBox--full pd-r0 ${sticky ? "headerBox_sticky" : "headerBox"
+          }`}
         ref={navBar}
         style={{
           padding:
@@ -325,8 +337,8 @@ export default function Header(props) {
                     props.whiteLogo
                       ? CIPLAMEDXLOGO_WHITE
                       : props.eventPage
-                      ? props.eventAndCiplaLogo
-                      : CIPLAMEDXLOGO
+                        ? props.eventAndCiplaLogo
+                        : CIPLAMEDXLOGO
                   }
                   alt="CIPLAMEDXLOGO"
                 />
