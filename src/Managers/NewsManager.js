@@ -44,23 +44,31 @@ export const NewsManager = {
     return new Promise(async (res, rej) => {
       try {
         let ref = "";
-        if (speciality) {
+        if (speciality && lastNews) {
           ref = firestore
             .collection(NEWS_COLLECTION)
             .where("speciality", "==", speciality)
             .orderBy("timestamp", "desc")
             .startAfter(lastNews)
             .limit(NEWS_LIMIT);
-        } else {
+        } else if (speciality && !lastNews) {
           ref = firestore
             .collection(NEWS_COLLECTION)
+            .where("speciality", "==", speciality)
             .orderBy("timestamp", "desc")
             .limit(NEWS_LIMIT);
         }
+        //  else {
+        //   ref = firestore
+        //     .collection(NEWS_COLLECTION)
+        //     .orderBy("timestamp", "desc")
+        //     .limit(NEWS_LIMIT);
+        // }
         const query = await ref.get();
         if (query.empty) {
           res({ data: [], lastVisible: "" });
         }
+        console.log("Sasas",query)
         const lastVisible = query && query.docs[query.docs.length - 1];
 
         let _data = query.docs.map((doc) => {

@@ -1,6 +1,11 @@
 import styles from "./NewsCard.module.css";
 import ShareVideoLink from "../../Components/ShareVideoLink/ShareVideoLink";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
+import {
+  NEWS_READMORE_CLICK,
+  NEWS_SHARE_CLICK,
+} from "../../AppConstants/AnalyticsEventName";
 
 // share icon
 const shareIcon = () => {
@@ -19,16 +24,35 @@ const shareIcon = () => {
     </svg>
   );
 };
+function truncate(str, limit) {
+  if (str.length > limit) {
+    return str.substring(0, limit) + " ...";
+  }
+  return str;
+}
 
 const NewsCard = ({ data }) => {
-  const [share, setshare] = useState(false);
+  const [share, setshare] = useState({ open: false, newsLink: "" });
+  const { addGAWithUserInfo } = useContext(AnalyticsContext);
 
-  const handleReadMoreBtn = (link) => {
-    window.open(link, "_blank");
+  const handleReadMoreBtn = (alldata) => {
+    addGAWithUserInfo(NEWS_READMORE_CLICK, {
+      newsLink: alldata.newsLink,
+      id: alldata.id,
+      title: alldata.title,
+      speciality: alldata.speciality,
+    });
+    window.open(alldata.newsLink, "_blank");
   };
 
-  const handleShareBtn = () => {
-    setshare(true);
+  const handleShareBtn = (alldata) => {
+    addGAWithUserInfo(NEWS_SHARE_CLICK, {
+      newsLink: alldata.newsLink,
+      id: alldata.id,
+      title: alldata.title,
+      speciality: alldata.speciality,
+    });
+    setshare({ open: true, newsLink: alldata.newsLink });
   };
 
   return (
@@ -42,9 +66,9 @@ const NewsCard = ({ data }) => {
         </div>
         <div className={styles["date"]}>{data.date}</div>
         <div className={styles["description"]}>
-          {data.description}
+          {truncate(data.description, 210)}
           <div
-            onClick={() => handleReadMoreBtn(data.newsLink)}
+            onClick={() => handleReadMoreBtn(data)}
             className={styles["readMore__Btn"]}
           >
             Read More
@@ -52,7 +76,7 @@ const NewsCard = ({ data }) => {
         </div>
         <div className={styles["shareBtn"]}>
           <div
-            onClick={() => handleShareBtn()}
+            onClick={() => handleShareBtn(data)}
             className={styles["shareBtn__container"]}
           >
             <span className={styles["shareBtn__container__icon"]}>
@@ -63,12 +87,14 @@ const NewsCard = ({ data }) => {
         </div>
         <div className={styles["source"]}>{data.source}</div>
       </div>
-      {share && (
+      {share.open && (
         <ShareVideoLink
-          message={`Check out this news from CiplaMedX: LINK: ${window.location.href}`}
+          message={`Check out this news from CiplaMedX: LINK: ${data.newsLink}`}
           zIndex={18}
-          email_endpoint="https://ciplamedx-mail.djvirtualevents.com/shareVideo"
-          closeInvitePopup={() => setshare(false)}
+          email_endpoint={
+            "https://ciplamedx-mail.djvirtualevents.com/shareVideo"
+          }
+          closeInvitePopup={() => setshare({ open: false, newsLink: "" })}
           title={data.title}
         />
       )}

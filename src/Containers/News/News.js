@@ -1,151 +1,51 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback, useRef } from "react";
 import NewsCard from "../../Components/NewsCard/NewsCard";
 import NewsHeader from "../../Components/NewsHeader/NewsHeader";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
-import { firestore } from "../../Firebase/firebase";
 import { NewsManager } from "../../Managers/NewsManager";
+import useFetch from "../../utils/useFetch";
 import styles from "./News.module.css";
 
-// const newsData = [
-//   {
-//     id: "1",
-//     enable: true,
-//     title: "Lorem ipsum dolor sit amet, consect etur adipiscing elit.",
-//     thumbnail: "./assets/images/doctors.jpg",
-//     date: "7th Jan, 2020",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque est maecenas id arcu. Placerat in faucibus amet massa consectetur vitae.Diam ipsum.",
-//     source: "From Crux News",
-//     newsLink: "https://www.google.com",
-//   },
-//   {
-//     id: "2",
-//     enable: true,
-//     title: "Lorem ipsum dolor sit amet, consect etur adipiscing elit.",
-//     thumbnail: "./assets/images/doctors.jpg",
-//     date: "7th Jan, 2020",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque est maecenas id arcu. Placerat in faucibus amet massa consectetur vitae.Diam ipsum.",
-//     source: "From Crux News",
-//     newsLink: "https://www.google.com",
-//   },
-//   {
-//     id: "3",
-//     enable: true,
-//     title: "Lorem ipsum dolor sit amet, consect etur adipiscing elit.",
-//     thumbnail: "./assets/images/doctors.jpg",
-//     date: "7th Jan, 2020",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque est maecenas id arcu. Placerat in faucibus amet massa consectetur vitae.Diam ipsum.",
-//     source: "From Crux News",
-//     newsLink: "https://www.google.com",
-//   },
-// ];
-
-// const SPECIALITY = [
-//   "CARDIOLOGIST",
-//   "CLINICAL CARDIOLOGIST",
-//   "ECHO CARDIOLOGIST",
-//   "PEAD CARDIOLOGIST",
-//   "PRACTICING CARDIOLOGIST",
-//   "INTERVENTIONAL CARDIOLOGIST",
-//   "MBBS CARDIOLOGIST D CARD",
-//   "MBBS DIABETOLOGIST D DIAB",
-//   "CTV SURGEON",
-//   "CVTS",
-//   "ELECTROPHYSIOLOGIST",
-//   "CHEST PHYSICIAN",
-//   "PULMONOLOGIST",
-//   "DIABETOLOGIST",
-//   "PRACTICING DIABETOLOGIST",
-//   "ENDOCRINOLOGIST",
-//   "GASTRO SURGEON",
-//   "GASTROENTEROLOGIST",
-//   "DENTIST",
-//   "DERMATOLOGIST",
-//   "COSMETIC DERMATOLOGIST",
-//   "COSMETIC SURGEON",
-//   "PAEDIATRIC DERMATOLOGIST",
-//   "PLASTIC SURGEON",
-//   "HAIR TRANSPLANT SURGEON",
-//   "TRICHOLOGIST",
-//   "OPHTHALMOLOGIST",
-//   "OPTH CATARACT",
-//   "OPTHAL CORNEA",
-//   "OPTHAL GLAUCOMA",
-//   "OPTHAL PHACO",
-//   "OPTHAL RETINA",
-//   "OPTOMETRIST",
-//   "ORTHOPEDICIAN",
-//   "ORTHO SURGEON",
-//   "GYNAECOLOGIST",
-//   "HAEMATOLOGIST",
-//   "IVF",
-//   "EMBRYOLOGIST",
-//   "NEUROSURGEON",
-//   "NEUROLOGIST",
-//   "PAED NEUROLOGIST",
-//   "PSYCHIATRIST",
-//   "ID SPECIALIST",
-//   "INTENSIVE CARE",
-//   "PRACTICING ICU CCU",
-//   "PAEDIATRICIAN",
-//   "NEONATOLOGIST",
-//   "ONCOLOGIST",
-//   "RADIATION ONCOLOGIST",
-//   "RHEUMATOLOGIST",
-//   "NEPHROLOGIST",
-//   "SURGEON",
-//   "PAEDIATRIC SURGEON",
-//   "ENT SURGEON",
-//   "URO ONCOLOGIST",
-//   "UROLOGIST",
-//   "VASCULAR SURGEON",
-//   "MICROBIOLOGIST",
-//   "GENERAL PHYSICIAN",
-//   "CONSULTANT PHYSICIAN",
-//   "GP NON MBBS",
-//   "ANAESTHETIST",
-//   "NON MBBS",
-//   "PURCHASE PHARMACY",
-//   "OTHERS",
-// ];
-
 const News = () => {
-  const [speciality, setSpeciality] = useState(null);
-  const { user } = useContext(UserContext);
-  const [newsData, setNewsData] = useState([]);
-  const [lastNews, setLastNews] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { user, userInfo } = useContext(UserContext);
+  const [speciality, setSpeciality] = useState(
+    userInfo.speciality ? userInfo.speciality.toLowerCase() : "others"
+  );
+  // const [newsData, setNewsData] = useState([]);
+  // const [lastNews, setLastNews] = useState(null);
+  // const [loading, setLoading] = useState(true);
   const [allSpeciality, setAllSpeicality] = useState([]);
-
-  useEffect(() => {
-    // window.scroll(0, 0);
-    let data = {
-      speciality: speciality,
-    };
-    getNews(data);
-  }, [speciality]);
+  const [page, setPage] = useState(1);
+  const { loading, error, list } = useFetch(speciality, page);
+  const loader = useRef(null);
+  // console.log(list)
+  // useEffect(() => {
+  //   // window.scroll(0, 0);
+  //   let data = {
+  //     speciality: speciality,
+  //   };
+  //   getNews(data);
+  // }, [speciality]);
 
   useEffect(() => {
     getSpeciality();
-    document.addEventListener("scroll", trackScrolling);
+    // document.addEventListener("scroll", trackScrolling);
     return () => {
-      document.removeEventListener("scroll", trackScrolling);
+      // document.removeEventListener("scroll", trackScrolling);
     };
   }, []);
 
-  const getNews = async (data) => {
-    NewsManager.getNews(data.speciality ? data.speciality : "")
-      .then((res) => {
-        setNewsData(res.data);
-        setLastNews(res.lastVisible);
-        setLoading(false);
-      })
-      .catch((err) => {
-        // setLoading(false);
-      });
-  };
+  // const getNews = async (data) => {
+  //   NewsManager.getNews(data.speciality ? data.speciality : "")
+  //     .then((res) => {
+  //       setNewsData(res.data);
+  //       setLastNews(res.lastVisible);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       // setLoading(false);
+  //     });
+  // };
 
   const getSpeciality = () => {
     NewsManager.getSpeciality()
@@ -157,41 +57,89 @@ const News = () => {
       });
   };
 
-  const fetchMoreNews = () => {
-    // setLoading(true);
-    NewsManager.getMoreNews(speciality ? speciality : "", lastNews)
-      .then((res) => {
-        const newNewsData = [...newsData];
-        for (let i = 0; i < res.data.length; i++) {
-          if (newNewsData.indexOf(res.data[i].id) === -1) {
-            newNewsData.push(res.data[i]);
-          }
-        }
+  // const fetchMoreNews = () => {
+  //   // setLoading(true);
+  //   NewsManager.getMoreNews(speciality ? speciality : "", lastNews)
+  //     .then((res) => {
+  //       const newNewsData = [...newsData];
+  //       for (let i = 0; i < res.data.length; i++) {
+  //         if (newNewsData.indexOf(res.data[i].id) === -1) {
+  //           newNewsData.push(res.data[i]);
+  //         }
+  //       }
 
-        setNewsData(newNewsData);
-        setLastNews(res.lastVisible);
-        // window.scrollIntoView()
-        // setLoading(false);
-        document.addEventListener("scroll", trackScrolling);
-        window.scrollIntoView();
-      })
-      .catch((err) => {
-        // setLoading(false);
-      });
-  };
+  //       setNewsData(newNewsData);
+  //       setLastNews(res.lastVisible);
+  //       // window.scrollIntoView()
+  //       // setLoading(false);
+  //       // document.addEventListener("scroll", trackScrolling);
+  //       window.scrollIntoView();
+  //     })
+  //     .catch((err) => {
+  //       // setLoading(false);
+  //     });
+  // };
 
-  const isBottom = (el) => {
-    return el.getBoundingClientRect().bottom <= window.innerHeight;
-  };
+  // const isBottom = (el) => {
+  //   let isBottom = false;
+  //   // console.log("innerheight", el.clientHeight);
+  //   // console.log("scrollHeight", window);
+  //   // console.log(
+  //   //   "el.getBoundingClientRect().bottom",
+  //   //   el.getBoundingClientRect().bottom
+  //   // );
 
-  const trackScrolling = () => {
-    const wrappedElement = document.getElementById("main_inner_news_container");
-    if (isBottom(wrappedElement)) {
-      console.log("header bottom reached");
-      fetchMoreNews();
-      document.removeEventListener("scroll", trackScrolling);
+  //   console.log("el.innerHeight", { el });
+
+  //   let difference =
+  //     el.getBoundingClientRect().bottom - el.getBoundingClientRect().height;
+
+  //   // let sub =
+  //   //   el.getBoundingClientRect().bottom + el.getBoundingClientRect().height;
+  //   // let h = el.getBoundingClientRect().top + el.getBoundingClientRect().height;
+  //   // console.log("object", h);
+  //   // scrollTop + clientHeight >= scrollHeight - 5
+  //   // let y = el.getBoundingClientRect().height - 100;
+  //   // console.log("object", y);
+  //   // console.log("object", (y - h) / 100);
+  //   // console.log("difference", difference);
+  //   // console.log("sub", sub);
+  //   // console.log("percentage", (difference / 100) * sub);
+
+  //   if (el.getBoundingClientRect().bottom <= window.innerHeight) {
+  //     isBottom = true;
+  //   } else {
+  //     isBottom = false;
+  //   }
+  //   return isBottom;
+  //   // return el.getBoundingClientRect().bottom <= window.innerHeight;
+  // };
+
+  // const trackScrolling = () => {
+  //   const wrappedElement = document.getElementById("main_inner_news_container");
+  //   if (isBottom(wrappedElement)) {
+  //     console.log("header bottom reached");
+  //     // fetchMoreNews();
+  //     // document.removeEventListener("scroll", trackScrolling);
+  //   }
+  // };
+
+  const handleObserver = useCallback((entries) => {
+    const target = entries[0];
+    if (target.isIntersecting) {
+      setPage((prev) => prev + 1);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const option = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 0,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loader.current) observer.observe(loader.current);
+  }, [handleObserver]);
 
   return (
     <>
@@ -218,9 +166,10 @@ const News = () => {
               }}
               value={speciality}
               onChange={(e) =>
-                e.target.value === "Speciality"
-                  ? setSpeciality("")
-                  : setSpeciality(e.target.value)
+                // e.target.value === "Speciality"
+                //   ? setSpeciality("")
+                //   :
+                setSpeciality(e.target.value)
               }
             >
               <option>Speciality</option>
@@ -232,8 +181,8 @@ const News = () => {
             </select>
           </h2>
           {!loading ? (
-            newsData && newsData.length > 0 ? (
-              newsData.map(
+            list && list.length > 0 ? (
+              list.map(
                 (news) => news.enable && <NewsCard key={news.id} data={news} />
               )
             ) : (
@@ -244,6 +193,7 @@ const News = () => {
               <div className="lds-dual-ring"></div>
             </div>
           )}
+          <div ref={loader} />
         </div>
       </div>
     </>
