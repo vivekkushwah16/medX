@@ -33,6 +33,7 @@ import firebase, {
 import {
   BRONCHTALK_COLLECTION,
   PROFILE_COLLECTION,
+  PROFILE_COLLECTION_test,
   USERMETADATA_COLLECTION,
 } from "./AppConstants/CollectionConstants";
 import { PollManager } from "./Managers/PollManager";
@@ -45,6 +46,7 @@ import { MediaModalType } from "./AppConstants/ModalType";
 import PWApromptWithButton, {
   PWAInstaller,
 } from "./Components/pwaPrompt/PWAprompt";
+import { NEW_SPECIALITY } from "./specialityData";
 
 
 // import loadable from "@loadable/component";
@@ -152,11 +154,11 @@ async function downloadData() {
         let data = {};
         snap.docs.forEach(
           (d) =>
-            (data[d.id] = {
-              ...d.data(),
-              id: d.id.split("_")[1],
-              phoneNumber: d.data().email.split("@")[0],
-            })
+          (data[d.id] = {
+            ...d.data(),
+            id: d.id.split("_")[1],
+            phoneNumber: d.data().email.split("@")[0],
+          })
         );
         console.log(data);
         exportFile(
@@ -183,7 +185,10 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
-    
+    // setTimeout(() => {
+    //   console.clear()
+    //   ReadUserProfile()
+    // }, 1000)
 
     // downloadData()
     // EventManager.addEngagement('ipaedia21', MediaModalType.Iframe, 'Survey', 'We need your valuable feedback.', '/fd2/index.html', 'https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FForacort%20Synchrobreathe%20-%20Infoguide.jpg?alt=media&token=9195d987-7708-4039-ab78-70613fce7b6a').then(res => {
@@ -372,4 +377,76 @@ async function checkForUserMetaData(uid) {
       reject(error);
     }
   });
+}
+
+function getNewSpec(oldSpec) {
+  if (NEW_SPECIALITY[oldSpec.toUpperCase()]) {
+    return NEW_SPECIALITY[oldSpec.toUpperCase()]
+  } else {
+    return []
+  }
+}
+
+async function updateSpecaility(uid) {
+  return new Promise(async (response, reject) => {
+    try {
+      console.log("start checking profile", uid);
+      let docRef = firestore.collection(PROFILE_COLLECTION_test).doc(uid);
+      await firestore.runTransaction(async (trans) => {
+        let document = await trans.get(docRef);
+        if (!document.exists) {
+          console.log("No userMeta found for ", uid);
+          return false;
+        } else {
+          let currentData = document.data()
+          let newSp = getNewSpec(currentData.speciality)
+          if (newSp.length == 0) {
+            return true
+          } else if (newSp.length == 1) {
+            return trans.update(docRef, {
+              speciality: newSp[0]
+            })
+          } else if (newSp.length == 2) {
+            return trans.update(docRef, {
+              speciality: newSp[0],
+              secondarySpeciality: newSp[1],
+            })
+          } else {
+            return true
+          }
+        }
+      });
+      response();
+    } catch (error) {
+      console.error(error);
+      reject(error);
+    }
+  });
+}
+
+async function ReadUserProfile() {
+  let lastUID = null
+  try {
+    console.log("start");
+    let queryRef = firestore
+      .collection(PROFILE_COLLECTION_test)
+    // .limit(1)
+
+    let queryResult = await queryRef.get();
+    if (!queryResult.empty) {
+      let docs = queryResult.docs;
+      console.log("totalLength", docs.length)
+      for (let i = 0; i < docs.length; i++) {
+        lastUID = docs[i].id
+        console.log("entering index ", i)
+        await updateSpecaility(docs[i].id)
+      }
+    } else {
+      console.log("not Found");
+    }
+    console.log("end ,", lastUID);
+  } catch (error) {
+    console.log("last uid :" + lastUID);
+    console.error(error);
+  }
 }

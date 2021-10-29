@@ -68,6 +68,28 @@ const defaultErr = {
 //   "Others",
 // ];
 const SPECIALITY = [
+  "General Medicine",
+  "Cardiology",
+  "Critical Care Medicine",
+  "Dermatology",
+  "Dentistry",
+  "Diabetology",
+  "ENT",
+  "Gastroenterology & Hepatology",
+  "HIV / AIDS",
+  "Infectious Diseases",
+  "Musculoskeletal Diseases",
+  "Neuropsychiatry",
+  "Obstetrics & Gynaecology",
+  "Oncology",
+  "Ophthalmology",
+  "Pediatrics",
+  "Respiratory Medicine",
+  "Surgery",
+  "Urology",
+];
+
+const SPECIALITY_V = [
   "CARDIOLOGIST",
   "CLINICAL CARDIOLOGIST",
   "ECHO CARDIOLOGIST",

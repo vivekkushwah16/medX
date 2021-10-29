@@ -15,6 +15,28 @@ import { firestore, auth } from "../../Firebase/firebase";
 //   "Others",
 // ];
 const SPECIALITY = [
+  "General Medicine",
+  "Cardiology",
+  "Critical Care Medicine",
+  "Dermatology",
+  "Dentistry",
+  "Diabetology",
+  "ENT",
+  "Gastroenterology & Hepatology",
+  "HIV / AIDS",
+  "Infectious Diseases",
+  "Musculoskeletal Diseases",
+  "Neuropsychiatry",
+  "Obstetrics & Gynaecology",
+  "Oncology",
+  "Ophthalmology",
+  "Pediatrics",
+  "Respiratory Medicine",
+  "Surgery",
+  "Urology",
+];
+
+const SPECIALITY_V = [
   "CARDIOLOGIST",
   "CLINICAL CARDIOLOGIST",
   "ECHO CARDIOLOGIST",
@@ -175,9 +197,8 @@ function Myprofile(props) {
               href="#"
               style={{ pointerEvents: "none" }}
             >
-              {`${
-                userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ""
-              }${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ""} `}
+              {`${userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ""
+                }${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ""} `}
             </a>
             <h3 className="modalBox__title" style={{ color: "#F5F5F5" }}>
               My Profile
@@ -198,10 +219,9 @@ function Myprofile(props) {
           <div className="profile__cont">
             <div className="profile-selector">
               <div
-                className={` ${
-                  history?.location.pathname.includes("/home/profile") &&
+                className={` ${history?.location.pathname.includes("/home/profile") &&
                   "profile-selected"
-                }`}
+                  }`}
                 onClick={() => {
                   if (history) history.push("/home/profile");
                 }}
@@ -209,10 +229,9 @@ function Myprofile(props) {
                 My Profile
               </div>
               <div
-                className={` ${
-                  history?.location.pathname.includes("/interest") &&
+                className={` ${history?.location.pathname.includes("/interest") &&
                   "profile-selected"
-                }`}
+                  }`}
                 onClick={() => {
                   if (history) history.push("/interest");
                 }}
@@ -275,7 +294,7 @@ function Myprofile(props) {
                     style={{ cursor: "not-allowed" }}
                     className="form-control background-black"
 
-                    // onChange={this.handleInputChange}
+                  // onChange={this.handleInputChange}
                   />
                   {/* {this.state.errors.email && (
                     <span className="input-error2">{this.state.errors.email}</span>
@@ -294,7 +313,7 @@ function Myprofile(props) {
                     value={mobile}
                     disabled={true}
                     style={{ cursor: "not-allowed" }}
-                    //   onChange={this.setValue}
+                  //   onChange={this.setValue}
                   />
                   {/* {this.state.errors.phoneNumber && (
                   <span className="input-error2">
@@ -481,7 +500,7 @@ function Myprofile(props) {
                 )} */}
                 <div
                   className="form-group doctor-profile-container"
-                  // style={{ border: !userInfo.doctorVerified && "none" }}
+                // style={{ border: !userInfo.doctorVerified && "none" }}
                 >
                   <div className="doctor-profile-verify-text">
                     Your Medical Registration Details
@@ -520,7 +539,7 @@ function Myprofile(props) {
                         style={{ cursor: "not-allowed" }}
                         className="form-control background-black"
 
-                        // onChange={this.handleInputChange}
+                      // onChange={this.handleInputChange}
                       />
                       {/* {this.state.errors.email && (
                     <span className="input-error2">{this.state.errors.email}</span>
@@ -542,7 +561,7 @@ function Myprofile(props) {
                         style={{ cursor: "not-allowed" }}
                         className="form-control background-black"
 
-                        // onChange={this.handleInputChange}
+                      // onChange={this.handleInputChange}
                       />
                       {/* {this.state.errors.email && (
                     <span className="input-error2">{this.state.errors.email}</span>
@@ -564,7 +583,7 @@ function Myprofile(props) {
                         style={{ cursor: "not-allowed" }}
                         className="form-control background-black"
 
-                        // onChange={this.handleInputChange}
+                      // onChange={this.handleInputChange}
                       />
                       {/* {this.state.errors.email && (
                     <span className="input-error2">{this.state.errors.email}</span>
@@ -578,7 +597,7 @@ function Myprofile(props) {
                     className="btn btn-secondary save__btn"
                     id="RegisterBtn"
                     type={"submit"}
-                    // disabled={this.state.isLoading ? true : false}
+                  // disabled={this.state.isLoading ? true : false}
                   >
                     {isLoading ? (
                       <>

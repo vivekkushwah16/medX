@@ -8,6 +8,7 @@ export const POLL_COLLECTION = 'poll'
 export const POLLRESPONSE_COLLECTION = 'pollResponse'
 export const RATING_COLLECTION = "ratings"
 export const PROFILE_COLLECTION = 'profiles'
+export const PROFILE_COLLECTION_test = 'profiles_test'
 export const MEDIAMETADATA_COLLECTION = 'mediaMetaData'
 export const TRENDINGITEM_COLLECTION = 'trendingItems'
 export const ENGAGEMENTS_COLLECTION = 'engagements'
