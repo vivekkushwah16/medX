@@ -40,6 +40,10 @@ const News = () => {
   }, []);
 
   useEffect(() => {
+    setPage(0);
+  }, [speciality]);
+
+  useEffect(() => {
     const option = {
       root: null,
       rootMargin: "20px",
@@ -97,8 +101,8 @@ const News = () => {
             </div>
           )}
         </div>
-        <div ref={loader} />
       </div>
+      <div ref={loader} />
     </>
   );
 };

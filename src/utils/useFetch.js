@@ -13,15 +13,21 @@ function useFetch(speciality, page) {
 
   const sendQuery = useCallback(async () => {
     console.log("DSdsdsdsds", prevSpeciality.current);
+    console.log(
+      "prevSpeciality.current !== speciality ? null : list.lastNews",
+      prevSpeciality.current !== speciality ? null : list.lastNews
+    );
     try {
       await setLoading(true);
       await setError(false);
       NewsManager.getMoreNews(
-        prevSpeciality.current ? prevSpeciality.current : "others",
+        prevSpeciality.current !== speciality
+          ? speciality
+          : prevSpeciality.current,
         prevSpeciality.current !== speciality ? null : list.lastNews
       )
         .then(async (res) => {
-          prevSpeciality.current = speciality;
+          //   prevSpeciality.current = speciality;
           if (res.data.length > 0) {
             // console.log("object", res);
             // console.log("list", list.data);

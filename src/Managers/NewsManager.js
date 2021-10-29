@@ -68,7 +68,6 @@ export const NewsManager = {
         if (query.empty) {
           res({ data: [], lastVisible: "" });
         }
-        console.log("Sasas",query)
         const lastVisible = query && query.docs[query.docs.length - 1];
 
         let _data = query.docs.map((doc) => {
@@ -87,6 +86,21 @@ export const NewsManager = {
     return new Promise(async (res, rej) => {
       try {
         const ref = firestore.collection(SPECIALITY_COLLECTION);
+        // const ref2 = firestore.collection(NEWS_COLLECTION);
+
+        // let data = {
+        //   date: "8th Jan, 2020",
+        //   description:
+        //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque est maecenas id arcu. Placerat in faucibus amet massa consectetur vitae.Diam ipsum.2",
+        //   enable: true,
+        //   newsLink: "https://www.google.com",
+        //   source: "From Crux News2",
+        //   speciality: "cvts",
+        //   thumbnail: "./assets/images/doctors.jpg",
+        //   timestamp: "",
+        //   title: "Lorem ipsum dolor sit amet, consect etur adipiscing elit.2",
+        // };
+        // const query2 = await ref2.doc().set(data);
 
         const query = await ref.doc("speciality").get();
         if (query.empty) {
