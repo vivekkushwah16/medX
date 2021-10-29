@@ -26,6 +26,7 @@ export const NOTIFICATION_RECEIVED = 'notification_received'
 export const NOTIFICATION_INTERACTED = 'notification_interacted'
 
 export const NEWS_READMORE_CLICK = 'news_read_more_click'
+export const NEWS_EXPLORE_CLICK = 'news_explore_click'
 export const NEWS_SHARE_CLICK = 'news_share_click'
 
 

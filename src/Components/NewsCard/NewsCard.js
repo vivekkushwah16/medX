@@ -89,8 +89,10 @@ const NewsCard = ({ data }) => {
       </div>
       {share.open && (
         <ShareVideoLink
+          hideEmail
           message={`Check out this news from CiplaMedX: LINK: ${data.newsLink}`}
           zIndex={18}
+          forcedURL={data.newsLink}
           email_endpoint={
             "https://ciplamedx-mail.djvirtualevents.com/shareVideo"
           }

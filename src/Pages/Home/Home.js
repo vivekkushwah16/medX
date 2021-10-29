@@ -210,7 +210,7 @@ class Home extends Component {
       { tag: "nebulization", header: "Nebulization" },
       { tag: "evolve session", header: "Evolve session" },
       { tag: "pediatric hepatology", header: "Pediatric hepatology" },
-      
+
 
       // { tag: "anti fungal", header: "Anti Fungal" },
       // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
@@ -1120,7 +1120,10 @@ class Home extends Component {
                     rowData={row}
                   />
                 ))}
-                <NewsBanner/>
+                {
+                  this.context.showNewsbanner &&
+                  <NewsBanner />
+                }
 
                 {preDefinedRows.map((row) => (
                   <VideoRow

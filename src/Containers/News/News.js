@@ -1,13 +1,27 @@
 import { useState, useEffect, useContext, useCallback, useRef } from "react";
+import { useHistory } from "react-router";
+import { RootRoute } from "../../AppConstants/Routes";
 import NewsCard from "../../Components/NewsCard/NewsCard";
 import NewsHeader from "../../Components/NewsHeader/NewsHeader";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import { NewsManager } from "../../Managers/NewsManager";
 import useFetch from "../../utils/useFetch";
 import styles from "./News.module.css";
-
+const ValidForNews = ["diabetology",
+  "cardiology",
+  "respiratory medicine",
+  "urology",
+  "paediatrics"]
 const News = () => {
   const { user, userInfo } = useContext(UserContext);
+  const history = useHistory()
+  useEffect(() => {
+    if (userInfo) {
+      if (ValidForNews.indexOf(userInfo.speciality.toLowerCase()) == -1) {
+        history.push(RootRoute)
+      }
+    }
+  }, [userInfo])
 
   const [speciality, setSpeciality] = useState(
     userInfo.speciality ? userInfo.speciality.toLowerCase() : "others"

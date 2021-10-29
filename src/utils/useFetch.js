@@ -1,43 +1,31 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { NewsManager } from "../Managers/NewsManager";
 
+
 function useFetch(speciality, page) {
-  let prevSpeciality = useRef();
+  let prevSpeciality = useRef(speciality);
+  let lastDocRef = useRef(null);
+  let lastPageRef = useRef(page);
+  let limitHitRef = useRef(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [list, setList] = useState({ data: [], lastNews: null });
 
-  console.log("list", list);
-  console.log("speciality", speciality);
-  console.log("page", page);
-
-  const sendQuery = useCallback(async () => {
-    console.log("DSdsdsdsds", prevSpeciality.current);
-    console.log(
-      "prevSpeciality.current !== speciality ? null : list.lastNews",
-      prevSpeciality.current !== speciality ? null : list.lastNews
-    );
+  const sendQuery = useCallback(async (repeated) => {
     try {
       await setLoading(true);
       await setError(false);
       NewsManager.getMoreNews(
-        prevSpeciality.current !== speciality
-          ? speciality
-          : prevSpeciality.current,
-        prevSpeciality.current !== speciality ? null : list.lastNews
+        speciality,
+        lastDocRef.current
       )
         .then(async (res) => {
-          //   prevSpeciality.current = speciality;
           if (res.data.length > 0) {
-            // console.log("object", res);
-            // console.log("list", list.data);
             if (list.data.length !== 0) {
               const newNewsData = [...list.data];
-
               let newData = await newNewsData.filter(
-                (d) => d.prevSpeciality.current === prevSpeciality.current
+                (d) => d.speciality === prevSpeciality.current
               );
-
               var allIds = await newData.map((d) => {
                 return d.id;
               });
@@ -47,15 +35,20 @@ function useFetch(speciality, page) {
                   newData.push(res.data[i]);
                 }
               }
+              lastDocRef.current = res.lastVisible
               await setList({ data: newData, lastNews: res.lastVisible });
             } else {
-              //   console.log("hrere", res.data);
+              lastDocRef.current = res.lastVisible
               await setList({ data: res.data, lastNews: res.lastVisible });
             }
             return;
           } else {
-            // console.log("Asaasasaasasasa here");
-            setList({ data: [], lastNews: null });
+            if (!repeated) {
+              lastDocRef.current = null
+              setList({ data: [], lastNews: null });
+            } else {
+              limitHitRef.current = true
+            }
             return;
           }
         })
@@ -64,24 +57,25 @@ function useFetch(speciality, page) {
         });
       setLoading(false);
     } catch (err) {
-      //   console.log("Asaasasaasasasa dsdssdsdssdsds");
       setList({ data: [], lastNews: null });
       setError(err);
     }
   }, [speciality, page]);
 
   useEffect(() => {
-    sendQuery(speciality);
+    if (speciality === prevSpeciality.current) {
+      if (lastPageRef.current !== page && !limitHitRef.current) {
+        lastPageRef.current = page
+        sendQuery(true);
+      }
+    } else {
+      prevSpeciality.current = speciality
+      lastDocRef.current = null
+      lastPageRef.current = 0
+      limitHitRef.current = false
+      sendQuery(false);
+    }
   }, [speciality, sendQuery, page]);
-
-  useEffect(() => {
-    //   console.log(
-    //     "specialifsdiodhgkidhfkjdfhndzjkgrdnkjdrbngjsdgbsdfhjg",
-    //     speciality
-    //   );
-    prevSpeciality.current = speciality;
-    //   setList({ list: null, lastNews: null });
-  }, [speciality]);
 
   return { loading, error, list: list.data };
 }
