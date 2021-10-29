@@ -391,7 +391,7 @@ async function updateSpecaility(uid) {
   return new Promise(async (response, reject) => {
     try {
       console.log("start checking profile", uid);
-      let docRef = firestore.collection(PROFILE_COLLECTION_test).doc(uid);
+      let docRef = firestore.collection(PROFILE_COLLECTION).doc(uid);
       await firestore.runTransaction(async (trans) => {
         let document = await trans.get(docRef);
         if (!document.exists) {
@@ -429,7 +429,7 @@ async function ReadUserProfile() {
   try {
     console.log("start");
     let queryRef = firestore
-      .collection(PROFILE_COLLECTION_test)
+      .collection(PROFILE_COLLECTION)
     // .limit(1)
 
     let queryResult = await queryRef.get();
@@ -438,8 +438,11 @@ async function ReadUserProfile() {
       console.log("totalLength", docs.length)
       for (let i = 0; i < docs.length; i++) {
         lastUID = docs[i].id
-        console.log("entering index ", i)
-        await updateSpecaility(docs[i].id)
+        console.log("entering index ", i, docs[i])
+        if (docs[i].data().speciality) {
+          if (NEW_SPECIALITY[docs[i].data().speciality.toUpperCase()])
+            await updateSpecaility(docs[i].id)
+        }
       }
     } else {
       console.log("not Found");
