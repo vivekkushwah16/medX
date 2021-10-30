@@ -111,7 +111,26 @@ const BannerData = [
   //     }
   //   },
   // },
-  
+
+  {
+    type: BannerType.LiveEvent,
+    mainTitle: `Benefits of Empagliflozin across the Heart Failure Spectrum`,
+    subTitle: ``,
+    eventId: "cme2910212",
+    eventName: "cme2910212",
+    needCountDown: false,
+    mainImageUrl: "/assets/images/cipla29thOctoberr.jpg",
+    style: {
+      bannerLeftStyle: {},
+      bannerRightStyle: {
+        position: "realtive",
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+      },
+      bannerImageStyle: {},
+    },
+  },
   {
     type: BannerType.LiveEvent,
     mainTitle: `Bilastine in Allergic Rhinitis: Current Concepts and Future Perspectives`,
@@ -120,6 +139,25 @@ const BannerData = [
     eventName: "cme291021",
     needCountDown: false,
     mainImageUrl: "/assets/images/cipla27thOct2.png",
+    style: {
+      bannerLeftStyle: {},
+      bannerRightStyle: {
+        position: "realtive",
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+      },
+      bannerImageStyle: {},
+    },
+  },
+  {
+    type: BannerType.LiveEvent,
+    mainTitle: `Urology Global Residents I-true Postgraduate program`,
+    subTitle: ``,
+    eventId: "cme301021",
+    eventName: "cme301021",
+    needCountDown: false,
+    mainImageUrl: "/assets/images/cipla30Oct.jpg",
     style: {
       bannerLeftStyle: {},
       bannerRightStyle: {
@@ -150,7 +188,6 @@ const BannerData = [
       bannerImageStyle: {},
     },
   },
-
 
   {
     type: BannerType.platformPromo,
