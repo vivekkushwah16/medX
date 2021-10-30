@@ -379,7 +379,7 @@ function PreEvent(props) {
                                 ) : (
                                   <a
                                     href="#"
-                                    class="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
+                                    className="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
                                     onClick={(e) => {
                                       if (history) {
                                         history.push(HOME_ROUTE);

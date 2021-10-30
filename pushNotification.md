@@ -2,15 +2,16 @@
 2.
 
 window.sendNotificationToTopic({
-    condition: "\'ankur3\' in topics",
+    condition: "\'ankur5\' in topics",
     data:{
-        link: "https://ciplamedx.com/ipaedia21?admin=true&preview=registration",
+        link: "https://express-impact.web.app/inspire21?navmode=notification",
         icon: "/logo512.png",
-        title: "Hello Ankur,",
-        body: "Testing Push Notifications",
-        topic: "",
-        msg_id: "unique_id",
-    },
-    analytics_label: ""
+        title: "Hello ",
+        body: "Testing Push Notifications ",
+        topic: "ankur5",
+        type: "registration",
+        eventId: "testevent1",
+        msg_id: "unique_id_1",
+    }
 })
 window.subscribeAllTokens({uid: "RtWXsbENPsW0uTywN0oVdlO8Dem2", topic:"ankur2"})

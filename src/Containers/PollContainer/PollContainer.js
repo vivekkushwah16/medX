@@ -116,7 +116,7 @@ export default function PollContainer(props) {
     <>
       <h2 className="communityBox__title mg-b10">Polls</h2>
       <hr></hr>
-      <div class="communityBox__body">
+      <div className="communityBox__body">
         {!pollData && (
           <div
             style={{

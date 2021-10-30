@@ -31,11 +31,11 @@ export default function AskQuestion(props) {
 
   return (
     <>
-      <div class="d-flex justify-content-between align-items-center pd-b10">
+      <div className="d-flex justify-content-between align-items-center pd-b10">
         <h2 className="communityBox__title">Ask The Experts</h2>
         {showCloseButton && (
           <button
-            class="btn btn-grey communityBox__close"
+            className="btn btn-grey communityBox__close"
             onClick={handleCloseBtn}
           >
             Close
@@ -55,16 +55,16 @@ export default function AskQuestion(props) {
                 }${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ""} `}
             </a>
 
-            <div class="form-group">
+            <div className="form-group">
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Ask a question"
                 onChange={handleInputChange}
                 value={question}
               />
-              <button class="btn" onClick={handleSendButton}>
-                <i class="icon-send"></i>
+              <button className="btn" onClick={handleSendButton}>
+                <i className="icon-send"></i>
               </button>
             </div>
           </>
