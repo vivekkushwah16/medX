@@ -1,0 +1,51 @@
+.news__container {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  padding: 7rem 1rem 2rem 1rem;
+}
+.news__container > .news__innerContainer {
+  max-width: 700px;
+}
+.news__innerContainer > h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+.news__person__name {
+  font-weight: 700;
+  padding-left: 0.4rem;
+}
+#stories__dropdown {
+  /* max-width: 150px; */
+  display: inline;
+  background: none;
+  border: none;
+  color: #25b9d3;
+  font-size: 1.5rem;
+  padding: 0;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.no_news {
+  text-align: center;
+  font-size: 2rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media only screen and (max-width: 991px) {
+  .news__innerContainer > h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .news__innerContainer > h2 {
+    font-size: 1.2rem;
+  }
+  #stories__dropdown {
+    display: block;
+    font-size: 1.2rem;
+  }
+}

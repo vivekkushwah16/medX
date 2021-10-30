@@ -23,7 +23,7 @@ function validateEmail(email) {
 
 export default function ShareVideoLink(props) {
   const alert = useAlert();
-  const [url, setUrl] = useState(window.location.href);
+  const [url, setUrl] = useState(props.forcedURL ? props.forcedURL : window.location.href);
   // const [url, setUrl] = useState("https://ciplamedx.com/evolve/register");
   const [urlShare, setUrlShare] = useState(window.encodeURI(props.message));
   //   window.encodeURI(
@@ -114,7 +114,10 @@ export default function ShareVideoLink(props) {
       className="modalBox modalBox--small active blackTint modalBoxAppearAnim inviteFriendModal"
       style={props.zIndex ? { zIndex: props.zIndex } : {}}
     >
-      <div className="modalBox__inner modalBoxChildScaleAnim">
+      <div className="modalBox__inner modalBoxChildScaleAnim" style={props.hideEmail ? {
+        minHeight: "0",
+        height: "17rem"
+      } : {}}>
         <div className="modalBox__header">
           <h3 className="modalBox__title">Invite your peers</h3>
           <button
@@ -133,7 +136,7 @@ export default function ShareVideoLink(props) {
             <label className="form-label">Link</label>
             <div className="form-group__has-icon">
               <i className="icon-link" onClick={() => copyCodeToClipboard()}>
-                <span class="link-tooltip">Click here to copy.</span>
+                <span className="link-tooltip">Click here to copy.</span>
               </i>
 
               <input
@@ -187,51 +190,57 @@ export default function ShareVideoLink(props) {
               </button>
             </div>
           </div>
-          <div className="form-group mg-b30">
-            <label className="form-label">Email</label>
-            <div className="form-group__has-icon">
-              <i className="icon-search"></i>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter email ID"
-                value={email}
-                onChange={(e) => {
-                  e.preventDefault();
-                  setEmail(e.target.value);
-                }}
-              />
-            </div>
-          </div>
-
-          {error && (
+          {
+            !props.hideEmail &&
             <>
+
               <div className="form-group mg-b30">
-                <span style={{ color: "red", marginBottom: "1rem" }}>
-                  *Enter a valid email.
-                </span>
+                <label className="form-label">Email</label>
+                <div className="form-group__has-icon">
+                  <i className="icon-search"></i>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter email ID"
+                    value={email}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setEmail(e.target.value);
+                    }}
+                  />
+                </div>
               </div>
+
+              {error && (
+                <>
+                  <div className="form-group mg-b30">
+                    <span style={{ color: "red", marginBottom: "1rem" }}>
+                      *Enter a valid email.
+                    </span>
+                  </div>
+                </>
+              )}
+              <button
+                className="btn btn-secondary"
+                onClick={sendMail}
+                disabled={isLoading ? true : false}
+              >
+                {isLoading ? (
+                  <>
+                    <img
+                      id="btnLoader"
+                      src="/assets/images/loader.gif"
+                      alt="loading"
+                    />
+                  </>
+                ) : (
+                  "Send Mail"
+                )}
+              </button>
             </>
-          )}
-          <button
-            className="btn btn-secondary"
-            onClick={sendMail}
-            disabled={isLoading ? true : false}
-          >
-            {isLoading ? (
-              <>
-                <img
-                  id="btnLoader"
-                  src="/assets/images/loader.gif"
-                  alt="loading"
-                />
-              </>
-            ) : (
-              "Send Mail"
-            )}
-          </button>
+          }
         </div>
       </div>
-    </div>
+    </div >
   );
 }

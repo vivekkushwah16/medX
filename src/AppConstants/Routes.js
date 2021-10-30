@@ -6,4 +6,5 @@ export const TOPIC_ROUTE = "/topics";
 export const EVENT_ROUTE = "/event";
 export const RootRoute = "/";
 export const INTEREST_ROUTE = "/interest";
+export const NEWS_ROUTE = "/news";
 

@@ -11,6 +11,7 @@ import {
   RootRoute,
   EVENT_ROUTE,
   INTEREST_ROUTE,
+  NEWS_ROUTE,
   SEARCH_ROUTE,
 } from "./AppConstants/Routes";
 
@@ -48,6 +49,7 @@ import PWApromptWithButton, {
 } from "./Components/pwaPrompt/PWAprompt";
 import { NEW_SPECIALITY } from "./specialityData";
 
+import News from "./Containers/News/News";
 
 // import loadable from "@loadable/component";
 // import LoadableFallback from "./Components/LoadableFallback/LoadableFallback";
@@ -247,7 +249,6 @@ export default function App() {
   return (
     <>
       <MediaModalLazy />
-
       {/* <PWApromptWithButton /> */}
       <Router>
         {initalCheck && (
@@ -292,6 +293,11 @@ export default function App() {
               path={"/upload-kmp23"}
             >
               <UploadLazy />
+            </ProtectedRoute>
+
+            {/* NEWS Route */}
+            <ProtectedRoute redirectTo={LOGIN_ROUTE} path={NEWS_ROUTE}>
+              <News />
             </ProtectedRoute>
 
             <EventRoute

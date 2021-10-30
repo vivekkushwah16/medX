@@ -24,6 +24,12 @@ export const UserContext = createContext();
 export const UserMetaDataContext = createContext();
 export const UserBronchTalkMetaDataContext = createContext();
 
+const ValidForNews = ["diabetology",
+  "cardiology",
+  "respiratory medicine",
+  "urology",
+  "paediatrics"]
+
 const UserContextProvider = (props) => {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("userAuth"))
@@ -33,6 +39,17 @@ const UserContextProvider = (props) => {
   const [mediaMetaData, setMediaMetaData] = useState({});
   const [userMetaData, setUserMetaData] = useState({ events: [] });
   const [userBronchTalkMetaData, setUserBronchTalkMetaData] = useState(null);
+  const [showNewsbanner, toggleNewsBanner] = useState(false);
+
+  useEffect(() => {
+    if (userInfo) {
+      if (ValidForNews.indexOf(userInfo.speciality.toLowerCase()) !== -1) {
+        toggleNewsBanner(true)
+      } else {
+        toggleNewsBanner(false)
+      }
+    }
+  }, [userInfo])
 
   useEffect(() => {
     // firestore.collection(BACKSTAGE_COLLECTION).doc(PLATFORM_BACKSTAGE_DOC).onSnapshot((doc) => {
@@ -330,6 +347,7 @@ const UserContextProvider = (props) => {
           forceUpdateUserInfo,
           getDoctorVerificationClickCount,
           updateDoctorVerificationClickCount,
+          showNewsbanner
         }}
       >
         <UserMetaDataContext.Provider value={userMetaData}>

@@ -57,6 +57,7 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 import DoctorFormModal from "../../Components/DoctorFormModal/DoctorFormModal";
 import { redirectClinet, removeURLQuery, updateURLQuery } from "../../utils/HandleUrlParam";
 import { customScrollToId } from "../../utils";
+import NewsBanner from "../../Components/NewsBanner/NewsBanner";
 
 const TAG_URL_PARAM_NAME = "selectedTag"
 const ComponentWillMountHook = (fun) => useMemo(fun, []);
@@ -209,7 +210,7 @@ class Home extends Component {
       { tag: "nebulization", header: "Nebulization" },
       { tag: "evolve session", header: "Evolve session" },
       { tag: "pediatric hepatology", header: "Pediatric hepatology" },
-      
+
 
       // { tag: "anti fungal", header: "Anti Fungal" },
       // { tag: ['Asthma', 'ILD/IPF'], header: 'Others', multipleTags: true }
@@ -1119,6 +1120,10 @@ class Home extends Component {
                     rowData={row}
                   />
                 ))}
+                {
+                  this.context.showNewsbanner &&
+                  <NewsBanner />
+                }
 
                 {preDefinedRows.map((row) => (
                   <VideoRow

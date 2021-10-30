@@ -1,0 +1,27 @@
+.news__header {
+  background: #0f212f;
+  color: #fff;
+  height: 5rem;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.headerBack__btn {
+  cursor: pointer;
+}
+.header__title {
+  font-weight: 700;
+  font-size: 1.3rem;
+  padding: 0 0 0.2rem 1rem;
+}
+
+@media only screen and (max-width: 991px) {
+  .news__header {
+    background: linear-gradient(0deg, #0869a8, #0869a8), #c4c4c4;
+  }
+}
