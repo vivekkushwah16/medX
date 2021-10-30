@@ -78,34 +78,30 @@ export const getUserProfile = (uid) => {
 export const askForPermissionToReceiveNotifications = async (user) => {
   try {
     if (messaging) {
-      // const firebaseMessaging = firebase.messaging();
       await messaging.requestPermission();
       const token = await messaging.getToken({
         vapidKey:
           "BJ9-wIY9F5wie3fzoPYHzPa34H-V_X3nkKSA7LIUpe_kRcGgX584JMojPTSvWdwQeDvOgl9F3qmipEjXVNXLnZ0",
       });
-      // firestore.collection('cloudMessaging').doc(user.uid).set({
-      //     uid: user.uid,
-      //     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      //     token: firebase.firestore.FieldValue.arrayUnion(token)
-      // })
       if (token) {
-        // await getUserProfile(user.uid).then((res) => {
-        // console.log("userData", res);
+        await getUserProfile(user.uid).then((res) => {
+          // console.log("userData", res);
 
-        let userData = {
-          uid: user.uid,
-          token: token,
-        };
-        const cloudRef = cloudFunction.httpsCallable(USER_TOKEN_UPDATE);
-        cloudRef(JSON.stringify(userData))
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-        // });
+          let userData = {
+            uid: user.uid,
+            token: token,
+            speciality: res.speciality,
+            state: res.state,
+          };
+          const cloudRef = cloudFunction.httpsCallable(USER_TOKEN_UPDATE);
+          cloudRef(JSON.stringify(userData))
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
       }
 
       // firebaseMessaging.onMessage((payload) => {

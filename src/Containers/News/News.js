@@ -7,21 +7,23 @@ import { UserContext } from "../../Context/Auth/UserContextProvider";
 import { NewsManager } from "../../Managers/NewsManager";
 import useFetch from "../../utils/useFetch";
 import styles from "./News.module.css";
-const ValidForNews = ["diabetology",
+const ValidForNews = [
+  "diabetology",
   "cardiology",
   "respiratory medicine",
   "urology",
-  "paediatrics"]
+  "paediatrics",
+];
 const News = () => {
   const { user, userInfo } = useContext(UserContext);
-  const history = useHistory()
+  const history = useHistory();
   useEffect(() => {
     if (userInfo) {
-      if (ValidForNews.indexOf(userInfo.speciality.toLowerCase()) == -1) {
-        history.push(RootRoute)
+      if (ValidForNews.indexOf(userInfo.speciality.toLowerCase()) === -1) {
+        history.push(RootRoute);
       }
     }
-  }, [userInfo])
+  }, [userInfo]);
 
   const [speciality, setSpeciality] = useState(
     userInfo.speciality ? userInfo.speciality.toLowerCase() : "others"

@@ -29,7 +29,6 @@ import EventRoute, { EventStausType } from "./Components/EventRoute";
 import firebase, {
   exportFile,
   firestore,
-  onMessageListener,
 } from "./Firebase/firebase";
 import {
   BRONCHTALK_COLLECTION,
@@ -156,11 +155,11 @@ async function downloadData() {
         let data = {};
         snap.docs.forEach(
           (d) =>
-          (data[d.id] = {
-            ...d.data(),
-            id: d.id.split("_")[1],
-            phoneNumber: d.data().email.split("@")[0],
-          })
+            (data[d.id] = {
+              ...d.data(),
+              id: d.id.split("_")[1],
+              phoneNumber: d.data().email.split("@")[0],
+            })
         );
         console.log(data);
         exportFile(
@@ -191,7 +190,6 @@ export default function App() {
     //   console.clear()
     //   ReadUserProfile()
     // }, 1000)
-
     // downloadData()
     // EventManager.addEngagement('ipaedia21', MediaModalType.Iframe, 'Survey', 'We need your valuable feedback.', '/fd2/index.html', 'https://firebasestorage.googleapis.com/v0/b/cipla-impact.appspot.com/o/impact2021%2Ftrending%2FForacort%20Synchrobreathe%20-%20Infoguide.jpg?alt=media&token=9195d987-7708-4039-ab78-70613fce7b6a').then(res => {
     //   console.log('xxxxxxxxxxxxxxxxx')
@@ -360,7 +358,7 @@ async function checkForUserMetaData(uid) {
   return new Promise(async (response, reject) => {
     try {
       if (!uid) {
-        throw { code: "invalid UID" };
+        throw new Error({ code: "invalid UID" });
       }
       console.log("start checking userMetaData", uid);
       let userMetaef = firestore.collection(USERMETADATA_COLLECTION).doc(uid);
@@ -387,9 +385,9 @@ async function checkForUserMetaData(uid) {
 
 function getNewSpec(oldSpec) {
   if (NEW_SPECIALITY[oldSpec.toUpperCase()]) {
-    return NEW_SPECIALITY[oldSpec.toUpperCase()]
+    return NEW_SPECIALITY[oldSpec.toUpperCase()];
   } else {
-    return []
+    return [];
   }
 }
 
@@ -404,21 +402,21 @@ async function updateSpecaility(uid) {
           console.log("No userMeta found for ", uid);
           return false;
         } else {
-          let currentData = document.data()
-          let newSp = getNewSpec(currentData.speciality)
+          let currentData = document.data();
+          let newSp = getNewSpec(currentData.speciality);
           if (newSp.length == 0) {
-            return true
+            return true;
           } else if (newSp.length == 1) {
             return trans.update(docRef, {
-              speciality: newSp[0]
-            })
+              speciality: newSp[0],
+            });
           } else if (newSp.length == 2) {
             return trans.update(docRef, {
               speciality: newSp[0],
               secondarySpeciality: newSp[1],
-            })
+            });
           } else {
-            return true
+            return true;
           }
         }
       });
@@ -431,23 +429,22 @@ async function updateSpecaility(uid) {
 }
 
 async function ReadUserProfile() {
-  let lastUID = null
+  let lastUID = null;
   try {
     console.log("start");
-    let queryRef = firestore
-      .collection(PROFILE_COLLECTION)
+    let queryRef = firestore.collection(PROFILE_COLLECTION);
     // .limit(1)
 
     let queryResult = await queryRef.get();
     if (!queryResult.empty) {
       let docs = queryResult.docs;
-      console.log("totalLength", docs.length)
+      console.log("totalLength", docs.length);
       for (let i = 0; i < docs.length; i++) {
-        lastUID = docs[i].id
-        console.log("entering index ", i, docs[i])
+        lastUID = docs[i].id;
+        console.log("entering index ", i, docs[i]);
         if (docs[i].data().speciality) {
           if (NEW_SPECIALITY[docs[i].data().speciality.toUpperCase()])
-            await updateSpecaility(docs[i].id)
+            await updateSpecaility(docs[i].id);
         }
       }
     } else {

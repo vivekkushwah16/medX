@@ -331,7 +331,7 @@ export const addToEventRegistered_IndexDB = (eventNames = []) => {
     eventNames.forEach(data => {
       let addrequest = store.add(data);
       addrequest.onerror = function (event) {
-        if (event.target.error.name = "ConstraintError") {
+        if (event.target.error.name == "ConstraintError") {
           event.preventDefault()
         }
         // console.log(event, '< -- onerror')

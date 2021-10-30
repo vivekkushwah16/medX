@@ -18,17 +18,22 @@ import firebase, {
   askForPermissionToReceiveNotifications,
 } from "../../Firebase/firebase";
 import VideoManager from "../../Managers/VideoManager";
-import { addToEventRegistered_IndexDB, checkIfEventIsRegistered_IndexDB } from "../../utils/notificationsManager";
+import {
+  addToEventRegistered_IndexDB,
+  checkIfEventIsRegistered_IndexDB,
+} from "../../utils/notificationsManager";
 
 export const UserContext = createContext();
 export const UserMetaDataContext = createContext();
 export const UserBronchTalkMetaDataContext = createContext();
 
-const ValidForNews = ["diabetology",
+const ValidForNews = [
+  "diabetology",
   "cardiology",
   "respiratory medicine",
   "urology",
-  "paediatrics"]
+  "paediatrics",
+];
 
 const UserContextProvider = (props) => {
   const [user, setUser] = useState(
@@ -44,12 +49,12 @@ const UserContextProvider = (props) => {
   useEffect(() => {
     if (userInfo) {
       if (ValidForNews.indexOf(userInfo.speciality.toLowerCase()) !== -1) {
-        toggleNewsBanner(true)
+        toggleNewsBanner(true);
       } else {
-        toggleNewsBanner(false)
+        toggleNewsBanner(false);
       }
     }
-  }, [userInfo])
+  }, [userInfo]);
 
   useEffect(() => {
     // firestore.collection(BACKSTAGE_COLLECTION).doc(PLATFORM_BACKSTAGE_DOC).onSnapshot((doc) => {
@@ -67,7 +72,7 @@ const UserContextProvider = (props) => {
         window.user = user;
         localStorage.setItem("userAuth", JSON.stringify(user));
         setUser(user);
-        askForPermissionToReceiveNotifications(user)
+        askForPermissionToReceiveNotifications(user);
         setInitalCheck(true);
         analytics.setUserId(user.uid);
         addUserLoginAnalytics(user.uid);
@@ -78,8 +83,8 @@ const UserContextProvider = (props) => {
         // setuserInfo(userInfo)
       } else {
         localStorage.removeItem("userAuth");
-        sessionStorage.clear()
-        localStorage.clear()
+        sessionStorage.clear();
+        localStorage.clear();
         setUser(null);
         setInitalCheck(true);
       }
@@ -291,11 +296,11 @@ const UserContextProvider = (props) => {
             // }
             checkIfEventIsRegistered_IndexDB("testxxx", (registered) => {
               if (registered) {
-                console.log("user is registered")
+                console.log("user is registered");
               } else {
-                console.log("user is not registered")
+                console.log("user is not registered");
               }
-            })
+            });
             //--
             setUserMetaData(doc.data());
             res(doc.data());
@@ -308,7 +313,7 @@ const UserContextProvider = (props) => {
     });
   };
   const getUserBronchTalkMetaData = (uid) => {
-    console.log("uid", uid, BRONCHTALK_COLLECTION)
+    console.log("uid", uid, BRONCHTALK_COLLECTION);
     return new Promise(async (res, rej) => {
       try {
         if (uid) {
@@ -324,8 +329,8 @@ const UserContextProvider = (props) => {
           }
         }
       } catch (error) {
-        console.log("SASasasassa here", error)
-        window.error = error
+        console.log("SASasasassa here", error);
+        window.error = error;
         rej(error);
       }
     });
@@ -347,11 +352,13 @@ const UserContextProvider = (props) => {
           forceUpdateUserInfo,
           getDoctorVerificationClickCount,
           updateDoctorVerificationClickCount,
-          showNewsbanner
+          showNewsbanner,
         }}
       >
         <UserMetaDataContext.Provider value={userMetaData}>
-          <UserBronchTalkMetaDataContext.Provider value={userBronchTalkMetaData}>
+          <UserBronchTalkMetaDataContext.Provider
+            value={userBronchTalkMetaData}
+          >
             {props.children}
           </UserBronchTalkMetaDataContext.Provider>
         </UserMetaDataContext.Provider>
