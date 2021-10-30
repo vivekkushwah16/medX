@@ -18,6 +18,7 @@ import firebase, {
   askForPermissionToReceiveNotifications,
 } from "../../Firebase/firebase";
 import VideoManager from "../../Managers/VideoManager";
+import { addToEventRegistered_IndexDB, checkIfEventIsRegistered_IndexDB } from "../../utils/notificationsManager";
 
 export const UserContext = createContext();
 export const UserMetaDataContext = createContext();
@@ -265,6 +266,20 @@ const UserContextProvider = (props) => {
             .doc(uid)
             .get();
           if (doc.exists) {
+            // adding events to indexDB, for crosschecking at time of notification
+            // let events = doc.data().events
+            // if (events) {
+            //   let indexData = events.map(id => ({ id, status: true }))
+            //   addToEventRegistered_IndexDB(indexData)
+            // }
+            checkIfEventIsRegistered_IndexDB("testxxx", (registered) => {
+              if (registered) {
+                console.log("user is registered")
+              } else {
+                console.log("user is not registered")
+              }
+            })
+            //--
             setUserMetaData(doc.data());
             res(doc.data());
           }

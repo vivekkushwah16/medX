@@ -33,6 +33,7 @@ import Myprofile from "../../Containers/myProfile/Myprofile";
 import { HOME_ROUTE } from "../../AppConstants/Routes";
 import { EVENT_CONFIRMATION_ENDPOINT } from "../../AppConstants/APIEndpoints";
 import { RegistrationType } from "../../AppConstants/TypeConstant";
+import { addToEventRegistered_IndexDB } from "../../utils/notificationsManager";
 
 function PreEvent(props) {
   const { user, userInfo } = useContext(UserContext);
@@ -57,6 +58,10 @@ function PreEvent(props) {
         .update({
           events: firebase.firestore.FieldValue.arrayUnion(props.event),
         });
+
+      // add the event to indexDB
+      addToEventRegistered_IndexDB([{ id: props.event, status: true }])
+
       const confirmationMailResponse = await axios({
         method: "post",
         url: EVENT_CONFIRMATION_ENDPOINT,
