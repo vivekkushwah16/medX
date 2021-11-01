@@ -379,29 +379,3 @@ export const checkIfEventIsRegistered_IndexDB = (eventId, cb) => {
   });
 };
 
-// export const updateIfEventNotificationIsReceived_IndexDB = (eventId, cb) => {
-//   let tableName = "event_registered";
-//   getEventRegisteredStoreSession(tableName, (event, request, transcation) => {
-//     const store = transcation.objectStore(tableName);
-//     let getRequest = store.put({ eventId: eventId, status: false });
-//     getRequest.onerror = function (event) {
-//       console.log("reading error", event.target.error);
-//       if (cb) {
-//         cb(false);
-//       }
-//     };
-//     getRequest.onsuccess = function (event) {
-//       if (event.target.result) {
-//         // console.log("reading onsuccess", event.target.result)
-//         if (cb) {
-//           cb(true);
-//         }
-//       } else {
-//         if (cb) {
-//           cb(false);
-//         }
-//       }
-//     };
-//     request.result.close();
-//   });
-// };

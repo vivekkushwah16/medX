@@ -8,7 +8,7 @@ const newsLogo = "./assets/images/newsLogo.png";
 
 const NewsBanner = () => {
   let history = useHistory();
-  const { addGAWithUserInfo } = useContext(AnalyticsContext)
+  const { addGAWithUserInfo } = useContext(AnalyticsContext);
   const handleExploreBtn = () => {
     addGAWithUserInfo(NEWS_EXPLORE_CLICK);
     history.push("/news");

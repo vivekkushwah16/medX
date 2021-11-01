@@ -35,7 +35,6 @@ export const NewsManager = {
           res({ data: [], lastVisible: "" });
         }
         const lastVisible = query && query.docs[query.docs.length - 1];
-        console.log("dsdsd", query.docs);
 
         let _data = query.docs.map((doc) => {
           let data = doc.data();

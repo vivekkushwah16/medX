@@ -11,6 +11,7 @@ window.sendNotificationToTopic({
         topic: "ankur5",
         type: "registration",
         eventId: "testevent1",
+        canRepeat: true,
         msg_id: "unique_id_1",
     }
 })

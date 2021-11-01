@@ -43,7 +43,7 @@ const audioLinkRef =
 const USER_NOTIFICATION_TABLE = "user_notification";
 const NEW_NOTIFICATION_TABLE = "new_notification";
 const CLICKED_NOTIFICATION_TABLE = "clicked_notification";
-const notificationType_registration = "registration"
+const notificationType_registration = "registration";
 //showCertificate, showFeedback
 export default function Header(props) {
   let audioRef = useRef();
@@ -103,7 +103,7 @@ export default function Header(props) {
             msg_id: id || title,
             title: title,
             topic: topic,
-            mode: "FRONTEND_NOTIFICATION"
+            mode: "FRONTEND_NOTIFICATION",
           });
         });
       }
@@ -174,8 +174,20 @@ export default function Header(props) {
       });
 
       //Notification Listener
-      onMessageListener((payload) => {
+      onMessageListener(async (payload) => {
         // console.log("payload", payload);
+        let date = new Date();
+        let data = {
+          id: payload.data.msg_id,
+          title: payload.data.title,
+          body: payload.data.body,
+          link: payload.data.link,
+          icon: payload.data.icon,
+          topic: payload.data.topic,
+          canRepeat: payload.data.canRepeat === "true" ? true : false,
+          date: date,
+          opened: false,
+        };
         const handleNotification = () => {
           addGAWithUserInfo(NOTIFICATION_RECEIVED, {
             msg_id: payload.data.msg_id || payload.data.title,
@@ -183,18 +195,6 @@ export default function Header(props) {
             topic: payload.data.topic,
           });
           audioRef.current.play();
-
-          let date = new Date();
-          let data = {
-            id: payload.data.msg_id,
-            title: payload.data.title,
-            body: payload.data.body,
-            link: payload.data.link,
-            icon: payload.data.icon,
-            topic: payload.data.topic,
-            date: date,
-            opened: false,
-          };
 
           addNewNotificationToIDB(USER_NOTIFICATION_TABLE, data, (res) => {
             if (res) {
@@ -232,18 +232,44 @@ export default function Header(props) {
               icon: <img src={payload.data.icon} alt="" />,
             }
           );
+        };
 
-        }
-        if (payload.type === notificationType_registration && payload.eventId) {
-          checkIfEventIsRegistered_IndexDB(payload.eventId, (registered) => {
-            if (!registered) {
-              handleNotification()
+        await getAllNotifications(USER_NOTIFICATION_TABLE, async (response) => {
+          if (response) {
+            let repeat = false;
+
+            if (response.length !== 0) {
+              repeat = response.filter((d) => d.id === payload.data.msg_id)[0]
+                .canRepeat;
+            } else {
+              repeat = true;
             }
-          })
-        } else {
-          handleNotification()
-        }
-
+            if (
+              payload.data.type === notificationType_registration &&
+              payload.data.eventId
+            ) {
+              checkIfEventIsRegistered_IndexDB(
+                payload.data.eventId,
+                async (registered) => {
+                  if (!registered) {
+                    if (repeat) {
+                      await handleNotification();
+                      updateNotification(
+                        { ...data, canRepeat: false },
+                        (res) => {}
+                      );
+                    }
+                  }
+                }
+              );
+            } else {
+              if (repeat) {
+                await handleNotification();
+                updateNotification({ ...data, canRepeat: false }, (res) => {});
+              }
+            }
+          }
+        });
       });
     }
   }, [userInfo]);
@@ -272,7 +298,7 @@ export default function Header(props) {
       }
       if (
         window.pageYOffset >
-        window.innerHeight + navBar.current.offsetTop + 130 &&
+          window.innerHeight + navBar.current.offsetTop + 130 &&
         window.innerHeight <= 600
       ) {
         setSearchBarSticky(true);
@@ -310,8 +336,9 @@ export default function Header(props) {
       ></audio>
 
       <div
-        className={` headerBox--full pd-r0 ${sticky ? "headerBox_sticky" : "headerBox"
-          }`}
+        className={` headerBox--full pd-r0 ${
+          sticky ? "headerBox_sticky" : "headerBox"
+        }`}
         ref={navBar}
         style={{
           padding:
@@ -337,8 +364,8 @@ export default function Header(props) {
                     props.whiteLogo
                       ? CIPLAMEDXLOGO_WHITE
                       : props.eventPage
-                        ? props.eventAndCiplaLogo
-                        : CIPLAMEDXLOGO
+                      ? props.eventAndCiplaLogo
+                      : CIPLAMEDXLOGO
                   }
                   alt="CIPLAMEDXLOGO"
                 />
