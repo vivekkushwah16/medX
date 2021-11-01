@@ -2,10 +2,10 @@ import { useState, useEffect, useContext, useCallback, useRef } from "react";
 import { useHistory } from "react-router";
 import { RootRoute } from "../../AppConstants/Routes";
 import NewsCard from "../../Components/NewsCard/NewsCard";
-import NewsHeader from "../../Components/NewsHeader/NewsHeader";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import { NewsManager } from "../../Managers/NewsManager";
 import useFetch from "../../utils/useFetch";
+import Header from "../Header/Header";
 import styles from "./News.module.css";
 const ValidForNews = [
   "diabetology",
@@ -74,7 +74,7 @@ const News = () => {
 
   return (
     <>
-      <NewsHeader />
+      <Header headerType="news" />
       <div className={styles["news__container"]}>
         <div
           className={styles["news__innerContainer"]}

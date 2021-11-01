@@ -36,6 +36,7 @@ import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
+import NewsHeader from "../../Components/NewsHeader/NewsHeader";
 
 const audioLinkRef =
   "https://storage.googleapis.com/cipla-impact.appspot.com/notification_music/notification.mp3";
@@ -334,130 +335,135 @@ export default function Header(props) {
         ref={audioRef}
         preload="auto"
       ></audio>
-
-      <div
-        className={` headerBox--full pd-r0 ${
-          sticky ? "headerBox_sticky" : "headerBox"
-        }`}
-        ref={navBar}
-        style={{
-          padding:
-            history.location.pathname.includes("search") && "1.325rem 0 5rem 0",
-          backgroundColor:
-            window.innerWidth <= 768 &&
-            history.location.pathname.includes("search") &&
-            "#000",
-        }}
-        id="header"
-      >
-        <div className="container">
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="headerBox__left">
-              <Link
-                to={RootRoute}
-                className={
-                  props.eventPage ? "headerBox__logo6" : "headerBox__logo5"
-                }
-              >
-                <img
-                  src={
-                    props.whiteLogo
-                      ? CIPLAMEDXLOGO_WHITE
-                      : props.eventPage
-                      ? props.eventAndCiplaLogo
-                      : CIPLAMEDXLOGO
+      
+      {props.headerType === "news" ? (
+        <NewsHeader />
+      ) : (
+        <div
+          className={` headerBox--full pd-r0 ${
+            sticky ? "headerBox_sticky" : "headerBox"
+          }`}
+          ref={navBar}
+          style={{
+            padding:
+              history.location.pathname.includes("search") &&
+              "1.325rem 0 5rem 0",
+            backgroundColor:
+              window.innerWidth <= 768 &&
+              history.location.pathname.includes("search") &&
+              "#000",
+          }}
+          id="header"
+        >
+          <div className="container">
+            <div className="d-flex align-items-center justify-content-between">
+              <div className="headerBox__left">
+                <Link
+                  to={RootRoute}
+                  className={
+                    props.eventPage ? "headerBox__logo6" : "headerBox__logo5"
                   }
-                  alt="CIPLAMEDXLOGO"
-                />
-              </Link>
-              {/* <a href={RootRoute} className="headerBox__logo5">
+                >
+                  <img
+                    src={
+                      props.whiteLogo
+                        ? CIPLAMEDXLOGO_WHITE
+                        : props.eventPage
+                        ? props.eventAndCiplaLogo
+                        : CIPLAMEDXLOGO
+                    }
+                    alt="CIPLAMEDXLOGO"
+                  />
+                </Link>
+                {/* <a href={RootRoute} className="headerBox__logo5">
                             <img src={props.whiteLogo ? CIPLAMEDXLOGO_WHITE : CIPLAMEDXLOGO} alt="CIPLAMEDXLOGO" />
                         </a> */}
-            </div>
+              </div>
 
-            {showSearchBar && (
-              <SearchBar
-                doSearch={doSearch}
-                initalSearchKeyword={initalSearchKeyword}
-                sticky={searchBarSticky}
-              />
-            )}
-
-            <div className="headerBox__right headerBox__right--nogap">
-              {props.showCertificate && (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    if (props.disableFeedback)
-                      swal(
-                        "Event still in progress",
-                        "Please collect your certificate at the end of the event"
-                      );
-                    else {
-                      addClickAnalytics(CERTIFICATE_CLICK);
-                      showMediaModal(MediaModalType.Component, {
-                        component: Certificate,
-                        data: {
-                          addClickAnalytics: () => {
-                            addClickAnalytics(DOWNLOAD_CERTIFICATE);
-                          },
-                          event: props.event,
-                        },
-                      });
-                    }
-                  }}
-                >
-                  Get your certificate
-                </button>
-              )}
-              {props.showFeedback && (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    addClickAnalytics(FEEDBACK_CLICK);
-                    showMediaModal(
-                      MediaModalType.PDF,
-                      `/feedback/index.html?id=123&event=${props.event}&title=${props.eventTitle}`
-                    );
-                  }}
-                >
-                  Feedback
-                </button>
-              )}
-              {!props.hideInviteFriend && (
-                <InviteFriend
-                  eventTitle={props.eventTitle}
-                  event={props.event}
-                  eventData={props.eventData}
-                  toggleInviteFriendModal={toggleInviteFriendModal}
-                  showInviteFriendModal={showInviteFriendModal}
+              {showSearchBar && (
+                <SearchBar
+                  doSearch={doSearch}
+                  initalSearchKeyword={initalSearchKeyword}
+                  sticky={searchBarSticky}
                 />
               )}
-              <Link
-                to="/search"
-                style={{
-                  display:
-                    (history.location.pathname.includes("search") ||
-                      !props.showMobileSearchBtn) &&
-                    "none",
-                }}
-                className="mobile-search-btn"
-              >
-                <i className="icon-search"></i>
-              </Link>
-              <Notification
-                // handleClick={() => {
-                // showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fimages%2Fnewflyer.pdf')
-                // }}
-                data={
-                  notificationData //["No Notifications"]
-                }
-              />
-              <Profile />
+
+              <div className="headerBox__right headerBox__right--nogap">
+                {props.showCertificate && (
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => {
+                      if (props.disableFeedback)
+                        swal(
+                          "Event still in progress",
+                          "Please collect your certificate at the end of the event"
+                        );
+                      else {
+                        addClickAnalytics(CERTIFICATE_CLICK);
+                        showMediaModal(MediaModalType.Component, {
+                          component: Certificate,
+                          data: {
+                            addClickAnalytics: () => {
+                              addClickAnalytics(DOWNLOAD_CERTIFICATE);
+                            },
+                            event: props.event,
+                          },
+                        });
+                      }
+                    }}
+                  >
+                    Get your certificate
+                  </button>
+                )}
+                {props.showFeedback && (
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => {
+                      addClickAnalytics(FEEDBACK_CLICK);
+                      showMediaModal(
+                        MediaModalType.PDF,
+                        `/feedback/index.html?id=123&event=${props.event}&title=${props.eventTitle}`
+                      );
+                    }}
+                  >
+                    Feedback
+                  </button>
+                )}
+                {!props.hideInviteFriend && (
+                  <InviteFriend
+                    eventTitle={props.eventTitle}
+                    event={props.event}
+                    eventData={props.eventData}
+                    toggleInviteFriendModal={toggleInviteFriendModal}
+                    showInviteFriendModal={showInviteFriendModal}
+                  />
+                )}
+                <Link
+                  to="/search"
+                  style={{
+                    display:
+                      (history.location.pathname.includes("search") ||
+                        !props.showMobileSearchBtn) &&
+                      "none",
+                  }}
+                  className="mobile-search-btn"
+                >
+                  <i className="icon-search"></i>
+                </Link>
+                <Notification
+                  // handleClick={() => {
+                  // showMediaModal(MediaModalType.PDF, '/web/viewer.html?file=%2Fassets%2Fimages%2Fnewflyer.pdf')
+                  // }}
+                  data={
+                    notificationData //["No Notifications"]
+                  }
+                />
+                <Profile />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
