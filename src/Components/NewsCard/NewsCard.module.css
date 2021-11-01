@@ -35,6 +35,7 @@
   margin-top: 1.5rem;
   color: #93d8ff;
   cursor: pointer;
+  width: max-content;
 }
 .readMore__Btn:hover {
   text-decoration: underline;

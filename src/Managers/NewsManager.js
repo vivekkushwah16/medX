@@ -47,8 +47,8 @@ export const NewsManager = {
             title: data.Title,
             timestamp: data.timestamp,
             newsLink: data.URL,
-            source: "From Crux News",
-            date: "7th Jan, 2020",
+            source: data.Source,
+            date: data.Date,
           };
           return newData;
         });
