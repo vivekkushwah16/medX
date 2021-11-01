@@ -21,5 +21,5 @@ export const BANNERS_BACKSTAGE_DOC = 'banners'
 export const USERMETADATA_COLLECTION = 'userMetaData'
 export const BRONCHTALK_COLLECTION = `BronchTalk`;
 export const DOCTOR_COLLECTION = "doctors-varification-data";
-export const NEWS_COLLECTION = "news_test";
+export const NEWS_COLLECTION = "news";
 export const SPECIALITY_COLLECTION = "speciality";

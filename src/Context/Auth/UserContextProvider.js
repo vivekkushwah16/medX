@@ -289,18 +289,18 @@ const UserContextProvider = (props) => {
             .get();
           if (doc.exists) {
             // adding events to indexDB, for crosschecking at time of notification
-            // let events = doc.data().events
-            // if (events) {
-            //   let indexData = events.map(id => ({ id, status: true }))
-            //   addToEventRegistered_IndexDB(indexData)
-            // }
-            checkIfEventIsRegistered_IndexDB("testxxx", (registered) => {
-              if (registered) {
-                console.log("user is registered");
-              } else {
-                console.log("user is not registered");
-              }
-            });
+            let events = doc.data().events
+            if (events) {
+              let indexData = events.map(id => ({ id, status: true }))
+              addToEventRegistered_IndexDB(indexData)
+            }
+            // checkIfEventIsRegistered_IndexDB("testxxx", (registered) => {
+            //   if (registered) {
+            //     console.log("user is registered");
+            //   } else {
+            //     console.log("user is not registered");
+            //   }
+            // });
             //--
             setUserMetaData(doc.data());
             res(doc.data());

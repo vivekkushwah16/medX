@@ -15,43 +15,45 @@ function useFetch(speciality, page) {
       try {
         await setLoading(true);
         await setError(false);
-        NewsManager.getMoreNews(speciality, lastDocRef.current)
-          .then(async (res) => {
-            if (res.data.length > 0) {
-              if (list.data.length !== 0) {
-                const newNewsData = [...list.data];
-                let newData = await newNewsData.filter(
-                  (d) => d.speciality === prevSpeciality.current
-                );
-                var allIds = await newData.map((d) => {
-                  return d.id;
-                });
 
-                for (let i = 0; i < res.data.length; i++) {
-                  if (allIds.indexOf(res.data[i].id) === -1) {
-                    newData.push(res.data[i]);
+        speciality &&
+          NewsManager.getMoreNews(speciality, lastDocRef.current)
+            .then(async (res) => {
+              if (res.data.length > 0) {
+                if (list.data.length !== 0) {
+                  const newNewsData = [...list.data];
+                  let newData = await newNewsData.filter(
+                    (d) => d.speciality === prevSpeciality.current
+                  );
+                  var allIds = await newData.map((d) => {
+                    return d.id;
+                  });
+
+                  for (let i = 0; i < res.data.length; i++) {
+                    if (allIds.indexOf(res.data[i].id) === -1) {
+                      newData.push(res.data[i]);
+                    }
                   }
+                  lastDocRef.current = res.lastVisible;
+                  await setList({ data: newData });
+                } else {
+                  lastDocRef.current = res.lastVisible;
+                  await setList({ data: res.data });
                 }
-                lastDocRef.current = res.lastVisible;
-                await setList({ data: newData });
+                return;
               } else {
-                lastDocRef.current = res.lastVisible;
-                await setList({ data: res.data });
+                if (!repeated) {
+                  lastDocRef.current = null;
+                  setList({ data: [] });
+                } else {
+                  limitHitRef.current = true;
+                }
+                return;
               }
-              return;
-            } else {
-              if (!repeated) {
-                lastDocRef.current = null;
-                setList({ data: [] });
-              } else {
-                limitHitRef.current = true;
-              }
-              return;
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         setLoading(false);
       } catch (err) {
         setList({ data: [] });

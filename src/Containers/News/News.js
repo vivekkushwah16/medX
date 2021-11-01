@@ -26,7 +26,7 @@ const News = () => {
   }, [userInfo]);
 
   const [speciality, setSpeciality] = useState(
-    userInfo.speciality ? userInfo.speciality.toLowerCase() : "others"
+    userInfo.speciality ? userInfo.speciality : "Speciality"
   );
 
   const [allSpeciality, setAllSpeicality] = useState([]);
@@ -58,6 +58,9 @@ const News = () => {
   useEffect(() => {
     setPage(0);
   }, [speciality]);
+  useEffect(() => {
+    setSpeciality(userInfo.speciality);
+  }, [userInfo]);
 
   useEffect(() => {
     const option = {
