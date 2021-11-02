@@ -37,20 +37,24 @@ const NewsCard = ({ data }) => {
 
   const handleReadMoreBtn = (alldata) => {
     addGAWithUserInfo(NEWS_READMORE_CLICK, {
-      newsLink: alldata.newsLink,
-      id: alldata.id,
-      title: alldata.title,
-      speciality: alldata.speciality,
+      news_newsLink: alldata.newsLink,
+      news_id: alldata.id,
+      news_title: alldata.title,
+      news_speciality: alldata.speciality,
+      news_date: alldata.date,
+      news_source: alldata.source,
     });
     window.open(alldata.newsLink, "_blank");
   };
 
   const handleShareBtn = (alldata) => {
     addGAWithUserInfo(NEWS_SHARE_CLICK, {
-      newsLink: alldata.newsLink,
-      id: alldata.id,
-      title: alldata.title,
-      speciality: alldata.speciality,
+      news_newsLink: alldata.newsLink,
+      news_id: alldata.id,
+      news_title: alldata.title,
+      news_speciality: alldata.speciality,
+      news_date: alldata.date,
+      news_source: alldata.source,
     });
     setshare({ open: true, newsLink: alldata.newsLink });
   };
