@@ -32,7 +32,7 @@ const ValidForNews = [
   "cardiology",
   "respiratory medicine",
   "urology",
-  "paediatrics",
+  "general medicine",
 ];
 
 const UserContextProvider = (props) => {

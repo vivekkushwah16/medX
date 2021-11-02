@@ -12,7 +12,7 @@ const ValidForNews = [
   "cardiology",
   "respiratory medicine",
   "urology",
-  "paediatrics",
+  "general medicine",
 ];
 const News = () => {
   const { user, userInfo } = useContext(UserContext);
