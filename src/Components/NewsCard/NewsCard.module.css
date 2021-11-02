@@ -80,6 +80,7 @@
   border-radius: 5px;
   height: 100%;
   width: 100%;
+  object-fit: cover;
 }
 @media only screen and (max-width: 991px) and (orientation: portrait) {
   .newsCard__container {

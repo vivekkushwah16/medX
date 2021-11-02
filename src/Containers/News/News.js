@@ -26,7 +26,7 @@ const News = () => {
   }, [userInfo]);
 
   const [speciality, setSpeciality] = useState(
-    userInfo.speciality ? userInfo.speciality : "Speciality"
+    userInfo.speciality ? userInfo.speciality : ""
   );
 
   const [allSpeciality, setAllSpeicality] = useState([]);
@@ -98,7 +98,7 @@ const News = () => {
               value={speciality}
               onChange={(e) => setSpeciality(e.target.value)}
             >
-              <option>Speciality</option>
+              {!speciality && <option>Speciality</option>}
               {allSpeciality.map((sp) => (
                 <option key={sp} value={sp}>
                   {sp}
