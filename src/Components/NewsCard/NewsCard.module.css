@@ -73,6 +73,8 @@
 }
 .upperContainer > .image {
   grid-area: 1 / 2 / 2 / 3;
+  width: 89.32px;
+  height: 72px;
 }
 .upperContainer > .image > img {
   border-radius: 5px;
@@ -92,5 +94,9 @@
 @media only screen and (max-width: 700px) and (orientation: landscape) {
   .newsCard__container {
     min-height: 260px;
+  }
+  .upperContainer > .image {
+    width: 65.87px;
+    height: 53.1px;
   }
 }
