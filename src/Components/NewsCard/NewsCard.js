@@ -6,6 +6,7 @@ import {
   NEWS_READMORE_CLICK,
   NEWS_SHARE_CLICK,
 } from "../../AppConstants/AnalyticsEventName";
+import { isIOS } from "react-device-detect";
 
 // share icon
 const shareIcon = () => {
@@ -44,7 +45,11 @@ const NewsCard = ({ data }) => {
       news_date: alldata.date,
       news_source: alldata.source,
     });
-    window.open(alldata.newsLink, "_blank");
+    if (isIOS) {
+      window.open(alldata.newsLink, "_self");
+    } else {
+      window.open(alldata.newsLink, "_blank");
+    }
   };
 
   const handleShareBtn = (alldata) => {

@@ -240,8 +240,12 @@ export default function Header(props) {
             let repeat = false;
 
             if (response.length !== 0) {
-              repeat = response.filter((d) => d.id === payload.data.msg_id)[0]
-                .canRepeat;
+              let re = response.filter((d) => d.id === payload.data.msg_id)[0];
+              if (re) {
+                repeat = re.canRepeat;
+              } else {
+                repeat = true;
+              }
             } else {
               repeat = true;
             }
@@ -256,7 +260,7 @@ export default function Header(props) {
                     if (repeat) {
                       await handleNotification();
                       updateNotification(
-                        { ...data, canRepeat: false },
+                        { ...data, canRepeat: data.canRepeat },
                         (res) => {}
                       );
                     }
@@ -266,7 +270,10 @@ export default function Header(props) {
             } else {
               if (repeat) {
                 await handleNotification();
-                updateNotification({ ...data, canRepeat: false }, (res) => {});
+                updateNotification(
+                  { ...data, canRepeat: data.canRepeat },
+                  (res) => {}
+                );
               }
             }
           }
@@ -335,7 +342,7 @@ export default function Header(props) {
         ref={audioRef}
         preload="auto"
       ></audio>
-      
+
       {props.headerType === "news" ? (
         <NewsHeader />
       ) : (

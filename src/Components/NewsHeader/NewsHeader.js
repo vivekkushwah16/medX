@@ -20,7 +20,9 @@ const NewsHeader = () => {
           <path d="M16 2L3 14.5L16 27" stroke="white" strokeWidth="3" />
         </svg>
       </span>
-      <div className={style.header__title}>CiplaMedX News</div>
+      <div className={style.header__title} onClick={handleBackBtn}>
+        CiplaMedX News
+      </div>
     </div>
   );
 };

@@ -135,13 +135,13 @@ export const addNewNotificationToIDB = (tableName, data, cb) => {
     var request = indb.open(dbName, version);
 
     request.onupgradeneeded = (event) => {
-      console.log("request.onupgradeneeded");
+      // console.log("request.onupgradeneeded");
       db = event.target.result;
       createStores(event);
     };
 
     request.onsuccess = (event) => {
-      console.log("request.onsuccess");
+      // console.log("request.onsuccess");
 
       db = event.target.result;
       console.log(db);
@@ -271,7 +271,7 @@ export const getClickNotificationFromDB = (
     };
 
     request.onsuccess = (event) => {
-      console.log("request.onsuccess");
+      // console.log("request.onsuccess");
       db = event.target.result;
       event.target.result.onversionchange = function (e) {
         if (e.newVersion === null) {
@@ -282,7 +282,7 @@ export const getClickNotificationFromDB = (
       let txt = db.transaction([tableName], "readwrite");
       const notificationStore = txt.objectStore(tableName).getAll();
       notificationStore.onsuccess = (event) => {
-        console.log("request.onsuccess");
+        // console.log("request.onsuccess");
         allData = event.target.result;
 
         if (tableName === "clicked_notification") {
@@ -296,7 +296,7 @@ export const getClickNotificationFromDB = (
               });
             }
             txt.objectStore(tableName).clear();
-            console.log("CLICKED_NOTIFICATION_TABLE", data);
+            // console.log("CLICKED_NOTIFICATION_TABLE", data);
           });
         }
         if (tableName === "new_notification") {
@@ -339,13 +339,13 @@ export const addToEventRegistered_IndexDB = (eventNames = []) => {
     eventNames.forEach((data) => {
       let addrequest = store.add(data);
       addrequest.onerror = function (event) {
-        if (event.target.error.name == "ConstraintError") {
+        if (event.target.error.name === "ConstraintError") {
           event.preventDefault();
         }
         // console.log(event, '< -- onerror')
       };
       addrequest.onsuccess = function (event) {
-        console.log(addrequest, "< -- addded");
+        // console.log(addrequest, "< -- addded");
       };
     });
     request.result.close();

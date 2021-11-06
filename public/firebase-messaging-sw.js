@@ -101,12 +101,12 @@ messaging.onBackgroundMessage((payload) => {
       // });
 
       self.addEventListener("notificationclick", function (event) {
-        console.log("On notification click: ", event.notification.tag);
+        // console.log("On notification click: ", event.notification.tag);
         updateNotificationToIDB("clicked_notification", newData, (res) => {
-          console.log("updated", res);
+          // console.log("updated", res);
         });
         updateNotificationToIDB("user_notification", newData, (res) => {
-          console.log("updated", res);
+          // console.log("updated", res);
         });
         event.notification.close();
 
@@ -121,15 +121,15 @@ messaging.onBackgroundMessage((payload) => {
               includeUncontrolled: true,
             })
             .then(function (clientList) {
-              console.log("clientList", clientList);
+              // console.log("clientList", clientList);
               let matchingClient = null;
               for (var i = 0; i < clientList.length; i++) {
-                console.log("matchingClient", matchingClient);
+                // console.log("matchingClient", matchingClient);
                 var client = clientList[i];
-                console.log(
-                  "client.url",
-                  client.url.split("//")[1].split("/")[0]
-                );
+                // console.log(
+                //   "client.url",
+                //   client.url.split("//")[1].split("/")[0]
+                // );
                 if (
                   client.url.split("//")[1].split("/")[0] == newURL &&
                   "focused" in client
@@ -155,10 +155,10 @@ messaging.onBackgroundMessage((payload) => {
     };
 
     addNotificationToIDB("new_notification", data, (res) => {
-      console.log("updated new_notification-------------", res);
+      // console.log("updated new_notification-------------", res);
     });
     addNotificationToIDB("user_notification", data, (res) => {
-      console.log("updated user_notification------------", res);
+      // console.log("updated user_notification------------", res);
     });
 
     getAllNotifications("user_notification", (response) => {
@@ -166,7 +166,12 @@ messaging.onBackgroundMessage((payload) => {
         let repeat = false;
 
         if (response.length !== 0) {
-          repeat = response.filter((d) => d.id === data.id)[0].canRepeat;
+          let re = response.filter((d) => d.id === data.id)[0].canRepeat;
+          if (re) {
+            repeat = re.canRepeat;
+          } else {
+            repeat = true;
+          }
         } else {
           repeat = true;
         }
@@ -177,7 +182,7 @@ messaging.onBackgroundMessage((payload) => {
                 showNotification();
                 updateNotificationToIDB(
                   "user_notification",
-                  { ...data, canRepeat: false },
+                  { ...data, canRepeat: data.canRepeat },
                   (res) => {}
                 );
               }
@@ -188,7 +193,7 @@ messaging.onBackgroundMessage((payload) => {
             showNotification();
             updateNotificationToIDB(
               "user_notification",
-              { ...data, canRepeat: false },
+              { ...data, canRepeat: data.canRepeat },
               (res) => {}
             );
           }
@@ -361,13 +366,13 @@ const getEventRegisteredStoreSession = (
   var db = null;
   var request = indb.open(dbName, version);
   request.onupgradeneeded = (event) => {
-    console.log("request.onupgradeneeded");
+    // console.log("request.onupgradeneeded");
     db = event.target.result;
     createStores(event);
   };
 
   request.onsuccess = (event) => {
-    console.log("session start");
+    // console.log("session start");
     let db = event.target.result;
     event.target.result.onversionchange = function (e) {
       if (e.newVersion === null) {
@@ -431,7 +436,7 @@ const getAllNotifications = (tableName, cb) => {
         const notificationStore = txt.objectStore(tableName).getAll();
 
         notificationStore.onsuccess = (event) => {
-          console.log("request.onsuccess");
+          // console.log("request.onsuccess");
           allData = event.target.result;
           request.result.close();
           cb(allData);

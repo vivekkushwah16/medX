@@ -17,11 +17,13 @@
 .header__title {
   font-weight: 700;
   font-size: 1.3rem;
+  cursor: pointer;
   padding: 0 0 0.2rem 1rem;
 }
 
 @media only screen and (max-width: 991px) {
   .news__header {
     background: linear-gradient(0deg, #0869a8, #0869a8), #c4c4c4;
+    padding-left: 1.5rem;
   }
 }
