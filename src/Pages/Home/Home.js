@@ -179,6 +179,7 @@ class Home extends Component {
       { tag: "Bronchiectasis", header: "Videos of Bronchiectasis" },
       { tag: "Allergic Rhinitis", header: "Videos of Allergic Rhinitis" },
       { tag: "pediatric hepatology", header: "Pediatric hepatology" },
+      { tag: "antifungal", header: "Antifungal" },
       // {
       //   tag: [
       //     "Inhalation Devices",
@@ -210,6 +211,7 @@ class Home extends Component {
       { tag: "nebulization", header: "Nebulization" },
       { tag: "evolve session", header: "Evolve session" },
       { tag: "pediatric hepatology", header: "Pediatric hepatology" },
+      { tag: "antifungal", header: "Antifungal" },
 
 
       // { tag: "anti fungal", header: "Anti Fungal" },
