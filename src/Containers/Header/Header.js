@@ -194,6 +194,7 @@ export default function Header(props) {
             msg_id: payload.data.msg_id || payload.data.title,
             title: payload.data.title,
             topic: payload.data.topic,
+            mode: "FRONTEND_NOTIFICATION",
           });
           audioRef.current.play();
 
