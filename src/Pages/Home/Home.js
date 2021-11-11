@@ -180,6 +180,8 @@ class Home extends Component {
       { tag: "Allergic Rhinitis", header: "Videos of Allergic Rhinitis" },
       { tag: "pediatric hepatology", header: "Pediatric hepatology" },
       { tag: "antifungal", header: "Antifungal" },
+      { tag: "uti", header: "UTI" },
+
       // {
       //   tag: [
       //     "Inhalation Devices",
@@ -212,6 +214,7 @@ class Home extends Component {
       { tag: "evolve session", header: "Evolve session" },
       { tag: "pediatric hepatology", header: "Pediatric hepatology" },
       { tag: "antifungal", header: "Antifungal" },
+      { tag: "uti", header: "UTI" },
 
 
       // { tag: "anti fungal", header: "Anti Fungal" },
