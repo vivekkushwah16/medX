@@ -1,10 +1,28 @@
-.bg-b{
-    background: black !important;
+.bg-b {
+  background: black !important;
 }
 
-.flexBoxC{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.flexBoxC {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.newsMainBannersub1 {
+  font-size: 4.25rem !important;
+  font-weight: 900 !important;
+}
+.newsMainBanner {
+  font-size: 3.25rem !important;
+}
+.newsBannerFontWt {
+  font-weight: 900 !important;
+}
+@media screen and (max-width: 768px) {
+  .newsMainBannersub1 {
+    font-size: 2.25rem !important;
+  }
+  .newsMainBanner {
+    font-size: 1.25rem !important;
+  }
 }

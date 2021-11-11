@@ -7,6 +7,7 @@ import {
   Custom1,
   Custom2,
   LiveEventBanner2,
+  MainNewsBanner,
 } from "../../Components/Banners";
 import * as Scroll from "react-scroll";
 import Slider from "react-slick";
@@ -56,10 +57,10 @@ const BannerType = {
   ImageSingleButton: "imageSingleButton",
   UpcompingEvent: "upcompingEvent",
   PromoVideoBanner: "promoVideoBanner",
-  platformPromo: "platformPromo",
+  NewsBanner: "newsBanner",
+  Custom3: "Custom3",
   Custom1: "Custom1",
   Custom2: "Custom2",
-  Custom3: "Custom3",
 };
 
 const PriorityBannerData = [];
@@ -188,7 +189,16 @@ const BannerData = [
   //     bannerImageStyle: {},
   //   },
   // },
-
+  {
+    type: BannerType.NewsBanner,
+    mainTitle: "Introducing",
+    subTitle_line1: "ciplamedX | NEWS",
+    subTitle_line2: "Get latest medical",
+    subTitle_line3: "news and updates",
+    buttonText: "Explore now",
+    mainImageUrl: "/assets/images/banner/mainNewsBanner.jpeg",
+    route: "news",
+  },
   {
     type: BannerType.platformPromo,
     platformId: "BronchTalk",
@@ -323,7 +333,7 @@ function Banner() {
     slidesToShow: 1,
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 10000,
     // responsive: [
     //   {
@@ -392,6 +402,10 @@ function Banner() {
                 needCountDown={item.needCountDown}
               />
             )}
+
+            {item.type === BannerType.NewsBanner &&
+              userContext.showNewsbanner && <MainNewsBanner data={item} />}
+
             {item.type === BannerType.platformPromo && (
               <LiveEventBanner2 data={item} enterEvent={handlePlatformPromo} />
             )}

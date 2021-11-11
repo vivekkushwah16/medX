@@ -6,7 +6,11 @@ import "./bannerIndex.css";
 import { isMobileOnly } from "react-device-detect";
 import Countdown from "../../Containers/Countdown/Countdown";
 // import { } from "react/cjs/react.development";
-import UserContextProvider, { UserBronchTalkMetaDataContext, UserMetaDataContext } from "../../Context/Auth/UserContextProvider";
+import UserContextProvider, {
+  UserBronchTalkMetaDataContext,
+  UserMetaDataContext,
+} from "../../Context/Auth/UserContextProvider";
+import { Link } from "react-router-dom";
 //props -  mainTitle, subTitle_line1, subTitle_line2, route, mainImageUrl, gotoRoute(),buttonText
 export function Custom1(props) {
   const { data } = props;
@@ -49,8 +53,8 @@ export function Custom1(props) {
               href={`#${data.route}`}
               className="btn  bannerBox__btn"
               onClick={(event) => {
-                event.preventDefault()
-                props.goToRoute(data.route)
+                event.preventDefault();
+                props.goToRoute(data.route);
               }}
             >
               {data.buttonText}
@@ -85,8 +89,8 @@ export function Custom2(props) {
               href={`#${data.route}`}
               className="btn   bannerBox__btn"
               onClick={(event) => {
-                event.preventDefault()
-                props.goToRoute(data.route)
+                event.preventDefault();
+                props.goToRoute(data.route);
               }}
             >
               {data.buttonText}
@@ -366,6 +370,67 @@ export function LiveEventBanner2(props) {
               />
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function MainNewsBanner(props) {
+  const { data } = props;
+  return (
+    <div className="bannerBox__inner gradient-bg2">
+      <div
+        className="bannerBox__slide"
+        style={{ backgroundImage: `url(${data.mainImageUrl})` }}
+      >
+        <div className="container">
+          <div>
+            <h1
+              id="banner"
+              className="bannerBox__featired-title mg-b50 newsMainBanner"
+              style={{ color: "#fff" }}
+            >
+              {data.mainTitle}
+              <br></br>
+              <span>
+                <span className="newsMainBannersub1">
+                  {data.subTitle_line1}
+                </span>
+                <br></br>
+                <span>
+                  {`${data.subTitle_line2.split(" ")[0]} ${
+                    data.subTitle_line2.split(" ")[1]
+                  }`}
+                  &nbsp;
+                  <span className="newsBannerFontWt">
+                    {data.subTitle_line2.split(" ")[2]}
+                  </span>
+                </span>
+                <br></br>
+                <span className="newsBannerFontWt">
+                  {data.subTitle_line3.split(" ")[0]}
+                  <span style={{ fontWeight: "normal" }}>
+                    &nbsp;
+                    {data.subTitle_line3.split(" ")[1]}
+                  </span>
+                  <span className="newsBannerFontWt">
+                    &nbsp;
+                    {data.subTitle_line3.split(" ")[2]}
+                  </span>
+                </span>
+              </span>
+            </h1>
+            {/* <a href="#" className="bannerBox__profile mg-b50">
+                            <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={data.speakerId} />
+                        </a> */}
+            <Link to={data.route} className="btn bannerBox__btn">
+              {data.buttonText}
+            </Link>
+          </div>
+          {/* <div className="bannerBox__center">
+                        <img src={data.mainImageUrl} alt="" />
+                    </div> */}
         </div>
       </div>
     </div>
