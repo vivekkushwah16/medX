@@ -333,7 +333,7 @@ function Banner() {
     slidesToShow: 1,
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 10000,
     // responsive: [
     //   {
@@ -385,7 +385,6 @@ function Banner() {
       }
     }
   };
-
   return (
     <div
       className="bannerBox bannerBox--large"
@@ -393,42 +392,52 @@ function Banner() {
       style={{ position: "relative" }}
     >
       <Slider className="slider-banner-desktop" {...settings}>
-        {banners.map((item, index) => (
-          <div key={item.mainImageUrl}>
-            {item.type === BannerType.LiveEvent && (
-              <LiveEventBanner
-                data={item}
-                enterEvent={enterEvent}
-                needCountDown={item.needCountDown}
-              />
-            )}
+        {banners
+          .filter((res) =>
+            userContext.showNewsbanner
+              ? res
+              : res.type !== BannerType.NewsBanner
+          )
+          .map((item, index) => (
+            <div key={item.mainImageUrl}>
+              {item.type === BannerType.LiveEvent && (
+                <LiveEventBanner
+                  data={item}
+                  enterEvent={enterEvent}
+                  needCountDown={item.needCountDown}
+                />
+              )}
 
-            {item.type === BannerType.NewsBanner &&
-              userContext.showNewsbanner && <MainNewsBanner data={item} />}
+              {item.type === BannerType.NewsBanner && (
+                <MainNewsBanner data={item} />
+              )}
 
-            {item.type === BannerType.platformPromo && (
-              <LiveEventBanner2 data={item} enterEvent={handlePlatformPromo} />
-            )}
-            {item.type === BannerType.ImageSingleButton && (
-              <ImageSingleButtonBanner
-                data={item}
-                watchTrailer={watchTrailer}
-              />
-            )}
-            {item.type === BannerType.PromoVideoBanner && (
-              <PromoVideoBanner data={item} watchVideo={watchVideo} />
-            )}
-            {item.type === BannerType.UpcompingEvent && (
-              <UpcompingEventBanner data={item} watchTrailer={watchTrailer} />
-            )}
-            {item.type === BannerType.Custom1 && (
-              <Custom1 data={item} goToRoute={goToRoute} />
-            )}
-            {item.type === BannerType.Custom2 && (
-              <Custom2 data={item} goToRoute={goToRoute} />
-            )}
-          </div>
-        ))}
+              {item.type === BannerType.platformPromo && (
+                <LiveEventBanner2
+                  data={item}
+                  enterEvent={handlePlatformPromo}
+                />
+              )}
+              {item.type === BannerType.ImageSingleButton && (
+                <ImageSingleButtonBanner
+                  data={item}
+                  watchTrailer={watchTrailer}
+                />
+              )}
+              {item.type === BannerType.PromoVideoBanner && (
+                <PromoVideoBanner data={item} watchVideo={watchVideo} />
+              )}
+              {item.type === BannerType.UpcompingEvent && (
+                <UpcompingEventBanner data={item} watchTrailer={watchTrailer} />
+              )}
+              {item.type === BannerType.Custom1 && (
+                <Custom1 data={item} goToRoute={goToRoute} />
+              )}
+              {item.type === BannerType.Custom2 && (
+                <Custom2 data={item} goToRoute={goToRoute} />
+              )}
+            </div>
+          ))}
       </Slider>
 
       {isMobileOnly && (
