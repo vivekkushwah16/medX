@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import { SpeakerProfileType } from "../../AppConstants/SpeakerProfileType";
 import SpeakerProfile from "../../Containers/SpeakerProfile.js/SpeakerProfile";
 import AddToCalendar from "../AddToCalendar/AddToCalendar";
+import { useHistory } from "react-router";
+
 import "./bannerIndex.css";
 import { isMobileOnly } from "react-device-detect";
 import Countdown from "../../Containers/Countdown/Countdown";
@@ -10,7 +12,9 @@ import UserContextProvider, {
   UserBronchTalkMetaDataContext,
   UserMetaDataContext,
 } from "../../Context/Auth/UserContextProvider";
-import { Link } from "react-router-dom";
+import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
+import { NEWS_ROUTE } from "../../AppConstants/Routes";
+import { NEWS_EXPLORE_BANNER_CLICK } from "../../AppConstants/AnalyticsEventName";
 //props -  mainTitle, subTitle_line1, subTitle_line2, route, mainImageUrl, gotoRoute(),buttonText
 export function Custom1(props) {
   const { data } = props;
@@ -378,6 +382,14 @@ export function LiveEventBanner2(props) {
 
 export function MainNewsBanner(props) {
   const { data } = props;
+  let history = useHistory();
+  const { addGAWithUserInfo } = useContext(AnalyticsContext);
+
+  const handleExplorebtn = () => {
+    addGAWithUserInfo(NEWS_EXPLORE_BANNER_CLICK);
+    history.push(NEWS_ROUTE);
+  };
+
   return (
     <div className="bannerBox__inner gradient-bg2">
       <div
@@ -424,9 +436,12 @@ export function MainNewsBanner(props) {
             {/* <a href="#" className="bannerBox__profile mg-b50">
                             <SpeakerProfile type={SpeakerProfileType.CARD_PROFILE} id={data.speakerId} />
                         </a> */}
-            <Link to={data.route} className="btn bannerBox__btn">
+            <div
+              onClick={() => handleExplorebtn(data.route)}
+              className="btn bannerBox__btn"
+            >
               {data.buttonText}
-            </Link>
+            </div>
           </div>
           {/* <div className="bannerBox__center">
                         <img src={data.mainImageUrl} alt="" />

@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { useContext } from "react";
 import { AnalyticsContext } from "../../Context/Analytics/AnalyticsContextProvider";
 import { NEWS_EXPLORE_CLICK } from "../../AppConstants/AnalyticsEventName";
+import { NEWS_ROUTE } from "../../AppConstants/Routes";
 
 const newsLogo = "./assets/images/newsLogo.png";
 
@@ -11,7 +12,7 @@ const NewsBanner = () => {
   const { addGAWithUserInfo } = useContext(AnalyticsContext);
   const handleExploreBtn = () => {
     addGAWithUserInfo(NEWS_EXPLORE_CLICK);
-    history.push("/news");
+    history.push(NEWS_ROUTE);
   };
 
   return (
