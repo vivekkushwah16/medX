@@ -396,7 +396,7 @@ export function MainNewsBanner(props) {
         className="bannerBox__slide"
         style={{ backgroundImage: `url(${data.mainImageUrl})` }}
       >
-        <div className="container">
+        <div className="container main_news_banner_container">
           <div>
             <h1
               id="banner"

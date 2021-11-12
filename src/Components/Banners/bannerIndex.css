@@ -8,21 +8,24 @@
   align-items: center;
   flex-direction: column;
 }
+.main_news_banner_container {
+  /* max-width: 100%; */
+}
 .newsMainBannersub1 {
-  font-size: 4.25rem !important;
+  font-size: 3rem !important;
   font-weight: 900 !important;
 }
 .newsMainBanner {
-  font-size: 3.25rem !important;
+  font-size: 2rem !important;
 }
 .newsBannerFontWt {
   font-weight: 900 !important;
 }
 @media screen and (max-width: 768px) {
   .newsMainBannersub1 {
-    font-size: 2.25rem !important;
+    font-size: 2.5rem !important;
   }
   .newsMainBanner {
-    font-size: 1.25rem !important;
+    font-size: 1.5rem !important;
   }
 }
