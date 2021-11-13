@@ -21,185 +21,162 @@ const version = 3;
 const notificationType_registration = "registration";
 
 messaging.onBackgroundMessage((payload) => {
-  let indb = getIndexDB();
-  if (!indb) {
-    console.log(
-      "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
-    );
-  } else {
-    // createIndexDb(payload);
+  try {
 
-    console.log(
-      "[firebase-messaging-sw.js] Received background message ",
-      payload
-    );
+    let indb = getIndexDB();
+    if (!indb) {
+      console.log(
+        "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
+      );
+    } else {
+      // createIndexDb(payload);
 
-    let data = {
-      id: payload.data.msg_id,
-      title: payload.data.title,
-      body: payload.data.body,
-      icon: payload.data.icon,
-      link: payload.data.link,
-      topic: payload.data.topic,
-      type: payload.data.type,
-      eventId: payload.data.eventId,
-      canRepeat: payload.data.canRepeat === "true" ? true : false,
-      date: new Date(),
-      opened: false,
-    };
-    let newData = {
-      ...data,
-      opened: true,
-    };
+      console.log(
+        "[firebase-messaging-sw.js] Received background message ",
+        payload
+      );
 
-    const showNotification = () => {
-      const notificationTitle = data.title;
-      const notificationOptions = {
-        body: data.body,
-        icon: data.icon,
-        image: data.image,
-        // actions: [
-        //   {
-        //     action: data.link,
-        //     title: "Accept",
-        //     icon: data.icon,
-        //   },
-        //   {
-        //     action: data.link,
-        //     title: "Reject",
-        //     icon: data.icon,
-        //   },
-        // ],
+      let data = {
+        id: payload.data.msg_id,
+        title: payload.data.title,
+        body: payload.data.body,
+        icon: payload.data.icon,
+        link: payload.data.link,
+        topic: payload.data.topic,
+        type: payload.data.type,
+        eventId: payload.data.eventId,
+        canRepeat: payload.data.canRepeat === "true" ? true : false,
+        date: new Date(),
+        opened: false,
+      };
+      let newData = {
+        ...data,
+        opened: true,
       };
 
-      // for getting all notificications
-      // self.registration
-      //   .getNotifications(notificationOptions)
-      //   .then(function (notifications) {
-      //     // do something with your notifications
-      //     console.log("all notifications", notifications);
-      //   });
+      const showNotification = () => {
+        const notificationTitle = data.title;
+        const notificationOptions = {
+          body: data.body,
+          icon: data.icon,
+          image: data.image,
+          // actions: [
+          //   {
+          //     action: data.link,
+          //     title: "Accept",
+          //     icon: data.icon,
+          //   },
+          //   {
+          //     action: data.link,
+          //     title: "Reject",
+          //     icon: data.icon,
+          //   },
+          // ],
+        };
 
-      // self.addEventListener("notificationclick", function (event) {
-      //   //---access data from event using event.notification.data---
-      //   console.log("object", event);
-      //   console.log("On notification click: ", event.notification.data);
-      //   var url = data.link;
+        self.addEventListener("notificationclick", function (event) {
+          // console.log("On notification click: ", event.notification.tag);
+          updateNotificationToIDB("clicked_notification", newData, (res) => {
+            // console.log("updated", res);
+          });
+          updateNotificationToIDB("user_notification", newData, (res) => {
+            // console.log("updated", res);
+          });
+          event.notification.close();
 
-      //   // onclick handle
-
-      //   //---close the notification---
-      //   event.notification.close();
-      //   updateNotificationToIDB("clicked_notification", newData, (res) => {
-      //     console.log("updated", res);
-      //   });
-      //   updateNotificationToIDB("user_notification", newData, (res) => {
-      //     console.log("updated", res);
-      //   });
-      //   // after clicking the notification---
-      //   event.waitUntil(clients.openWindow(url));
-      // });
-
-      self.addEventListener("notificationclick", function (event) {
-        // console.log("On notification click: ", event.notification.tag);
-        updateNotificationToIDB("clicked_notification", newData, (res) => {
-          // console.log("updated", res);
-        });
-        updateNotificationToIDB("user_notification", newData, (res) => {
-          // console.log("updated", res);
-        });
-        event.notification.close();
-
-        const urlToOpen = new URL(data.link, self.location.origin).href;
-        let newURL = urlToOpen.split("//")[1].split("/")[0];
-        // This looks to see if the current is already open and
-        // focuses if it is
-        event.waitUntil(
-          clients
-            .matchAll({
-              type: "window",
-              includeUncontrolled: true,
-            })
-            .then(function (clientList) {
-              // console.log("clientList", clientList);
-              let matchingClient = null;
-              for (var i = 0; i < clientList.length; i++) {
-                // console.log("matchingClient", matchingClient);
-                var client = clientList[i];
-                // console.log(
-                //   "client.url",
-                //   client.url.split("//")[1].split("/")[0]
-                // );
-                if (
-                  client.url.split("//")[1].split("/")[0] == newURL &&
-                  "focused" in client
-                ) {
-                  matchingClient = client;
-                  break;
+          const urlToOpen = new URL(data.link, self.location.origin).href;
+          let newURL = urlToOpen.split("//")[1].split("/")[0];
+          // This looks to see if the current is already open and
+          // focuses if it is
+          event.waitUntil(
+            clients
+              .matchAll({
+                type: "window",
+                includeUncontrolled: true,
+              })
+              .then(function (clientList) {
+                // console.log("clientList", clientList);
+                let matchingClient = null;
+                for (var i = 0; i < clientList.length; i++) {
+                  // console.log("matchingClient", matchingClient);
+                  var client = clientList[i];
+                  // console.log(
+                  //   "client.url",
+                  //   client.url.split("//")[1].split("/")[0]
+                  // );
+                  if (
+                    client.url.split("//")[1].split("/")[0] == newURL &&
+                    "focused" in client
+                  ) {
+                    matchingClient = client;
+                    break;
+                  }
                 }
-              }
-              if (matchingClient) {
-                matchingClient.url = urlToOpen;
-                return matchingClient.focus();
-              } else {
-                return clients.openWindow(urlToOpen);
-              }
-            })
+                if (matchingClient) {
+                  matchingClient.url = urlToOpen;
+                  return matchingClient.focus();
+                } else {
+                  return clients.openWindow(urlToOpen);
+                }
+              })
+          );
+        });
+        return self.registration.showNotification(
+          notificationTitle,
+          notificationOptions
         );
+      };
+
+      addNotificationToIDB("new_notification", data, (res) => {
+        // console.log("updated new_notification-------------", res);
+      });
+      addNotificationToIDB("user_notification", data, (res) => {
+        // console.log("updated user_notification------------", res);
       });
 
-      return self.registration.showNotification(
-        notificationTitle,
-        notificationOptions
-      );
-    };
+      getAllNotifications("user_notification", (response) => {
+        if (response) {
+          let repeat = false;
 
-    addNotificationToIDB("new_notification", data, (res) => {
-      // console.log("updated new_notification-------------", res);
-    });
-    addNotificationToIDB("user_notification", data, (res) => {
-      // console.log("updated user_notification------------", res);
-    });
-
-    getAllNotifications("user_notification", (response) => {
-      if (response) {
-        let repeat = false;
-
-        if (response.length !== 0) {
-          let re = response.filter((d) => d.id === data.id)[0].canRepeat;
-          if (re) {
-            repeat = re.canRepeat;
+          if (response.length !== 0) {
+            let re = response.filter((d) => d.id === data.id);
+            if (re.length > 0) {
+              repeat = re[0].canRepeat;
+            } else {
+              repeat = true;
+            }
           } else {
             repeat = true;
           }
-        } else {
-          repeat = true;
-        }
-        if (data.type === notificationType_registration && data.eventId) {
-          checkIfEventIsRegistered_IndexDB(data.eventId, (registered) => {
-            if (!registered) {
-              if (repeat) {
-                showNotification();
-                updateNotificationToIDB(
-                  "user_notification",
-                  { ...data, canRepeat: data.canRepeat },
-                  (res) => {}
-                );
+
+          if (data.type === notificationType_registration && data.eventId) {
+            checkIfEventIsRegistered_IndexDB(data.eventId, (registered) => {
+              if (!registered) {
+                if (repeat) {
+                  updateNotificationToIDB(
+                    "user_notification",
+                    { ...data, canRepeat: data.canRepeat },
+                    (res) => { }
+                  );
+                  return showNotification();
+                }
               }
+            });
+          } else {
+            if (repeat) {
+              updateNotificationToIDB(
+                "user_notification",
+                { ...data, canRepeat: data.canRepeat },
+                (res) => { }
+              );
+              return showNotification();
             }
-          });
-        } else {
-          if (repeat) {
-            showNotification();
-            updateNotificationToIDB(
-              "user_notification",
-              { ...data, canRepeat: data.canRepeat },
-              (res) => {}
-            );
           }
         }
-      }
-    });
+      });
+    }
+  } catch (error) {
+    console.log(error)
   }
 });
 

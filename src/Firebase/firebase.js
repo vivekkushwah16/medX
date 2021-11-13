@@ -96,7 +96,7 @@ export const askForPermissionToReceiveNotifications = async (user) => {
           const cloudRef = cloudFunction.httpsCallable(USER_TOKEN_UPDATE);
           cloudRef(JSON.stringify(userData))
             .then((res) => {
-              console.log(res);
+              // console.log(res);
             })
             .catch((error) => {
               console.log(error);
@@ -203,7 +203,7 @@ export const copyFromRealtoFirestore = () => {
           }
         }
       },
-      (err) => {}
+      (err) => { }
     );
   } catch (error) {
     console.log(error);

@@ -51,13 +51,13 @@ const getEventRegisteredStoreSession = (
   var db = null;
   var request = indb.open(dbName, version);
   request.onupgradeneeded = (event) => {
-    console.log("request.onupgradeneeded");
+    // console.log("request.onupgradeneeded");
     db = event.target.result;
     createStores(event);
   };
 
   request.onsuccess = (event) => {
-    console.log("session start");
+    // console.log("session start");
     let db = event.target.result;
     event.target.result.onversionchange = function (e) {
       if (e.newVersion === null) {
@@ -99,7 +99,7 @@ export const getAllNotifications = (tableName, cb) => {
         const notificationStore = txt.objectStore(tableName).getAll();
 
         notificationStore.onsuccess = (event) => {
-          console.log("request.onsuccess");
+          // console.log("request.onsuccess");
           allData = event.target.result;
           request.result.close();
           cb(allData);
@@ -144,7 +144,7 @@ export const addNewNotificationToIDB = (tableName, data, cb) => {
       // console.log("request.onsuccess");
 
       db = event.target.result;
-      console.log(db);
+      // console.log(db);
       event.target.result.onversionchange = function (e) {
         if (e.newVersion === null) {
           // An attempt is made to delete the db
