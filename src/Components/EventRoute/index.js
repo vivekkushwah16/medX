@@ -262,6 +262,14 @@ export const EventChecker = (props) => {
           <props.qnaPage eventId={eventDetails.id} />
         </ProtectedRoute>
 
+        <ProtectedRoute
+          exact
+          redirectTo={`${url}/signup`}
+          path={`${url}/poll-kmp23`}
+        >
+          <props.pollPage eventId={eventDetails.id} />
+        </ProtectedRoute>
+
         <ProtectedRoute redirectTo={`${url}/signup`} path={url}>
           {
             eventStatus === EventStausType.NotLive ?
@@ -344,6 +352,7 @@ export default function EventRoute(props) {
           env={props.env} //dev or prod
           forceState={props.forceState}
           qnaPage={props.qnaPage}
+          pollPage={props.pollPage}
           liveCount={props.liveCount}
         >
           {props.children}

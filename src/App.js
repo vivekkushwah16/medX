@@ -94,6 +94,10 @@ const QnaPageLazy = loadable(
   () => import(/* webpackChunkName: "QnaPageLazy" */ "./Pages/QnaPage/QnaPage"),
   { fallback: <LoadableFallback /> }
 );
+const PollPageLazy = loadable(
+  () => import(/* webpackChunkName: "PollPageLazy" */ "./Pages/PollPage/PollResponseContainer"),
+  { fallback: <LoadableFallback /> }
+);
 const UploadLazy = loadable(
   () =>
     import(/* webpackChunkName: "UploadLazy" */ "./Components/Upload/upload"),
@@ -307,6 +311,7 @@ export default function App() {
               liveEvent={MainPagesEventLazy} //for event component
               // finishedEvent={''}//for finished component
               qnaPage={QnaPageLazy}
+              pollPage={PollPageLazy}
               liveCount={LiveCountLazy}
               env={"prod"} //dev or prod
               forceState={EventStausType.NotLive}
