@@ -240,7 +240,7 @@ function PreEvent(props) {
             <div
               className="login2Box__left s"
               style={{
-                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?X=x")`,
+                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?X=${Math.random()}")`,
                 backgroundPosition: "top",
                 backgroundSize: "contain",
                 backgroundRepeat: "repeat-x",
@@ -248,7 +248,7 @@ function PreEvent(props) {
                   ? props.eventData.preventStyle.preeventBGColor
                   : "inherit"
                   }`,
-                backgroundBlendMode: "multiply",
+                backgroundBlendMode: `${props.eventData?.preventStyle?.stop_multiply_bgBlendMode ? 'inherit' : "multiply"}`,
               }}
             >
               {/* BannerBox */}

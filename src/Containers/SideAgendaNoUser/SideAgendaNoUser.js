@@ -28,12 +28,12 @@ export default function SideAgendaNoUser(props) {
             </header>
 
             <div className="login2Box__left" style={{
-                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?x=x")`,
+                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?x=${Math.random()}")`,
                 backgroundPosition: 'top',
                 backgroundSize: "contain",
                 backgroundRepeat: "repeat-x",
                 backgroundColor: `${props.eventData?.regStyle?.registerationBGColor ? props.eventData.regStyle.registerationBGColor : 'inherit'}`,
-                backgroundBlendMode: "multiply",
+                backgroundBlendMode: `${props.eventData?.regStyle?.stop_multiply_bgBlendMode ? 'inherit' : "multiply"}`,
             }}>
                 <div className="bannerBox" style={{ marginTop: '2rem' }}>
                     <div className="bannerBox__inner bannerBox__inner--small bannerBox__inner4 gradient-bg1">

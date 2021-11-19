@@ -371,6 +371,7 @@
   .navigarion-bar__menu > li > .btn {
     padding-top: 0.625rem;
     padding-bottom: 0.625rem;
+    padding: 0.625rem;
   }
   .login2Box__Simple_Left {
     min-height: 40vh;
