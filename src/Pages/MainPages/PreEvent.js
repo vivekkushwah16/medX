@@ -377,17 +377,18 @@ function PreEvent(props) {
                                       : "Take Poll"}
                                   </a>
                                 ) : (
-                                  <a
-                                    href="#"
-                                    className="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
-                                    onClick={(e) => {
-                                      if (history) {
-                                        history.push(HOME_ROUTE);
-                                      }
-                                    }}
-                                  >
-                                    Explore Informative videos
-                                  </a>
+                                  <></>
+                                  // <a
+                                  //   href="#"
+                                  //   className="btn btn-secondary--outline bannerBox__btn mg-l20 mg-b30"
+                                  //   onClick={(e) => {
+                                  //     if (history) {
+                                  //       history.push(HOME_ROUTE);
+                                  //     }
+                                  //   }}
+                                  // >
+                                  //   Explore Informative videos
+                                  // </a>
                                 )}
                                 {props.canEnterEvent && props.event && (
                                   <a
