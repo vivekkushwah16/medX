@@ -1,6 +1,9 @@
 ```
 npm run build
-firebase deploy --only hosting 
+firebase deploy --only hosting
+
+npm version patch
+npm version minor
 ```
 
 {
@@ -23,8 +26,6 @@ firebase deploy --only hosting
 "source": "/accounts",
 "function": "accounts"
 }
-
-
 
 # Getting Started with Create React App
 
