@@ -51,7 +51,8 @@ export default function SideAgendaNoUser(props) {
                                             props.eventData.watchTrailer &&
                                             props.eventData.watchTrailer.enabled &&
                                             props.eventData.watchTrailer.link &&
-                                            <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-b20" style={{ fontSize: "1.1rem" }}
+                                            <a href="#" class="btn btn-secondary--outline bannerBox__btn mg-b20 wt-btn"
+                                                style={{ fontSize: "1.1rem" }}
                                                 onClick={(e) => {
                                                     showMediaModal(MediaModalType.Videos, props.eventData.watchTrailer.link)
                                                     // addGAWithUserInfo(WATCHTRAILER_ANALYTICS_EVENT, { eventId: props.event })

@@ -46,9 +46,8 @@ function PreEvent() {
       return a.startTime - b.startTime;
     });
     data.forEach((timeline) => {
-      let date = `${
-        MonthName[new Date(timeline.startTime).getMonth()]
-      } ${new Date(timeline.startTime).getDate()}`;
+      let date = `${MonthName[new Date(timeline.startTime).getMonth()]
+        } ${new Date(timeline.startTime).getDate()}`;
       if (newData.hasOwnProperty(date)) {
         newData = {
           ...newData,
@@ -108,8 +107,8 @@ function PreEvent() {
                         </p>
                         <a
                           href="#"
-                          class="btn btn-secondary--outline bannerBox__btn mg-b20"
-                          style={{ fontSize: "1.1rem" }}
+                          class="btn btn-secondary--outline bannerBox__btn mg-b20 "
+                          style={{ fontSize: "1.1rem", background: '#fff', }}
                           onClick={(e) => {
                             showMediaModal(
                               MediaModalType.Videos,

@@ -783,3 +783,13 @@ html { scroll-behavior: smooth; }
     width: 12px; height: 12px;
   } */
 }
+
+.wt-btn {
+  font-size: 1.1rem;
+  background: #fff!important;
+  color: #015189!important;
+}
+
+.wt-btn:hover {
+  color: #015189!important;
+}

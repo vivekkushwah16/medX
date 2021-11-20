@@ -33,7 +33,7 @@ export function addToCalendarBlueBtn({ children, onClick }) {
   return (
     <button
       id="addToCal"
-      className={'btn btn-secondary bannerBox__btn '}
+      className={'btn btn-secondary bannerBox__btn wt-btn'}
       onClick={handleClick}
     >
       {children}

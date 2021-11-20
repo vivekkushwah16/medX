@@ -282,7 +282,7 @@ function PreEvent(props) {
                             props.eventData.watchTrailer.link && (
                               <a
                                 href="#"
-                                className="btn btn-secondary--outline bannerBox__btn mg-b20"
+                                className="btn btn-secondary--outline bannerBox__btn mg-b20 wt-btn"
                                 style={{ fontSize: "1.1rem" }}
                                 onClick={(e) => {
                                   showMediaModal(
