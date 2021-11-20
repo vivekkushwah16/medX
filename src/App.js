@@ -58,87 +58,87 @@ import News from "./Containers/News/News";
 const RegisterLazy = loadable(
   () =>
     import(
-      /* webpackChunkName: "Register" */ "./Pages/SimpleRegister/Register"
+      "./Pages/SimpleRegister/Register"
     ),
   { fallback: <LoadableFallback /> }
 );
 
 const LoginLazy = loadable(
-  () => import(/* webpackChunkName: "Login" */ "./Pages/SimpleLogin/Login"),
+  () => import("./Pages/SimpleLogin/Login"),
   { fallback: <LoadableFallback /> }
 );
 const MediaModalLazy = loadable(
   () =>
     import(
-      /* webpackChunkName: "MediaModal" */ "./Containers/MediaModal/MediaModal"
+      "./Containers/MediaModal/MediaModal"
     ),
   { fallback: <LoadableFallback /> }
 );
 const EventLazy = loadable(
-  () => import(/* webpackChunkName: "EventLazy" */ "./Pages/Event/Event"),
+  () => import("./Pages/Event/Event"),
   { fallback: <LoadableFallback /> }
 );
 
 const HomeLazy = loadable(
-  () => import(/* webpackChunkName: "HomeLazy" */ "./Pages/Home/Home"),
+  () => import("./Pages/Home/Home"),
   { fallback: <LoadableFallback /> }
 );
 const LiveCountLazy = loadable(
   () =>
     import(
-      /* webpackChunkName: "LiveCountLazy" */ "./Pages/LiveCount/liveCount"
+      "./Pages/LiveCount/liveCount"
     ),
   { fallback: <LoadableFallback /> }
 );
 const QnaPageLazy = loadable(
-  () => import(/* webpackChunkName: "QnaPageLazy" */ "./Pages/QnaPage/QnaPage"),
+  () => import("./Pages/QnaPage/QnaPage"),
   { fallback: <LoadableFallback /> }
 );
 const PollPageLazy = loadable(
-  () => import(/* webpackChunkName: "PollPageLazy" */ "./Pages/PollPage/PollResponseContainer"),
+  () => import("./Pages/PollPage/PollResponseContainer"),
   { fallback: <LoadableFallback /> }
 );
 const UploadLazy = loadable(
   () =>
-    import(/* webpackChunkName: "UploadLazy" */ "./Components/Upload/upload"),
+    import("./Components/Upload/upload"),
   { fallback: <LoadableFallback /> }
 );
 
 const MainPagesLoginLazy = loadable(
-  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Login"),
+  () => import("./Pages/MainPages/Login"),
   { fallback: <LoadableFallback /> }
 );
 const MainPagesRegisterLazy = loadable(
   () =>
-    import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Register"),
+    import("./Pages/MainPages/Register"),
   { fallback: <LoadableFallback /> }
 );
 const MainPagesPreEventLazy = loadable(
   () =>
-    import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/PreEvent"),
+    import("./Pages/MainPages/PreEvent"),
   { fallback: <LoadableFallback /> }
 );
 const MainPagesEventLazy = loadable(
-  () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Event"),
+  () => import("./Pages/MainPages/Event"),
   { fallback: <LoadableFallback /> }
 );
 
 // const MainPagesLoginLazy = loadable(
-//   () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Login"),
+//   () => import( "./Pages/MainPages/Login"),
 //   { fallback: <LoadableFallback /> }
 // );
 // const MainPagesRegisterLazy = loadable(
 //   () =>
-//     import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Register"),
+//     import( "./Pages/MainPages/Register"),
 //   { fallback: <LoadableFallback /> }
 // );
 // const MainPagesPreEventLazy = loadable(
 //   () =>
-//     import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/PreEvent"),
+//     import( "./Pages/MainPages/PreEvent"),
 //   { fallback: <LoadableFallback /> }
 // );
 // const MainPagesEventLazy = loadable(
-//   () => import(/* webpackChunkName: "UploadLazy" */ "./Pages/MainPages/Event"),
+//   () => import("./Pages/MainPages/Event"),
 //   { fallback: <LoadableFallback /> }
 // );
 
@@ -159,11 +159,11 @@ async function downloadData() {
         let data = {};
         snap.docs.forEach(
           (d) =>
-            (data[d.id] = {
-              ...d.data(),
-              id: d.id.split("_")[1],
-              phoneNumber: d.data().email.split("@")[0],
-            })
+          (data[d.id] = {
+            ...d.data(),
+            id: d.id.split("_")[1],
+            phoneNumber: d.data().email.split("@")[0],
+          })
         );
         console.log(data);
         exportFile(
