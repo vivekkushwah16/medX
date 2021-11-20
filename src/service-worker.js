@@ -73,3 +73,16 @@ self.addEventListener("message", (event) => {
 });
 
 // Any other custom service worker logic can go here.
+// remove old cache if any
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    const cacheNames = await caches.keys();
+    console.log("service worker activated")
+    await Promise.all(cacheNames.map(async (cacheName) => {
+      if (self.cacheName !== cacheName) {
+        console.log("service worker deleted")
+        await caches.delete(cacheName);
+      }
+    }));
+  })());
+});
