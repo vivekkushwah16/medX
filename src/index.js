@@ -12,6 +12,7 @@ import AlertTemplate from "react-alert-template-basic";
 import MediaModalContextProvider from "./Context/MedialModal/MediaModalContextProvider";
 import AnalyticsContextProvider from "./Context/Analytics/AnalyticsContextProvider";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import CacheBuster from "./CacheBuster";
 
 
 const options = {
@@ -23,21 +24,32 @@ const options = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserContextProvider>
-      <AnalyticsContextProvider>
-        <EventContextProvider>
-          <SpeakerContextProvider>
-            <LikeContextProvider>
-              <MediaModalContextProvider>
-                <AlertProvider template={AlertTemplate} {...options}>
-                  <App />
-                </AlertProvider>
-              </MediaModalContextProvider>
-            </LikeContextProvider>
-          </SpeakerContextProvider>
-        </EventContextProvider>
-      </AnalyticsContextProvider>
-    </UserContextProvider>
+    <CacheBuster>
+      {({ loading, isLatestVersion, refreshCacheAndReload }) => {
+        if (loading) return null;
+        if (!loading && !isLatestVersion) {
+          // You can decide how and when you want to force reload
+          refreshCacheAndReload();
+        }
+        return (
+          <UserContextProvider>
+            <AnalyticsContextProvider>
+              <EventContextProvider>
+                <SpeakerContextProvider>
+                  <LikeContextProvider>
+                    <MediaModalContextProvider>
+                      <AlertProvider template={AlertTemplate} {...options}>
+                        <App />
+                      </AlertProvider>
+                    </MediaModalContextProvider>
+                  </LikeContextProvider>
+                </SpeakerContextProvider>
+              </EventContextProvider>
+            </AnalyticsContextProvider>
+          </UserContextProvider>
+        );
+      }}
+    </CacheBuster>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -59,6 +59,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "generate-build-version": "node generate-build-version",
+    "prebuild": "npm run generate-build-version",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
