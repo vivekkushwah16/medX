@@ -13,7 +13,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { StaleWhileRevalidate } from "workbox-strategies";
 
-const currentVersion = "V0.2.7.9";
+const currentVersion = "V0.2.8.1";
 console.log(currentVersion);
 clientsClaim();
 
@@ -81,6 +81,19 @@ self.addEventListener('activate', (event) => {
     await Promise.all(cacheNames.map(async (cacheName) => {
       if (self.cacheName !== cacheName) {
         console.log("service worker deleted")
+        await caches.delete(cacheName);
+      }
+    }));
+  })());
+});
+
+self.addEventListener('install', (event) => {
+  event.waitUntil((async () => {
+    const cacheNames = await caches.keys();
+    console.log("new service worker install")
+    await Promise.all(cacheNames.map(async (cacheName) => {
+      if (self.cacheName !== cacheName) {
+        console.log("new service worker deleting cache")
         await caches.delete(cacheName);
       }
     }));

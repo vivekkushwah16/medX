@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { isMobileOnly } from 'react-device-detect'
 import { WATCHTRAILER_ANALYTICS_EVENT } from '../../AppConstants/AnalyticsEventName'
 import { MediaModalType } from '../../AppConstants/ModalType'
@@ -10,6 +10,7 @@ import { MediaModalContext } from '../../Context/MedialModal/MediaModalContextPr
 export default function SideAgendaNoUser(props) {
     const { agendaData, agendaDates, currentDate, handleDateChange, tabs, currentTab, tabsName, ToggleTab } = props
     const { showMediaModal } = useContext(MediaModalContext)
+    const randomNumber = useMemo(() => { return Math.random() }, [])
     return (
         <>
             <header className="headerBox">
@@ -28,7 +29,7 @@ export default function SideAgendaNoUser(props) {
             </header>
 
             <div className="login2Box__left" style={{
-                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?x=${Math.random()}")`,
+                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?x=${randomNumber}")`,
                 backgroundPosition: 'top',
                 backgroundSize: "contain",
                 backgroundRepeat: "repeat-x",

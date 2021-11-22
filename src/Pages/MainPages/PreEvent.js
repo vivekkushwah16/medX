@@ -47,6 +47,8 @@ function PreEvent(props) {
   const { attachTimelineListener, removeTimelineListener } =
     useContext(eventContext);
   const { addGAWithUserInfo, addCAWithUserInfo } = useContext(AnalyticsContext);
+  const randomNumber = useMemo(() => { return Math.random() }, [])
+
 
   let firstTime = useMemo(() => true, []);
   const regeristerUser = async () => {
@@ -240,7 +242,7 @@ function PreEvent(props) {
             <div
               className="login2Box__left s"
               style={{
-                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?X=${Math.random()}")`,
+                backgroundImage: `url("https://storage.googleapis.com/cipla-impact.appspot.com/${props.event}/WithAgenda_MainBG.jpg?X=${randomNumber}")`,
                 backgroundPosition: "top",
                 backgroundSize: "contain",
                 backgroundRepeat: "repeat-x",

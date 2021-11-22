@@ -68,20 +68,15 @@ function registerValidSW(swUrl, config) {
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
               console.log(
-                'New content is available and will be used when all ' +
-                'tabs for this page are closed. See https://cra.link/PWA.'
+                'New CiplaMedx content is available and will be used when all ' +
+                'tabs for this page are closed.'
               );
-              try {
-                const cacheNames = await caches.keys();
-                await Promise.all(cacheNames.map(async (cacheName) => {
-                  if (self.cacheName !== cacheName) {
-                    console.log("remove cahce")
-                    await caches.delete(cacheName);
-                  }
-                }));
-              } catch (error) {
-                console.log("error in installed state: ", error)
-              }
+              // See https://cra.link/PWA.
+              // if (window) {
+              //   if (window.location) {
+              //     window.location.reload()
+              //   }
+              // }
 
               // Execute callback
               if (config && config.onUpdate) {

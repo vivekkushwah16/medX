@@ -57,7 +57,20 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
 // serviceWorkerRegistration.unregister();
-serviceWorkerRegistration.register();
+serviceWorkerRegistration.register({
+  onUpdate: registration => {
+    // registration.unregister().then(() => {
+    //   window.location.reload()
+    // })
+    console.log("new version found")
+    registration.waiting.postMessage({ type: 'SKIP_WAITING' })
+    window.location.reload()
+  },
+  onSuccess: registration => {
+    console.info('service worker on success state')
+    console.log(registration)
+  },
+});
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
