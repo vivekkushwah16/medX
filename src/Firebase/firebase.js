@@ -35,7 +35,7 @@ export const messaging = firebase.messaging.isSupported()
   : null;
 
 export const cloudFunction = firebase.app().functions("asia-south1");
-// cloudFunction.useEmulator("localhost", 5001)
+cloudFunction.useEmulator("localhost", 5001)
 
 window.testCloud = (name, obj) => {
   const verifyCLoudFunctionRef = cloudFunction.httpsCallable(name);
@@ -75,6 +75,7 @@ export const getUserProfile = (uid) => {
     }
   });
 };
+
 export const askForPermissionToReceiveNotifications = async (user) => {
   try {
     if (messaging) {
@@ -203,7 +204,7 @@ export const copyFromRealtoFirestore = () => {
           }
         }
       },
-      (err) => { }
+      (err) => {}
     );
   } catch (error) {
     console.log(error);

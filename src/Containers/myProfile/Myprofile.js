@@ -5,7 +5,7 @@ import PhoneInput from "react-phone-number-input";
 import { UserContext } from "../../Context/Auth/UserContextProvider";
 import "./Myprofile.css";
 import { useHistory } from "react-router-dom";
-import { firestore, auth } from "../../Firebase/firebase";
+import { firestore, cloudFunction } from "../../Firebase/firebase";
 // const SPECIALITY = [
 //   "Chest Physician",
 //   "Consulting Physician",
@@ -157,22 +157,70 @@ function Myprofile(props) {
         return;
       }
       setLoading(true);
-      await firestore.collection("profiles").doc(user.uid).update({
-        city: city,
-        country: country,
-        firstName: firstName,
-        lastName: lastName,
-        pincode: pincode,
-        profession: profession,
-        speciality: speciality,
-        state: state,
-      });
+      // check for unsubscribe message tokens
+      let unsubscribeTopic = false;
+
+      if (userInfo.speciality !== speciality) {
+        unsubscribeTopic = true;
+      } else {
+        unsubscribeTopic = false;
+      }
+
+      await firestore
+        .collection("profiles")
+        .doc(user.uid)
+        .update({
+          city: city,
+          country: country,
+          firstName: firstName,
+          lastName: lastName,
+          pincode: pincode,
+          profession: profession,
+          speciality: speciality,
+          state: state,
+        })
+        .then((res) => {
+          // unsubscribe start
+          if (unsubscribeTopic) {
+            const unSubscribeAllTokensRef = cloudFunction.httpsCallable(
+              "unSubscribeAllTokens"
+            );
+            const subscribeAllTokensRef =
+              cloudFunction.httpsCallable("subscribeAllTokens");
+
+            let unSubscribeData = {
+              uid: user.uid,
+              topic: userInfo.speciality,
+            };
+
+            let subscribeData = {
+              uid: user.uid,
+              topic: speciality,
+            };
+
+            unSubscribeAllTokensRef(JSON.stringify(unSubscribeData))
+              .then((res) => {
+                console.log(res);
+                subscribeAllTokensRef(JSON.stringify(subscribeData))
+                  .then((res) => {
+                    console.log(res);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+          // unsubscribe end
+        });
       if (firstName !== userInfo.firstName || lastName !== userInfo.lastName) {
         await user.updateProfile({ displayName: `${firstName} ${lastName}` });
       }
       setLoading(false);
       await forceUpdateUserInfo();
-      console.log(user.displayName);
+      // console.log(user.displayName);
     } catch (err) {
       console.log(err);
     }
@@ -197,8 +245,9 @@ function Myprofile(props) {
               href="#"
               style={{ pointerEvents: "none" }}
             >
-              {`${userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ""
-                }${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ""} `}
+              {`${
+                userInfo.firstName ? userInfo.firstName[0].toUpperCase() : ""
+              }${userInfo.lastName ? userInfo.lastName[0].toUpperCase() : ""} `}
             </a>
             <h3 className="modalBox__title" style={{ color: "#F5F5F5" }}>
               My Profile
@@ -219,9 +268,10 @@ function Myprofile(props) {
           <div className="profile__cont">
             <div className="profile-selector">
               <div
-                className={` ${history?.location.pathname.includes("/home/profile") &&
+                className={` ${
+                  history?.location.pathname.includes("/home/profile") &&
                   "profile-selected"
-                  }`}
+                }`}
                 onClick={() => {
                   if (history) history.push("/home/profile");
                 }}
@@ -229,9 +279,10 @@ function Myprofile(props) {
                 My Profile
               </div>
               <div
-                className={` ${history?.location.pathname.includes("/interest") &&
+                className={` ${
+                  history?.location.pathname.includes("/interest") &&
                   "profile-selected"
-                  }`}
+                }`}
                 onClick={() => {
                   if (history) history.push("/interest");
                 }}
@@ -294,7 +345,7 @@ function Myprofile(props) {
                     style={{ cursor: "not-allowed" }}
                     className="form-control background-black"
 
-                  // onChange={this.handleInputChange}
+                    // onChange={this.handleInputChange}
                   />
                   {/* {this.state.errors.email && (
                     <span className="input-error2">{this.state.errors.email}</span>
@@ -313,7 +364,7 @@ function Myprofile(props) {
                     value={mobile}
                     disabled={true}
                     style={{ cursor: "not-allowed" }}
-                  //   onChange={this.setValue}
+                    //   onChange={this.setValue}
                   />
                   {/* {this.state.errors.phoneNumber && (
                   <span className="input-error2">
@@ -500,7 +551,7 @@ function Myprofile(props) {
                 )} */}
                 <div
                   className="form-group doctor-profile-container"
-                // style={{ border: !userInfo.doctorVerified && "none" }}
+                  // style={{ border: !userInfo.doctorVerified && "none" }}
                 >
                   <div className="doctor-profile-verify-text">
                     Your Medical Registration Details
@@ -539,7 +590,7 @@ function Myprofile(props) {
                         style={{ cursor: "not-allowed" }}
                         className="form-control background-black"
 
-                      // onChange={this.handleInputChange}
+                        // onChange={this.handleInputChange}
                       />
                       {/* {this.state.errors.email && (
                     <span className="input-error2">{this.state.errors.email}</span>
@@ -561,7 +612,7 @@ function Myprofile(props) {
                         style={{ cursor: "not-allowed" }}
                         className="form-control background-black"
 
-                      // onChange={this.handleInputChange}
+                        // onChange={this.handleInputChange}
                       />
                       {/* {this.state.errors.email && (
                     <span className="input-error2">{this.state.errors.email}</span>
@@ -583,7 +634,7 @@ function Myprofile(props) {
                         style={{ cursor: "not-allowed" }}
                         className="form-control background-black"
 
-                      // onChange={this.handleInputChange}
+                        // onChange={this.handleInputChange}
                       />
                       {/* {this.state.errors.email && (
                     <span className="input-error2">{this.state.errors.email}</span>
@@ -597,7 +648,7 @@ function Myprofile(props) {
                     className="btn btn-secondary save__btn"
                     id="RegisterBtn"
                     type={"submit"}
-                  // disabled={this.state.isLoading ? true : false}
+                    // disabled={this.state.isLoading ? true : false}
                   >
                     {isLoading ? (
                       <>
