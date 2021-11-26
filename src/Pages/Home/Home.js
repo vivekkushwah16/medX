@@ -178,9 +178,9 @@ class Home extends Component {
       { tag: "Pediatric asthma", header: "Videos of Pediatric asthma" },
       { tag: "Bronchiectasis", header: "Videos of Bronchiectasis" },
       { tag: "Allergic Rhinitis", header: "Videos of Allergic Rhinitis" },
-      { tag: "pediatric hepatology", header: "Pediatric hepatology" },
-      { tag: "antifungal", header: "Antifungal" },
-      { tag: "uti", header: "UTI" },
+      { tag: "pediatric hepatology", header: "Videos of Pediatric hepatology" },
+      { tag: "antifungal", header: "Videos of Antifungal" },
+      { tag: "uti", header: "Videos of UTI" },
 
       // {
       //   tag: [
