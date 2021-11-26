@@ -15,4 +15,5 @@ window.sendNotificationToTopic({
         msg_id: "unique_id_1",
     }
 })
-window.subscribeAllTokens({uid: "RtWXsbENPsW0uTywN0oVdlO8Dem2", topic:"ankur2"})
+window.subscribeAllTokens({**uid**: "RtWXsbENPsW0uTywN0oVdlO8Dem2", **topic**:"ankur2"})
+unSubscribeAllTokens({**uid**: "RtWXsbENPsW0uTywN0oVdlO8Dem2", **topic**:"ankur2"})
