@@ -4,4 +4,5 @@ export const MediaModalType = {
     Videos: 'video',
     Component: 'component',
     Iframe: 'pdf',
+    Photobooth: 'photobooth',
 }

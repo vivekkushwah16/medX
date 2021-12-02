@@ -89,8 +89,8 @@ $(document).ready(function () {
   let your_email = "";
   let feedbackExists = false;
 
-  const urlQuery = new URLSearchParams(window.location.href);
-  eventId = urlQuery.get("event");
+  const urlQuery = new URLSearchParams(window.location.search);
+  eventId = urlQuery.get("eventId");
   eventTitle = urlQuery.get("title");
 
   auth.onAuthStateChanged(function (user) {

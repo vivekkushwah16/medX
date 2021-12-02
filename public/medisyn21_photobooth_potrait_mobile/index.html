@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
+  <title>Photobooth</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://storage.googleapis.com/openbucketproject/Scripts/detect.min.js"></script>
+  <link rel="stylesheet" href="css/orientationCheck.css">
+  <link rel="stylesheet" href="css/loaderRing.css">
+  <style>
+    html {
+      height: 100vh;
+    }
+
+    body {
+      background: black;
+      /* linear-gradient(0deg, #004EE3 -19.38%, #0080E9 37.49%, #00A2ED 82.6%, #00AEEF 106.14%); */
+      /* background-image: linear-gradient(316.52deg, #E07E94 -5.86%, #D97993 -5.01%, #AC598C 1.18%, #863E86 7.62%, #662781 14.25%, #4E167D 21.12%, #3D0A7A 28.32%, #320279 36.1%, #2F0078 45.46%, #30037C 54.86%, #310A88 64.42%, #34189D 74.05%, #382AB9 83.72%, #3D41DE 93.35%, #4256FE 100.57%); */
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .takePhoto {
+      background-color: brown;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      margin-top: -370px;
+      margin-left: 50%;
+    }
+
+    .photo-frame-area {
+      /* float: left; */
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    canvas {
+      width: calc(100vh * 1.77);
+      height: 100vh;
+    }
+
+
+    .button-bg-img {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      width: 5vw;
+      height: 5vW;
+    }
+
+    .retake-button {
+      background-image: url('img/Retake.png');
+      width: 10vw;
+      padding: 0rem 0.85rem;
+      /* border-radius: 3rem; */
+    }
+
+
+    .capture-button {
+      background-image: url('img/capture.png');
+      margin: 0 19vw;
+      border-radius: 50%;
+      /* width: 100px; */
+    }
+
+    .button-bg-img {
+      /* box-shadow: 0px 0px 25px #000; */
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .button-bg-img:hover {
+      transform: scale(1.1);
+      /* box-shadow: 0px 0px 12px #1243ed; */
+    }
+
+    .save-button {
+      background-image: url('img/Save.png');
+      width: 10vw;
+      margin: 0 1vw;
+      padding: 0rem 0.85rem;
+      /* border-radius: 3rem; */
+    }
+
+    @media only screen and (max-width: 900px) {
+
+      canvas {
+        height: calc(100vw * 1.77);
+        width: 100vw;
+      }
+
+      /* .photo-frame-area{
+        height:  100vh;
+        overflow: hidden;
+      } */
+      /* body{
+        height: 100vh;
+        overflow: hidden;
+      }
+      .photo{
+        height: 100vh;
+      } */
+
+    }
+
+
+    @media only screen and (min-width: 600px) and (orientation: portrait) {
+      /* .photo-frame-area{
+    margin-top: 20vh
+  } */
+    }
+
+
+    /* @media only screen and (orientation: portrait){
+     
+      .button-area {
+          position: absolute;
+          top: 16vw;
+          left: 0;
+            height: 20vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+      }
+      .button-bg-img{
+      width: 8vw;
+    }
+} */
+
+    @media only screen and (orientation: portrait) {
+
+      /* .button-area {
+          height: 450px;
+      } */
+      .button-area {
+        /* height: 350px; */
+
+        position: absolute;
+        top: 16vw;
+        left: 0;
+        height: 30vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .button-bg-img {
+        width: 10vw;
+        height: 10vw;
+        box-shadow: unset;
+      }
+    }
+
+    @media only screen and (orientation: landscape) {
+      .button-area {
+        /* height: 350px; */
+        /* width: 100%; */
+
+        /* position: absolute;
+        top: 44vw;
+        left: 27vw;
+        height: 20vh;
+        display: flex; */
+
+        position: absolute;
+        bottom: 6rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .button-area .retake-button {
+        /* margin-left: 12vw; */
+      }
+    }
+
+
+    @media screen and (orientation: portrait) {
+      /* .tablet {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  } */
+
+      .tablet button-area {
+        top: 33vw !important;
+      }
+
+      /* .mobile{
+    width: 100%;
+    height: 100%;
+  } 
+  .mobile body{
+    width:100%;
+    height:100%;
+    display: flex;
+    align-items: center;
+  } */
+      .mobile .button-bg-img {
+        width: 13vw !important;
+        height: 13vw;
+
+        box-shadow: unset;
+      }
+
+      .mobile .retake-button {
+        width: 26vw !important;
+        height: 26vw;
+
+        box-shadow: unset;
+      }
+
+      .mobile .save-button {
+        width: 26vw !important;
+        height: 26vw;
+
+        box-shadow: unset;
+      }
+
+      .tablet .button-area {
+        display: none;
+      }
+
+
+      .tablet .photo-frame-area {
+        display: none;
+      }
+
+      .tablet #rotate {
+        display: flex !important;
+      }
+
+      body {
+        background: #03141d;
+        /* linear-gradient(0deg, #0062e6 -19.38%, #0061e5 37.49%, #00A2ED 82.6%, #00AEEF 106.14%); */
+      }
+    }
+
+
+
+    @media screen and (orientation: landscape) {
+      .tablet {
+        width: 100%;
+        height: 100%;
+      }
+
+      .tablet body {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .mobile .button-area {
+        display: none;
+      }
+
+
+      .mobile .photo-frame-area {
+        display: none;
+      }
+
+      .mobile #rotate {
+        display: flex !important;
+      }
+    }
+
+    /* @media screen and (orientation: portrait){
+    .tablet{
+    width: 100%;
+    }
+
+    .tablet body{
+        width:100%;
+        height:100%;
+        display: flex;
+        align-items: center;
+    }
+} */
+  </style>
+</head>
+
+<body position="relative">
+
+
+  <div class="photo-frame-area">
+    <video class="player" style="position: absolute; width: 4px;height: 4px; z-index: 1000; top: 0; left: 0;"></video>
+    <canvas class="photo" ></canvas>
+  </div>
+
+  <div class="button-area" id="button-area">
+    <div class="capture-button button-bg-img" id="Capture" onClick="takePhoto();"></div>
+    <div class="retake-button button-bg-img" id="Retake" onClick="window.location.href=window.location.href"></div>
+    <div class="save-button button-bg-img" id="Save"></div>
+  </div>
+
+  <div class="check_landscape" id="check_landscape">
+    <div id="rotate" style="display: none;">
+      <div class="phone">
+      </div>
+      <div class="message">
+        Please rotate your device!
+      </div>
+    </div>
+  </div>
+
+  <div id="blocker" class="blocker d-none">
+    <div class="lds-dual-ring"></div>
+    <div>Downloading...</div>
+  </div>
+  <audio class="snap" src="./snap.mp3" hidden></audio>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+  <script src="./script.js"></script>
+  <script>
+    var temp = navigator.userAgent;
+    var user = detect.parse(temp);
+
+    if (user.device.type === "Tablet") {
+      // top:28vw
+      document.getElementById("button-area").setAttribute("style", "top:47vw;");
+      document.getElementById("html").classList.add("tablet");
+
+    }
+    else if (user.device.type === "Mobile") {
+      document.getElementById("button-area").setAttribute("style", "top:120vw;");
+      document.getElementById("html").classList.add("mobile");
+
+    }
+  </script>
+</body>
+
+</html>

@@ -25,6 +25,7 @@ export default function About(props) {
           >
             {data.speakers.map((id) => (
               <SpeakerProfile
+                key={id}
                 type={SpeakerProfileType.CARD_PROFILE}
                 id={id}
                 fromTitle={props.fromTitle}

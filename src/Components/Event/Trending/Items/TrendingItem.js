@@ -90,7 +90,7 @@ export default function TrendingItem(props) {
               disabled={data.disabled}
               onClick={() => {
                 handleClickAnalytic();
-                showMediaModal(MediaModalType.PDF, data.link);
+                showMediaModal(MediaModalType.PDF, `${data.link}?eventId=${data.eventId}`);
               }}
             >
               Open <i className="icon-lock"></i>
@@ -103,6 +103,18 @@ export default function TrendingItem(props) {
               onClick={() => {
                 handleClickAnalytic();
                 window.open(data.link, "_blank");
+              }}
+            >
+              Open <i className="icon-lock"></i>
+            </button>
+          )}
+           {data.type === TRENDING_ITEM_TYPE.PHOTOBOOTH && (
+            <button
+              className="btn btn-outline btn-locked mg-t10 "
+              disabled={data.disabled}
+              onClick={() => {
+                handleClickAnalytic();
+                showMediaModal(MediaModalType.Photobooth, `${data.link}?eventId=${data.eventId}`);
               }}
             >
               Open <i className="icon-lock"></i>

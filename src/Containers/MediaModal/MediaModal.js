@@ -17,7 +17,7 @@ export default function MediaModal() {
                             if (e) { e.preventDefault() }
                             closeMediaModal()
                         }}></div>
-                        <div className={`mediaModal_container ${ modalDetails.type === MediaModalType.PDF ? 'pdf-full':''}`} style={modalDetails.type === MediaModalType.Component ? { width: 'auto' } : {}}>
+                        <div className={`mediaModal_container ${ modalDetails.type === MediaModalType.PDF ? 'pdf-full': modalDetails.type === MediaModalType.Photobooth ? 'photobooth-full':''}`} style={modalDetails.type === MediaModalType.Component ? { width: 'auto' } : {}}>
                             {
                                 modalDetails.type === MediaModalType.Image &&
                                 <img src={modalDetails.link} alt="imageLink" />
@@ -41,6 +41,10 @@ export default function MediaModal() {
                             {
                                 modalDetails.type === MediaModalType.PDF &&
                                 <iframe src={modalDetails.link} title="pdfViewer" />
+                            }
+                             {
+                                modalDetails.type === MediaModalType.Photobooth &&
+                                <iframe src={modalDetails.link} title="Photobooth" />
                             }
                             {
                                 modalDetails.type === MediaModalType.Component &&
