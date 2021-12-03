@@ -249,7 +249,7 @@ function paintToCanvas(type) {
         // ctx.arc(pos_x + radius, pos_y + radius, radius, 0, Math.PI * 2, true);
         // ctx.closePath();
         // ctx.clip();
-        roundedImage(pos_x, pos_y, width, height, 20);
+        roundedImage(pos_x, pos_y, width, height, 0);
         ctx.clip();
         ctx.drawImage(video, pos_x, pos_y, width, height);
 
