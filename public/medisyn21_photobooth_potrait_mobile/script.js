@@ -219,6 +219,30 @@ function paintToCanvas(type) {
   }
 
   console.log(canvas.width);
+
+  const getResponsiveWidthAndHeight = (requieredFrameWidth, requieredFrameHeight, videoFrameWidth, videoFrameHeight) => {
+    let canvasRatio = requieredFrameWidth / requieredFrameHeight;
+    let videoCamRatio = videoFrameWidth / videoFrameHeight;
+    let targetWidth = 0;
+    let targetHeight = 0;
+    if (videoCamRatio > canvasRatio) {
+      targetHeight = requieredFrameHeight;
+      targetWidth = requieredFrameHeight * videoCamRatio;
+    } else {
+      targetWidth = requieredFrameWidth;
+      targetHeight = (requieredFrameWidth) / videoCamRatio;
+    }
+    return { targetWidth, targetHeight }
+  }
+
+
+  const getStartingPositions = (startingX, startingY, frameWidth, frameHeight, videoFrameWidth, videoFrameHeight) => {
+    let targetPosX = startingX + frameWidth / 2 - videoFrameWidth / 2
+    let targetPosY = startingY + frameHeight / 2 - videoFrameHeight / 2
+    return { targetPosX, targetPosY }
+  }
+
+
   return setInterval(() => {
     if (!Pause) {
       //console.log("This is working");
@@ -227,118 +251,32 @@ function paintToCanvas(type) {
       let findExtaW = (731 - reObj.width) / 2;
       let findExtaH = (472 - reObj.height) / 2;
       ctx.drawImage(frame, 0, 0, frame.width, frame.height);
+      var pos_x = 0;
+      var pos_y = 0;
+      var width = 0;
+      var height = 0;
       if (mobile) {
         //Change
+        pos_x = 174;
+        pos_y = 315;
+        width = 730;
+        height = 1347;
 
-        var pos_x = 174;
-        var pos_y = 315;
-        var width = 730;
-        var height = 1347;
-
-        var radius = 400;
-        ctx.save();
-
-        ctx.beginPath();
-        // ctx.arc(539, 1095, 360, 0, 2 * Math.PI);
-        // ctx.fillStyle = "#fff";
-        // ctx.fill();
-        // ctx.clip();
-        // ctx.rect(pos_x, pos_y, 620, 775);
-        // ctx.fillStyle = 'orange'//"#f5c043";
-        // ctx.fill();
-        // ctx.arc(pos_x + radius, pos_y + radius, radius, 0, Math.PI * 2, true);
-        // ctx.closePath();
-        // ctx.clip();
-        roundedImage(pos_x, pos_y, width, height, 0);
-        ctx.clip();
-        ctx.drawImage(video, pos_x, pos_y, width, height);
-
-        // ctx.drawImage(video, pos_x, pos_y, reObj.width * 2, reObj.height * 1.65);
-
-        // ctx.beginPath();
-        // ctx.rect(0, 937, 260, reObj.height * 0.175);
-        // ctx.rect(790, 936, 110, reObj.height * 0.175);
-        // ctx.fillStyle = "#f5c043";
-        // ctx.fill();
-        // ctx.closePath();
-
-        // ctx.beginPath();
-        // ctx.arc(0, 0, 2, 0, Math.PI * 2, true);
-        // ctx.clip();
-        ctx.closePath();
-        ctx.restore();
-
-        // ctx.drawImage(video, -50 + findExtaW, 349 + findExtaH, reObj.width+449, reObj.height+572);
       } else {
-        // ctx.fillRect(569, 256, 732, 473);
-
-        // ctx.beginPath();
-        // ctx.arc(500, 500, 250, 0, 2 * Math.PI);
-        // ctx.stroke();
-        // ctx.drawImage(video, 350 + findExtaW, 147 + findExtaH, reObj.width*1.2, reObj.height*1.2);
-        //Change
-        var pos_x = 405;
-        var pos_y = 376;
-        var width = 1113;
-        var height = 590;
-        ctx.save();
-
-        ctx.beginPath();
-        roundedImage(pos_x, pos_y, width, height, 8);
-
-        // ctx.lineJoin = "round";
-        // ctx.lineWidth = 10;
-        // ctx.fillStyle = "#fff";
-        // ctx.strokeStyle = "#fff";
-        // ctx.strokeRect(pos_x, pos_y, 895, 500);
-        // ctx.rect(pos_x, pos_y, 895, 500)
-
-        // var radius = 5;
-        // ctx.arc(603, 540, 306, 0, 2 * Math.PI);
-        // ctx.arc(pos_x + radius, pos_y + radius, radius, 0, Math.PI * 2, true);
-        // ctx.rect(pos_x, pos_y, reObj.width * 1.4, reObj.height * 1.4)
-        // ctx.fillStyle = "#ffbd04";
-        // ctx.fill();
-        ctx.clip();
-        // ctx.closePath();
-
-        // ctx.drawImage(video, pos_x, pos_y, 2*radius+2, 2*radius+2);
-        // console.log("w"+reObj.width);
-        // console.log("h"+reObj.height);
-        ctx.drawImage(video, pos_x, pos_y, width, height);
-
-        // ctx.drawImage(video, pos_x, pos_y, reObj.width * 1.20, reObj.height * 1.2);
-        // ctx.drawImage(video,454+260-365,175+260-205,reObj.width*1.2,reObj.height*1.2);
-
-        // ctx.beginPath();
-        // ctx.arc(0, 0, 2, 0, Math.PI * 2, true);
-        // ctx.clip();
-        // ctx.closePath();
-
-        // ctx.beginPath();
-        // ctx.rect(0, 437, reObj.width * 0.7, reObj.height * 0.35);
-        // ctx.rect(1440, 437, 105, reObj.height * 0.35);
-        // ctx.fillStyle = "#ffbd04";
-        // ctx.fill();
-        ctx.closePath();
-        ctx.restore();
+        pos_x = 405;
+        pos_y = 376;
+        width = 1113;
+        height = 590;
       }
-      // if(width > height){
-
-      //   ctx.drawImage(video,(width/2)/2,0,w,h,0,0,-w,h);
-
-      // }else if(width < height){
-
-      //   ctx.drawImage(video,0,(height/2)/2,w,h,0,0,-w,h);
-
-      // }else{
-
-      //   ctx.drawImage(video,0,0,w,h,0,0,-w,h);
-      // }
-
-      // ctx.drawImage(video,0,0,w,h,0,0,-w,h);
-
-      //  ctx.scale(-1, 1);
+      const { targetWidth, targetHeight } = getResponsiveWidthAndHeight(width, height, video.videoWidth, video.videoHeight)
+      const { targetPosX, targetPosY } = getStartingPositions(pos_x, pos_y, width, height, targetWidth, targetHeight)
+      ctx.save();
+      ctx.beginPath();
+      roundedImage(pos_x, pos_y, width, height, 0);
+      ctx.clip();
+      ctx.drawImage(video, targetPosX, targetPosY, targetWidth, targetHeight);
+      ctx.closePath();
+      ctx.restore();
     }
   }, 16);
 }
@@ -421,14 +359,14 @@ function UploadImage(file) {
       var timestamp = date.getTime();
 
       var storageRef = storage.ref(
-        "phootobooth/"+ eventId + "/" + eid + "_" + timestamp + ".jpeg"
+        "phootobooth/" + eventId + "/" + eid + "_" + timestamp + ".jpeg"
       );
 
       var task = storageRef.put(file);
 
       task.on(
         "state_changed",
-        function progress(snapshot) {},
+        function progress(snapshot) { },
         function error(er) {
           console.log(er.code);
           // window.location.reload();
@@ -765,8 +703,8 @@ var saveAs =
     return saveAs;
   })(
     (typeof self !== "undefined" && self) ||
-      (typeof window !== "undefined" && window) ||
-      this.content
+    (typeof window !== "undefined" && window) ||
+    this.content
   );
 // `self` is undefined in Firefox for Android content script context
 // while `this` is nsIContentFrameMessageManager
@@ -984,7 +922,7 @@ if (typeof module !== "undefined" && module !== null) {
   }
 })(
   (typeof self !== "undefined" && self) ||
-    (typeof window !== "undefined" && window) ||
-    this.content ||
-    this
+  (typeof window !== "undefined" && window) ||
+  this.content ||
+  this
 );

@@ -190,6 +190,15 @@ export default function App() {
   }, [initalCheck, user]);
 
   useEffect(() => {
+    window.console.medXlog = (...args) => {
+      if (process.env.NODE_ENV !== "production") {
+        window.console.log(...args)
+      } else {
+        if (window.showMedxConsole)
+          window.console.log(...args)
+      }
+    }
+
     // setTimeout(() => {
     //   console.clear()
     //   ReadUserProfile()

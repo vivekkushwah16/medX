@@ -52,10 +52,10 @@ function UpdateScrore(gamescore, totalTime) {
         if (!gamedoc.exists) {
           transaction.set(gameDocRef, {
             id: userid,
-            mobileNumber: number,
             quiz_score: gamescore_new,
             time: totalTime,
             name: currentUser.displayName,
+            eventId: eventId,
           });
           return gamescore_new;
         }
@@ -85,7 +85,7 @@ function showLeaderBoard() {
     var idx = 1;
     var found = false;
     var users_ref = db.collection("quiz");
-    users_ref
+    users_ref.where('eventId', "==", eventId)
       .orderBy("quiz_score", "desc")
       .limit(10)
       .get()

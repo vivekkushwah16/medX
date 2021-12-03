@@ -21,7 +21,7 @@ const FULL_DASH_ARRAY = 283;
 const WARNING_THRESHOLD = 30;
 const ALERT_THRESHOLD = 10;
 
-const NO_OF_QUESTIONS = 15;
+const NO_OF_QUESTIONS = 9;
 
 const COLOR_CODES = {
   info: {
@@ -340,26 +340,26 @@ var quizCompleted = false;
 var RColor;
 function showResult(percentage, ca) {
   /*	if (percentage == 100) {
-		RColor = 'teal';
-		// resultFb.innerHTML = 'Wohoo.. Great, You Fantastic!';
-		correctAns.innerHTML = 'Correct Answers: ' + ca;
-	} else if (percentage >= 80) {
-		RColor = 'green';
-		// resultFb.innerHTML = 'Congrats! You are doing good.';
-		correctAns.innerHTML = 'Correct Answers: ' + ca;
-	} else if (percentage >= 65) {
-		RColor = 'blue';
-		// resultFb.innerHTML = 'Let have some fun activity';
-		correctAns.innerHTML = 'Correct Answers: ' + ca;
-	} else if (percentage >= 50) {
-		RColor = 'orange';
-		// resultFb.innerHTML = 'Lets have some fu activity';
-		correctAns.innerHTML = 'Correct Answers: ' + ca;
-	} else {
-		RColor = 'red';
-		// resultFb.innerHTML = 'Oh! You are unwell';
-		correctAns.innerHTML = 'Correct Answers: ' + ca;
-	}*/
+    RColor = 'teal';
+    // resultFb.innerHTML = 'Wohoo.. Great, You Fantastic!';
+    correctAns.innerHTML = 'Correct Answers: ' + ca;
+  } else if (percentage >= 80) {
+    RColor = 'green';
+    // resultFb.innerHTML = 'Congrats! You are doing good.';
+    correctAns.innerHTML = 'Correct Answers: ' + ca;
+  } else if (percentage >= 65) {
+    RColor = 'blue';
+    // resultFb.innerHTML = 'Let have some fun activity';
+    correctAns.innerHTML = 'Correct Answers: ' + ca;
+  } else if (percentage >= 50) {
+    RColor = 'orange';
+    // resultFb.innerHTML = 'Lets have some fu activity';
+    correctAns.innerHTML = 'Correct Answers: ' + ca;
+  } else {
+    RColor = 'red';
+    // resultFb.innerHTML = 'Oh! You are unwell';
+    correctAns.innerHTML = 'Correct Answers: ' + ca;
+  }*/
 
   correctAns.innerHTML = "Your score " + ca;
   localStorage.setItem("percentage", percentage);

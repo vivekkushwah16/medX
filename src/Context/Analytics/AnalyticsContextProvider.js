@@ -36,7 +36,7 @@ export default function AnalyticsContextProvider(props) {
 
   async function addGAWithUserInfo(eventName, data = {}) {
     try {
-      // console.log(eventName, data, userInfo);
+      console.medXlog(eventName, data, userInfo)
       // return
       if (!userInfo) {
         console.error("No UsrInfo Found");
@@ -53,7 +53,7 @@ export default function AnalyticsContextProvider(props) {
         dateTimeStamp: new Date().getTime(),
       };
       let wholeData = { ...baseData, ...data };
-      console.log(wholeData);
+      console.medXlog(eventName, data, userInfo)
       analytics.logEvent(eventName, wholeData);
     } catch (error) {
       // console.log(error);
