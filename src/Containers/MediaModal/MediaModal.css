@@ -21,6 +21,10 @@
     animation: 0.25s scaleUp forwards;
     animation-delay: 0.25s;
 }
+.photobooth-full{
+    width: 80vw;
+    height: calc(80vw * 0.5624);
+}
 
 .mediaModal_container_closeBtn{
     position: absolute;

@@ -25,6 +25,8 @@ const VIDEO_WIDTH = 1920;
 const VIDEO_HEIGHT = 1080;
 const mobile = isMobile();
 
+let currentUser = null
+
 //const alphaNumber = document.querySelector('.alphaContainer input');
 var ratio = window.devicePixelRatio || 1;
 var Pause;
@@ -73,9 +75,39 @@ let eventId = urlQuery.get("eventId");
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 const auth = firebase.auth();
+var _Analytics = null
+if (firebase.analytics) {
+  _Analytics = firebase.analytics();
+  console.log(_Analytics)
+}
+
+async function addGAWithUserInfo(eventName, data = {}) {
+  try {
+    // console.log(eventName, data)
+    // return
+    if (!_Analytics) {
+      console.error("No UsrInfo Found");
+      return;
+    }
+    let baseData = {
+      userId: currentUser.uid,
+      date: new Date(),
+      dateTimeStamp: new Date().getTime(),
+    };
+    let wholeData = { ...baseData, ...data };
+    // console.log(wholeData)
+    _Analytics.logEvent(eventName, wholeData);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 auth.onAuthStateChanged(function (user) {
   if (user) {
+    currentUser = user
+    if (_Analytics) {
+      _Analytics.setUserId(user.uid);
+    }
     console.log(user.email + " Signed In");
     eid = user.email;
   } else {
@@ -179,17 +211,17 @@ window.addEventListener("orientationchange", function () {
 var gotFirst = true;
 
 function paintToCanvas(type) {
-  console.log(type + "xxxxxxxxxxxx");
+  // console.log(type + "xxxxxxxxxxxx");
 
   if (!gotFirst) {
     return;
   }
   gotFirst = false;
-  console.log("xxxxxxxxxxxx" + type);
+  // console.log("xxxxxxxxxxxx" + type);
 
   const width = video.videoWidth;
   const height = video.videoHeight;
-  console.log(width + "X" + height);
+  // console.log(width + "X" + height);
   // alert(width + "X" + height);
   let w = 0,
     h = 0;
@@ -319,6 +351,7 @@ function takePhoto() {
   snap.currentTime = 0;
   snap.play();
   console.log("This is Working");
+  addGAWithUserInfo("Photobooth_ImageCaptured", { eventId })
   Capture.style.display = "none";
   Save.style.display = "block";
   Retake.style.display = "block";
@@ -420,6 +453,7 @@ video.addEventListener("seeked", () => paintToCanvas("seeked"));
 const loader = document.querySelector("#blocker");
 
 $("#Save").click(function () {
+  addGAWithUserInfo("Photobooth_ImageSaved", { eventId })
   canvas.toBlob(async function (blob) {
     loader.classList.remove("d-none");
     await UploadImage(blob);
