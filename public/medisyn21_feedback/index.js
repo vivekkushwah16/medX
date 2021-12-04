@@ -88,10 +88,35 @@ $(document).ready(function () {
   let your_name = "";
   let your_email = "";
   let feedbackExists = false;
+  const SAVE_COLLECTION_NAME = "userSurvey"
+  let AnalyticsName = "SurveySubmitted"
+
+  async function addGAWithUserInfo(eventName, data = {}) {
+    try {
+      // console.log(eventName, data)
+      // return
+      if (!_Analytics) {
+        console.error("No UsrInfo Found");
+        return;
+      }
+      let baseData = {
+        userId: currentUser.uid,
+        date: new Date(),
+        dateTimeStamp: new Date().getTime(),
+      };
+      let wholeData = { ...baseData, ...data };
+      // console.log(wholeData)
+      _Analytics.logEvent(eventName, wholeData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   const urlQuery = new URLSearchParams(window.location.search);
   eventId = urlQuery.get("eventId");
   eventTitle = urlQuery.get("title");
+
 
   auth.onAuthStateChanged(function (user) {
     if (user) {
@@ -99,10 +124,13 @@ $(document).ready(function () {
       your_name = user.displayName;
       your_email = user.email;
       your_id = user.uid;
+      if (_Analytics) {
+        _Analytics.setUserId(user.uid);
+      }
       // console.log(your_email);
       firebase
         .firestore()
-        .collection("userFeedback")
+        .collection(SAVE_COLLECTION_NAME)
         // .doc(currentUser.uid)
         .doc(`${eventId}_${currentUser.uid}`)
         .get()
@@ -142,7 +170,7 @@ $(document).ready(function () {
         });
       // getDataIfExist();
     } else {
-      
+
       // console.log("Nobody is Signed In");
       //window.location.href = "/login/index.html";
     }
@@ -347,7 +375,7 @@ $(document).ready(function () {
     // console.log(survey1);
     firebase
       .firestore()
-      .collection("userFeedback")
+      .collection(SAVE_COLLECTION_NAME)
       // .doc(currentUser.uid)
       .doc(`${eventId}_${currentUser.uid}`)
       .set({
@@ -358,6 +386,8 @@ $(document).ready(function () {
         eventTitle: eventTitle,
       })
       .then(() => {
+        addGAWithUserInfo(AnalyticsName, { eventId })
+
         successfulFeedback();
       })
       .catch((err) => {

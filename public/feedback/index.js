@@ -59,6 +59,29 @@ $(document).ready(function () {
   let your_name = "";
   let your_email = "";
   let feedbackExists = false;
+  let AnalyticsName = "FeedbackSubmitted"
+
+  async function addGAWithUserInfo(eventName, data = {}) {
+    try {
+      // console.log(eventName, data)
+      // return
+      if (!_Analytics) {
+        console.error("No UsrInfo Found");
+        return;
+      }
+      let baseData = {
+        userId: currentUser.uid,
+        date: new Date(),
+        dateTimeStamp: new Date().getTime(),
+      };
+      let wholeData = { ...baseData, ...data };
+      // console.log(wholeData)
+      _Analytics.logEvent(eventName, wholeData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   auth.onAuthStateChanged(function (user) {
     if (user) {
@@ -66,6 +89,9 @@ $(document).ready(function () {
       your_name = user.displayName;
       your_email = user.email;
       your_id = user.uid;
+      if (_Analytics) {
+        _Analytics.setUserId(user.uid);
+      }
       // console.log(your_email);
       const urlQuery = new URLSearchParams(window.location.href);
       eventId = urlQuery.get("event");
@@ -73,7 +99,7 @@ $(document).ready(function () {
 
       firebase
         .firestore()
-        .collection("userLogged")
+        .collection("userFeedback")
         // .doc(your_id)
         .doc(`${eventId}_${currentUser.uid}`)
         .get()
@@ -93,20 +119,20 @@ $(document).ready(function () {
           if (eventId === null) {
             return;
           }
-          document.querySelector("#mainForm").style.display = "block";
-          document.querySelector("#loader").style.display = "none";
-          document.querySelector("#finalMessage").style.display = "none";
+          // document.querySelector("#mainForm").style.display = "block";
+          // document.querySelector("#loader").style.display = "none";
+          // document.querySelector("#finalMessage").style.display = "none";
           feedbackExists = doc.exists;
 
-          // if (doc.exists) {
-          //     // document.querySelector('#mainForm').style.display = 'none';
-          //     // document.querySelector('#loader').style.display = 'none';
-          //     // document.querySelector('#finalMessage').style.display = 'block';
-          // } else {
-          //     document.querySelector('#mainForm').style.display = 'block';
-          //     document.querySelector('#loader').style.display = 'none';
-          //     document.querySelector('#finalMessage').style.display = 'none';
-          // }
+          if (doc.exists) {
+            document.querySelector('#mainForm').style.display = 'none';
+            document.querySelector('#loader').style.display = 'none';
+            document.querySelector('#finalMessage').style.display = 'block';
+          } else {
+            document.querySelector('#mainForm').style.display = 'block';
+            document.querySelector('#loader').style.display = 'none';
+            document.querySelector('#finalMessage').style.display = 'none';
+          }
         });
       // getDataIfExist();
     } else {
@@ -192,11 +218,15 @@ $(document).ready(function () {
     // console.log(event);
     event.preventDefault();
     const survey1 = {};
+    let givenSomeInput = false
     let formData = new FormData(document.querySelector("form"));
     for (var pair of formData.entries()) {
       // console.log(pair[0] + ': ' + pair[1]);
       if (!survey1[`${pair[0]}`]) {
         survey1[`${pair[0]}`] = pair[1];
+        if (!givenSomeInput && pair[1].length > 0) {
+          givenSomeInput = true
+        }
       } else {
         survey1[`${pair[0]}`] += `| ${pair[1]}`;
         // if (typeof (survey[`${pair[0]}`]) === 'object') {
@@ -209,7 +239,10 @@ $(document).ready(function () {
     }
 
     // console.log(survey1);
-
+    if (!givenSomeInput) {
+      alert("Please provide some input.")
+      return
+    }
     showError(false);
     // const survey = {
     //   question1: document.querySelector("#session").value,
@@ -245,6 +278,8 @@ $(document).ready(function () {
         eventId: eventId,
       })
       .then(() => {
+        console.log("xxxxxxxxxxxxxxxxxxxxxxx")
+        addGAWithUserInfo(AnalyticsName, { eventId })
         successfulFeedback();
       })
       .catch((err) => {

@@ -19,6 +19,7 @@
     transform: translate(-50%, 0);
     font-size: calc((75vw * 0.6)/20);
     color: #3e3e3f;
+    font-weight: 600;
 }
 
 .certDownload {

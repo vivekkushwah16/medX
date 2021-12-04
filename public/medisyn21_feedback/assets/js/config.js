@@ -10,6 +10,11 @@ let firebaseConfig = {
 };
 
 var app = firebase.initializeApp(firebaseConfig);
-// if (firebase.analytics) {
-//   firebase.analytics();
-// }
+var _Analytics = null
+if (firebase.analytics) {
+  _Analytics = firebase.analytics();
+  console.log(_Analytics)
+}
+
+
+
