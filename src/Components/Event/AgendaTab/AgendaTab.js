@@ -14,7 +14,7 @@ export default function AgendaTab(props) {
     // }
     return (
 
-        <div id="tab2" class="eventBox__tabs-content active">
+        <div id="tab2" className="eventBox__tabs-content active">
             <>
                 {
                     agendaDates &&
