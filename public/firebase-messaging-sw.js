@@ -91,7 +91,7 @@ messaging.onBackgroundMessage((payload) => {
           event.waitUntil(
             clients
               .matchAll({
-                type: "window",
+                type: "all",
                 includeUncontrolled: true,
               })
               .then(function (clientList) {
